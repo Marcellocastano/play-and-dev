@@ -1,0 +1,10 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/core" },
+    { "path": "packages/subject-javascript" },
+    { "path": "packages/subject-placeholders" },
+    { "path": "apps/web" },
+    { "path": "apps/server" }
+  ]
+}
