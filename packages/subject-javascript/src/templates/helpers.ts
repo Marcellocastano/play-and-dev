@@ -6,7 +6,16 @@ export type Rng = () => number;
 
 /** Nomi di variabili/plurali usati nei contesti generati. */
 export const VAR_NAMES = [
-  'x', 'y', 'n', 'totale', 'contatore', 'punteggio', 'prezzo', 'quantita', 'risultato', 'valore',
+  'x',
+  'y',
+  'n',
+  'totale',
+  'contatore',
+  'punteggio',
+  'prezzo',
+  'quantita',
+  'risultato',
+  'valore',
 ] as const;
 
 export const PERSON_NAMES = ['Ada', 'Marco', 'Lucia', 'Sara', 'Paolo', 'Elena'] as const;

@@ -1,0 +1,225 @@
+{
+  "topicId": "destructuring",
+  "questions": [
+    {
+      "id": "destructuring-fg-0013",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-arrays",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["array destructuring"],
+      "prompt": "Completa il destructuring per estrarre il secondo elemento dell'array `colori` in una variabile chiamata `secondo`.",
+      "code": "const colori = [\"rosso\", \"verde\", \"blu\"];\nconst [___] = colori;\nconsole.log(secondo);",
+      "options": [
+        {
+          "id": "a",
+          "text": ", secondo"
+        },
+        {
+          "id": "b",
+          "text": "secondo"
+        },
+        {
+          "id": "c",
+          "text": "secondo,"
+        },
+        {
+          "id": "d",
+          "text": "[secondo]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Per estrarre il secondo elemento si scrive una virgola prima della variabile: `[ , secondo ]`.",
+        "whyCorrect": "La virgola salta il primo elemento, quindi il secondo valore dell'array va nella variabile `secondo`. La sintassi `[ , secondo ] = colori` assegna `\"verde\"` a `secondo`.",
+        "whyOthersWrong": {
+          "b": "Scrivendo solo `secondo` senza la virgola, si assegna il primo elemento, non il secondo, quindi `secondo` sarebbe \"rosso\".",
+          "c": "Mettendo la virgola dopo `secondo`, JavaScript cerca un terzo elemento e `secondo` riceve il primo valore, non il secondo.",
+          "d": "Usare `[secondo]` crea una variabile chiamata `secondo`, ma assegna comunque solo il primo elemento, non il secondo."
+        },
+        "concept": "Destructuring di array: salto di elementi",
+        "commonMistake": "Dimenticare la virgola per saltare elementi nell'array.",
+        "example": "const [ , secondo ] = [1, 2, 3]; // secondo = 2"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:07.893Z"
+    },
+    {
+      "id": "destructuring-fg-0014",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["object destructuring", "property renaming"],
+      "prompt": "Completa il destructuring per estrarre la proprietà `nome` dall'oggetto `persona` e assegnarla a una variabile chiamata `n`.",
+      "code": "const persona = { nome: \"Luca\", età: 22 };\nconst { ___ } = persona;\nconsole.log(n);",
+      "options": [
+        {
+          "id": "a",
+          "text": "nome: n"
+        },
+        {
+          "id": "b",
+          "text": "n: nome"
+        },
+        {
+          "id": "c",
+          "text": "nome as n"
+        },
+        {
+          "id": "d",
+          "text": "nome = n"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La sintassi per rinominare è `{ originale: nuovoNome }`, quindi `{ nome: n }`.",
+        "whyCorrect": "Per estrarre la proprietà `nome` in una variabile chiamata `n`, si usa `{ nome: n }`. Così, `persona.nome` viene assegnato a `n`.",
+        "whyOthersWrong": {
+          "b": "Invertire l'ordine (`n: nome`) cerca una proprietà `n` e la mette in `nome`, che non è l'obiettivo né la sintassi corretta.",
+          "c": "La sintassi `as` non esiste in JavaScript per il destructuring; è tipica di altri linguaggi come TypeScript.",
+          "d": "L'uguale (`=`) serve solo per assegnare valori di default, non per rinominare variabili."
+        },
+        "concept": "Destructuring oggetti: rinomina proprietà",
+        "commonMistake": "Invertire l'ordine nella rinomina, usando `{ nuovoNome: originale }`.",
+        "example": "const { x: y } = { x: 1 }; // y = 1"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:07.895Z"
+    },
+    {
+      "id": "destructuring-fg-0015",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["object destructuring", "default values"],
+      "prompt": "Completa il destructuring per estrarre la proprietà `livello` dall'oggetto `utente`, usando 5 come valore di default se non è presente.",
+      "code": "const utente = { nome: \"Paola\" };\nconst { livello = ___ } = utente;\nconsole.log(livello);",
+      "options": [
+        {
+          "id": "a",
+          "text": "5"
+        },
+        {
+          "id": "b",
+          "text": "\"livello\""
+        },
+        {
+          "id": "c",
+          "text": "utente.livello"
+        },
+        {
+          "id": "d",
+          "text": "null"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Serve il valore di default nella sintassi: `{ livello = 5 }`.",
+        "whyCorrect": "Se `utente` non ha la proprietà `livello`, verrà usato il valore dopo `=`, cioè 5. Quindi `livello` sarà 5.",
+        "whyOthersWrong": {
+          "b": "Scrivere la stringa \"livello\" assegna la stringa stessa, non un numero né il valore della proprietà.",
+          "c": "Usando `utente.livello` si ottiene undefined, perché la proprietà non esiste sull'oggetto.",
+          "d": "`null` non è il valore di default richiesto; serve assegnare 5."
+        },
+        "concept": "Destructuring oggetti: valori di default",
+        "commonMistake": "Mettere il nome della proprietà o un'espressione invece del valore di default.",
+        "example": "const { a = 10 } = {}; // a = 10"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:07.895Z"
+    },
+    {
+      "id": "destructuring-fg-0016",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-arrays",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["array destructuring"],
+      "prompt": "Completa il destructuring per assegnare il primo elemento dell'array `numeri` a `primo` e il secondo a `secondo`.",
+      "code": "const numeri = [8, 9, 10];\nconst [___] = numeri;\nconsole.log(primo, secondo);",
+      "options": [
+        {
+          "id": "a",
+          "text": "primo, secondo"
+        },
+        {
+          "id": "b",
+          "text": "secondo, primo"
+        },
+        {
+          "id": "c",
+          "text": "[primo, secondo]"
+        },
+        {
+          "id": "d",
+          "text": "primo & secondo"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La sintassi corretta per il destructuring di due elementi è `[primo, secondo]`.",
+        "whyCorrect": "`[primo, secondo]` assegna il primo valore a `primo` e il secondo a `secondo`.",
+        "whyOthersWrong": {
+          "b": "Invertendo l'ordine, `secondo` riceverà 8 e `primo` il valore 9, scambiando i risultati desiderati.",
+          "c": "Le parentesi quadre interne non sono necessarie: serve solo separare i nomi delle variabili.",
+          "d": "L'operatore `&` non ha alcun significato nel destructuring degli array."
+        },
+        "concept": "Destructuring array: estrazione posizionale",
+        "commonMistake": "Invertire l'ordine delle variabili o usare una sintassi non valida.",
+        "example": "const [a, b] = [1, 2]; // a = 1, b = 2"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:07.896Z"
+    },
+    {
+      "id": "destructuring-fg-0017",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["estrazione proprietà oggetto", "rinomina variabili"],
+      "prompt": "Completa la dichiarazione per estrarre la proprietà 'titolo' dall'oggetto libro, assegnandola a una nuova variabile chiamata 'nomeLibro'.",
+      "code": "const libro = { titolo: \"Il Principito\", autore: \"Saint-Exupéry\" };\nconst { ___ } = libro;\nconsole.log(nomeLibro);",
+      "options": [
+        {
+          "id": "a",
+          "text": "titolo: nomeLibro"
+        },
+        {
+          "id": "b",
+          "text": "nomeLibro: titolo"
+        },
+        {
+          "id": "c",
+          "text": "titolo as nomeLibro"
+        },
+        {
+          "id": "d",
+          "text": "nomeLibro = titolo"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La sintassi corretta per rinominare una proprietà durante il destructuring è proprietà: nuovoNome.",
+        "whyCorrect": "Scrivendo 'titolo: nomeLibro' si estrae la proprietà 'titolo' dall'oggetto e la si assegna alla variabile 'nomeLibro', che poi sarà usata nel console.log.",
+        "whyOthersWrong": {
+          "b": "La sintassi 'nomeLibro: titolo' cerca una proprietà chiamata 'nomeLibro' nell'oggetto, che non esiste, e la assegna a una variabile 'titolo', quindi nomeLibro sarà undefined.",
+          "c": "'as' non è una parola chiave valida in questo contesto JavaScript; questa sintassi non è supportata nel destructuring.",
+          "d": "L'uguale '=' non è usato per la rinomina nel destructuring. Qui verrebbe interpretato come un valore di default, non una rinomina della variabile."
+        },
+        "concept": "rinomina proprietà oggetto",
+        "commonMistake": "Invertire la sintassi di rinomina ({ nuovo: vecchio }) o usare parole chiave sbagliate.",
+        "example": "const { x: y } = { x: 10 }; // y = 10"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:11.565Z"
+    }
+  ]
+}

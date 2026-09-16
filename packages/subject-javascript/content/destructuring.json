@@ -1,0 +1,997 @@
+{
+  "topicId": "destructuring",
+  "questions": [
+    {
+      "id": "destructuring-fb-0006",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "destructuring oggetti",
+        "parametri funzione"
+      ],
+      "prompt": "La funzione accetta un oggetto opzioni e dovrebbe estrarre livello con default 1, ma lancia TypeError se si chiama senza argomenti.",
+      "code": "function imposta({ livello = 1 }) {\n  console.log(livello);\n}\nimposta();",
+      "options": [
+        {
+          "id": "a",
+          "text": "Serve un default per tutto il parametro"
+        },
+        {
+          "id": "b",
+          "text": "Livello deve essere passato sempre"
+        },
+        {
+          "id": "c",
+          "text": "La destructuring va fatta dentro la funzione"
+        },
+        {
+          "id": "d",
+          "text": "La funzione deve restituire livello"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Destrutturare undefined causa TypeError: serve un default.",
+        "whyCorrect": "Quando si destruttura direttamente un parametro, bisogna dargli un default come `{ livello = 1 } = {}` per gestire il caso senza argomenti.",
+        "whyOthersWrong": {
+          "b": "Non è obbligatorio passare sempre livello: un valore di default nel destructuring permette di non specificarlo.",
+          "c": "La destructuring nei parametri funzione è corretta ed è una pratica comune.",
+          "d": "Restituire livello non risolve il problema del TypeError, che nasce dalla destrutturazione di undefined."
+        },
+        "concept": "Default nel destructuring parametri funzione",
+        "commonMistake": "Dimenticare di fornire un oggetto vuoto come default per destrutturare parametri opzionali.",
+        "example": "function f({ x = 1 } = {}) { ... }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:28:19.779Z"
+    },
+    {
+      "id": "destructuring-fb-0007",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "destructuring oggetti",
+        "rinominare proprietà",
+        "default in destructuring"
+      ],
+      "prompt": "Il codice vuole estrarre la proprietà `età` dall'oggetto `persona`, assegnarla a una variabile `anni`, e se non c'è, usare il default 18. Tuttavia, il risultato non è quello voluto: stampando, ottiene undefined invece di 18. Dov'è l'errore?",
+      "code": "const persona = {};\nconst { anni: età = 18 } = persona;\nconsole.log(età);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Rinominato nella direzione sbagliata: 'anni: età'"
+        },
+        {
+          "id": "b",
+          "text": "Default applicato solo se tutta la variabile manca"
+        },
+        {
+          "id": "c",
+          "text": "Serve usare [età] per estrarre la proprietà"
+        },
+        {
+          "id": "d",
+          "text": "La sintassi va usata solo nei parametri di funzione"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La sintassi di rinomina va da proprietà originale a nuovo nome: andava scritto { età: anni = 18 }.",
+        "whyCorrect": "La sintassi di destructuring per rinominare è { proprietà: variabile }, quindi per assegnare il valore di età a anni scriveremmo { età: anni = 18 }. Nel codice, 'anni: età' cerca una proprietà 'anni' che non esiste.",
+        "whyOthersWrong": {
+          "b": "Il default viene applicato quando la proprietà manca o vale undefined, non quando manca la variabile creata.",
+          "c": "I nomi tra parentesi quadre servono per gli array, non per gli oggetti: qui va usata la sintassi con parentesi graffe.",
+          "d": "Il destructuring è valido sia nelle dichiarazioni che nei parametri di funzione; non c'è questa limitazione."
+        },
+        "concept": "Rinominare proprietà in destructuring oggetti",
+        "commonMistake": "Invertire l'ordine proprietà:variabile nella rinomina.",
+        "example": "const { età: anni = 18 } = {};\nconsole.log(anni); // 18"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:28:28.646Z"
+    },
+    {
+      "id": "destructuring-fg-0001",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "estrarre proprietà da oggetto"
+      ],
+      "prompt": "Completa il destructuring per ottenere la proprietà 'età' dall'oggetto.",
+      "code": "const persona = { nome: 'Leo', età: 25 };\nconst { ___ } = persona;\nconsole.log(età);",
+      "options": [
+        {
+          "id": "a",
+          "text": "età"
+        },
+        {
+          "id": "b",
+          "text": "[età]"
+        },
+        {
+          "id": "c",
+          "text": "persona.età"
+        },
+        {
+          "id": "d",
+          "text": "età: persona"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Con il destructuring si usano le parentesi graffe e il nome della proprietà.",
+        "whyCorrect": "La sintassi corretta per estrarre la proprietà 'età' è { età }, che crea una variabile con lo stesso nome.",
+        "whyOthersWrong": {
+          "b": "Le parentesi quadre vengono usate solo per destrutturare array, non oggetti. Qui servono le graffe.",
+          "c": "Scrivere persona.età è la notazione per accedere direttamente, ma nel destructuring si usa solo il nome della proprietà.",
+          "d": "La sintassi età: persona tenta di rinominare, ma qui si vuole solo estrarre 'età'; la variabile si chiamerebbe persona, non ha senso."
+        },
+        "concept": "Destructuring oggetti base",
+        "commonMistake": "Usare la sintassi degli array o notazione proprietà.",
+        "example": "const { nome } = { nome: 'Ada' };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:28:16.672Z"
+    },
+    {
+      "id": "destructuring-fg-0002",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-arrays",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "rest operator",
+        "destructuring array"
+      ],
+      "prompt": "Completa per mettere il primo elemento in uno e i restanti in altri.",
+      "code": "const lettere = [\"a\", \"b\", \"c\"];\nconst [ uno, ___ ] = lettere;",
+      "options": [
+        {
+          "id": "a",
+          "text": "...altri"
+        },
+        {
+          "id": "b",
+          "text": "altri"
+        },
+        {
+          "id": "c",
+          "text": "[ ...altri ]"
+        },
+        {
+          "id": "d",
+          "text": "{ ...altri }"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Per raccogliere gli elementi restanti si usa ...nome.",
+        "whyCorrect": "La sintassi ...altri raccoglie gli elementi dopo il primo in un array chiamato altri.",
+        "whyOthersWrong": {
+          "b": "altri senza ... raccoglierebbe solo il secondo elemento, non tutti i restanti.",
+          "c": "[ ...altri ] non è corretto: le parentesi quadre qui sarebbero annidate inutilmente.",
+          "d": "{ ...altri } è sintassi di oggetti, non di array: ... si può usare solo in array qui."
+        },
+        "concept": "Rest operator nel destructuring array",
+        "commonMistake": "Dimenticare i ... o usarli nella sintassi degli oggetti.",
+        "example": "const [ primo, ...resto ] = arr;"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:28:31.189Z"
+    },
+    {
+      "id": "destructuring-fg-0003",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "default proprietà oggetto",
+        "destructuring base"
+      ],
+      "prompt": "Completa per assegnare 5 a 'valore' se la proprietà valore non è presente nell'oggetto dati.",
+      "code": "const dati = {};\nconst { valore = ___ } = dati;\nconsole.log(valore);",
+      "options": [
+        {
+          "id": "a",
+          "text": "5"
+        },
+        {
+          "id": "b",
+          "text": "\"valore\""
+        },
+        {
+          "id": "c",
+          "text": "undefined"
+        },
+        {
+          "id": "d",
+          "text": "default"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Per assegnare un default nel destructuring, si usa il valore desiderato dopo il segno =.",
+        "whyCorrect": "Scrivendo 5 dopo il segno = si assegna a valore questo valore quando la proprietà manca.",
+        "whyOthersWrong": {
+          "b": "La stringa \"valore\" non è il valore numerico di default richiesto.",
+          "c": "undefined è già il valore predefinito quando la proprietà manca; bisogna impostare un valore concreto.",
+          "d": "default non è una parola chiave valida nella sintassi di default del destructuring."
+        },
+        "concept": "Valori di default nel destructuring oggetti",
+        "commonMistake": "Confondere il default con la stringa della proprietà o con parole chiave inesistenti.",
+        "example": "const { a = 1 } = {};"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:28:42.779Z"
+    },
+    {
+      "id": "destructuring-po-0011",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "rinominare proprietà",
+        "default nel destructuring",
+        "lettura di oggetti"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const dati = { x: 7 };\nconst { x: y = 10, z = 3 } = dati;\nconsole.log(y);\nconsole.log(z);",
+      "options": [
+        {
+          "id": "a",
+          "text": "7\n3"
+        },
+        {
+          "id": "b",
+          "text": "10\nundefined"
+        },
+        {
+          "id": "c",
+          "text": "7\nundefined"
+        },
+        {
+          "id": "d",
+          "text": "undefined\n3"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La variabile y prende valore 7 dalla proprietà x, mentre z prende il default 3.",
+        "whyCorrect": "Nel destructuring, `x: y = 10` significa che y prende il valore di x; dato che x c'è ed è 7, y vale 7. La proprietà z non esiste, quindi usa il default e z vale 3.",
+        "whyOthersWrong": {
+          "b": "z ha un valore di default specificato (3), quindi non può essere undefined.",
+          "c": "Il default su z assicura che abbia sempre un valore, e y prende il 7 dalla proprietà x.",
+          "d": "La proprietà x è presente, quindi y non è undefined, e z prende il default 3."
+        },
+        "concept": "Destructuring oggetti con rinomina e default",
+        "commonMistake": "Confondere l'ordine della rinomina o pensare che il default si applichi anche se la proprietà esiste.",
+        "example": "const { a: nuovo = 1 } = { a: 5 }; // nuovo = 5"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:16.101Z"
+    },
+    {
+      "id": "destructuring-po-0012",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-arrays",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "assegnamento per posizione",
+        "default di elemento mancante"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const arr = [1];\nconst [primo, secondo = 42, terzo = 99] = arr;\nconsole.log(primo);\nconsole.log(secondo);\nconsole.log(terzo);",
+      "options": [
+        {
+          "id": "a",
+          "text": "1\n42\n99"
+        },
+        {
+          "id": "b",
+          "text": "1\nundefined\nundefined"
+        },
+        {
+          "id": "c",
+          "text": "1\nundefined\n99"
+        },
+        {
+          "id": "d",
+          "text": "1\n42\nundefined"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Manca il secondo e terzo elemento, quindi i default vengono usati.",
+        "whyCorrect": "L'array ha solo un elemento, quindi secondo e terzo non sono definiti; entrambi prendono il valore di default specificato nel destructuring.",
+        "whyOthersWrong": {
+          "b": "Il default viene usato quando manca un elemento, quindi secondo e terzo non possono essere undefined.",
+          "c": "Solo il secondo elemento manca, ma anche il terzo manca, quindi anche terzo prende il default.",
+          "d": "Il terzo elemento manca e ha un default, quindi non può essere undefined."
+        },
+        "concept": "Destructuring array con valori di default",
+        "commonMistake": "Pensare che i default valgano solo per il primo elemento mancante.",
+        "example": "const [a, b = 2] = [1]; // a = 1, b = 2"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:16.102Z"
+    },
+    {
+      "id": "destructuring-po-0013",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "destructuring parametri funzione",
+        "default nei parametri"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "function saluta({ nome = 'Mario', saluto = 'Ciao' }) {\n  console.log(saluto + ', ' + nome);\n}\nsaluta({ nome: 'Luisa' });",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ciao, Luisa"
+        },
+        {
+          "id": "b",
+          "text": "undefined, Luisa"
+        },
+        {
+          "id": "c",
+          "text": "Ciao, Mario"
+        },
+        {
+          "id": "d",
+          "text": "undefined, Mario"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La funzione usa 'Luisa' e il default 'Ciao' per saluto.",
+        "whyCorrect": "L'oggetto passato ha solo la proprietà nome, quindi saluto prende il valore di default 'Ciao' e nome prende 'Luisa'.",
+        "whyOthersWrong": {
+          "b": "Il valore di default per saluto è 'Ciao', quindi non può essere undefined.",
+          "c": "La proprietà nome è fornita ('Luisa'), quindi il default 'Mario' non viene usato.",
+          "d": "Sia nome che saluto hanno default, ma almeno uno viene fornito nell'oggetto, quindi non sono undefined."
+        },
+        "concept": "Default nel destructuring nei parametri funzione",
+        "commonMistake": "Pensare che i default non si applichino se la proprietà manca solo nell'oggetto passato.",
+        "example": "function f({x = 1}) { console.log(x); } f({}); // 1"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:16.103Z"
+    },
+    {
+      "id": "destructuring-po-0014",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-arrays",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "rest operator",
+        "destructuring array"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const numeri = [4, 5, 6, 7];\nconst [primo, ...altri] = numeri;\nconsole.log(primo);\nconsole.log(altri);",
+      "options": [
+        {
+          "id": "a",
+          "text": "4\n[ 5, 6, 7 ]"
+        },
+        {
+          "id": "b",
+          "text": "4\n5"
+        },
+        {
+          "id": "c",
+          "text": "4\n[ 4, 5, 6, 7 ]"
+        },
+        {
+          "id": "d",
+          "text": "4\nundefined"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il rest operator prende tutti gli elementi dopo il primo.",
+        "whyCorrect": "Il primo elemento va in primo, il resto dell'array viene raccolto nell'array altri tramite il rest operator.",
+        "whyOthersWrong": {
+          "b": "Il rest operator raccoglie in un array, non un singolo valore.",
+          "c": "Il rest operator prende solo gli elementi successivi, non tutto l'array.",
+          "d": "Il rest operator crea sempre un array, anche se vuoto, non undefined."
+        },
+        "concept": "Rest operator nel destructuring array",
+        "commonMistake": "Pensare che il rest operator prenda solo il prossimo elemento o tutto l'array.",
+        "example": "const [a, ...b] = [1,2,3]; // a=1, b=[2,3]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:16.103Z"
+    },
+    {
+      "id": "destructuring-po-0015",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-arrays",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "salto di elementi",
+        "assegnamento posizionale"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const valori = [10, 20, 30, 40];\nconst [ , secondo, , quarto ] = valori;\nconsole.log(secondo);\nconsole.log(quarto);",
+      "options": [
+        {
+          "id": "a",
+          "text": "20\n40"
+        },
+        {
+          "id": "b",
+          "text": "20\n30"
+        },
+        {
+          "id": "c",
+          "text": "10\n40"
+        },
+        {
+          "id": "d",
+          "text": "10\n30"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Gli elementi saltati vengono ignorati, secondo e quarto prendono la posizione.",
+        "whyCorrect": "Il primo e il terzo elemento sono saltati: secondo prende il secondo valore (20) e quarto prende il quarto valore (40).",
+        "whyOthersWrong": {
+          "b": "Il terzo elemento (30) non viene assegnato a quarto, ma il quarto (40).",
+          "c": "Il secondo prende il secondo valore, non il primo; quarto prende il quarto.",
+          "d": "Né il secondo né il quarto valore corrispondono a queste posizioni."
+        },
+        "concept": "Destructuring array saltando elementi",
+        "commonMistake": "Dimenticare che le virgole vuote saltano la posizione corrispondente.",
+        "example": "const [ , b, , d ] = [1,2,3,4]; // b=2, d=4"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:16.103Z"
+    },
+    {
+      "id": "destructuring-po-0016",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "destructuring oggetti",
+        "rinomina",
+        "valori di default"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const animale = { specie: 'gatto', zampe: 4 };\nconst { specie: tipo, colore = 'nero' } = animale;\nconsole.log(tipo);\nconsole.log(colore);",
+      "options": [
+        {
+          "id": "a",
+          "text": "gatto\nnero"
+        },
+        {
+          "id": "b",
+          "text": "specie\nnero"
+        },
+        {
+          "id": "c",
+          "text": "gatto\nundefined"
+        },
+        {
+          "id": "d",
+          "text": "tipo\nnero"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La proprietà specie viene rinominata in tipo, colore prende il default.",
+        "whyCorrect": "La proprietà specie dell'oggetto viene estratta e rinominata in tipo, quindi tipo vale 'gatto'. Colore non esiste nell'oggetto, quindi riceve il valore di default 'nero'.",
+        "whyOthersWrong": {
+          "b": "La variabile tipo contiene il valore di specie ('gatto'), non il nome della proprietà ('specie').",
+          "c": "Colore non viene lasciata undefined: non trovandola nell'oggetto prende il valore di default specificato, cioè 'nero'.",
+          "d": "Console.log stampa i valori delle variabili, non i loro nomi; tipo vale 'gatto', non 'tipo'."
+        },
+        "concept": "Destructuring oggetti con rinomina e default",
+        "commonMistake": "Confondere il nome della proprietà con quello della variabile di destinazione o trascurare il default.",
+        "example": "const { a: nuovoNome = 42 } = {}; // nuovoNome = 42"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:22.808Z"
+    },
+    {
+      "id": "destructuring-po-0017",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-arrays",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "destructuring",
+        "default values",
+        "array manipulation"
+      ],
+      "prompt": "Cosa stampa questo codice che usa il destructuring di array con valori di default e rest?",
+      "code": "const arr = [undefined, 3, 5];\nconst [a = 1, b = 2, ...rest] = arr;\nconsole.log(a);\nconsole.log(b);\nconsole.log(rest);",
+      "options": [
+        {
+          "id": "a",
+          "text": "1\n3\n[ 5 ]"
+        },
+        {
+          "id": "b",
+          "text": "undefined\n3\n[ 5 ]"
+        },
+        {
+          "id": "c",
+          "text": "1\n2\n[ 3, 5 ]"
+        },
+        {
+          "id": "d",
+          "text": "undefined\n2\n[ 5 ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il valore undefined attiva il default per 'a', mentre 'b' prende il secondo elemento. Il rest raccoglie il restante.",
+        "whyCorrect": "'a' assume il valore 1 perché nella posizione 0 di arr c'è undefined e quindi scatta il valore di default. 'b' prende 3, il valore alla posizione 1. Il rest operator raccoglie il valore rimanente (5) in un array.",
+        "whyOthersWrong": {
+          "b": "Se il primo elemento fosse undefined senza default, avremmo undefined, ma qui 'a = 1' fornisce il valore di default.",
+          "c": "'b' prende il secondo elemento dell'array, cioè 3, non il valore di default 2. Il rest parte dalla terza posizione, quindi raccoglie solo 5, non 3 e 5.",
+          "d": "'a' avrebbe undefined solo senza valore di default, ma qui il default è 1. 'b' prende comunque 3, non 2, e il rest parte dalla terza posizione."
+        },
+        "concept": "Destructuring di array: default e rest",
+        "commonMistake": "Credere che undefined non attivi il valore di default, o che rest prenda più elementi di quanti ne restino.",
+        "example": "const [a = 1, b = 2, ...rest] = [undefined, 3, 5];"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:27.758Z"
+    },
+    {
+      "id": "destructuring-fg-0013",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-arrays",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "array destructuring"
+      ],
+      "prompt": "Completa il destructuring per estrarre il secondo elemento dell'array `colori` in una variabile chiamata `secondo`.",
+      "code": "const colori = [\"rosso\", \"verde\", \"blu\"];\nconst [___] = colori;\nconsole.log(secondo);",
+      "options": [
+        {
+          "id": "a",
+          "text": ", secondo"
+        },
+        {
+          "id": "b",
+          "text": "secondo"
+        },
+        {
+          "id": "c",
+          "text": "secondo,"
+        },
+        {
+          "id": "d",
+          "text": "[secondo]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Per estrarre il secondo elemento si scrive una virgola prima della variabile: `[ , secondo ]`.",
+        "whyCorrect": "La virgola salta il primo elemento, quindi il secondo valore dell'array va nella variabile `secondo`. La sintassi `[ , secondo ] = colori` assegna `\"verde\"` a `secondo`.",
+        "whyOthersWrong": {
+          "b": "Scrivendo solo `secondo` senza la virgola, si assegna il primo elemento, non il secondo, quindi `secondo` sarebbe \"rosso\".",
+          "c": "Mettendo la virgola dopo `secondo`, JavaScript cerca un terzo elemento e `secondo` riceve il primo valore, non il secondo.",
+          "d": "Usare `[secondo]` crea una variabile chiamata `secondo`, ma assegna comunque solo il primo elemento, non il secondo."
+        },
+        "concept": "Destructuring di array: salto di elementi",
+        "commonMistake": "Dimenticare la virgola per saltare elementi nell'array.",
+        "example": "const [ , secondo ] = [1, 2, 3]; // secondo = 2"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:07.893Z"
+    },
+    {
+      "id": "destructuring-fg-0014",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "object destructuring",
+        "property renaming"
+      ],
+      "prompt": "Completa il destructuring per estrarre la proprietà `nome` dall'oggetto `persona` e assegnarla a una variabile chiamata `n`.",
+      "code": "const persona = { nome: \"Luca\", età: 22 };\nconst { ___ } = persona;\nconsole.log(n);",
+      "options": [
+        {
+          "id": "a",
+          "text": "nome: n"
+        },
+        {
+          "id": "b",
+          "text": "n: nome"
+        },
+        {
+          "id": "c",
+          "text": "nome as n"
+        },
+        {
+          "id": "d",
+          "text": "nome = n"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La sintassi per rinominare è `{ originale: nuovoNome }`, quindi `{ nome: n }`.",
+        "whyCorrect": "Per estrarre la proprietà `nome` in una variabile chiamata `n`, si usa `{ nome: n }`. Così, `persona.nome` viene assegnato a `n`.",
+        "whyOthersWrong": {
+          "b": "Invertire l'ordine (`n: nome`) cerca una proprietà `n` e la mette in `nome`, che non è l'obiettivo né la sintassi corretta.",
+          "c": "La sintassi `as` non esiste in JavaScript per il destructuring; è tipica di altri linguaggi come TypeScript.",
+          "d": "L'uguale (`=`) serve solo per assegnare valori di default, non per rinominare variabili."
+        },
+        "concept": "Destructuring oggetti: rinomina proprietà",
+        "commonMistake": "Invertire l'ordine nella rinomina, usando `{ nuovoNome: originale }`.",
+        "example": "const { x: y } = { x: 1 }; // y = 1"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:07.895Z"
+    },
+    {
+      "id": "destructuring-fg-0015",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "object destructuring",
+        "default values"
+      ],
+      "prompt": "Completa il destructuring per estrarre la proprietà `livello` dall'oggetto `utente`, usando 5 come valore di default se non è presente.",
+      "code": "const utente = { nome: \"Paola\" };\nconst { livello = ___ } = utente;\nconsole.log(livello);",
+      "options": [
+        {
+          "id": "a",
+          "text": "5"
+        },
+        {
+          "id": "b",
+          "text": "\"livello\""
+        },
+        {
+          "id": "c",
+          "text": "utente.livello"
+        },
+        {
+          "id": "d",
+          "text": "null"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Serve il valore di default nella sintassi: `{ livello = 5 }`.",
+        "whyCorrect": "Se `utente` non ha la proprietà `livello`, verrà usato il valore dopo `=`, cioè 5. Quindi `livello` sarà 5.",
+        "whyOthersWrong": {
+          "b": "Scrivere la stringa \"livello\" assegna la stringa stessa, non un numero né il valore della proprietà.",
+          "c": "Usando `utente.livello` si ottiene undefined, perché la proprietà non esiste sull'oggetto.",
+          "d": "`null` non è il valore di default richiesto; serve assegnare 5."
+        },
+        "concept": "Destructuring oggetti: valori di default",
+        "commonMistake": "Mettere il nome della proprietà o un'espressione invece del valore di default.",
+        "example": "const { a = 10 } = {}; // a = 10"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:07.895Z"
+    },
+    {
+      "id": "destructuring-fg-0016",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-arrays",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "array destructuring"
+      ],
+      "prompt": "Completa il destructuring per assegnare il primo elemento dell'array `numeri` a `primo` e il secondo a `secondo`.",
+      "code": "const numeri = [8, 9, 10];\nconst [___] = numeri;\nconsole.log(primo, secondo);",
+      "options": [
+        {
+          "id": "a",
+          "text": "primo, secondo"
+        },
+        {
+          "id": "b",
+          "text": "secondo, primo"
+        },
+        {
+          "id": "c",
+          "text": "[primo, secondo]"
+        },
+        {
+          "id": "d",
+          "text": "primo & secondo"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La sintassi corretta per il destructuring di due elementi è `[primo, secondo]`.",
+        "whyCorrect": "`[primo, secondo]` assegna il primo valore a `primo` e il secondo a `secondo`.",
+        "whyOthersWrong": {
+          "b": "Invertendo l'ordine, `secondo` riceverà 8 e `primo` il valore 9, scambiando i risultati desiderati.",
+          "c": "Le parentesi quadre interne non sono necessarie: serve solo separare i nomi delle variabili.",
+          "d": "L'operatore `&` non ha alcun significato nel destructuring degli array."
+        },
+        "concept": "Destructuring array: estrazione posizionale",
+        "commonMistake": "Invertire l'ordine delle variabili o usare una sintassi non valida.",
+        "example": "const [a, b] = [1, 2]; // a = 1, b = 2"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:07.896Z"
+    },
+    {
+      "id": "destructuring-fg-0017",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "estrazione proprietà oggetto",
+        "rinomina variabili"
+      ],
+      "prompt": "Completa la dichiarazione per estrarre la proprietà 'titolo' dall'oggetto libro, assegnandola a una nuova variabile chiamata 'nomeLibro'.",
+      "code": "const libro = { titolo: \"Il Principito\", autore: \"Saint-Exupéry\" };\nconst { ___ } = libro;\nconsole.log(nomeLibro);",
+      "options": [
+        {
+          "id": "a",
+          "text": "titolo: nomeLibro"
+        },
+        {
+          "id": "b",
+          "text": "nomeLibro: titolo"
+        },
+        {
+          "id": "c",
+          "text": "titolo as nomeLibro"
+        },
+        {
+          "id": "d",
+          "text": "nomeLibro = titolo"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La sintassi corretta per rinominare una proprietà durante il destructuring è proprietà: nuovoNome.",
+        "whyCorrect": "Scrivendo 'titolo: nomeLibro' si estrae la proprietà 'titolo' dall'oggetto e la si assegna alla variabile 'nomeLibro', che poi sarà usata nel console.log.",
+        "whyOthersWrong": {
+          "b": "La sintassi 'nomeLibro: titolo' cerca una proprietà chiamata 'nomeLibro' nell'oggetto, che non esiste, e la assegna a una variabile 'titolo', quindi nomeLibro sarà undefined.",
+          "c": "'as' non è una parola chiave valida in questo contesto JavaScript; questa sintassi non è supportata nel destructuring.",
+          "d": "L'uguale '=' non è usato per la rinomina nel destructuring. Qui verrebbe interpretato come un valore di default, non una rinomina della variabile."
+        },
+        "concept": "rinomina proprietà oggetto",
+        "commonMistake": "Invertire la sintassi di rinomina ({ nuovo: vecchio }) o usare parole chiave sbagliate.",
+        "example": "const { x: y } = { x: 10 }; // y = 10"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:11.565Z"
+    },
+    {
+      "id": "destructuring-fb-0015",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "destructuring",
+        "oggetti",
+        "valori di default"
+      ],
+      "prompt": "La funzione `saluta` dovrebbe estrarre il campo `nome` dall'oggetto `persona`, e se il campo manca, usare il default 'Anonimo'. Tuttavia, chiamando `saluta({})`, ottiene `undefined` invece di 'Anonimo'. Qual è il problema?",
+      "code": "function saluta(persona) {\n  const { nome } = persona || { nome: 'Anonimo' };\n  console.log(nome);\n}\nsaluta({});",
+      "options": [
+        {
+          "id": "a",
+          "text": "Il default non si applica quando la proprietà esiste"
+        },
+        {
+          "id": "b",
+          "text": "Il valore di default va impostato nel destructuring"
+        },
+        {
+          "id": "c",
+          "text": "Serve l'operatore && anziché ||"
+        },
+        {
+          "id": "d",
+          "text": "Deve usare un array invece di un oggetto"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": {
+        "short": "Il default va messo nel destructuring, come `{ nome = 'Anonimo' }`.",
+        "whyCorrect": "L'oggetto passato non è undefined o null, quindi l'operatore || non scatta: solo il default nel destructuring copre il caso di proprietà mancante.",
+        "whyOthersWrong": {
+          "a": "Il default si applica solo se la proprietà manca o è undefined: in questo caso manca, ma non è stato specificato un valore di default nel destructuring.",
+          "c": "L'operatore && non aiuterebbe: non serve una condizione logica, ma specificare un valore di default per la proprietà assente.",
+          "d": "Qui serve destrutturare un oggetto, non un array. La struttura dati non è il problema."
+        },
+        "concept": "Valore di default nelle proprietà oggetto",
+        "commonMistake": "Mettere il default fuori dal destructuring invece che nella variabile.",
+        "example": "const { nome = 'Anonimo' } = persona;"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:20.747Z"
+    },
+    {
+      "id": "destructuring-fb-0016",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "destructuring",
+        "parametri funzione",
+        "oggetti"
+      ],
+      "prompt": "La funzione `sommaProprieta` dovrebbe ricevere un oggetto con proprietà `a` e `b` e restituire la loro somma. Se una proprietà manca dovrebbe usare 0 come default. Tuttavia, chiamando con `{ a: 5 }`, genera `NaN`. Cosa non va?",
+      "code": "function sommaProprieta({ a, b }) {\n  return a + b;\n}\nconsole.log(sommaProprieta({ a: 5 }));",
+      "options": [
+        {
+          "id": "a",
+          "text": "I default non sono specificati nel destructuring"
+        },
+        {
+          "id": "b",
+          "text": "Serve il destructuring dentro il corpo della funzione"
+        },
+        {
+          "id": "c",
+          "text": "Ha dimenticato il rest operator nel destructuring"
+        },
+        {
+          "id": "d",
+          "text": "Non si possono sommare proprietà mancanti"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "I default vanno messi direttamente nei parametri destrutturati: `{ a = 0, b = 0 }`.",
+        "whyCorrect": "Se una proprietà manca, il valore sarà undefined, e `5 + undefined` dà NaN. Serve assegnare 0 come default nel destructuring.",
+        "whyOthersWrong": {
+          "b": "Non è necessario spostare il destructuring dentro il corpo: si può (anzi, spesso si deve) usare nel parametro.",
+          "c": "Il rest operator serve solo per raccogliere il resto delle proprietà, non per default.",
+          "d": "Si possono sommare proprietà mancanti se si fornisce un valore di default nel destructuring."
+        },
+        "concept": "Default nei parametri destrutturati",
+        "commonMistake": "Dimenticare il default nei parametri: proprietà undefined causano NaN.",
+        "example": "function sommaProprieta({ a = 0, b = 0 }) { ... }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:20.748Z"
+    },
+    {
+      "id": "destructuring-fb-0018",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-arrays",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "destructuring",
+        "array destructuring",
+        "rest operator"
+      ],
+      "prompt": "Il codice vuole estrarre il primo elemento di un array in una variabile chiamata `primo` e il resto degli elementi in una variabile `resto`, poi stamparli. Tuttavia, il risultato non è quello voluto: `resto` non contiene gli altri elementi ma invece il secondo. Dov'è il problema?",
+      "code": "const numeri = [4, 5, 6, 7];\nconst [primo, resto] = numeri;\nconsole.log(primo);\nconsole.log(resto);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Manca l'operatore ... prima di resto nel destructuring"
+        },
+        {
+          "id": "b",
+          "text": "Serve usare {} invece di [] per estrarre resto"
+        },
+        {
+          "id": "c",
+          "text": "Bisogna scrivere resto, primo per invertire l'ordine"
+        },
+        {
+          "id": "d",
+          "text": "Il destructuring non funziona con array di numeri"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Senza l'operatore ... la variabile `resto` prende solo il secondo elemento, non tutti gli altri.",
+        "whyCorrect": "Per ottenere tutti gli elementi rimanenti nel destructuring di array bisogna usare l'operatore rest (`...resto`). Senza di esso, la seconda variabile riceve solo il secondo elemento.",
+        "whyOthersWrong": {
+          "b": "Usare le parentesi graffe ({}) serve per il destructuring di oggetti, non di array: con gli array si devono usare sempre le parentesi quadre ([]) e l'operatore ... per rest.",
+          "c": "Invertire l'ordine delle variabili non cambia il fatto che senza ..., la seconda prende solo il secondo elemento, non tutti gli altri. L'ordine nel destructuring corrisponde alla posizione degli elementi.",
+          "d": "Il destructuring di array funziona perfettamente anche con array di numeri; il tipo degli elementi non influisce sulla sintassi di destructuring."
+        },
+        "concept": "Rest operator nel destructuring di array",
+        "commonMistake": "Dimenticare l'operatore ... davanti alla variabile rest e aspettarsi comunque un array con tutti gli elementi restanti.",
+        "example": "const [primo, ...resto] = numeri;"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:31.044Z"
+    },
+    {
+      "id": "destructuring-fb-0019",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "destructuring oggetti",
+        "rinomina",
+        "valori di default"
+      ],
+      "prompt": "Il codice vuole estrarre la proprietà `codice` da un oggetto `prodotto`, assegnarla a una variabile `idProdotto` e usare 'N/A' come default se la proprietà manca. Tuttavia, stampando `idProdotto` quando `prodotto` non ha la proprietà `codice`, viene `undefined` invece di 'N/A'. Qual è il problema?",
+      "code": "const prodotto = {}; \nconst { idProdotto: codice = 'N/A' } = prodotto;\nconsole.log(codice);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ha invertito nome originale e rinominato"
+        },
+        {
+          "id": "b",
+          "text": "Ha usato = nel posto sbagliato"
+        },
+        {
+          "id": "c",
+          "text": "Serve la sintassi [] anziché {}"
+        },
+        {
+          "id": "d",
+          "text": "Manca una virgola tra le proprietà"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Chi ha invertito ordine in `{ idProdotto: codice }` non ottiene né la rinomina né il default: bisogna scrivere `{ codice: idProdotto = 'N/A' }`.",
+        "whyCorrect": "Il destructuring oggetti usa la sintassi `{ originale: nuovoNome = default }`. Qui ha scritto `{ idProdotto: codice = 'N/A' }`, ma `idProdotto` non è una proprietà dell'oggetto, quindi `codice` riceve undefined. Bisogna scrivere `{ codice: idProdotto = 'N/A' }`.",
+        "whyOthersWrong": {
+          "b": "Il problema non è la posizione del `=`, ma l'ordine tra nome originale e rinominato: il default è scritto nel punto giusto.",
+          "c": "La sintassi con le parentesi quadre `[]` serve per destrutturare array, non oggetti: qui serve proprio `{}`.",
+          "d": "Non manca una virgola: c'è una sola proprietà nel destructuring, quindi la sintassi è formalmente corretta."
+        },
+        "concept": "Destructuring oggetti con rinomina e default",
+        "commonMistake": "Invertire nome originale e nuovo nome nella sintassi `{ originale: nuovoNome }`.",
+        "example": "const { a: b = 1 } = {}; // b = 1"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:58:48.935Z"
+    }
+  ]
+}

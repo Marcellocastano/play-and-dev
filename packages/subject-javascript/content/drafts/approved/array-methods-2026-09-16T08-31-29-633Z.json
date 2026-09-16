@@ -1,0 +1,225 @@
+{
+  "topicId": "array-methods",
+  "questions": [
+    {
+      "id": "array-methods-fg-0002",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["usare map"],
+      "prompt": "Completa la callback per ottenere un array di stringhe 'valore: X'.",
+      "code": "const valori = [5, 6];\nconst stringhe = valori.map(v => ___ );\nconsole.log(stringhe);",
+      "options": [
+        {
+          "id": "a",
+          "text": "`valore: ${v}`"
+        },
+        {
+          "id": "b",
+          "text": "'valore: v'"
+        },
+        {
+          "id": "c",
+          "text": "'valore:' + valori"
+        },
+        {
+          "id": "d",
+          "text": "v + ' : valore'"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le stringhe dinamiche si creano con il template literal `${v}`.",
+        "whyCorrect": "L'espressione `valore: ${v}` inserisce il valore attuale nella stringa come richiesto.",
+        "whyOthersWrong": {
+          "b": "Le virgolette singole racchiudono solo il testo letterale, quindi v non viene interpolato.",
+          "c": "valori rappresenta l'intero array, non il singolo elemento v, e la sintassi non è richiesta.",
+          "d": "L'ordine è sbagliato: la stringa risultante sarebbe '5 : valore' invece di 'valore: 5'."
+        },
+        "concept": "map: template literal",
+        "commonMistake": "Dimenticare l'interpolazione per inserire variabili nelle stringhe.",
+        "example": "[1, 2].map(x => `valore: ${x}`)"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:17.747Z"
+    },
+    {
+      "id": "array-methods-fg-0003",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["usare find"],
+      "prompt": "Completa la funzione per ottenere il primo nome con più di 4 lettere.",
+      "code": "const nomi = [\"Ana\", \"Marco\", \"Lisa\"];\nconst risultato = nomi.find(nome => ___ );\nconsole.log(risultato);",
+      "options": [
+        {
+          "id": "a",
+          "text": "nome.length > 4"
+        },
+        {
+          "id": "b",
+          "text": "nome.length >= 4"
+        },
+        {
+          "id": "c",
+          "text": "nome.length == 4"
+        },
+        {
+          "id": "d",
+          "text": "nome.length < 4"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "find restituisce il primo elemento che rispetta la condizione.",
+        "whyCorrect": "nome.length > 4 trova il primo nome con più di 4 lettere, ovvero 'Marco'.",
+        "whyOthersWrong": {
+          "b": "nome.length >= 4 includerebbe anche 'Lisa', che però non ha più di 4 lettere.",
+          "c": "nome.length == 4 trova solo 'Lisa', non nomi più lunghi di 4 lettere.",
+          "d": "nome.length < 4 trova solo 'Ana', che non soddisfa il criterio richiesto."
+        },
+        "concept": "find: prima corrispondenza",
+        "commonMistake": "Usare >= al posto di > o confondere find con filter.",
+        "example": "[\"Ada\", \"Marco\", \"Lisa\"].find(n => n.length > 4)"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:17.748Z"
+    },
+    {
+      "id": "array-methods-fg-0005",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["filtrare array", "usare filter"],
+      "prompt": "Completa la callback per ottenere solo i numeri maggiori di 5.",
+      "code": "const numeri = [2, 6, 8, 3];\nconst grandi = numeri.filter(n => ___ );\nconsole.log(grandi);",
+      "options": [
+        {
+          "id": "a",
+          "text": "n > 5"
+        },
+        {
+          "id": "b",
+          "text": "n >= 8"
+        },
+        {
+          "id": "c",
+          "text": "n < 5"
+        },
+        {
+          "id": "d",
+          "text": "n === 5"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "`n > 5` seleziona i numeri desiderati con filter.",
+        "whyCorrect": "`filter` passa solo gli elementi per cui la condizione è vera: qui, i maggiori di 5 sono 6 e 8.",
+        "whyOthersWrong": {
+          "b": "`n >= 8` filtra solo gli 8, quindi il risultato sarebbe [8], non tutti i numeri maggiori di 5.",
+          "c": "`n < 5` seleziona quelli minori di 5 (2 e 3), il contrario di quanto richiesto.",
+          "d": "`n === 5` prende solo i 5, che nell'array non ci sono: risultato []."
+        },
+        "concept": "filter: selezione tramite condizione",
+        "commonMistake": "Sbagliare la condizione logica nella callback di filter.",
+        "example": "[2, 6, 8, 3].filter(n => n > 5) // [6, 8]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:29.631Z"
+    },
+    {
+      "id": "array-methods-fg-0006",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-reduce",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["usare reduce", "aggregare valori"],
+      "prompt": "Completa la chiamata per calcolare la somma dei numeri con reduce.",
+      "code": "const numeri = [1, 2, 3];\nconst somma = numeri.reduce((totale, n) => totale + n, ___ );\nconsole.log(somma);",
+      "options": [
+        {
+          "id": "a",
+          "text": "0"
+        },
+        {
+          "id": "b",
+          "text": "1"
+        },
+        {
+          "id": "c",
+          "text": "undefined"
+        },
+        {
+          "id": "d",
+          "text": "null"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il valore iniziale corretto per la somma è 0.",
+        "whyCorrect": "Passando 0 come valore iniziale, la somma si calcola partendo da zero e include tutti gli elementi.",
+        "whyOthersWrong": {
+          "b": "Con 1 come iniziale il risultato sarebbe maggiore di quanto atteso (aggiunge 1 in più).",
+          "c": "Se passi undefined come iniziale, il primo elemento viene usato come accumulatore ma non va bene per somme generiche, e su array vuoti causa errore.",
+          "d": "Usare null non è corretto: la somma parte da null e i risultati sarebbero errati (null + n = NaN)."
+        },
+        "concept": "reduce: valore iniziale dell'accumulatore",
+        "commonMistake": "Omettere o usare il valore iniziale sbagliato in reduce.",
+        "example": "[1, 2, 3].reduce((a, n) => a + n, 0) // 6"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:29.631Z"
+    },
+    {
+      "id": "array-methods-fg-0007",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["usare find", "ricercare elemento"],
+      "prompt": "Completa la chiamata per trovare il primo nome di 4 lettere.",
+      "code": "const nomi = ['Luca', 'Anna', 'Paolo'];\nconst trovato = nomi.find(nome => ___ );\nconsole.log(trovato);",
+      "options": [
+        {
+          "id": "a",
+          "text": "nome.length === 4"
+        },
+        {
+          "id": "b",
+          "text": "nome.length > 4"
+        },
+        {
+          "id": "c",
+          "text": "nome.length !== 4"
+        },
+        {
+          "id": "d",
+          "text": "nome.length < 4"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La condizione corretta è `nome.length === 4`.",
+        "whyCorrect": "Con `find`, serve la condizione esatta che seleziona solo i nomi di 4 lettere, quindi 'Luca'.",
+        "whyOthersWrong": {
+          "b": "`nome.length > 4` filtra solo i nomi più lunghi, quindi 'Paolo', che però ha 5 lettere.",
+          "c": "`nome.length !== 4` esclude proprio i nomi di 4 lettere, restituendo invece un nome diverso o undefined.",
+          "d": "`nome.length < 4` selezionerebbe solo nomi più corti, che in questo array non ci sono."
+        },
+        "concept": "find: trovare il primo che soddisfa una condizione",
+        "commonMistake": "Confondere la condizione e ottenere l'elemento sbagliato.",
+        "example": "['Luca', 'Anna', 'Paolo'].find(n => n.length === 4) // 'Luca'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:29.631Z"
+    }
+  ]
+}

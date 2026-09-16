@@ -1,5 +1,5 @@
 import type { QuestionTemplate } from '@lg/core';
-import { fmt, makeOptions, pickInt, pickOf, PERSON_NAMES, retry, shuffle, type Rng } from '../helpers.js';
+import { fmt, makeOptions, pickInt, pickOf, PERSON_NAMES, retry, type Rng } from '../helpers.js';
 
 const TOPIC = 'objects-basics';
 const DD = 'dd-objects-basics';
@@ -22,11 +22,23 @@ const accessPo: QuestionTemplate = {
       const other = key === 'nome' ? eta : nome;
       const built = makeOptions(
         rng,
-        { text: fmt(correct), why: `utente.${key} legge la proprietà ${key}: ${fmt(correct)}.` },
+        {
+          text: fmt(correct),
+          why: `\`utente.${key}\` legge la proprietà ${key} dell'oggetto: il log stampa ${fmt(correct)}.`,
+        },
         [
-          { text: fmt(other), why: `Quella è l'altra proprietà: qui si legge ${key}.` },
-          { text: 'undefined', why: `La proprietà ${key} esiste nell'oggetto.` },
-          { text: `{ nome: '${nome}', eta: ${eta} }`, why: 'Si stampa una proprietà, non l\'oggetto intero.' },
+          {
+            text: fmt(other),
+            why: `${fmt(other)} è il valore dell'altra proprietà: il codice accede a \`utente.${key}\`, non a quella.`,
+          },
+          {
+            text: 'undefined',
+            why: `La proprietà ${key} esiste nell'oggetto e vale ${fmt(correct)}: undefined comparirebbe solo per una chiave assente.`,
+          },
+          {
+            text: `{ nome: '${nome}', eta: ${eta} }`,
+            why: 'Il log stampa una singola proprietà, non l’oggetto intero: `utente.nome`-style seleziona solo un valore.',
+          },
         ],
       );
       return {
@@ -67,11 +79,23 @@ const bracketMc: QuestionTemplate = {
     const obj = pickOf(rng, ['utente', 'prodotto', 'record']);
     const built = makeOptions(
       rng,
-      { text: `${obj}[${key}]`, why: `Con la chiave in una variabile serve la bracket notation: ${obj}[${key}].` },
+      {
+        text: `${obj}[${key}]`,
+        why: `Con la chiave dentro una variabile serve la bracket notation: \`${obj}[${key}]\` valuta ${key} e legge la proprietà '${target}'.`,
+      },
       [
-        { text: `${obj}.${key}`, why: `${obj}.${key} cerca letteralmente la proprietà "${key}", non il suo contenuto.` },
-        { text: `${obj}.'${key}'`, why: 'Non è sintassi valida: la stringa va tra parentesi quadre.' },
-        { text: `${obj}(${key})`, why: 'Le parentesi tonde invocherebbero l\'oggetto come funzione.' },
+        {
+          text: `${obj}.${key}`,
+          why: `Con il punto il nome non viene valutato: \`${obj}.${key}\` cerca la chiave letterale "${key}", che non è '${target}'.`,
+        },
+        {
+          text: `${obj}['${key}']`,
+          why: `Tra virgolette '${key}' è una stringa letterale: cercherebbe la chiave "${key}" invece del contenuto della variabile, cioè '${target}'.`,
+        },
+        {
+          text: `${obj}(${key})`,
+          why: `Le parentesi tonde invocano una funzione: \`${obj}(${key})\` tenterebbe di chiamare l'oggetto e darebbe un TypeError.`,
+        },
       ],
     );
     return {
@@ -112,13 +136,22 @@ const methodFb: QuestionTemplate = {
     const built = makeOptions(
       rng,
       {
-        text: `Manca (): ${obj}.${m} è la funzione; per invocarla serve ${obj}.${m}()`,
-        why: 'Senza () si stampa il riferimento alla funzione, non il suo risultato.',
+        text: 'Mancano le `()` di chiamata',
+        why: `\`${obj}.${m}\` restituisce il riferimento alla funzione: per eseguirla e stampare '${greet}' servono le parentesi, \`${obj}.${m}()\`.`,
       },
       [
-        { text: 'return va fuori dal metodo', why: 'Il return dentro il metodo è corretto.' },
-        { text: 'Gli oggetti non possono contenere funzioni', why: 'Le funzioni come proprietà si chiamano metodi ed è normalissimo.' },
-        { text: 'console.log non stampa stringhe da oggetti', why: 'Il problema è solo la chiamata mancante.' },
+        {
+          text: 'Il metodo va definito con `function`',
+          why: `La shorthand \`${m}() { ... }\` è una sintassi valida per i metodi degli oggetti: la definizione è corretta, manca solo la chiamata.`,
+        },
+        {
+          text: `Serve \`this.${m}()\``,
+          why: `\`this\` serve dentro i metodi per riferirsi all'oggetto: dall'esterno si chiama con \`${obj}.${m}()\`, senza this.`,
+        },
+        {
+          text: '`return` va fuori dal metodo',
+          why: 'Il `return` è nella posizione giusta dentro il metodo: il bug è che il metodo non viene invocato, non dove sta il return.',
+        },
       ],
     );
     return {
@@ -158,11 +191,23 @@ const inFg: QuestionTemplate = {
     const code = `const ${obj} = { ${key}: 'x' };\nif ('${key}' ___ ${obj}) {\n  console.log('presente');\n}`;
     const built = makeOptions(
       rng,
-      { text: 'in', why: `'${key}' in ${obj} verifica l'esistenza della chiave.` },
+      {
+        text: 'in',
+        why: `L'operatore \`in\` verifica se una chiave esiste nell'oggetto: \`'${key}' in ${obj}\` restituisce true.`,
+      },
       [
-        { text: 'of', why: 'of si usa in for...of, non per verificare le chiavi.' },
-        { text: '==', why: '== confronterebbe la stringa con l\'oggetto: sempre false.' },
-        { text: 'has', why: 'has non è un operatore: è un metodo di Map/Set, non degli oggetti.' },
+        {
+          text: 'of',
+          why: '`of` appartiene al ciclo `for...of` e non verifica le proprietà: in quella posizione darebbe un errore di sintassi.',
+        },
+        {
+          text: '==',
+          why: `\`'${key}' == ${obj}\` confronterebbe una stringa con un oggetto: restituirebbe false, non l'esistenza della chiave.`,
+        },
+        {
+          text: 'has',
+          why: '`has` non è un operatore: è un metodo di Map e Set, e sugli oggetti semplici non esiste.',
+        },
       ],
     );
     return {
@@ -172,7 +217,7 @@ const inFg: QuestionTemplate = {
       topicId: TOPIC,
       subtopicId: 'objects-methods-in',
       skills: ['in'],
-      prompt: 'Completa il controllo sull\'esistenza della proprietà.',
+      prompt: "Completa il controllo sull'esistenza della proprietà.",
       code,
       ...built,
       explanation: {
@@ -197,22 +242,32 @@ const dotBracketCmp: QuestionTemplate = {
   skills: ['dot notation', 'bracket notation'],
   tags: ['oggetti'],
   generate(rng: Rng) {
-    const trueStatements = [
-      { text: 'Serve quando la chiave è contenuta in una variabile', why: 'obj[k] valuta k; obj.k cercherebbe la chiave letterale "k".' },
-      { text: 'Serve quando la chiave contiene spazi o caratteri speciali', why: 'obj["nome completo"] funziona; obj.nome completo no.' },
-      { text: 'Serve quando la chiave è calcolata a runtime', why: 'Le parentesi quadre valutano un\'espressione: obj["a" + n].' },
-      { text: 'Serve quando la chiave inizia con una cifra', why: 'obj["1a"] è valido; obj.1a è un errore di sintassi.' },
-    ];
-    const falseStatements = [
-      { text: 'Sono sempre intercambiabili', why: 'obj.prop cerca il nome letterale "prop": con una variabile serve obj[prop].' },
-      { text: 'La bracket notation è deprecata', why: 'Nessuna delle due è deprecata: hanno scopi diversi.' },
-      { text: 'La bracket notation serve solo per gli array', why: 'Funziona su qualunque oggetto: obj["chiave"].' },
-      { text: 'La dot notation funziona con le variabili', why: 'obj.k cerca la chiave "k", non il valore della variabile k.' },
-    ];
+    const key = pickOf(rng, ['k', 'chiave', 'campo']);
+    const target = pickOf(rng, ['nome', 'email', 'ruolo']);
+    const val = pickOf(rng, PERSON_NAMES);
+    const other = pickOf(rng, ['x', 'ok', 'test']);
+    const obj = pickOf(rng, ['utente', 'record', 'profilo']);
+    const code = `const ${key} = '${target}';\nconst ${obj} = { ${target}: '${val}', ${key}: '${other}' };\nconsole.log(${obj}.${key});\nconsole.log(${obj}[${key}]);`;
     const built = makeOptions(
       rng,
-      pickOf(rng, trueStatements),
-      shuffle(falseStatements, rng).slice(0, 3),
+      {
+        text: `${other}\n${val}`,
+        why: `\`${obj}.${key}\` legge la chiave letterale "${key}" e stampa '${other}'; \`${obj}[${key}]\` valuta la variabile e legge '${target}', stampando '${val}'.`,
+      },
+      [
+        {
+          text: `${val}\n${other}`,
+          why: `Le notazioni sono invertite: è il punto a leggere la chiave letterale "${key}" ('${other}'), mentre le quadre valutano la variabile e danno '${val}'.`,
+        },
+        {
+          text: `${val}\n${val}`,
+          why: `Le due forme coincidono solo se non esiste una chiave letterale "${key}": qui invece esiste, quindi \`${obj}.${key}\` stampa '${other}'.`,
+        },
+        {
+          text: `${other}\n${other}`,
+          why: `Le quadre non cercano la chiave "${key}": valutano la variabile, che contiene '${target}', quindi il secondo log stampa '${val}'.`,
+        },
+      ],
     );
     return {
       templateId: 'obj-dot-bracket-cmp',
@@ -220,16 +275,17 @@ const dotBracketCmp: QuestionTemplate = {
       difficulty: 'medium' as const,
       topicId: TOPIC,
       subtopicId: 'objects-access',
-      skills: ['bracket notation'],
-      prompt: 'Quale affermazione su dot notation e bracket notation è corretta?',
+      skills: ['dot notation', 'bracket notation'],
+      prompt: 'Cosa stampano i due `console.log`, in ordine?',
+      code,
       ...built,
       explanation: {
-        short: 'Bracket per chiavi dinamiche o non identificatori; dot per chiavi fisse.',
+        short: `${obj}[${key}] valuta la variabile e legge ${target}: '${val}'.`,
         whyCorrect: 'obj[k] risolve il valore di k; obj.k cerca la chiave "k".',
         whyOthersWrong: built.whyOthersWrong,
         concept: 'Dot vs bracket notation',
         commonMistake: 'Scrivere obj.variabile pensando che legga la chiave contenuta.',
-        example: 'obj["nome completo"] funziona; obj.nome completo no',
+        example: 'const k = "nome"; obj[k] // legge obj["nome"]',
       },
       deepDiveRef: DD,
     };

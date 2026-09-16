@@ -20,11 +20,23 @@ const mapPo: QuestionTemplate = {
       const code = `const a = [${arr.join(', ')}];\nconst b = a.map((n) => n * ${m});\nconsole.log(b);`;
       const built = makeOptions(
         rng,
-        { text: fmt(mapped), why: `map applica n * ${m} a ogni elemento: ${fmt(mapped)}.` },
+        {
+          text: fmt(mapped),
+          why: `\`map\` applica la callback \`n => n * ${m}\` a ogni elemento: il risultato è ${fmt(mapped)}.`,
+        },
         [
-          { text: fmt(arr.map((n) => n + m)), why: `La callback moltiplica per ${m}, non somma.` },
-          { text: fmt(arr), why: 'map ritorna un NUOVO array trasformato: l\'originale non cambia ma non è ciò che viene stampato.' },
-          { text: fmt(mapped.join(', ')), why: 'console.log di un array usa il formato [ ... ], non una stringa.' },
+          {
+            text: fmt(arr.map((n) => n + m)),
+            why: `La callback moltiplica per ${m}, non somma: questo sarebbe il risultato di \`n => n + ${m}\`.`,
+          },
+          {
+            text: fmt(arr),
+            why: `Questo è l'array di partenza: \`map\` produce un nuovo array trasformato (${fmt(mapped)}) e il log stampa quello, non l'originale.`,
+          },
+          {
+            text: fmt(mapped.join(', ')),
+            why: 'Il log riceve un array e lo stampa nel formato `[ ... ]`, non come stringa di valori separati da virgola.',
+          },
         ],
       );
       return {
@@ -68,11 +80,27 @@ const filterPo: QuestionTemplate = {
       const code = `const a = [${arr.join(', ')}];\nconsole.log(a.filter((n) => n > ${t}));`;
       const built = makeOptions(
         rng,
-        { text: fmt(filtered), why: `filter tiene solo gli elementi > ${t}: ${fmt(filtered)}.` },
+        {
+          text: fmt(filtered),
+          why: `\`filter\` mantiene solo gli elementi per cui \`n > ${t}\` è vera: il risultato è ${fmt(filtered)}.`,
+        },
         [
-          { text: fmt(arr.filter((n) => n >= t)), why: `La condizione è stretta (>): ${t} stesso è escluso.` },
-          { text: fmt(arr.filter((n) => n < t)), why: 'Questo è il complemento: tiene i minori, non i maggiori.' },
-          { text: fmt(filtered.length), why: 'filter ritorna un array, non un conteggio.' },
+          {
+            text: fmt(arr.filter((n) => n >= t)),
+            why: `Con \`>\` il valore ${t} stesso è escluso: questo risultato corrisponderebbe a \`n >= ${t}\`, che lo includerebbe.`,
+          },
+          {
+            text: fmt(arr),
+            why: `Questo è l'array completo senza filtro: \`filter\` scarta gli elementi che non superano ${t} e restituisce ${fmt(filtered)}.`,
+          },
+          {
+            text: fmt(arr.filter((n) => n < t)),
+            why: `La condizione è invertita: questo terrebbe gli elementi minori di ${t}, mentre il codice chiede i maggiori.`,
+          },
+          {
+            text: fmt([...filtered].reverse()),
+            why: `\`filter\` preserva l'ordine originale degli elementi selezionati: non li riordina né li inverte.`,
+          },
         ],
       );
       return {
@@ -87,10 +115,11 @@ const filterPo: QuestionTemplate = {
         ...built,
         explanation: {
           short: `filter(n => n > ${t}) seleziona ${fmt(filtered)}.`,
-          whyCorrect: 'filter ritorna un nuovo array con gli elementi che soddisfano la condizione.',
+          whyCorrect:
+            'filter ritorna un nuovo array con gli elementi che soddisfano la condizione.',
           whyOthersWrong: built.whyOthersWrong,
           concept: 'Array.prototype.filter',
-          commonMistake: 'Confondere > con >= o pensare che muti l\'array.',
+          commonMistake: "Confondere > con >= o pensare che muti l'array.",
           example: '[1,2,3].filter(n => n > 1) // [2,3]',
         },
         deepDiveRef: DD,
@@ -114,13 +143,22 @@ const forEachFb: QuestionTemplate = {
     const built = makeOptions(
       rng,
       {
-        text: `forEach non ritorna un array (ritorna undefined): per trasformare serve map`,
-        why: 'forEach esegue effetti collaterali; il valore di ritorno va ignorato.',
+        text: '`forEach` ritorna `undefined`',
+        why: `\`forEach\` esegue la callback per effetti collaterali e restituisce sempre undefined: per produrre i doppi serviva \`a.map((n) => n * ${m})\`.`,
       },
       [
-        { text: 'La arrow function è scritta male', why: 'La sintassi è corretta; il problema è il metodo scelto.' },
-        { text: 'a è const e non può essere letto', why: 'const permette di leggere e chiamare metodi: vieta solo la riassegnazione.' },
-        { text: 'Bisogna dichiarare doppi con let', why: 'Il tipo di dichiarazione non cambia: forEach ritorna sempre undefined.' },
+        {
+          text: 'Manca `return` nella arrow',
+          why: 'Anche con un `return` esplicito, `forEach` ignorerebbe il valore restituito dalla callback: il bug è il metodo scelto, non la callback.',
+        },
+        {
+          text: 'Serve `let` per `doppi`',
+          why: 'Il tipo di dichiarazione non cambia il risultato: `doppi` riceve il valore di ritorno di `forEach`, che è sempre undefined.',
+        },
+        {
+          text: '`forEach` vuole due parametri',
+          why: 'Il secondo parametro della callback (l’indice) è opzionale: la firma è corretta, il problema è il valore di ritorno di `forEach`.',
+        },
       ],
     );
     return {
@@ -160,11 +198,23 @@ const reduceFg: QuestionTemplate = {
     const code = `const a = [${arr.join(', ')}];\nconst totale = a.reduce((s, n) => s + n, ___);\nconsole.log(totale); // ${sum}`;
     const built = makeOptions(
       rng,
-      { text: '0', why: `L'accumulatore parte da 0: la somma è ${sum}.` },
+      {
+        text: '0',
+        why: `Il secondo argomento di \`reduce\` è il valore iniziale dell'accumulatore: partendo da 0 la somma è ${sum}.`,
+      },
       [
-        { text: '1', why: `Partendo da 1 la somma sarebbe ${sum + 1}: sbagliata.` },
-        { text: '[]', why: 'Partendo da un array, s + n concatenerrebbe invece di sommare.' },
-        { text: 'null', why: 'null + n darebbe risultati inattesi: l\'accumulatore deve essere un numero.' },
+        {
+          text: '1',
+          why: `Partendo da 1 il totale includerebbe un +1 iniziale e darebbe ${sum + 1} invece di ${sum}.`,
+        },
+        {
+          text: '[]',
+          why: 'Con un array come valore iniziale, `s + n` concatenerebbe invece di sommare: per una somma l’accumulatore deve essere un numero.',
+        },
+        {
+          text: 'null',
+          why: `Con \`null\` come inizio la prima somma sarebbe \`null + ${arr[0]}\`, che produce un risultato numerico inatteso: l'accumulatore deve essere 0.`,
+        },
       ],
     );
     return {
@@ -178,7 +228,7 @@ const reduceFg: QuestionTemplate = {
       code,
       ...built,
       explanation: {
-        short: 'Il secondo argomento di reduce è il valore iniziale dell\'accumulatore.',
+        short: "Il secondo argomento di reduce è il valore iniziale dell'accumulatore.",
         whyCorrect: `Con 0 la somma è ${arr.join(' + ')} = ${sum}.`,
         whyOthersWrong: built.whyOthersWrong,
         concept: 'Valore iniziale di reduce',
@@ -190,9 +240,4 @@ const reduceFg: QuestionTemplate = {
   },
 };
 
-export const arrayMethodsTemplates: QuestionTemplate[] = [
-  mapPo,
-  filterPo,
-  forEachFb,
-  reduceFg,
-];
+export const arrayMethodsTemplates: QuestionTemplate[] = [mapPo, filterPo, forEachFb, reduceFg];

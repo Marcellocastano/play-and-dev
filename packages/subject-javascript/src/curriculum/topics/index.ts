@@ -14,6 +14,12 @@ import { arraysBasicsTopic } from './arrays-basics.js';
 import { objectsBasicsTopic } from './objects-basics.js';
 import { arrayMethodsTopic } from './array-methods.js';
 import { destructuringTopic } from './destructuring.js';
+import { spreadRestTopic } from './spread-rest.js';
+import { stringMethodsAdvancedTopic } from './string-methods-advanced.js';
+import { objectsAdvancedTopic } from './objects-advanced.js';
+import { errorsTopic } from './errors.js';
+import { jsonTopic } from './json.js';
+import { datesMathTopic } from './dates-math.js';
 import { closuresAdvancedTopic } from './closures-advanced.js';
 
 export const topics: Topic[] = [
@@ -32,5 +38,11 @@ export const topics: Topic[] = [
   objectsBasicsTopic,
   arrayMethodsTopic,
   destructuringTopic,
+  spreadRestTopic,
+  stringMethodsAdvancedTopic,
+  objectsAdvancedTopic,
+  errorsTopic,
+  jsonTopic,
+  datesMathTopic,
   closuresAdvancedTopic,
 ];

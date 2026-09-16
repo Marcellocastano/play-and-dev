@@ -1,0 +1,269 @@
+{
+  "topicId": "array-methods",
+  "questions": [
+    {
+      "id": "array-methods-po-0008",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["map", "trasformazione elemento per elemento"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const parole = [\"gatto\", \"cane\", \"lupo\"];\nconst maiuscole = parole.map((p) => p.toUpperCase());\nconsole.log(maiuscole);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 'GATTO', 'CANE', 'LUPO' ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 'gatto', 'cane', 'lupo' ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 'Gatto', 'Cane', 'Lupo' ]"
+        },
+        {
+          "id": "d",
+          "text": "[ undefined, undefined, undefined ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il metodo map applica `.toUpperCase()` a ogni parola e restituisce un nuovo array con tutte le parole in maiuscolo.",
+        "whyCorrect": "Il metodo `map` chiama la funzione passata su ogni elemento, restituendo un array dove ogni parola è stata convertita in maiuscolo tramite `toUpperCase()`.",
+        "whyOthersWrong": {
+          "b": "Senza una trasformazione, `map` restituirebbe l'array originale, ma qui ogni elemento viene realmente trasformato in maiuscolo.",
+          "c": "La funzione `toUpperCase()` restituisce tutte le lettere maiuscole, non solo l'iniziale.",
+          "d": "Questo succede solo se la funzione non restituisce nulla (dimenticando il return), ma qui il valore è ritornato correttamente."
+        },
+        "concept": "map e trasformazione degli elementi",
+        "commonMistake": "Dimenticare che la funzione di map deve ritornare il valore trasformato.",
+        "example": "[1,2,3].map(n => n * 2) // [2,4,6]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:47.978Z"
+    },
+    {
+      "id": "array-methods-po-0009",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["filter", "selezione condizionale"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const numeri = [3, 7, 2, 9, 5];\nconst maggioriDiCinque = numeri.filter((n) => n > 5);\nconsole.log(maggioriDiCinque);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 7, 9 ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 7, 2, 9, 5 ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 9 ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 3, 7, 2, 9, 5 ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Filter restituisce un array con solo gli elementi che soddisfano la condizione `n > 5`, cioè 7 e 9.",
+        "whyCorrect": "La funzione di callback di `filter` tiene solo i numeri maggiori di 5. Nell'array, questi sono 7 e 9.",
+        "whyOthersWrong": {
+          "b": "Questa opzione include numeri che non sono maggiori di 5, come 2 e 5.",
+          "c": "`filter` seleziona tutti gli elementi che soddisfano la condizione, non solo il primo.",
+          "d": "Qui si mostra l'array originale, ma filter restituisce solo gli elementi che rispettano la condizione."
+        },
+        "concept": "filter per selezionare elementi",
+        "commonMistake": "Confondere filter con find e aspettarsi solo il primo elemento.",
+        "example": "[1,2,3,4].filter(x => x % 2 === 0) // [2, 4]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:47.978Z"
+    },
+    {
+      "id": "array-methods-po-0010",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["map", "uso dell'indice"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const lettere = [\"a\", \"b\", \"c\"];\nconst conIndice = lettere.map((l, i) => l + i);\nconsole.log(conIndice);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 'a0', 'b1', 'c2' ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 'a1', 'b2', 'c3' ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 0, 1, 2 ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 'a', 'b', 'c' ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Map passa anche l'indice all'interno della funzione, quindi ogni lettera viene concatenata al suo indice.",
+        "whyCorrect": "La funzione di `map` aggiunge all'elemento corrente il suo indice, quindi si ottiene 'a0', 'b1' e 'c2'.",
+        "whyOthersWrong": {
+          "b": "Gli indici in JavaScript partono da 0, quindi 'a1' sarebbe solo se l'indice partisse da 1.",
+          "c": "Qui viene restituito solo l'indice, ma la funzione concatena lettera e indice.",
+          "d": "Questo sarebbe il risultato se la funzione non facesse alcuna trasformazione."
+        },
+        "concept": "map e parametri callback",
+        "commonMistake": "Dimenticare che il secondo argomento della funzione di map è l'indice, che parte da 0.",
+        "example": "[ 'x', 'y' ].map((v,i) => v+i) // [ 'x0', 'y1' ]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:47.979Z"
+    },
+    {
+      "id": "array-methods-po-0011",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-reduce",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["reduce", "valore iniziale", "concatenazione stringhe"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const nomi = [\"Anna\", \"Luca\", \"Rita\"];\nconst frase = nomi.reduce((acc, nome) => acc + \"-\" + nome);\nconsole.log(frase);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Anna-Luca-Rita"
+        },
+        {
+          "id": "b",
+          "text": "undefined-Anna-Luca-Rita"
+        },
+        {
+          "id": "c",
+          "text": "AnnaRita"
+        },
+        {
+          "id": "d",
+          "text": "Luca-Rita"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Reduce concatena i nomi separandoli con un trattino, iniziando dal primo elemento (se non viene fornito valore iniziale).",
+        "whyCorrect": "Senza valore iniziale, acc prende il primo elemento, poi concatena gli altri con il trattino, risultando in 'Anna-Luca-Rita'.",
+        "whyOthersWrong": {
+          "b": "Il valore iniziale non è undefined: reduce usa il primo elemento come base se non specificato.",
+          "c": "Riduce concatena tutti i nomi, non solo il primo e l'ultimo. Il trattino viene sempre aggiunto.",
+          "d": "Questa sarebbe la concatenazione solo degli ultimi due nomi, non di tutti."
+        },
+        "concept": "reduce senza valore iniziale",
+        "commonMistake": "Pensare che reduce inizi con undefined o salti elementi.",
+        "example": "[\"a\",\"b\",\"c\"].reduce((a,b) => a + \",\" + b) // 'a,b,c'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:47.979Z"
+    },
+    {
+      "id": "array-methods-po-0012",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["filter", "condizione su proprietà oggetto"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const libri = [\n  { titolo: \"JS Facile\", pagine: 120 },\n  { titolo: \"JS Avanzato\", pagine: 320 },\n  { titolo: \"CSS\", pagine: 200 }\n];\nconst voluminosi = libri.filter(libro => libro.pagine > 150);\nconsole.log(voluminosi.map(libro => libro.titolo));",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 'JS Avanzato', 'CSS' ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 'JS Facile', 'JS Avanzato', 'CSS' ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 'JS Avanzato' ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 'CSS' ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Filter seleziona i libri con più di 150 pagine, quindi solo 'JS Avanzato' e 'CSS' vengono inclusi nell'output.",
+        "whyCorrect": "Vengono selezionati i libri con più di 150 pagine: 'JS Avanzato' (320) e 'CSS' (200). 'JS Facile' ha solo 120 pagine.",
+        "whyOthersWrong": {
+          "b": "Questa opzione include anche 'JS Facile', che non supera le 150 pagine.",
+          "c": "Questa opzione considera solo 'JS Avanzato', ma anche 'CSS' ha più di 150 pagine.",
+          "d": "'CSS' è incluso, ma manca anche 'JS Avanzato', che rispetta la condizione."
+        },
+        "concept": "filter su array di oggetti",
+        "commonMistake": "Dimenticare di applicare la condizione corretta su una proprietà dell'oggetto.",
+        "example": "[{a:1},{a:2}].filter(o => o.a>1) // [{a:2}]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:47.979Z"
+    },
+    {
+      "id": "array-methods-po-0014",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["filter", "predicate", "array"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const studenti = [\n  { nome: 'Anna', voto: 28 },\n  { nome: 'Luca', voto: 18 },\n  { nome: 'Sara', voto: 30 }\n];\nconst promossi = studenti.filter(studente => studente.voto >= 28);\nconsole.log(promossi.length);",
+      "options": [
+        {
+          "id": "a",
+          "text": "3"
+        },
+        {
+          "id": "b",
+          "text": "1"
+        },
+        {
+          "id": "c",
+          "text": "2"
+        },
+        {
+          "id": "d",
+          "text": "0"
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": {
+        "short": "La funzione filter seleziona gli oggetti con voto almeno 28, quindi due studenti risultano promossi.",
+        "whyCorrect": "Sia 'Anna' (28) che 'Sara' (30) hanno voto >= 28, quindi filter restituisce due elementi: promossi.length vale 2.",
+        "whyOthersWrong": {
+          "a": "Filter restituisce solo gli elementi che soddisfano la condizione, non tutti. Tre sarebbe la lunghezza senza alcun filtro.",
+          "b": "Solo uno studente ha 30, ma la condizione include anche chi ha 28, quindi sono due.",
+          "d": "Ci sono due studenti con voto almeno 28: il risultato non può essere zero."
+        },
+        "concept": "filter su array di oggetti",
+        "commonMistake": "Credere che filter cerchi solo valori strettamente maggiori, o solo il massimo.",
+        "example": "[{v:2},{v:5}].filter(x => x.v > 2) // [{v:5}]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:54.723Z"
+    }
+  ]
+}

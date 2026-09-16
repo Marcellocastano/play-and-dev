@@ -1,0 +1,99 @@
+{
+  "topicId": "objects-advanced",
+  "questions": [
+    {
+      "id": "objects-advanced-fb-0026",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "proprietà shorthand",
+        "chiavi computate"
+      ],
+      "prompt": "Questo codice vuole creare un oggetto con una proprietà dinamica e una proprietà `eta` usando la shorthand, ma la proprietà dinamica non viene creata con il nome atteso. Dove si trova l'errore?",
+      "code": "const chiave = 'ruolo';\nconst eta = 28;\nconst utente = {\n  chiave: 'admin',\n  eta\n};\nconsole.log(utente);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Manca l'uso delle parentesi quadre per la chiave computata"
+        },
+        {
+          "id": "b",
+          "text": "Si usa la variabile eta senza valore"
+        },
+        {
+          "id": "c",
+          "text": "La proprietà ruolo è scritta come stringa invece di variabile"
+        },
+        {
+          "id": "d",
+          "text": "Serve Object.assign per ottenere il risultato"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le chiavi computate richiedono le parentesi quadre nel letterale.",
+        "whyCorrect": "Per ottenere una chiave dinamica col valore di una variabile bisogna scrivere [chiave]: 'admin'. Scrivere solo chiave: 'admin' crea la proprietà 'chiave', non 'ruolo'.",
+        "whyOthersWrong": {
+          "b": "La variabile eta è dichiarata e valorizzata; la shorthand funziona correttamente in questo caso.",
+          "c": "La proprietà ruolo non viene nemmeno creata: la chiave è sempre 'chiave', non importa se la stringa fosse variabile o meno.",
+          "d": "Object.assign non serve per creare una chiave calcolata: il problema è la sintassi delle parentesi quadre."
+        },
+        "concept": "Chiavi computate nei letterali oggetto",
+        "commonMistake": "Dimenticare le parentesi quadre per una chiave calcolata.",
+        "example": "const o = { [chiave]: valore };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:59:02.465Z"
+    },
+    {
+      "id": "objects-advanced-fb-0027",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-chaining",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "optional chaining",
+        "valori di default"
+      ],
+      "prompt": "Il codice qui sotto dovrebbe restituire il valore di `utente.info.telefono` se esiste, oppure 'non disponibile' se manca, ma quando `info` manca viene lanciato un errore. Dov'è l'errore nel codice?",
+      "code": "const utente = {};\nconst telefono = utente.info.telefono ?? 'non disponibile';\nconsole.log(telefono);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Manca l'optional chaining su info"
+        },
+        {
+          "id": "b",
+          "text": "Si usa ?? invece di || per il default"
+        },
+        {
+          "id": "c",
+          "text": "utente non è definito come oggetto annidato"
+        },
+        {
+          "id": "d",
+          "text": "Si cerca di accedere a una proprietà numerica"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Senza ?. su info, accedere a telefono causa errore se info manca.",
+        "whyCorrect": "Quando info non esiste, accedere a utente.info.telefono causa un TypeError; serve utente.info?.telefono per evitare l'errore.",
+        "whyOthersWrong": {
+          "b": "L'operatore ?? è corretto qui perché consente di fornire un default solo se il valore a sinistra è null o undefined.",
+          "c": "utente è definito come oggetto, il problema è che info non esiste come proprietà.",
+          "d": "Nessuna proprietà numerica viene usata; l'errore non dipende da questo."
+        },
+        "concept": "Optional chaining per accessi sicuri",
+        "commonMistake": "Omettere ?. e causare un TypeError su proprietà annidate.",
+        "example": "const tel = utente.info?.telefono ?? 'non disponibile';"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:59:02.465Z"
+    }
+  ]
+}

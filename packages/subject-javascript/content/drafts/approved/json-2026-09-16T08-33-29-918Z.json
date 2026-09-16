@@ -1,0 +1,313 @@
+{
+  "topicId": "json",
+  "questions": [
+    {
+      "id": "json-fb-0001",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["serializzazione oggetti", "gestione valori non serializzabili"],
+      "prompt": "Questo codice dovrebbe serializzare un oggetto includendo tutte le sue proprietà, ma la proprietà 'b' sparisce dal risultato.",
+      "code": "const obj = { a: 1, b: undefined };\nconst testo = JSON.stringify(obj);\nconsole.log(testo);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Le proprietà con undefined non vengono incluse"
+        },
+        {
+          "id": "b",
+          "text": "JSON.stringify non gestisce oggetti annidati"
+        },
+        {
+          "id": "c",
+          "text": "Serve passare un replacer per vedere tutto"
+        },
+        {
+          "id": "d",
+          "text": "Manca l'opzione per le proprietà nulle"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "JSON.stringify omette le proprietà con valore undefined.",
+        "whyCorrect": "Quando si serializza un oggetto, tutte le proprietà che hanno valore undefined vengono omesse dall'output JSON. Quindi 'b' non compare nella stringa risultante.",
+        "whyOthersWrong": {
+          "b": "JSON.stringify serializza perfettamente oggetti annidati finché tutte le proprietà sono serializzabili; il problema qui non riguarda l'annidamento.",
+          "c": "Un replacer permette di filtrare o modificare le proprietà, ma il comportamento standard senza replacer è già corretto: undefined viene omesso comunque.",
+          "d": "Non esiste alcuna opzione che includa le proprietà nulle: null viene serializzato, undefined viene omesso, ed è proprio questo il caso."
+        },
+        "concept": "Serializzazione di proprietà undefined",
+        "commonMistake": "Aspettarsi che undefined venga convertito in null o una stringa.",
+        "example": "JSON.stringify({ x: undefined, y: 2 }) // '{\"y\":2}'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:21.246Z"
+    },
+    {
+      "id": "json-fb-0002",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["serializzazione funzioni", "differenza tra valori serializzabili e non"],
+      "prompt": "Si vorrebbe includere una funzione nell'oggetto serializzato, ma nell'output la proprietà 'metodo' non appare affatto.",
+      "code": "const persona = {\n  nome: 'Luca',\n  metodo: function() { return 'ciao'; }\n};\nconsole.log(JSON.stringify(persona));",
+      "options": [
+        {
+          "id": "a",
+          "text": "Le funzioni vengono omesse dalla serializzazione"
+        },
+        {
+          "id": "b",
+          "text": "Le funzioni vengono convertite in stringhe"
+        },
+        {
+          "id": "c",
+          "text": "Serve passare la funzione come stringa"
+        },
+        {
+          "id": "d",
+          "text": "Il metodo va invocato prima di serializzare"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le funzioni non vengono incluse da JSON.stringify.",
+        "whyCorrect": "Durante la serializzazione con JSON.stringify, le proprietà il cui valore è una funzione vengono completamente ignorate: non compaiono affatto nel risultato.",
+        "whyOthersWrong": {
+          "b": "Se ci si aspetta che le funzioni vengano convertite automaticamente in stringhe, si sbaglia: vengono semplicemente omesse.",
+          "c": "Convertire la funzione in stringa manualmente cambierebbe il tipo, ma di default JSON.stringify non fa questa conversione.",
+          "d": "Invocare il metodo prima della serializzazione serve solo a ottenere il risultato della funzione, non a includerla come funzione nell'oggetto."
+        },
+        "concept": "Serializzazione delle funzioni",
+        "commonMistake": "Credere che le funzioni vengano incluse come stringhe o oggetti.",
+        "example": "JSON.stringify({ f: () => 1 }) // '{}'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:21.246Z"
+    },
+    {
+      "id": "json-fb-0003",
+      "topicId": "json",
+      "subtopicId": "json-parse",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["parsing JSON", "gestione errori sintassi"],
+      "prompt": "Si vuole convertire una stringa JSON in oggetto, ma il codice lancia un errore invece di restituire il risultato desiderato.",
+      "code": "const testo = \"{'a': 1, 'b': 2}\";\nconst oggetto = JSON.parse(testo);\nconsole.log(oggetto);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Il JSON valido richiede virgolette doppie"
+        },
+        {
+          "id": "b",
+          "text": "JSON.parse non gestisce numeri"
+        },
+        {
+          "id": "c",
+          "text": "Le parentesi graffe non sono permesse"
+        },
+        {
+          "id": "d",
+          "text": "Serve parseInt prima di JSON.parse"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le chiavi e le stringhe JSON usano sempre virgolette doppie.",
+        "whyCorrect": "Il formato JSON ammette solo virgolette doppie per chiavi e stringhe. Usando virgolette singole, JSON.parse solleva un SyntaxError.",
+        "whyOthersWrong": {
+          "b": "JSON.parse gestisce perfettamente i numeri nel formato JSON corretto; l'errore qui è dovuto alla sintassi, non ai numeri.",
+          "c": "Le parentesi graffe sono richieste per gli oggetti JSON; il problema non è questo.",
+          "d": "parseInt serve per convertire stringhe numeriche in numeri, ma qui si sta cercando di parsare un oggetto."
+        },
+        "concept": "Regole di sintassi del JSON",
+        "commonMistake": "Usare virgolette singole pensando siano valide in JSON.",
+        "example": "JSON.parse('{\"a\": 1}') // { a: 1 }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:21.247Z"
+    },
+    {
+      "id": "json-fb-0004",
+      "topicId": "json",
+      "subtopicId": "json-deep-copy",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["deep copy", "limiti della serializzazione"],
+      "prompt": "L'obiettivo era clonare in profondità un oggetto che contiene una data, ma nell'oggetto clonato la data non è più una istanza di Date.",
+      "code": "const originale = { data: new Date('2022-01-01') };\nconst copia = JSON.parse(JSON.stringify(originale));\nconsole.log(copia.data instanceof Date);",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON non conserva i tipi Date: diventano stringhe"
+        },
+        {
+          "id": "b",
+          "text": "La funzione JSON.stringify non copia i metodi"
+        },
+        {
+          "id": "c",
+          "text": "Bisogna serializzare la data manualmente"
+        },
+        {
+          "id": "d",
+          "text": "Le istanze di Date sono bloccate da JSON.parse"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le date diventano stringhe con JSON, non oggetti Date.",
+        "whyCorrect": "JSON.stringify serializza le Date come stringhe ISO, e JSON.parse ricostruisce una stringa, non una vera istanza di Date.",
+        "whyOthersWrong": {
+          "b": "Non sono i metodi a mancare, ma proprio la natura di Date: quell'attributo è ora una stringa.",
+          "c": "Serializzare manualmente la data non risolve perché la questione è la ricostruzione dell'oggetto Date, che richiede una conversione esplicita dopo il parse.",
+          "d": "JSON.parse non blocca le Date: non ha semplicemente modo di distinguere una stringa che rappresenta una data da una qualsiasi altra stringa."
+        },
+        "concept": "Limitazioni della copia profonda via JSON",
+        "commonMistake": "Aspettarsi che Date rimanga di tipo Date dopo la copia.",
+        "example": "JSON.parse(JSON.stringify({ d: new Date() })).d // stringa"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:21.247Z"
+    },
+    {
+      "id": "json-fb-0005",
+      "topicId": "json",
+      "subtopicId": "json-deep-copy",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["deep copy", "gestione strutture cicliche"],
+      "prompt": "Si prova a clonare un oggetto che fa riferimento a sé stesso, ma il codice provoca un errore invece di restituire la copia.",
+      "code": "const oggetto = {};\noggetto.me = oggetto;\nconst copia = JSON.parse(JSON.stringify(oggetto));",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON.stringify lancia su oggetti con riferimenti ciclici"
+        },
+        {
+          "id": "b",
+          "text": "Serve un replacer per i riferimenti ciclici"
+        },
+        {
+          "id": "c",
+          "text": "JSON.parse non gestisce le proprietà ricorsive"
+        },
+        {
+          "id": "d",
+          "text": "Manca un'opzione deepClone in JSON.stringify"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "JSON.stringify non può serializzare riferimenti ciclici: lancia TypeError.",
+        "whyCorrect": "Se si prova a serializzare un oggetto con riferimenti ciclici, JSON.stringify solleva un TypeError e l'operazione si interrompe.",
+        "whyOthersWrong": {
+          "b": "Un replacer personalizzato potrebbe aiutare a filtrare i riferimenti ciclici, ma non risolve automaticamente il problema: di default l'errore si verifica comunque.",
+          "c": "L'errore si verifica già durante la serializzazione e JSON.parse non entra proprio in gioco.",
+          "d": "Non esiste alcuna opzione 'deepClone' integrata in JSON.stringify; la funzione serve solo a serializzare."
+        },
+        "concept": "Riferimenti ciclici e serializzazione JSON",
+        "commonMistake": "Tentare di clonare strutture cicliche con JSON.stringify.",
+        "example": "const a = {}; a.me = a; JSON.stringify(a) // TypeError"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:21.247Z"
+    },
+    {
+      "id": "json-fb-0006",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["analizzare codice", "riconoscere limiti di JSON.stringify"],
+      "prompt": "Un programmatore vuole serializzare un oggetto che contiene una funzione e una proprietà `undefined`, per inviarlo tramite AJAX. Tuttavia, nota che il risultato della serializzazione non è come si aspettava: alcune informazioni mancano nel testo JSON prodotto. Individua il problema.",
+      "code": "const utente = {\n  nome: \"Mario\",\n  saluta: function() { return \"Ciao\"; },\n  cognome: undefined\n};\nconst dati = JSON.stringify(utente);\nconsole.log(dati);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Le proprietà funzione e undefined vengono omesse"
+        },
+        {
+          "id": "b",
+          "text": "La funzione viene serializzata come stringa"
+        },
+        {
+          "id": "c",
+          "text": "La proprietà undefined diventa null"
+        },
+        {
+          "id": "d",
+          "text": "Viene lanciato un errore di serializzazione"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le funzioni e le proprietà `undefined` vengono ignorate da `JSON.stringify`, quindi non compaiono nel testo prodotto.",
+        "whyCorrect": "Nel processo di serializzazione con `JSON.stringify`, sia le proprietà che contengono funzioni sia quelle con valore `undefined` vengono completamente omesse dal risultato. Nel JSON finale resta solo la proprietà `nome`.",
+        "whyOthersWrong": {
+          "b": "Le funzioni non vengono mai convertite in stringa da `JSON.stringify`; vengono semplicemente scartate senza apparire nel testo serializzato.",
+          "c": "Le proprietà `undefined` non vengono trasformate in `null`, ma omesse del tutto dal JSON risultante. Solo se il valore fosse esplicitamente `null` verrebbe incluso.",
+          "d": "Non si verifica alcun errore: `JSON.stringify` gestisce normalmente funzioni e `undefined` omettendole, senza interrompere il programma."
+        },
+        "concept": "Omissione di tipi non supportati da JSON",
+        "commonMistake": "Credere che funzioni o `undefined` vengano serializzati come stringa o `null`.",
+        "example": "JSON.stringify({ ok: undefined, foo: function() {}, x: 1 }) // '{\"x\":1}'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:29.916Z"
+    },
+    {
+      "id": "json-fb-0007",
+      "topicId": "json",
+      "subtopicId": "json-parse",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["debugging JSON.parse", "gestione degli errori di parsing"],
+      "prompt": "Un utente riceve una stringa JSON da un servizio esterno e vuole convertirla in oggetto JavaScript. Tuttavia, il codice va in errore appena eseguito. Qual è la causa più probabile del problema?",
+      "code": "const risposta = \"{'id': 123, 'attivo': true}\";\nconst obj = JSON.parse(risposta);\nconsole.log(obj.id);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Le virgolette usate sono singole invece che doppie"
+        },
+        {
+          "id": "b",
+          "text": "Il valore booleano non è scritto in maiuscolo"
+        },
+        {
+          "id": "c",
+          "text": "Manca una virgola tra le proprietà"
+        },
+        {
+          "id": "d",
+          "text": "Le chiavi dovrebbero essere senza virgolette"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il formato JSON richiede virgolette doppie per le chiavi e le stringhe, altrimenti `JSON.parse` lancia un errore di sintassi.",
+        "whyCorrect": "In JSON valido, tutte le chiavi e le stringhe vanno racchiuse tra virgolette doppie. Usando virgolette singole, `JSON.parse` lancia un `SyntaxError` senza nemmeno iniziare il parsing.",
+        "whyOthersWrong": {
+          "b": "Il valore booleano `true` è corretto in minuscolo in JSON; il problema non è la capitalizzazione, ma l'uso delle virgolette.",
+          "c": "Nel testo fornito la virgola tra le proprietà è presente; l'errore non dipende dalla punteggiatura, ma dalla sintassi delle stringhe.",
+          "d": "In JSON le chiavi devono sempre essere tra doppie virgolette, non senza. Senza virgolette sarebbe sintassi JavaScript valida (oggetto letterale), non JSON."
+        },
+        "concept": "Sintassi corretta del formato JSON",
+        "commonMistake": "Usare virgolette singole nelle chiavi o nei valori JSON.",
+        "example": "JSON.parse('{\"id\": 123}') // corretto; JSON.parse('{id: 123}') // errore"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:29.916Z"
+    }
+  ]
+}

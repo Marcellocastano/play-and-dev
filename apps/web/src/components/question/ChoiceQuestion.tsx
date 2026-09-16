@@ -2,6 +2,7 @@ import type { Question, QuestionAttempt } from '@lg/core';
 import { useEffect } from 'react';
 import { CodeBlock } from '../ui/CodeBlock';
 import { Icon } from '../ui/Icon';
+import { RichText } from '../ui/RichText';
 
 interface ChoiceQuestionProps {
   question: Question;
@@ -47,7 +48,9 @@ export function ChoiceQuestion({ question, typeLabel, answered, onAnswer }: Choi
           {{ easy: 'Fondamenti', medium: 'Un passo in più', hard: 'Sfida' }[question.difficulty]}
         </span>
       </div>
-      <h2>{question.prompt}</h2>
+      <h2>
+        <RichText text={question.prompt} />
+      </h2>
       {question.code && <CodeBlock code={question.code} lineNumbers />}
       <div className="answer-instruction">
         <span>Scegli la tua risposta</span>
@@ -83,7 +86,7 @@ export function ChoiceQuestion({ question, typeLabel, answered, onAnswer }: Choi
                 )}
               </span>
               <span className="answer-text">
-                {opt.text}
+                <RichText text={opt.text} />
                 {answered && isCorrect && <strong className="answer-result">Corretta</strong>}
                 {answered && isSelected && !isCorrect && (
                   <strong className="answer-result">Sbagliata</strong>

@@ -1,0 +1,269 @@
+{
+  "topicId": "dates-math",
+  "questions": [
+    {
+      "id": "dates-math-po-0015",
+      "topicId": "dates-math",
+      "subtopicId": "dates-math-math",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["Math.abs", "Math.floor"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "let x = -7.8;\nlet y = Math.abs(x);\nconsole.log(Math.floor(y));",
+      "options": [
+        {
+          "id": "a",
+          "text": "7"
+        },
+        {
+          "id": "b",
+          "text": "8"
+        },
+        {
+          "id": "c",
+          "text": "-7"
+        },
+        {
+          "id": "d",
+          "text": "-8"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Math.abs converte il numero in positivo e Math.floor tronca verso il basso.",
+        "whyCorrect": "Math.abs(-7.8) restituisce 7.8, Math.floor(7.8) porta a 7 perché floor arrotonda sempre verso il basso all'intero più vicino.",
+        "whyOthersWrong": {
+          "b": "Math.floor non arrotonda all'intero più vicino, ma al più basso, quindi 7.8 diventa 7 e non 8.",
+          "c": "Math.abs rende il numero positivo, quindi il risultato non può essere negativo.",
+          "d": "Math.abs converte in positivo e Math.floor non scende a -8 perché il valore di partenza dopo abs è positivo."
+        },
+        "concept": "Math.abs e Math.floor",
+        "commonMistake": "Confondere floor con round o tralasciare abs.",
+        "example": "Math.floor(Math.abs(-3.4)) // 3"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:46.765Z"
+    },
+    {
+      "id": "dates-math-po-0016",
+      "topicId": "dates-math",
+      "subtopicId": "dates-math-number",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["parseInt", "parseFloat", "conversioni"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "let s = '12.7abc';\nconsole.log(parseInt(s), parseFloat(s));",
+      "options": [
+        {
+          "id": "a",
+          "text": "12 12.7"
+        },
+        {
+          "id": "b",
+          "text": "NaN NaN"
+        },
+        {
+          "id": "c",
+          "text": "12.7 12.7"
+        },
+        {
+          "id": "d",
+          "text": "12 NaN"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "parseInt estrae la parte intera, parseFloat la parte decimale.",
+        "whyCorrect": "parseInt preleva i caratteri numerici iniziali e si ferma al punto, quindi restituisce 12. parseFloat legge fino a dove il numero è valido come float, quindi restituisce 12.7.",
+        "whyOthersWrong": {
+          "b": "Entrambe le funzioni restituiscono NaN solo se la stringa non inizia con una cifra (qui inizia con 12).",
+          "c": "parseInt tronca al primo carattere non valido per un intero, quindi restituisce 12 e non 12.7.",
+          "d": "parseFloat accetta la parte decimale, legge 12.7 e non si ferma alla parte intera."
+        },
+        "concept": "parseInt vs parseFloat",
+        "commonMistake": "Aspettarsi che parseInt legga anche i decimali.",
+        "example": "parseInt('5.9abc') // 5, parseFloat('5.9abc') // 5.9"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:46.767Z"
+    },
+    {
+      "id": "dates-math-po-0017",
+      "topicId": "dates-math",
+      "subtopicId": "dates-math-date",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["Date", "mesi 0-based", "getMonth"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const d = new Date(2024, 4, 15);\nconsole.log(d.getMonth());",
+      "options": [
+        {
+          "id": "a",
+          "text": "4"
+        },
+        {
+          "id": "b",
+          "text": "5"
+        },
+        {
+          "id": "c",
+          "text": "3"
+        },
+        {
+          "id": "d",
+          "text": "15"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "I mesi partono da 0, quindi getMonth restituisce il valore fornito.",
+        "whyCorrect": "La data creata con mese 4 rappresenta maggio, e getMonth restituisce 4 perché i mesi vanno da 0 (gennaio) a 11 (dicembre).",
+        "whyOthersWrong": {
+          "b": "Scegliere 5 confonde il numero del mese umano (maggio come 5) con quello usato da Date, che è 0-based.",
+          "c": "3 sarebbe aprile: qui invece è stato passato 4, che indica maggio.",
+          "d": "15 è il giorno fornito, mentre getMonth restituisce solo l'indice del mese."
+        },
+        "concept": "Date e mesi 0-based",
+        "commonMistake": "Dimenticare che getMonth e costruttore usano 0-based.",
+        "example": "new Date(2024, 0, 1).getMonth() // 0 (gennaio)"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:46.767Z"
+    },
+    {
+      "id": "dates-math-po-0018",
+      "topicId": "dates-math",
+      "subtopicId": "dates-math-date",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["Date", "getDate", "getDay"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const data = new Date(2024, 3, 7);\nconsole.log(data.getDate(), data.getDay());",
+      "options": [
+        {
+          "id": "a",
+          "text": "7 0"
+        },
+        {
+          "id": "b",
+          "text": "7 7"
+        },
+        {
+          "id": "c",
+          "text": "3 7"
+        },
+        {
+          "id": "d",
+          "text": "7 6"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "getDate restituisce il giorno del mese, getDay il giorno della settimana (domenica=0).",
+        "whyCorrect": "new Date(2024, 3, 7) rappresenta il 7 aprile 2024, che è una domenica. getDate() è 7 (giorno del mese), getDay() è 0 (domenica).",
+        "whyOthersWrong": {
+          "b": "getDay restituisce valori da 0 (domenica) a 6 (sabato), mai 7.",
+          "c": "Il numero '3' come giorno del mese è errato: 3 è il mese (aprile, 0-based).",
+          "d": "getDay=6 sarebbe sabato, ma il 7 aprile 2024 cade di domenica (0)."
+        },
+        "concept": "Date: getDate vs getDay",
+        "commonMistake": "Confondere getDay (giorno settimana) e getDate (del mese).",
+        "example": "new Date(2024, 0, 1).getDay() // 1 (lunedì)"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:46.767Z"
+    },
+    {
+      "id": "dates-math-po-0019",
+      "topicId": "dates-math",
+      "subtopicId": "dates-math-math",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["Math.abs", "differenze tra numeri negativi e positivi"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "let a = -7;\nlet b = 3;\nlet diff = Math.abs(a - b);\nconsole.log(diff);",
+      "options": [
+        {
+          "id": "a",
+          "text": "10"
+        },
+        {
+          "id": "b",
+          "text": "4"
+        },
+        {
+          "id": "c",
+          "text": "7"
+        },
+        {
+          "id": "d",
+          "text": "3"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Math.abs calcola il valore assoluto della differenza tra i due numeri.",
+        "whyCorrect": "La differenza tra -7 e 3 è -10, ma poi viene passato a Math.abs, che lo trasforma in 10.",
+        "whyOthersWrong": {
+          "b": "Questo valore deriva dalla differenza 7 - 3, ma l'operazione svolta qui è -7 - 3, non 7 - 3.",
+          "c": "Questo è semplicemente il valore assoluto di a, mentre qui si calcola la differenza tra a e b.",
+          "d": "Questo è il valore assoluto di b, ma la funzione applicata è Math.abs(a - b), non Math.abs(b)."
+        },
+        "concept": "Math.abs e differenze numeriche",
+        "commonMistake": "Confondere ordine e segno nella sottrazione.",
+        "example": "Math.abs(-4 - 2) // 6"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:56.590Z"
+    },
+    {
+      "id": "dates-math-po-0020",
+      "topicId": "dates-math",
+      "subtopicId": "dates-math-number",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["parseInt", "parseFloat", "conversioni di stringhe con caratteri speciali"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "let testo = '17.5px';\nconsole.log(parseInt(testo));\nconsole.log(parseFloat(testo));",
+      "options": [
+        {
+          "id": "a",
+          "text": "17\n17.5"
+        },
+        {
+          "id": "b",
+          "text": "17.5\nNaN"
+        },
+        {
+          "id": "c",
+          "text": "NaN\n17.5"
+        },
+        {
+          "id": "d",
+          "text": "17\nNaN"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "parseInt estrae la parte intera, parseFloat quella decimale finché trova cifre.",
+        "whyCorrect": "parseInt legge fino al punto decimale e si ferma, restituendo 17. parseFloat legge anche il punto e il numero dopo, restituendo 17.5.",
+        "whyOthersWrong": {
+          "b": "parseInt non restituisce 17.5: si ferma prima del punto decimale e restituisce solo la parte intera.",
+          "c": "parseInt non restituisce NaN in questo caso, perché la stringa inizia con cifre valide. parseFloat converte correttamente in 17.5.",
+          "d": "parseFloat riesce a leggere il valore decimale perché la stringa inizia con numeri validi, quindi non restituisce NaN."
+        },
+        "concept": "parseInt e parseFloat su stringhe miste",
+        "commonMistake": "Aspettarsi che parseInt restituisca la parte decimale.",
+        "example": "parseInt('23.8kg') // 23, parseFloat('23.8kg') // 23.8"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:56.590Z"
+    }
+  ]
+}

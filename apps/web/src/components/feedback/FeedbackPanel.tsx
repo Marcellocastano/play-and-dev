@@ -5,6 +5,7 @@ import { aiClient } from '../../services/aiClient';
 import { Button } from '../ui/Button';
 import { CodeBlock } from '../ui/CodeBlock';
 import { Icon } from '../ui/Icon';
+import { RichText } from '../ui/RichText';
 import { DeepDiveDrawer } from './DeepDiveDrawer';
 
 interface FeedbackPanelProps {
@@ -103,11 +104,15 @@ export function FeedbackPanel({
             {correct ? 'CONNESSIONE RIUSCITA' : 'UN’OCCASIONE PER CAPIRE'}
           </span>
           <h3>{correct ? 'Esatto. Hai colto il punto.' : 'Non proprio. Scopriamo perché.'}</h3>
-          <p>{ex.short}</p>
+          <p>
+            <RichText text={ex.short} />
+          </p>
           {!correct && (
             <p className="correct-answer-caption">
               <strong>Risposta corretta: </strong>
-              {question.options.find((o) => o.id === question.correctOptionId)?.text}
+              <RichText
+                text={question.options.find((o) => o.id === question.correctOptionId)?.text ?? ''}
+              />
             </p>
           )}
         </div>
@@ -147,7 +152,9 @@ export function FeedbackPanel({
               <span className="explanation-index">01</span>
               <div>
                 <h4>Perché è corretta</h4>
-                <p>{ex.whyCorrect}</p>
+                <p>
+                  <RichText text={ex.whyCorrect} />
+                </p>
               </div>
             </div>
             <div className="explanation-section">
@@ -157,8 +164,10 @@ export function FeedbackPanel({
                 <ul>
                   {Object.entries(ex.whyOthersWrong).map(([id, why]) => (
                     <li key={id}>
-                      <strong>{question.options.find((o) => o.id === id)?.text}</strong>
-                      <p>{why}</p>
+                      <code className="inline-code">
+                        {question.options.find((o) => o.id === id)?.text.replaceAll('`', '')}
+                      </code>{' '}
+                      — <RichText text={why} />
                     </li>
                   ))}
                 </ul>
@@ -167,8 +176,14 @@ export function FeedbackPanel({
             <div className="concept-note">
               <Icon name="spark" size={20} />
               <div>
-                <strong>{ex.concept}</strong>
-                {ex.commonMistake && <p>{ex.commonMistake}</p>}
+                <strong>
+                  <RichText text={ex.concept} />
+                </strong>
+                {ex.commonMistake && (
+                  <p>
+                    <RichText text={ex.commonMistake} />
+                  </p>
+                )}
               </div>
             </div>
             {ex.example && <CodeBlock code={ex.example} />}

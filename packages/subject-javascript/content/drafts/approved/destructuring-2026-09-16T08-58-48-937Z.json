@@ -1,0 +1,53 @@
+{
+  "topicId": "destructuring",
+  "questions": [
+    {
+      "id": "destructuring-fb-0019",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "destructuring oggetti",
+        "rinomina",
+        "valori di default"
+      ],
+      "prompt": "Il codice vuole estrarre la proprietà `codice` da un oggetto `prodotto`, assegnarla a una variabile `idProdotto` e usare 'N/A' come default se la proprietà manca. Tuttavia, stampando `idProdotto` quando `prodotto` non ha la proprietà `codice`, viene `undefined` invece di 'N/A'. Qual è il problema?",
+      "code": "const prodotto = {}; \nconst { idProdotto: codice = 'N/A' } = prodotto;\nconsole.log(codice);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ha invertito nome originale e rinominato"
+        },
+        {
+          "id": "b",
+          "text": "Ha usato = nel posto sbagliato"
+        },
+        {
+          "id": "c",
+          "text": "Serve la sintassi [] anziché {}"
+        },
+        {
+          "id": "d",
+          "text": "Manca una virgola tra le proprietà"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Chi ha invertito ordine in `{ idProdotto: codice }` non ottiene né la rinomina né il default: bisogna scrivere `{ codice: idProdotto = 'N/A' }`.",
+        "whyCorrect": "Il destructuring oggetti usa la sintassi `{ originale: nuovoNome = default }`. Qui ha scritto `{ idProdotto: codice = 'N/A' }`, ma `idProdotto` non è una proprietà dell'oggetto, quindi `codice` riceve undefined. Bisogna scrivere `{ codice: idProdotto = 'N/A' }`.",
+        "whyOthersWrong": {
+          "b": "Il problema non è la posizione del `=`, ma l'ordine tra nome originale e rinominato: il default è scritto nel punto giusto.",
+          "c": "La sintassi con le parentesi quadre `[]` serve per destrutturare array, non oggetti: qui serve proprio `{}`.",
+          "d": "Non manca una virgola: c'è una sola proprietà nel destructuring, quindi la sintassi è formalmente corretta."
+        },
+        "concept": "Destructuring oggetti con rinomina e default",
+        "commonMistake": "Invertire nome originale e nuovo nome nella sintassi `{ originale: nuovoNome }`.",
+        "example": "const { a: b = 1 } = {}; // b = 1"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:58:48.935Z"
+    }
+  ]
+}

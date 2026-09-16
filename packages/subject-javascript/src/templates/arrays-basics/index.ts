@@ -19,11 +19,23 @@ const pushLenPo: QuestionTemplate = {
       const code = `const lista = [${arr.join(', ')}];\nlista.push(${v});\nconsole.log(lista.length);`;
       const built = makeOptions(
         rng,
-        { text: fmt(arr.length + 1), why: `push aggiunge un elemento: ${arr.length} + 1 = ${arr.length + 1}.` },
+        {
+          text: fmt(arr.length + 1),
+          why: `\`push(${v})\` aggiunge un elemento in coda: la lunghezza passa da ${arr.length} a ${arr.length + 1}.`,
+        },
         [
-          { text: fmt(arr.length), why: 'push modifica l\'array: la lunghezza aumenta di 1.' },
-          { text: fmt(v), why: 'length restituisce il numero di elementi, non l\'ultimo valore.' },
-          { text: fmt(arr.length + 2), why: 'push aggiunge un solo elemento.' },
+          {
+            text: fmt(arr.length),
+            why: `\`push\` modifica l'array sul posto: dopo la chiamata gli elementi sono ${arr.length + 1}, non più ${arr.length}.`,
+          },
+          {
+            text: fmt(v),
+            why: `\`length\` restituisce il numero di elementi dell'array, non il valore appena inserito: ${v} è l'elemento aggiunto.`,
+          },
+          {
+            text: fmt(arr.length + 2),
+            why: `\`push(${v})\` aggiunge un solo elemento: la lunghezza cresce di 1, da ${arr.length} a ${arr.length + 1}.`,
+          },
         ],
       );
       return {
@@ -65,11 +77,23 @@ const indexPo: QuestionTemplate = {
       const code = `const a = [${arr.join(', ')}];\nconsole.log(a[${i}]);`;
       const built = makeOptions(
         rng,
-        { text: fmt(arr[i]), why: `a[${i}] è l'elemento in posizione ${i} (partendo da 0): ${arr[i]}.` },
+        {
+          text: fmt(arr[i]),
+          why: `Gli indici partono da 0: \`a[${i}]\` legge l'elemento in posizione ${i}, che in [${arr.join(', ')}] vale ${arr[i]}.`,
+        },
         [
-          { text: fmt(arr[i + 1] ?? arr[i]! + 1), why: `Questo sarebbe a[${i + 1}]: gli indici partono da 0.` },
-          { text: fmt(i), why: 'a[i] è il valore in posizione i, non l\'indice stesso.' },
-          { text: 'undefined', why: `${i} è un indice valido: l'array ha ${arr.length} elementi.` },
+          {
+            text: fmt(arr[i + 1] ?? arr[i]! + 1),
+            why: `Questo sarebbe il valore di \`a[${i + 1}]\`: con indici in base 0, la posizione ${i} contiene ${arr[i]}.`,
+          },
+          {
+            text: fmt(i),
+            why: `\`a[${i}]\` restituisce il valore contenuto in posizione ${i}, non l'indice stesso: il log stampa ${arr[i]}.`,
+          },
+          {
+            text: 'undefined',
+            why: `${i} è un indice valido perché l'array ha ${arr.length} elementi (indici 0…${arr.length - 1}): il log stampa ${arr[i]}.`,
+          },
         ],
       );
       return {
@@ -88,7 +112,7 @@ const indexPo: QuestionTemplate = {
           whyOthersWrong: built.whyOthersWrong,
           concept: 'Accesso per indice (base 0)',
           commonMistake: 'Contare da 1 invece che da 0.',
-          example: 'a[0] è il primo elemento; a[a.length - 1] l\'ultimo.',
+          example: "a[0] è il primo elemento; a[a.length - 1] l'ultimo.",
         },
         deepDiveRef: DD,
       };
@@ -111,13 +135,22 @@ const offByFb: QuestionTemplate = {
     const built = makeOptions(
       rng,
       {
-        text: `a.length vale ${arr.length} ma l'ultimo indice valido è ${arr.length - 1}: serve a[a.length - 1]`,
-        why: `a[${arr.length}] non esiste → undefined; l'ultimo elemento è ${last} a indice ${arr.length - 1}.`,
+        text: "L'ultimo indice è `length - 1`",
+        why: `\`a[${arr.length}]\` non esiste perché gli indici validi sono 0…${arr.length - 1}: per stampare ${last} serviva \`a[a.length - 1]\`.`,
       },
       [
-        { text: 'Gli array partono da 1', why: 'In JavaScript gli indici partono da 0.' },
-        { text: 'console.log non può leggere gli array', why: 'Può: il problema è l\'indice fuori range.' },
-        { text: 'Manca un metodo last()', why: 'Basta l\'indice corretto: a[a.length - 1].' },
+        {
+          text: 'Manca un metodo `last()`',
+          why: `Gli array JavaScript non hanno un metodo \`last()\`: l'ultimo elemento si legge con \`a[a.length - 1]\`.`,
+        },
+        {
+          text: 'Gli indici partono da 1',
+          why: `In JavaScript gli indici partono da 0: con partenza a 1 l'ultimo elemento sarebbe a indice ${arr.length}, ma in realtà è \`a[${arr.length - 1}]\`.`,
+        },
+        {
+          text: `\`a.length\` vale ${arr.length - 1}, non ${arr.length}`,
+          why: `\`length\` conta gli elementi e vale ${arr.length}; sono gli indici ad arrivare a ${arr.length - 1}, quindi \`a[a.length]\` è fuori range.`,
+        },
       ],
     );
     return {
@@ -131,11 +164,11 @@ const offByFb: QuestionTemplate = {
       code,
       ...built,
       explanation: {
-        short: 'Off-by-one: l\'ultimo indice è length - 1.',
+        short: "Off-by-one: l'ultimo indice è length - 1.",
         whyCorrect: `a[a.length - 1] = a[${arr.length - 1}] = ${last}.`,
         whyOthersWrong: built.whyOthersWrong,
         concept: 'Indici validi di un array',
-        commonMistake: 'Confondere il conteggio (length) con l\'ultimo indice.',
+        commonMistake: "Confondere il conteggio (length) con l'ultimo indice.",
         example: 'a[arr.length] // sempre undefined',
       },
       deepDiveRef: DD,
@@ -147,44 +180,59 @@ const popMc: QuestionTemplate = {
   id: 'arr-pop-mc',
   topicId: TOPIC,
   subtopicId: 'arrays-mutators',
-  type: 'multiple-choice',
+  type: 'predict-output',
   difficulty: 'easy',
   skills: ['pop'],
   tags: ['array'],
   generate(rng: Rng) {
-    const arr = pickInts(rng, 3, 10, 60, true);
-    const last = arr[arr.length - 1]!;
-    const built = makeOptions(
-      rng,
-      {
-        text: `Restituisce l'ultimo elemento (${last}) e lo rimuove dall'array`,
-        why: 'pop toglie l\'elemento in coda e lo ritorna.',
-      },
-      [
-        { text: `Restituisce il primo elemento (${arr[0]})`, why: 'Quello è shift(), non pop().' },
-        { text: `Restituisce la nuova lunghezza (${arr.length - 1})`, why: 'È push() a restituire la nuova lunghezza.' },
-        { text: 'Restituisce l\'intero array senza l\'ultimo elemento', why: 'pop ritorna l\'elemento rimosso, non l\'array.' },
-      ],
-    );
-    return {
-      templateId: 'arr-pop-mc',
-      type: 'multiple-choice',
-      difficulty: 'easy' as const,
-      topicId: TOPIC,
-      subtopicId: 'arrays-mutators',
-      skills: ['pop'],
-      prompt: `Dato \`const a = [${arr.join(', ')}]\`, cosa fa \`a.pop()\`?`,
-      ...built,
-      explanation: {
-        short: `pop() rimuove ${last} dalla coda e lo restituisce.`,
-        whyCorrect: `Dopo pop, a vale [${arr.slice(0, -1).join(', ')}] e il valore ritornato è ${last}.`,
-        whyOthersWrong: built.whyOthersWrong,
-        concept: 'pop vs push/shift',
-        commonMistake: 'Confondere pop (coda) con shift (testa).',
-        example: '[1,2,3].pop() // 3; l\'array diventa [1,2]',
-      },
-      deepDiveRef: DD,
-    };
+    return retry(() => {
+      const arr = pickInts(rng, 3, 10, 60, true);
+      const last = arr[arr.length - 1]!;
+      const rest = arr.slice(0, -1);
+      const code = `const a = [${arr.join(', ')}];\na.pop();\nconsole.log(a);`;
+      const built = makeOptions(
+        rng,
+        {
+          text: fmt(rest),
+          why: `\`pop()\` rimuove l'ultimo elemento ${last} e modifica l'array: resta ${fmt(rest)}.`,
+        },
+        [
+          {
+            text: fmt(arr),
+            why: `\`pop()\` modifica l'array sul posto: dopo la chiamata ${last} non c'è più e l'array è ${fmt(rest)}.`,
+          },
+          {
+            text: fmt(arr.slice(1)),
+            why: `Questo risultato corrisponderebbe a \`shift()\`, che rimuove il primo elemento: \`pop()\` toglie dalla coda, non dalla testa.`,
+          },
+          {
+            text: fmt([last]),
+            why: `${last} è il valore che \`pop()\` restituisce, non lo stato finale: il log stampa l'array modificato, ${fmt(rest)}.`,
+          },
+        ],
+      );
+      return {
+        templateId: 'arr-pop-mc',
+        type: 'predict-output',
+        difficulty: 'easy' as const,
+        topicId: TOPIC,
+        subtopicId: 'arrays-mutators',
+        skills: ['pop'],
+        prompt: 'Cosa stampa questo codice?',
+        code,
+        ...built,
+        explanation: {
+          short: `pop() rimuove ${last}: a diventa ${fmt(rest)}.`,
+          whyCorrect:
+            "pop toglie l'elemento in coda e lo ritorna; qui si stampa l'array modificato.",
+          whyOthersWrong: built.whyOthersWrong,
+          concept: 'pop vs push/shift',
+          commonMistake: 'Confondere pop (coda) con shift (testa).',
+          example: "[1,2,3].pop() // 3; l'array diventa [1,2]",
+        },
+        deepDiveRef: DD,
+      };
+    });
   },
 };
 
@@ -200,11 +248,23 @@ const includesBm: QuestionTemplate = {
     const v = pickInt(rng, 1, 9);
     const built = makeOptions(
       rng,
-      { text: `lista.includes(${v})`, why: 'includes() ritorna true/false: il modo più diretto.' },
+      {
+        text: `lista.includes(${v})`,
+        why: `\`includes(${v})\` restituisce direttamente true o false: è il booleano pronto per l'\`if\` richiesto dallo scenario.`,
+      },
       [
-        { text: `lista.indexOf(${v})`, why: 'indexOf ritorna la posizione o -1: funziona ma va confrontato con >= 0 o !== -1.' },
-        { text: `lista.contains(${v})`, why: 'contains() non esiste negli array JavaScript.' },
-        { text: `lista.find(${v})`, why: 'find riceve una funzione, non un valore: lista.find(v) darebbe errore.' },
+        {
+          text: `lista.indexOf(${v})`,
+          why: `\`indexOf(${v})\` restituisce la posizione dell'elemento o -1: è un numero, non un booleano, e andrebbe confrontato con \`!== -1\`.`,
+        },
+        {
+          text: `lista.contains(${v})`,
+          why: 'Gli array JavaScript non hanno un metodo `contains` (esiste in Java e C#): la chiamata lancerebbe un TypeError.',
+        },
+        {
+          text: `lista.find(${v})`,
+          why: `\`find\` si aspetta una funzione predicato, non il valore ${v}: passato un numero cercherebbe gli elementi "truthy" della funzione e darebbe un esito diverso.`,
+        },
       ],
     );
     return {
@@ -214,7 +274,7 @@ const includesBm: QuestionTemplate = {
       topicId: TOPIC,
       subtopicId: 'arrays-search',
       skills: ['includes'],
-      prompt: `Vuoi sapere se un array contiene il valore ${v}. Qual è il modo migliore?`,
+      prompt: `Ti serve un booleano pronto per un \`if\`: l'array contiene ${v}? Qual è il modo più diretto?`,
       ...built,
       explanation: {
         short: 'includes() ritorna un booleano direttamente.',
@@ -243,11 +303,23 @@ const pushFg: QuestionTemplate = {
     const code = `const numeri = [${arr.join(', ')}];\nnumeri.___(${v});`;
     const built = makeOptions(
       rng,
-      { text: 'push', why: `push(${v}) aggiunge ${v} in coda a numeri.` },
+      {
+        text: 'push',
+        why: `\`numeri.push(${v})\` accoda ${v} in fondo all'array, ottenendo [${[...arr, v].join(', ')}].`,
+      },
       [
-        { text: 'pop', why: 'pop rimuove l\'ultimo elemento, non aggiunge.' },
-        { text: 'shift', why: 'shift rimuove il primo elemento, non aggiunge.' },
-        { text: 'append', why: 'append() non esiste sugli array JavaScript (è di Python).' },
+        {
+          text: 'pop',
+          why: `\`pop\` fa l'operazione opposta: rimuove e restituisce l'ultimo elemento (${arr[arr.length - 1]}) invece di aggiungere ${v}.`,
+        },
+        {
+          text: 'shift',
+          why: `\`shift\` rimuove il primo elemento (${arr[0]}) invece di aggiungerne uno in coda.`,
+        },
+        {
+          text: 'append',
+          why: 'In JavaScript gli array non hanno `append` (è il metodo delle liste Python): la chiamata lancerebbe un TypeError.',
+        },
       ],
     );
     return {

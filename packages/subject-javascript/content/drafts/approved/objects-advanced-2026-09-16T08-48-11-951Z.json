@@ -1,0 +1,93 @@
+{
+  "topicId": "objects-advanced",
+  "questions": [
+    {
+      "id": "objects-advanced-fb-0022",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["Object.keys", "iterazione", "proprietà oggetto"],
+      "prompt": "Il codice dovrebbe stampare tutte le chiavi di `dati` una per riga, ma invece stampa solo i numeri 0 e 1. Dov'è l'errore?",
+      "code": "const dati = { x: 10, y: 20 };\nfor (let i in Object.keys(dati)) {\n  console.log(i);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "Si itera sugli indici dell'array, non sulle chiavi"
+        },
+        {
+          "id": "b",
+          "text": "Object.keys non funziona su oggetti con numeri"
+        },
+        {
+          "id": "c",
+          "text": "Manca la conversione da oggetto a array"
+        },
+        {
+          "id": "d",
+          "text": "La variabile 'dati' deve essere un array"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "'for...in' cicla sugli indici dell'array, non sulle chiavi dell'oggetto.",
+        "whyCorrect": "'for...in' restituisce gli indici dell'array prodotto da Object.keys, quindi '0' e '1', invece delle chiavi 'x' e 'y'. Serve 'for...of' per ottenere i valori dell'array.",
+        "whyOthersWrong": {
+          "b": "Object.keys funziona su oggetti con chiavi stringa o numeriche; il problema non è nei dati.",
+          "c": "Object.keys già restituisce un array, quindi non manca alcuna conversione.",
+          "d": "Per usare Object.keys l'oggetto può essere anche un oggetto normale, non solo un array."
+        },
+        "concept": "Usare Object.keys con il ciclo corretto",
+        "commonMistake": "Confondere 'for...in' (indici) e 'for...of' (valori) sugli array.",
+        "example": "for (const chiave of Object.keys(obj)) { ... }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:48:07.117Z"
+    },
+    {
+      "id": "objects-advanced-fb-0024",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-chaining",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["optional chaining", "proprietà annidate"],
+      "prompt": "Il codice vorrebbe leggere la proprietà 'telefono' di `utente.contatti` senza errore se `contatti` non esiste, ma in realtà ottiene un TypeError. Dov'è l'errore?",
+      "code": "const utente = { nome: 'Luca' };\nconsole.log(utente.contatti.telefono);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Manca l'optional chaining con ?. dopo 'contatti'"
+        },
+        {
+          "id": "b",
+          "text": "Si usa '.' invece di '[]' per accedere a 'telefono'"
+        },
+        {
+          "id": "c",
+          "text": "La variabile 'utente' non ha la proprietà 'telefono'"
+        },
+        {
+          "id": "d",
+          "text": "Doveva essere una funzione, non un oggetto"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Serve il chaining opzionale per evitare l'errore se 'contatti' non c'è.",
+        "whyCorrect": "Accedendo a una proprietà di 'undefined', senza l'optional chaining, si ottiene un TypeError. Con 'utente.contatti?.telefono', invece, si ottiene undefined senza errore.",
+        "whyOthersWrong": {
+          "b": "Sia '.' che '[]' servono per accedere a proprietà, ma il problema non riguarda la notazione.",
+          "c": "Il problema non è la mancanza della proprietà 'telefono', ma la mancanza di 'contatti', che causa l'errore accedendo a 'undefined'.",
+          "d": "L'oggetto va bene: il problema è l'accesso alla proprietà annidata, non il tipo di 'utente'."
+        },
+        "concept": "Optional chaining su proprietà annidate",
+        "commonMistake": "Dimenticare '?.' quando una proprietà può mancare.",
+        "example": "console.log(obj.nodo?.valore);"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:48:07.117Z"
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "topicId": "destructuring",
+  "questions": [
+    {
+      "id": "destructuring-fg-0001",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["estrarre proprietà da oggetto"],
+      "prompt": "Completa il destructuring per ottenere la proprietà 'età' dall'oggetto.",
+      "code": "const persona = { nome: 'Leo', età: 25 };\nconst { ___ } = persona;\nconsole.log(età);",
+      "options": [
+        {
+          "id": "a",
+          "text": "età"
+        },
+        {
+          "id": "b",
+          "text": "[età]"
+        },
+        {
+          "id": "c",
+          "text": "persona.età"
+        },
+        {
+          "id": "d",
+          "text": "età: persona"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Con il destructuring si usano le parentesi graffe e il nome della proprietà.",
+        "whyCorrect": "La sintassi corretta per estrarre la proprietà 'età' è { età }, che crea una variabile con lo stesso nome.",
+        "whyOthersWrong": {
+          "b": "Le parentesi quadre vengono usate solo per destrutturare array, non oggetti. Qui servono le graffe.",
+          "c": "Scrivere persona.età è la notazione per accedere direttamente, ma nel destructuring si usa solo il nome della proprietà.",
+          "d": "La sintassi età: persona tenta di rinominare, ma qui si vuole solo estrarre 'età'; la variabile si chiamerebbe persona, non ha senso."
+        },
+        "concept": "Destructuring oggetti base",
+        "commonMistake": "Usare la sintassi degli array o notazione proprietà.",
+        "example": "const { nome } = { nome: 'Ada' };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:28:16.672Z"
+    },
+    {
+      "id": "destructuring-fg-0002",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-arrays",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["rest operator", "destructuring array"],
+      "prompt": "Completa per mettere il primo elemento in uno e i restanti in altri.",
+      "code": "const lettere = [\"a\", \"b\", \"c\"];\nconst [ uno, ___ ] = lettere;",
+      "options": [
+        {
+          "id": "a",
+          "text": "...altri"
+        },
+        {
+          "id": "b",
+          "text": "altri"
+        },
+        {
+          "id": "c",
+          "text": "[ ...altri ]"
+        },
+        {
+          "id": "d",
+          "text": "{ ...altri }"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Per raccogliere gli elementi restanti si usa ...nome.",
+        "whyCorrect": "La sintassi ...altri raccoglie gli elementi dopo il primo in un array chiamato altri.",
+        "whyOthersWrong": {
+          "b": "altri senza ... raccoglierebbe solo il secondo elemento, non tutti i restanti.",
+          "c": "[ ...altri ] non è corretto: le parentesi quadre qui sarebbero annidate inutilmente.",
+          "d": "{ ...altri } è sintassi di oggetti, non di array: ... si può usare solo in array qui."
+        },
+        "concept": "Rest operator nel destructuring array",
+        "commonMistake": "Dimenticare i ... o usarli nella sintassi degli oggetti.",
+        "example": "const [ primo, ...resto ] = arr;"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:28:31.189Z"
+    },
+    {
+      "id": "destructuring-fg-0003",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["default proprietà oggetto", "destructuring base"],
+      "prompt": "Completa per assegnare 5 a 'valore' se la proprietà valore non è presente nell'oggetto dati.",
+      "code": "const dati = {};\nconst { valore = ___ } = dati;\nconsole.log(valore);",
+      "options": [
+        {
+          "id": "a",
+          "text": "5"
+        },
+        {
+          "id": "b",
+          "text": "\"valore\""
+        },
+        {
+          "id": "c",
+          "text": "undefined"
+        },
+        {
+          "id": "d",
+          "text": "default"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Per assegnare un default nel destructuring, si usa il valore desiderato dopo il segno =.",
+        "whyCorrect": "Scrivendo 5 dopo il segno = si assegna a valore questo valore quando la proprietà manca.",
+        "whyOthersWrong": {
+          "b": "La stringa \"valore\" non è il valore numerico di default richiesto.",
+          "c": "undefined è già il valore predefinito quando la proprietà manca; bisogna impostare un valore concreto.",
+          "d": "default non è una parola chiave valida nella sintassi di default del destructuring."
+        },
+        "concept": "Valori di default nel destructuring oggetti",
+        "commonMistake": "Confondere il default con la stringa della proprietà o con parole chiave inesistenti.",
+        "example": "const { a = 1 } = {};"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:28:42.779Z"
+    }
+  ]
+}

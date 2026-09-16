@@ -1,0 +1,181 @@
+{
+  "topicId": "string-methods-advanced",
+  "questions": [
+    {
+      "id": "string-methods-advanced-fg-0001",
+      "topicId": "string-methods-advanced",
+      "subtopicId": "string-methods-advanced-split-join",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["join", "array", "string"],
+      "prompt": "Completa per ottenere la stringa 'uno,due,tre' da un array.",
+      "code": "[\"uno\", \"due\", \"tre\"].join(___)",
+      "options": [
+        {
+          "id": "a",
+          "text": "\",\""
+        },
+        {
+          "id": "b",
+          "text": "\" \""
+        },
+        {
+          "id": "c",
+          "text": "\".\""
+        },
+        {
+          "id": "d",
+          "text": "\"-\""
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il separatore deve essere la virgola per produrre 'uno,due,tre'.",
+        "whyCorrect": "join con la virgola unisce gli elementi dell'array inserendo una virgola tra ciascuno, ottenendo la stringa desiderata.",
+        "whyOthersWrong": {
+          "b": "Uno spazio tra gli elementi darebbe 'uno due tre', non con le virgole.",
+          "c": "Il punto tra gli elementi produrrebbe 'uno.due.tre', non la versione richiesta.",
+          "d": "Il trattino darebbe come risultato 'uno-due-tre', diverso dalla richiesta."
+        },
+        "concept": "join con separatore",
+        "commonMistake": "Usare un separatore diverso da quello richiesto.",
+        "example": "[ 'a', 'b' ].join(',') // 'a,b'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:03.612Z"
+    },
+    {
+      "id": "string-methods-advanced-fg-0002",
+      "topicId": "string-methods-advanced",
+      "subtopicId": "string-methods-advanced-trim-pad",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["padStart", "allineamento", "formattazione"],
+      "prompt": "Completa per ottenere '007' partendo da '7'.",
+      "code": "\"7\".padStart(___)",
+      "options": [
+        {
+          "id": "a",
+          "text": "3, \"0\""
+        },
+        {
+          "id": "b",
+          "text": "2, \"7\""
+        },
+        {
+          "id": "c",
+          "text": "3, \"7\""
+        },
+        {
+          "id": "d",
+          "text": "2, \"0\""
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "padStart(3, '0') rende '007' aggiungendo zeri a sinistra.",
+        "whyCorrect": "padStart con lunghezza 3 e carattere '0' aggiunge zeri finché la lunghezza raggiunge 3, ottenendo '007'.",
+        "whyOthersWrong": {
+          "b": "padStart(2, '7') produce '77', non aggiunge zeri e la lunghezza è diversa.",
+          "c": "padStart(3, '7') crea '777', non aggiunge zeri ma il carattere dato.",
+          "d": "padStart(2, '0') produce '07', quindi la stringa non raggiunge 3 cifre."
+        },
+        "concept": "padStart parametri",
+        "commonMistake": "Invertire posizione e carattere o usare lunghezza sbagliata.",
+        "example": "'5'.padStart(3, '0') // '005'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:03.613Z"
+    },
+    {
+      "id": "string-methods-advanced-fg-0003",
+      "topicId": "string-methods-advanced",
+      "subtopicId": "string-methods-advanced-replace",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["replace", "sostituzione", "string"],
+      "prompt": "Completa per sostituire solo la prima occorrenza di 'a' con 'o'.",
+      "code": "\"banana\".replace(___)",
+      "options": [
+        {
+          "id": "a",
+          "text": "\"a\", \"o\""
+        },
+        {
+          "id": "b",
+          "text": "/a/g, \"o\""
+        },
+        {
+          "id": "c",
+          "text": "\"an\", \"on\""
+        },
+        {
+          "id": "d",
+          "text": "/an/, \"on\""
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "replace('a', 'o') cambia solo la prima 'a' trovata.",
+        "whyCorrect": "Con due stringhe, replace sostituisce solo la prima corrispondenza della 'a' con 'o', lasciando invariate le altre.",
+        "whyOthersWrong": {
+          "b": "L'opzione usa una regex globale, che sostituirebbe tutte le 'a', non solo la prima.",
+          "c": "Sostituirebbe la sequenza 'an' con 'on', non la singola 'a'.",
+          "d": "Sostituisce 'an' con 'on' solo alla prima occorrenza, non la singola 'a'."
+        },
+        "concept": "replace prima occorrenza",
+        "commonMistake": "Supporre che replace sostituisca tutte le occorrenze.",
+        "example": "'testa'.replace('t', 'b') // 'besta'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:03.613Z"
+    },
+    {
+      "id": "string-methods-advanced-fg-0005",
+      "topicId": "string-methods-advanced",
+      "subtopicId": "string-methods-advanced-trim-pad",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["trim"],
+      "prompt": "Scegli il metodo che rimuove gli spazi all’inizio e alla fine della stringa.",
+      "code": "const input = '  esempio  ';\nconst pulito = input.___();",
+      "options": [
+        {
+          "id": "a",
+          "text": "trim"
+        },
+        {
+          "id": "b",
+          "text": "slice"
+        },
+        {
+          "id": "c",
+          "text": "split"
+        },
+        {
+          "id": "d",
+          "text": "replaceAll"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il metodo trim elimina gli spazi da inizio e fine stringa.",
+        "whyCorrect": "trim rimuove i caratteri di spazio solo all’inizio e alla fine della stringa, lasciando invariato il resto.",
+        "whyOthersWrong": {
+          "b": "slice crea una sottostringa scegliendo un intervallo, non rimuove gli spazi automaticamente.",
+          "c": "split converte la stringa in array secondo un separatore, ma non elimina spazi.",
+          "d": "replaceAll sostituisce tutte le occorrenze di un pattern, ma senza pattern specifico non pulisce gli spazi."
+        },
+        "concept": "Metodo trim sulle stringhe",
+        "commonMistake": "Cercare di usare slice o replace per rimuovere spazi ai bordi.",
+        "example": "'  ok  '.trim() // 'ok'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:10.200Z"
+    }
+  ]
+}

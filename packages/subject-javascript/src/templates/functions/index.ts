@@ -18,11 +18,23 @@ const noReturnPo: QuestionTemplate = {
     const code = `function doppia(x) {\n  const r = x * ${m};\n}\nconsole.log(doppia(${a}));`;
     const built = makeOptions(
       rng,
-      { text: 'undefined', why: 'Senza return la funzione restituisce undefined.' },
+      {
+        text: 'undefined',
+        why: 'La funzione calcola `r` ma non lo restituisce: senza `return` il valore di ritorno è undefined.',
+      },
       [
-        { text: fmt(a * m), why: 'Il calcolo avviene ma il risultato non viene restituito: serve return r.' },
-        { text: 'null', why: 'Il valore di default di una funzione è undefined, non null.' },
-        { text: 'r', why: 'r è una variabile interna: non viene stampata né restituita.' },
+        {
+          text: fmt(a * m),
+          why: `Il prodotto ${a * m} viene calcolato e assegnato a \`r\`, ma non esce mai dalla funzione: servirebbe \`return r\`.`,
+        },
+        {
+          text: 'null',
+          why: 'Il valore di ritorno implicito di una funzione è undefined, non null: `null` andrebbe restituito esplicitamente.',
+        },
+        {
+          text: 'r',
+          why: '`r` è una variabile locale interna alla funzione: il log stampa il valore di ritorno della chiamata, che senza `return` è undefined.',
+        },
       ],
     );
     return {
@@ -62,11 +74,23 @@ const missingArgPo: QuestionTemplate = {
     const code = `function ${fname}(a, b) {\n  console.log(b);\n}\n${fname}(${a});`;
     const built = makeOptions(
       rng,
-      { text: 'undefined', why: `b non riceve argomenti: vale undefined.` },
+      {
+        text: 'undefined',
+        why: `La chiamata \`${fname}(${a})\` passa un solo argomento, che va ad \`a\`: \`b\` resta senza valore e vale undefined.`,
+      },
       [
-        { text: fmt(a), why: `${a} va al primo parametro a, non a b.` },
-        { text: '0', why: 'I parametri mancanti valgono undefined, non 0.' },
-        { text: 'ReferenceError', why: 'Chiamare con meno argomenti non è un errore: b vale undefined.' },
+        {
+          text: fmt(a),
+          why: `${a} viene assegnato al primo parametro \`a\` in ordine posizionale: \`b\` non riceve nulla e vale undefined.`,
+        },
+        {
+          text: '0',
+          why: 'I parametri senza argomento non hanno un default implicito a 0: senza un valore di default dichiarato, `b` vale undefined.',
+        },
+        {
+          text: 'ReferenceError',
+          why: 'Chiamare una funzione con meno argomenti del previsto è lecito in JavaScript: il parametro mancante vale semplicemente undefined.',
+        },
       ],
     );
     return {
@@ -106,13 +130,22 @@ const afterReturnFb: QuestionTemplate = {
     const built = makeOptions(
       rng,
       {
-        text: "Il console.log dopo return non viene mai eseguito: return termina la funzione",
-        why: 'Tutto il codice dopo return è irraggiungibile.',
+        text: 'Il codice dopo `return` non gira',
+        why: `\`return ${v}\` fa uscire subito dalla funzione: la riga con \`console.log('finito')\` è codice irraggiungibile e non viene mai eseguita.`,
       },
       [
-        { text: 'return deve stare alla fine del file', why: 'return può stare ovunque nella funzione; è il codice dopo a non eseguirsi.' },
-        { text: 'console.log dentro le funzioni è vietato', why: 'È lecito: semplicemente qui non viene raggiunto.' },
-        { text: 'Manca un else', why: 'Non c\'è alcuna condizione da completare.' },
+        {
+          text: 'Manca un ramo `else`',
+          why: 'Non c’è alcun `if` in questo codice e non serve un `else`: il problema è che la riga del log sta dopo `return` e non viene mai raggiunta.',
+        },
+        {
+          text: "`'finito'` va restituito con `return`",
+          why: 'Anche restituendo la stringa, la riga resta dopo il primo `return` e non verrebbe eseguita: per vederla andrebbe spostata prima.',
+        },
+        {
+          text: '`return` va dentro `console.log`',
+          why: '`return` non può stare dentro un `console.log` come parametro in questo modo: il problema è l’ordine delle righe, non l’annidamento.',
+        },
       ],
     );
     return {
@@ -129,7 +162,7 @@ const afterReturnFb: QuestionTemplate = {
         short: 'return esce subito dalla funzione: il codice successivo è dead code.',
         whyCorrect: `La funzione restituisce ${v} e termina.`,
         whyOthersWrong: built.whyOthersWrong,
-        concept: 'return interrompe l\'esecuzione',
+        concept: "return interrompe l'esecuzione",
         commonMistake: 'Pensare che la funzione continui dopo return.',
         example: 'Metti il console.log prima del return.',
       },
@@ -152,11 +185,23 @@ const declareFg: QuestionTemplate = {
     const code = `___ ${fname}(a, b) {\n  return ${expr};\n}`;
     const built = makeOptions(
       rng,
-      { text: 'function', why: 'function è la parola chiave per dichiarare una funzione in JavaScript.' },
+      {
+        text: 'function',
+        why: `In JavaScript una funzione si dichiara con \`function ${fname}(a, b) { ... }\`: è la parola chiave richiesta.`,
+      },
       [
-        { text: 'def', why: 'def è la sintassi di Python, non di JavaScript.' },
-        { text: 'fun', why: 'fun è la sintassi di Kotlin, non di JavaScript.' },
-        { text: 'method', why: '"method" non è una parola chiave di JavaScript.' },
+        {
+          text: 'def',
+          why: '`def` è la sintassi di Python per le funzioni: in JavaScript darebbe un errore di sintassi, la parola chiave è `function`.',
+        },
+        {
+          text: 'fun',
+          why: '`fun` appartiene a Kotlin (e linguaggi simili): in JavaScript non esiste e il codice non verrebbe riconosciuto.',
+        },
+        {
+          text: 'method',
+          why: '`method` non è una parola chiave di JavaScript: la dichiarazione corretta usa `function`.',
+        },
       ],
     );
     return {
@@ -198,12 +243,21 @@ const defaultBm: QuestionTemplate = {
       rng,
       {
         text: `function ${fname}(${pname} = '${def}') { ... }`,
-        why: 'I parametri di default si dichiarano nella firma: pulito e visibile.',
+        why: `I parametri di default si dichiarano nella firma con \`=\`: se ${pname} non viene passato (o è undefined) vale '${def}'.`,
       },
       [
-        { text: `function ${fname}(${pname} || '${def}') { ... }`, why: 'Non è sintassi valida nella firma dei parametri.' },
-        { text: `function ${fname}(${pname}: '${def}') { ... }`, why: 'I due punti nella firma indicano un tipo (TypeScript), non un default.' },
-        { text: `function ${fname}(default ${pname} = '${def}') { ... }`, why: '"default" non è una parola chiave valida per i parametri.' },
+        {
+          text: `function ${fname}(${pname} || '${def}') { ... }`,
+          why: `Nella firma dei parametri non si può scrivere un'espressione con \`||\`: darebbe un errore di sintassi; \`||\` andrebbe nel corpo, oppure si usa \`=\` in firma.`,
+        },
+        {
+          text: `function ${fname}(${pname}: '${def}') { ... }`,
+          why: "I due punti dopo un parametro indicano un'annotazione di tipo in stile TypeScript, non un valore di default: non è JavaScript valido.",
+        },
+        {
+          text: `function ${fname}(default ${pname} = '${def}') { ... }`,
+          why: 'Non esiste una parola chiave `default` per i parametri: il default si esprime direttamente con `=` dopo il nome del parametro.',
+        },
       ],
     );
     return {
@@ -217,7 +271,7 @@ const defaultBm: QuestionTemplate = {
       ...built,
       explanation: {
         short: 'I parametri di default si scrivono nella firma: (nome = "ospite").',
-        whyCorrect: 'Il default si applica quando l\'argomento è undefined.',
+        whyCorrect: "Il default si applica quando l'argomento è undefined.",
         whyOthersWrong: built.whyOthersWrong,
         concept: 'Parametri di default',
         commonMistake: 'Gestire il default a mano nel corpo quando la firma lo supporta.',

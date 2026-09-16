@@ -1,5 +1,5 @@
 import type { QuestionTemplate } from '@lg/core';
-import { fmt, makeOptions, pickInt, pickName, pickOf, retry, shuffle, type Rng } from '../helpers.js';
+import { fmt, makeOptions, pickInt, pickName, pickOf, retry, type Rng } from '../helpers.js';
 
 const TOPIC = 'scope-basics';
 const DD = 'dd-scope-basics';
@@ -22,12 +22,21 @@ const shadowPo: QuestionTemplate = {
         rng,
         {
           text: `${inner}\n${outer}`,
-          why: `Dentro il blocco vale la ${name} interna (${inner}); fuori resta ${outer}.`,
+          why: `Dentro il blocco la seconda \`let ${name}\` fa ombra a quella esterna e stampa ${inner}; usciti dal blocco vale di nuovo la variabile esterna, che stampa ${outer}.`,
         },
         [
-          { text: `${outer}\n${outer}`, why: 'Il let interno fa shadowing: dentro il blocco vale il valore interno.' },
-          { text: `${inner}\n${inner}`, why: 'Il let interno vale solo nel blocco: fuori resta il valore originale.' },
-          { text: 'ReferenceError', why: 'Entrambe le variabili sono dichiarate prima dell\'uso: nessun errore.' },
+          {
+            text: `${outer}\n${outer}`,
+            why: `La \`let\` interna non riassegna la variabile esterna ma ne crea una nuova che fa ombra: dentro il blocco il primo log stampa ${inner}, non ${outer}.`,
+          },
+          {
+            text: `${inner}\n${inner}`,
+            why: `La \`let\` interna vive solo dentro le graffe: fuori la variabile originale vale ancora ${outer}, quindi il secondo log non stampa ${inner}.`,
+          },
+          {
+            text: 'ReferenceError',
+            why: 'Entrambe le variabili sono dichiarate prima di essere lette: il nome esiste in entrambi gli scope e non c’è alcun errore.',
+          },
         ],
       );
       return {
@@ -69,13 +78,22 @@ const blockMc: QuestionTemplate = {
     const built = makeOptions(
       rng,
       {
-        text: `ReferenceError: ${name} is not defined`,
-        why: 'let ha scope di blocco: fuori dalle graffe la variabile non esiste.',
+        text: 'ReferenceError',
+        why: `\`let\` ha scope di blocco: ${name} esiste solo tra le graffe dell'\`if\`, quindi il \`console.log\` fuori lancia un ReferenceError.`,
       },
       [
-        { text: fmt(v), why: `Sarebbe il risultato con var: let non esce dal blocco.` },
-        { text: 'undefined', why: 'La variabile non esiste proprio fuori dal blocco: è un errore, non undefined.' },
-        { text: 'null', why: 'Non c\'è alcun valore da stampare: l\'esecuzione si ferma con un errore.' },
+        {
+          text: fmt(v),
+          why: `Stampare ${v} corrisponderebbe al comportamento di \`var\`, che ignora i blocchi: con \`let\` la variabile non esiste fuori dalle graffe.`,
+        },
+        {
+          text: 'undefined',
+          why: `Con \`var\` l'hoisting darebbe undefined, ma con \`let\` il nome fuori dal blocco non è proprio definito: l'esito è un ReferenceError.`,
+        },
+        {
+          text: 'TypeError',
+          why: 'L’errore riguarda un nome non definito nello scope, non un’operazione su un valore: è un ReferenceError, non un TypeError.',
+        },
       ],
     );
     return {
@@ -110,23 +128,29 @@ const varScopeCmp: QuestionTemplate = {
   skills: ['var', 'let', 'scope'],
   tags: ['scope'],
   generate(rng: Rng) {
-    const v = pickInt(rng, 1, 99);
-    const trueStatements = [
-      { text: 'var ha scope di funzione: dichiarata in un blocco è visibile anche fuori', why: `var ignora i blocchi: if (true) { var x = ${v}; } → x è visibile dopo e vale ${v}.` },
-      { text: 'let dichiarata in un blocco non esiste fuori dal blocco', why: 'let/const hanno scope di blocco: oltre la graffa è ReferenceError.' },
-      { text: 'var in un ciclo for resta visibile dopo il ciclo', why: 'var non ha scope di blocco: il contatore "esce".' },
-      { text: 'let e const condividono lo scope di blocco', why: 'Entrambe sono confinate dalle graffe; var no.' },
-    ];
-    const falseStatements = [
-      { text: 'var ha scope di blocco come let', why: 'No: è la differenza principale tra var e let.' },
-      { text: 'let è visibile ovunque nello script', why: 'let è confinata al blocco che la contiene.' },
-      { text: 'var dichiarata in un blocco dà ReferenceError fuori', why: 'Questo è il comportamento di let, non di var.' },
-      { text: 'let in un for è visibile dopo il ciclo', why: 'let muore col blocco del for; è var a sopravvivere.' },
-    ];
+    const n = pickInt(rng, 2, 9);
+    const codeA = `for (var i = 0; i < ${n}; i++) { }\nconsole.log(i);`;
+    const codeB = `for (let i = 0; i < ${n}; i++) { }\nconsole.log(i);`;
     const built = makeOptions(
       rng,
-      pickOf(rng, trueStatements),
-      shuffle(falseStatements, rng).slice(0, 3),
+      {
+        text: `\`var\` stampa ${n}, \`let\` dà errore`,
+        why: `\`var\` ha scope di funzione: il contatore sopravvive al ciclo e vale ${n}. Con \`let\` il contatore muore col blocco e il log lancia un ReferenceError.`,
+      },
+      [
+        {
+          text: `\`let\` stampa ${n}, \`var\` dà errore`,
+          why: `I due scope sono invertiti: è \`var\` a uscire dal blocco del \`for\` e a stampare ${n}, mentre \`let\` resta confinata e dà errore.`,
+        },
+        {
+          text: 'Stampano entrambe lo stesso',
+          why: `\`var\` e \`let\` non sono equivalenti nello scope: solo \`var\` resta visibile dopo il \`for\` e stampa ${n}; con \`let\` il nome non esiste più.`,
+        },
+        {
+          text: 'Danno entrambe errore',
+          why: `Solo \`let\` muore col blocco: \`var\` ha scope di funzione, quindi il primo frammento stampa ${n} senza errori.`,
+        },
+      ],
     );
     return {
       templateId: 'scope-var-cmp',
@@ -135,10 +159,11 @@ const varScopeCmp: QuestionTemplate = {
       topicId: TOPIC,
       subtopicId: 'scope-function',
       skills: ['var', 'let'],
-      prompt: 'Qual è la differenza di scope tra var e let dentro un blocco (es. un if)?',
+      prompt: 'Confronta i due frammenti: cosa stampa il `console.log` dopo il ciclo in ciascuno?',
+      code: `A:\n${codeA}\n\nB:\n${codeB}`,
       ...built,
       explanation: {
-        short: 'var esce dai blocchi, let no.',
+        short: `Con var stampa ${n} (il contatore esce dal ciclo); con let è ReferenceError.`,
         whyCorrect: 'var è "function-scoped": i blocchi non la contengono.',
         whyOthersWrong: built.whyOthersWrong,
         concept: 'Function scope vs block scope',
@@ -165,13 +190,22 @@ const tdzFb: QuestionTemplate = {
     const built = makeOptions(
       rng,
       {
-        text: `${name} è usata prima della dichiarazione: con let si è nella TDZ → ReferenceError`,
-        why: 'A differenza di var, let/const non sono accessibili prima della riga di dichiarazione.',
+        text: 'Accesso prima della `let` (TDZ)',
+        why: `Con \`let\` la variabile esiste ma non è accessibile prima della sua riga (Temporal Dead Zone): \`console.log(${name})\` arriva troppo presto e lancia un ReferenceError.`,
       },
       [
-        { text: 'Manca il punto e virgola', why: 'Il punto e virgola è opzionale e non è il problema.' },
-        { text: 'console.log va dopo ogni dichiarazione', why: 'Non è una regola: il problema è leggere una let prima che esista.' },
-        { text: 'Bisogna usare var in cima al file', why: 'Usare var "risolverebbe" solo perché var è sollevata: la vera soluzione è spostare la dichiarazione prima dell\'uso.' },
+        {
+          text: `\`${name}\` va dichiarata con \`const\``,
+          why: `Anche \`const\` è soggetta alla TDZ: leggere ${name} prima della dichiarazione darebbe lo stesso errore; il problema è l'ordine delle righe.`,
+        },
+        {
+          text: `Manca \`= ${v}\` nel \`console.log\``,
+          why: `\`console.log\` legge il valore, non lo assegna: ${name} va dichiarata (e inizializzata) prima della riga del log.`,
+        },
+        {
+          text: '`let` non accetta numeri',
+          why: `\`let\` accetta qualunque tipo di valore, numeri compresi: l'errore nasce perché il log precede la dichiarazione di ${name}.`,
+        },
       ],
     );
     return {
@@ -189,7 +223,7 @@ const tdzFb: QuestionTemplate = {
         whyCorrect: `console.log(${name}) precede la riga let ${name}: ReferenceError.`,
         whyOthersWrong: built.whyOthersWrong,
         concept: 'Temporal Dead Zone',
-        commonMistake: 'Aspettarsi l\'hoisting alla var (che darebbe undefined).',
+        commonMistake: "Aspettarsi l'hoisting alla var (che darebbe undefined).",
         example: 'Sposta la dichiarazione sopra il console.log.',
       },
       deepDiveRef: DD,
@@ -211,11 +245,23 @@ const letForFg: QuestionTemplate = {
     const code = `for (___ ${i} = 0; ${i} < ${n}; ${i}++) {\n  console.log(${i});\n}\n// ${i} non deve esistere qui fuori`;
     const built = makeOptions(
       rng,
-      { text: 'let', why: `let confina ${i} al blocco del for: fuori non esiste.` },
+      {
+        text: 'let',
+        why: `\`let\` confina ${i} al blocco del \`for\`: dopo il ciclo il nome non esiste più, come richiesto.`,
+      },
       [
-        { text: 'var', why: `var ha scope di funzione: ${i} resterebbe visibile fuori dal ciclo.` },
-        { text: 'const', why: `const non permette ${i}++: la riassegnazione lancerebbe TypeError.` },
-        { text: 'static', why: 'static non è una parola chiave per le variabili in JavaScript.' },
+        {
+          text: 'var',
+          why: `\`var\` ha scope di funzione e ignora il blocco del \`for\`: dopo il ciclo ${i} resterebbe visibile e varrebbe ${n}.`,
+        },
+        {
+          text: 'const',
+          why: `\`const\` vieterebbe la riassegnazione: \`${i}++\` tenterebbe di modificare una costante e lancerebbe un TypeError al primo giro.`,
+        },
+        {
+          text: 'static',
+          why: 'In JavaScript `static` serve solo per i membri statici delle classi: non dichiara variabili e darebbe un errore di sintassi.',
+        },
       ],
     );
     return {
@@ -230,7 +276,7 @@ const letForFg: QuestionTemplate = {
       ...built,
       explanation: {
         short: 'let nel for dà al contatore lo scope del ciclo.',
-        whyCorrect: 'Con let, i è confinata alle graffe e all\'header del for.',
+        whyCorrect: "Con let, i è confinata alle graffe e all'header del for.",
         whyOthersWrong: built.whyOthersWrong,
         concept: 'let nei for',
         commonMistake: 'Usare var e ritrovare il contatore "inquinato" fuori.',

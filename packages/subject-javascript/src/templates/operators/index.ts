@@ -22,11 +22,23 @@ const incPo: QuestionTemplate = {
         : `let ${name} = ${a};\n++${name};\nconsole.log(${name});`;
       const built = makeOptions(
         rng,
-        { text: fmt(a + 1), why: `++ incrementa ${name} di 1: da ${a} a ${a + 1}.` },
+        {
+          text: fmt(a + 1),
+          why: `L'operatore \`++\` incrementa ${name} di 1: da ${a} passa a ${a + 1} prima del log.`,
+        },
         [
-          { text: fmt(a), why: '++ modifica la variabile: non resta al valore iniziale.' },
-          { text: fmt(a + 2), why: '++ incrementa di 1, non di 2.' },
-          { text: 'undefined', why: 'La variabile è inizializzata e poi incrementata.' },
+          {
+            text: fmt(a),
+            why: `\`++\` modifica la variabile sul posto: ${name} non resta al valore iniziale ${a} ma sale a ${a + 1}.`,
+          },
+          {
+            text: fmt(a + 2),
+            why: `\`++\` aggiunge sempre e solo 1: un incremento doppio richiederebbe due operatori o \`+= 2\`, quindi ${a} diventa ${a + 1}.`,
+          },
+          {
+            text: 'undefined',
+            why: `La variabile viene inizializzata a ${a} e poi incrementata: ha sempre un valore numerico, mai undefined.`,
+          },
         ],
       );
       return {
@@ -41,7 +53,8 @@ const incPo: QuestionTemplate = {
         ...built,
         explanation: {
           short: `${postfix ? `${name}++` : `++${name}`} incrementa ${name}: stampa ${a + 1}.`,
-          whyCorrect: 'Sia prefisso che postfisso incrementano la variabile; qui conta il valore finale.',
+          whyCorrect:
+            'Sia prefisso che postfisso incrementano la variabile; qui conta il valore finale.',
           whyOthersWrong: built.whyOthersWrong,
           concept: 'Operatore di incremento ++',
           commonMistake: 'Pensare che x++ non modifichi x.',
@@ -69,11 +82,23 @@ const compoundPo: QuestionTemplate = {
       const code = `let ${name} = ${a};\n${name} += ${b};\nconsole.log(${name});`;
       const built = makeOptions(
         rng,
-        { text: fmt(a + b), why: `+= somma ${b} a ${name}: ${a} + ${b} = ${a + b}.` },
+        {
+          text: fmt(a + b),
+          why: `\`+=\` somma ${b} al valore esistente: \`${name} += ${b}\` equivale a \`${name} = ${a} + ${b}\`, cioè ${a + b}.`,
+        },
         [
-          { text: fmt(b), why: '+= aggiunge al valore esistente, non sostituisce.' },
-          { text: fmt(a), why: 'La variabile viene aggiornata: non resta al valore iniziale.' },
-          { text: fmt(`${a}${b}`), why: 'Con i numeri += somma; la concatenazione avviene solo con le stringhe.' },
+          {
+            text: fmt(b),
+            why: `\`+=\` aggiunge al valore esistente invece di sostituirlo: ${name} parte da ${a}, quindi non diventa ${b} ma ${a + b}.`,
+          },
+          {
+            text: fmt(a),
+            why: `La seconda riga aggiorna ${name} sommandovi ${b}: il valore iniziale ${a} non è quello stampato.`,
+          },
+          {
+            text: fmt(`${a}${b}`),
+            why: `La concatenazione avviene solo quando un operando è una stringa: ${a} e ${b} sono numeri, quindi \`+=\` li somma in ${a + b}.`,
+          },
         ],
       );
       return {
@@ -88,7 +113,7 @@ const compoundPo: QuestionTemplate = {
         ...built,
         explanation: {
           short: `${name} += ${b} equivale a ${name} = ${name} + ${b} → ${a + b}.`,
-          whyCorrect: 'L\'assegnazione composta aggiorna la variabile sommando.',
+          whyCorrect: "L'assegnazione composta aggiorna la variabile sommando.",
           whyOthersWrong: built.whyOthersWrong,
           concept: 'Assegnazione composta',
           commonMistake: 'Leggere += come semplice assegnazione.',
@@ -116,11 +141,23 @@ const precedenceMc: QuestionTemplate = {
       const correct = a + b * c;
       const built = makeOptions(
         rng,
-        { text: fmt(correct), why: `La moltiplicazione ha precedenza: ${b} * ${c} = ${b * c}, poi ${a} + ${b * c} = ${correct}.` },
+        {
+          text: fmt(correct),
+          why: `La moltiplicazione ha la precedenza sull'addizione: prima ${b} * ${c} = ${b * c}, poi ${a} + ${b * c} = ${correct}.`,
+        },
         [
-          { text: fmt((a + b) * c), why: 'Questo sarebbe il risultato con le parentesi (a + b) * c: senza, * viene prima.' },
-          { text: fmt(a * b + c), why: 'Le operazioni non si riordinano: resta a + (b * c).' },
-          { text: fmt(a + b + c), why: 'La moltiplicazione non sparisce: b * c va calcolata prima.' },
+          {
+            text: fmt((a + b) * c),
+            why: `Questo sarebbe il risultato di \`(${a} + ${b}) * ${c}\`: senza parentesi la moltiplicazione si calcola prima e il risultato è ${correct}.`,
+          },
+          {
+            text: fmt(a * b + c),
+            why: `Le operazioni non si riordinano: l'espressione resta ${a} + (${b} * ${c}), quindi ${a * b + c} non è tra i risultati possibili.`,
+          },
+          {
+            text: fmt(a + b + c),
+            why: `La moltiplicazione non scompare: ${b} * ${c} vale ${b * c} e va calcolata prima della somma, quindi il totale è ${correct}.`,
+          },
         ],
       );
       return {
@@ -137,7 +174,7 @@ const precedenceMc: QuestionTemplate = {
           whyCorrect: '* ha precedenza maggiore di +.',
           whyOthersWrong: built.whyOthersWrong,
           concept: 'Precedenza degli operatori',
-          commonMistake: 'Leggere l\'espressione da sinistra a destra ignorando la precedenza.',
+          commonMistake: "Leggere l'espressione da sinistra a destra ignorando la precedenza.",
           example: '2 + 3 * 4 // 14, non 20',
         },
         deepDiveRef: DD,
@@ -162,13 +199,22 @@ const eqPlusFb: QuestionTemplate = {
     const built = makeOptions(
       rng,
       {
-        text: `=+ non esiste: il codice assegna +${b} a ${name}; per sommare serviva +=`,
-        why: `${name} =+ ${b} è letto come "${name} = (+${b})": stampa ${b}, non ${a + b}.`,
+        text: '`=+` assegna invece di sommare',
+        why: `\`${name} =+ ${b}\` viene letto come \`${name} = (+${b})\`: il + unario non somma ma assegna ${b}, quindi stampa ${b} invece di ${a + b}.`,
       },
       [
-        { text: 'console.log è chiamato su una variabile sbagliata', why: 'Il console.log stampa la variabile giusta: il problema è l\'assegnazione.' },
-        { text: `${name} non può essere riassegnata perché let`, why: 'let è riassegnabile; il problema è l\'operatore usato.' },
-        { text: 'Bisogna dichiarare la variabile due volte', why: 'Non serve: let permette la riassegnazione con l\'operatore corretto.' },
+        {
+          text: 'La variabile va ridichiarata',
+          why: `${name} è già dichiarata nella prima riga: bastava correggere l'operatore in \`+=\`, senza aggiungere una nuova dichiarazione.`,
+        },
+        {
+          text: `Manca \`let\` davanti a \`${name}\``,
+          why: `${name} esiste già grazie alla prima riga: il problema non è la dichiarazione ma l'operatore \`=+\`, che assegna invece di sommare.`,
+        },
+        {
+          text: `\`+${b}\` va scritto \`${b}+\``,
+          why: `Il segno va spostato prima dell'\`=\`, non dopo il numero: la forma corretta è \`${name} += ${b}\`.`,
+        },
       ],
     );
     return {
@@ -183,10 +229,10 @@ const eqPlusFb: QuestionTemplate = {
       ...built,
       explanation: {
         short: `=+ ${b} assegna +${b} (più unario), non somma: ${name} diventa ${b}.`,
-        whyCorrect: 'L\'assegnazione composta si scrive +=, con + prima di =.',
+        whyCorrect: "L'assegnazione composta si scrive +=, con + prima di =.",
         whyOthersWrong: built.whyOthersWrong,
         concept: '+= vs =+',
-        commonMistake: 'Invertire l\'ordine dei caratteri negli operatori composti.',
+        commonMistake: "Invertire l'ordine dei caratteri negli operatori composti.",
         example: 'x =+ 5 assegna 5; x += 5 somma 5',
       },
       deepDiveRef: DD,
@@ -207,12 +253,36 @@ const logicCmp: QuestionTemplate = {
       const a = rng() < 0.5;
       const b = rng() < 0.5;
       const exprs = [
-        { text: 'a && b', value: a && b, why: '&& richiede entrambi veri.' },
-        { text: 'a || b', value: a || b, why: '|| basta un operando vero.' },
-        { text: '!a && b', value: !a && b, why: `!a è ${!a} e b è ${b}.` },
-        { text: 'a && !b', value: a && !b, why: `a è ${a} e !b è ${!b}.` },
-        { text: '!(a || b)', value: !(a || b), why: `a || b è ${a || b}, negato è ${!(a || b)}.` },
-        { text: '!a || b', value: !a || b, why: `!a è ${!a}, b è ${b}: || basta un vero.` },
+        {
+          text: 'a && b',
+          value: a && b,
+          why: `\`a && b\` richiede entrambi veri: con a = ${a} e b = ${b} vale ${a && b}.`,
+        },
+        {
+          text: 'a || b',
+          value: a || b,
+          why: `\`a || b\` richiede almeno un operando vero: con a = ${a} e b = ${b} vale ${a || b}.`,
+        },
+        {
+          text: '!a && b',
+          value: !a && b,
+          why: `\`!a\` vale ${!a} e \`b\` vale ${b}: la congiunzione \`!a && b\` risulta ${!a && b}.`,
+        },
+        {
+          text: 'a && !b',
+          value: a && !b,
+          why: `\`a\` vale ${a} e \`!b\` vale ${!b}: la congiunzione \`a && !b\` risulta ${a && !b}.`,
+        },
+        {
+          text: '!(a || b)',
+          value: !(a || b),
+          why: `\`a || b\` vale ${a || b} e la negazione lo inverte: \`!(a || b)\` risulta ${!(a || b)}.`,
+        },
+        {
+          text: '!a || b',
+          value: !a || b,
+          why: `\`!a\` vale ${!a} e \`b\` vale ${b}: la disgiunzione \`!a || b\` risulta ${!a || b}.`,
+        },
       ];
       const trueOnes = exprs.filter((e) => e.value);
       const falseOnes = exprs.filter((e) => !e.value);
@@ -220,13 +290,9 @@ const logicCmp: QuestionTemplate = {
       const correct = pickOf(rng, trueOnes);
       const distractors = falseOnes.slice(0, 3).map((e) => ({
         text: e.text,
-        why: `${e.text} vale false qui: ${e.why}`,
+        why: e.why,
       }));
-      const built = makeOptions(
-        rng,
-        { text: correct.text, why: `${correct.text} vale true: ${correct.why}` },
-        distractors,
-      );
+      const built = makeOptions(rng, { text: correct.text, why: correct.why }, distractors);
       return {
         templateId: 'op-logic-cmp',
         type: 'compare',

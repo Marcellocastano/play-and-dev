@@ -1,0 +1,52 @@
+{
+  "topicId": "spread-rest",
+  "questions": [
+    {
+      "id": "spread-rest-fb-0034",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "copia superficiale",
+        "spread su array"
+      ],
+      "prompt": "Il codice vuole creare una copia di `numeri` per modificarla senza toccare l'originale, ma dopo la modifica anche `numeri` viene alterato. Qual è la causa?",
+      "code": "const numeri = [[1, 2], [3, 4]];\nconst copia = [...numeri];\ncopia[0][0] = 99;\nconsole.log(numeri);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Lo spread copia solo l'array esterno, non gli interni"
+        },
+        {
+          "id": "b",
+          "text": "Lo spread muta entrambi gli array per errore"
+        },
+        {
+          "id": "c",
+          "text": "Serve uno spread doppio per copiare tutto"
+        },
+        {
+          "id": "d",
+          "text": "Lo spread funziona solo su array di numeri semplici"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread copia solo l'array più esterno: gli array interni restano condivisi.",
+        "whyCorrect": "Lo spread effettua una copia superficiale dell'array, quindi gli array annidati rimangono riferimenti condivisi tra la copia e l'originale. Modificando un elemento interno, il cambiamento si riflette su entrambi.",
+        "whyOthersWrong": {
+          "b": "Lo spread non modifica direttamente nessuno dei due array: restituisce un nuovo array contenente gli stessi riferimenti degli elementi originali, quindi la mutazione si propaga solo agli oggetti condivisi.",
+          "c": "Non esiste un 'doppio spread' automatico: bisognerebbe copiare manualmente ogni array interno per ottenere una copia profonda.",
+          "d": "Lo spread funziona su qualunque array, non solo su numeri. Il problema nasce con valori mutabili come array o oggetti, non con il tipo di elemento."
+        },
+        "concept": "Spread copia superficiale",
+        "commonMistake": "Pensare che lo spread crei una copia profonda di array annidati.",
+        "example": "const copia = [...arr]; // array annidati restano condivisi"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:59:14.057Z"
+    }
+  ]
+}

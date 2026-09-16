@@ -1,0 +1,225 @@
+{
+  "topicId": "spread-rest",
+  "questions": [
+    {
+      "id": "spread-rest-po-0023",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["spread oggetto", "ordine proprietà", "override"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const base = { id: 1, ruolo: 'user' };\nconst extra = { ruolo: 'admin', attivo: true };\nconst unito = { ...base, ...extra };\nconsole.log(unito);",
+      "options": [
+        {
+          "id": "a",
+          "text": "{ id: 1, ruolo: 'admin', attivo: true }"
+        },
+        {
+          "id": "b",
+          "text": "{ ruolo: 'user', attivo: true, id: 1 }"
+        },
+        {
+          "id": "c",
+          "text": "{ id: 1, ruolo: 'user', attivo: true }"
+        },
+        {
+          "id": "d",
+          "text": "{ ruolo: 'admin', id: 1, attivo: true }"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le proprietà duplicate sono sovrascritte dall’ultimo oggetto espanso.",
+        "whyCorrect": "Lo spread espande prima tutte le proprietà di `base`, poi quelle di `extra`. Le chiavi duplicate ('ruolo') vengono sovrascritte dall’ultimo oggetto spread, quindi 'admin' prevale.",
+        "whyOthersWrong": {
+          "b": "L’ordine delle proprietà segue l’inserimento: prima id, poi ruolo, poi attivo. Inoltre la proprietà ruolo viene sovrascritta con 'admin', non resta 'user'.",
+          "c": "La proprietà 'ruolo' deve essere quella dell’oggetto `extra`, quindi 'admin', non 'user'.",
+          "d": "L’ordine degli oggetti spread determina anche quello delle proprietà, e la chiave 'id' precede 'ruolo', quindi 'id' viene prima."
+        },
+        "concept": "Unione oggetti con spread e override",
+        "commonMistake": "Non considerare che le proprietà duplicate vengono sovrascritte dall’ultimo oggetto.",
+        "example": "const o = { ...a, ...b };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:53.067Z"
+    },
+    {
+      "id": "spread-rest-po-0024",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-destructuring",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["rest array destructuring", "destructuring multiplo"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const numeri = [10, 20, 30, 40];\nconst [primo, ...[secondo, ...resto]] = numeri;\nconsole.log(primo, secondo, resto);",
+      "options": [
+        {
+          "id": "a",
+          "text": "10 20 [ 30, 40 ]"
+        },
+        {
+          "id": "b",
+          "text": "10 undefined [ 20, 30, 40 ]"
+        },
+        {
+          "id": "c",
+          "text": "10 30 [ 40 ]"
+        },
+        {
+          "id": "d",
+          "text": "10 20 [ 40 ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il rest annidato raccoglie gli ultimi due elementi.",
+        "whyCorrect": "Il primo elemento viene assegnato a 'primo'. Poi si destruttura il resto dell’array: 'secondo' prende il primo valore (20), 'resto' riceve i rimanenti (30, 40).",
+        "whyOthersWrong": {
+          "b": "Il secondo elemento non è undefined: viene estratto tramite la destrutturazione annidata.",
+          "c": "Il secondo elemento preso è 20, non 30. Il rest annidato scatta dopo il secondo valore.",
+          "d": "Il rest raccoglie entrambi gli ultimi due valori, non solo uno."
+        },
+        "concept": "Rest annidato in destructuring array",
+        "commonMistake": "Credere che il rest raccolga solo un elemento o che la destrutturazione annidata non funzioni.",
+        "example": "const [a, ...[b, ...rest]] = arr;"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:53.067Z"
+    },
+    {
+      "id": "spread-rest-po-0025",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["spread array", "valori primitivi", "concatenazione spread"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const uno = [1];\nconst due = [2];\nconst risultato = [...uno, ...due, ...[3, ...uno]];\nconsole.log(risultato);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 1, 2, 3, 1 ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 1, 2, [ 3, 1 ] ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 1, 2, 3, [ 1 ] ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 1, 2, 3 ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Gli spread annidati vengono risolti completamente in valori piatti.",
+        "whyCorrect": "Lo spread interno ...[3, ...uno] produce [3, 1], che viene ulteriormente espanso. Si ottiene quindi [1] + [2] + [3, 1], ovvero [1, 2, 3, 1].",
+        "whyOthersWrong": {
+          "b": "Se non si espandesse l’array interno, si otterrebbe un array annidato, ma qui lo spread appiattisce tutto.",
+          "c": "Si avrebbe un array con un elemento annidato solo se non si usasse lo spread anche su uno.",
+          "d": "Vengono uniti anche l’ultimo 1 grazie allo spread annidato, quindi mancherebbe un elemento."
+        },
+        "concept": "Spread array e concetto di flatness",
+        "commonMistake": "Pensare che lo spread annidato crei array dentro array invece di espandere tutto.",
+        "example": "const arr = [...a, ...b, ...[c, ...a]];"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:53.067Z"
+    },
+    {
+      "id": "spread-rest-po-0026",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["spread array", "copia superficiale", "mutazione"],
+      "prompt": "Cosa stampa questo codice che usa lo spread per copiare un array di array e poi modifica un elemento interno?",
+      "code": "const matrice = [[1, 2], [3, 4]];\nconst copia = [...matrice];\ncopia[0][1] = 99;\nconsole.log(matrice[0]);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 1, 99 ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 1, 2 ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 99, 2 ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 3, 4 ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread copia solo il primo livello: gli array interni sono condivisi tra `matrice` e `copia`, quindi la modifica si riflette su entrambi.",
+        "whyCorrect": "Usando lo spread per copiare un array di array si ottiene una copia superficiale: entrambi gli array condividono i sotto-array interni. Modificando `copia[0][1]`, anche `matrice[0][1]` viene aggiornato, quindi `console.log(matrice[0])` stampa `[ 1, 99 ]`.",
+        "whyOthersWrong": {
+          "b": "La risposta `[ 1, 2 ]` sarebbe corretta solo se lo spread producesse una copia profonda, ma in realtà gli array interni restano condivisi, quindi la modifica si riflette anche sull'originale.",
+          "c": "La risposta `[ 99, 2 ]` deriva dall'invertire i valori o da una confusione sugli indici. In realtà viene modificato il secondo elemento, non il primo.",
+          "d": "`[ 3, 4 ]` è il secondo sotto-array, che non viene modificato: il `console.log` mostra il primo sotto-array dopo la modifica."
+        },
+        "concept": "spread copia superficiale",
+        "commonMistake": "Pensare che lo spread su array annidati crei copie indipendenti anche degli array interni.",
+        "example": "const b = [...a]; b[0][0] = 123; // anche a[0][0]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:35:01.134Z"
+    },
+    {
+      "id": "spread-rest-po-0027",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-destructuring",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["rest destructuring", "oggetto", "ordine delle proprietà"],
+      "prompt": "Cosa stampa questo codice che usa il rest nel destructuring di oggetto dove una proprietà viene ridefinita dopo lo spread?",
+      "code": "const persona = { nome: 'Anna', età: 30, città: 'Milano' };\nconst { nome, ...info } = persona;\nconst nuova = { ...info, nome: 'Luca' };\nconsole.log(nuova);",
+      "options": [
+        {
+          "id": "a",
+          "text": "{ età: 30, città: 'Milano', nome: 'Luca' }"
+        },
+        {
+          "id": "b",
+          "text": "{ nome: 'Anna', età: 30, città: 'Milano' }"
+        },
+        {
+          "id": "c",
+          "text": "{ nome: 'Luca', età: 30, città: 'Milano' }"
+        },
+        {
+          "id": "d",
+          "text": "{ età: 30, città: 'Milano' }"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Quando si espande prima un oggetto e poi si aggiunge una proprietà con lo stesso nome, quest'ultima sovrascrive il valore precedente.",
+        "whyCorrect": "La proprietà `nome` viene esclusa da `info` durante il destructuring, quindi dopo lo spread in `nuova` si aggiunge `nome: 'Luca'`, che viene inserita dopo le altre proprietà. L'oggetto risultante è `{ età: 30, città: 'Milano', nome: 'Luca' }`.",
+        "whyOthersWrong": {
+          "b": "Qui la proprietà `nome` rimarrebbe 'Anna', ma in realtà viene rimossa da `info` e poi reinserita con valore 'Luca', quindi non può essere 'Anna'.",
+          "c": "L'ordine delle proprietà in output riflette l'ordine di inserimento: prima `età` e `città` (dallo spread), poi `nome`. In Node vengono mostrate in quest'ordine.",
+          "d": "Questa opzione manca della proprietà `nome`, che viene invece aggiunta esplicitamente dopo lo spread."
+        },
+        "concept": "rest destructuring oggetti e sovrascrittura",
+        "commonMistake": "Credere che lo spread in oggetti mantenga anche le proprietà escluse dal destructuring, o che l'ordine sia diverso.",
+        "example": "const nuovo = { ...base, nome: 'Nuovo' };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:35:01.134Z"
+    }
+  ]
+}

@@ -2,35 +2,24 @@ import { describe, expect, it } from 'vitest';
 import {
   composeSession,
   generateQuestion,
+  qualityIssues,
   questionTypeRegistry,
   validateQuestion,
   type Question,
 } from '@lg/core';
 import { deepDives, getDeepDive, javascriptSubject } from '../src/index.js';
-import { fmt } from '../src/templates/helpers.js';
+import { bankQuestions, bankTemplates, MIN_BANK_SIZE } from '../src/bank/index.js';
+import { runCode } from '../scripts/runCode.js';
 
 const SEEDS = Array.from({ length: 25 }, (_, i) => i * 97 + 13);
 
 const topicIds = new Set(javascriptSubject.topics.map((t) => t.id));
-const subtopicIds = new Set(
-  javascriptSubject.topics.flatMap((t) => t.subtopics.map((s) => s.id)),
-);
+const subtopicIds = new Set(javascriptSubject.topics.flatMap((t) => t.subtopics.map((s) => s.id)));
 
 function correctText(q: Question): string {
   const opt = q.options.find((o) => o.id === q.correctOptionId);
   if (!opt) throw new Error(`no correct option in ${q.id}`);
   return opt.text;
-}
-
-/** Executes the code capturing console.log lines, formatted with the same fmt convention. */
-function runCode(code: string): string {
-  const lines: string[] = [];
-  const fakeConsole = {
-    log: (...args: unknown[]) => lines.push(args.map((a) => fmt(a)).join(' ')),
-  };
-  const fn = new Function('console', `"use strict";\n${code}`);
-  fn(fakeConsole);
-  return lines.join('\n');
 }
 
 describe('template validity (25 seeds each)', () => {
@@ -40,7 +29,11 @@ describe('template validity (25 seeds each)', () => {
       for (const seed of SEEDS) {
         const q = generateQuestion(template, seed);
         const result = validateQuestion(q);
-        expect(result.errors, `${template.id} seed ${seed}: ${result.errors.join('; ')}`).toEqual([]);
+        expect(result.errors, `${template.id} seed ${seed}: ${result.errors.join('; ')}`).toEqual(
+          [],
+        );
+        const quality = qualityIssues(q);
+        expect(quality, `${template.id} seed ${seed}: ${quality.join('; ')}`).toEqual([]);
         expect(result.ok).toBe(true);
         expect(questionTypeRegistry.has(q.type)).toBe(true);
         expect(topicIds.has(q.topicId)).toBe(true);
@@ -95,6 +88,23 @@ describe('counts', () => {
     const ddTopicIds = new Set(deepDives.map((d) => d.topicId));
     for (const t of javascriptSubject.topics) {
       expect(ddTopicIds.has(t.id), `missing deep dive for ${t.id}`).toBe(true);
+    }
+  });
+});
+
+describe('curated bank', () => {
+  it('every bank template is backed by at least MIN_BANK_SIZE questions', () => {
+    const groups = new Map<string, number>();
+    for (const q of bankQuestions) {
+      const key = `${q.topicId}:${q.type}:${q.difficulty}`;
+      groups.set(key, (groups.get(key) ?? 0) + 1);
+    }
+    for (const t of bankTemplates) {
+      const key = `${t.topicId}:${t.type}:${t.difficulty}`;
+      expect(
+        groups.get(key) ?? 0,
+        `bank group ${key} has fewer than ${MIN_BANK_SIZE} questions`,
+      ).toBeGreaterThanOrEqual(MIN_BANK_SIZE);
     }
   });
 });

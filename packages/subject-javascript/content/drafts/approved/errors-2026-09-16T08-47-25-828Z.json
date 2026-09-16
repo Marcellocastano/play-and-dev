@@ -1,0 +1,93 @@
+{
+  "topicId": "errors",
+  "questions": [
+    {
+      "id": "errors-fg-0023",
+      "topicId": "errors",
+      "subtopicId": "errors-try-catch",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["try/catch", "gestione errori"],
+      "prompt": "Completa il blocco per catturare un errore durante il parsing di una stringa JSON.",
+      "code": "try {\n  JSON.parse(dati);\n} ___ (e) {\n  console.log('Errore nel parsing');\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "catch"
+        },
+        {
+          "id": "b",
+          "text": "error"
+        },
+        {
+          "id": "c",
+          "text": "except"
+        },
+        {
+          "id": "d",
+          "text": "handle"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La parola chiave catch serve per intercettare errori nei blocchi try.",
+        "whyCorrect": "catch è la parola chiave giusta per intercettare un’eccezione in JavaScript. Il parametro tra parentesi sarà l’oggetto errore generato dall’istruzione nel blocco try.",
+        "whyOthersWrong": {
+          "b": "error non è una parola chiave JavaScript: non introduce un blocco di gestione delle eccezioni.",
+          "c": "except è usato in Python, non in JavaScript: qui bisogna usare catch.",
+          "d": "handle non è una parola riservata per la gestione degli errori in JavaScript."
+        },
+        "concept": "try/catch per intercettare errori",
+        "commonMistake": "Confondere catch con except o altri nomi usati in altri linguaggi.",
+        "example": "try { ... } catch (e) { ... }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:25.826Z"
+    },
+    {
+      "id": "errors-fg-0025",
+      "topicId": "errors",
+      "subtopicId": "errors-native",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["errori nativi", "ReferenceError", "TypeError"],
+      "prompt": "Completa la riga per verificare se l’errore catturato è di tipo ReferenceError.",
+      "code": "try {\n  usaVariabileNonDefinita();\n} catch (e) {\n  if (___) {\n    console.log('Variabile non definita');\n  }\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "e instanceof ReferenceError"
+        },
+        {
+          "id": "b",
+          "text": "e.name === 'TypeError'"
+        },
+        {
+          "id": "c",
+          "text": "e instanceof TypeError"
+        },
+        {
+          "id": "d",
+          "text": "typeof e === 'ReferenceError'"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "instanceof ReferenceError controlla il tipo nativo dell’errore.",
+        "whyCorrect": "Con instanceof ReferenceError verifichiamo che l'errore sia effettivamente di quel tipo: è il modo più affidabile e idiomatico per distinguere i diversi errori nativi.",
+        "whyOthersWrong": {
+          "b": "Questo controllo verifica se il nome dell’errore è TypeError, quindi non corrisponde al ReferenceError richiesto.",
+          "c": "instanceof TypeError controlla un altro tipo di errore, non ReferenceError: non rileva il caso voluto.",
+          "d": "typeof su un oggetto restituisce 'object', non il nome della classe: questa condizione è sempre falsa."
+        },
+        "concept": "Errori nativi: ReferenceError",
+        "commonMistake": "Confondere TypeError con ReferenceError o usare typeof sugli errori.",
+        "example": "if (e instanceof TypeError) { ... }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:25.826Z"
+    }
+  ]
+}

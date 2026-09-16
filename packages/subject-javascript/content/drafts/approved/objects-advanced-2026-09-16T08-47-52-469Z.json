@@ -1,0 +1,93 @@
+{
+  "topicId": "objects-advanced",
+  "questions": [
+    {
+      "id": "objects-advanced-fg-0021",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["Oggetti", "Iterazione", "Object.entries"],
+      "prompt": "Completa per ottenere un array di coppie chiave/valore dell'oggetto `prodotto`.",
+      "code": "const prodotto = { nome: \"penna\", prezzo: 2 };\nconst coppie = ___;",
+      "options": [
+        {
+          "id": "a",
+          "text": "Object.entries(prodotto)"
+        },
+        {
+          "id": "b",
+          "text": "Object.keys(prodotto)"
+        },
+        {
+          "id": "c",
+          "text": "Object.values(prodotto)"
+        },
+        {
+          "id": "d",
+          "text": "[prodotto]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Object.entries produce array di [chiave, valore] per ogni proprietà.",
+        "whyCorrect": "La funzione Object.entries restituisce un array in cui ogni elemento è una coppia [chiave, valore], che permette di iterare facilmente su tutte le proprietà e i loro valori.",
+        "whyOthersWrong": {
+          "b": "Object.keys restituisce solo i nomi delle proprietà come stringhe, senza i valori associati.",
+          "c": "Object.values restituisce solo i valori delle proprietà, non le coppie complete.",
+          "d": "Mettere l'oggetto tra parentesi quadre crea un array con l'oggetto come unico elemento, nessuna trasformazione in coppie."
+        },
+        "concept": "Object.entries",
+        "commonMistake": "Confondere Object.keys, Object.values e Object.entries.",
+        "example": "Object.entries({ a: 1, b: 2 }) // [['a', 1], ['b', 2]]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:52.467Z"
+    },
+    {
+      "id": "objects-advanced-fg-0022",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["Oggetti", "Shorthand proprietà"],
+      "prompt": "Completa per usare la shorthand delle proprietà: la chiave e la variabile si chiamano allo stesso modo.",
+      "code": "const colore = \"rosso\";\nconst frutta = { nome: \"mela\", ___ };",
+      "options": [
+        {
+          "id": "a",
+          "text": "colore"
+        },
+        {
+          "id": "b",
+          "text": "colore: colore"
+        },
+        {
+          "id": "c",
+          "text": "\"colore\""
+        },
+        {
+          "id": "d",
+          "text": "\"colore\": colore"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La shorthand delle proprietà consente di scrivere solo il nome della variabile.",
+        "whyCorrect": "In JavaScript, se la chiave e la variabile hanno lo stesso nome, si può omettere il valore: scrivere solo 'colore' equivale a 'colore: colore'.",
+        "whyOthersWrong": {
+          "b": "Scrivere 'colore: colore' funziona, ma non usa la shorthand richiesta: il prompt chiede di essere concisi.",
+          "c": "Mettere solo '\"colore\"' crea una chiave chiamata 'colore' ma senza valore; serve anche il valore.",
+          "d": "Questa sintassi richiede due nomi, non è una shorthand, e non è più breve di 'colore: colore'."
+        },
+        "concept": "Shorthand delle proprietà",
+        "commonMistake": "Scrivere sempre la coppia chiave: valore anche quando non serve.",
+        "example": "const persona = { nome, età };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:52.468Z"
+    }
+  ]
+}

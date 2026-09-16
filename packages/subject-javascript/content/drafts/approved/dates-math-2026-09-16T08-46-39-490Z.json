@@ -1,0 +1,93 @@
+{
+  "topicId": "dates-math",
+  "questions": [
+    {
+      "id": "dates-math-fg-0015",
+      "topicId": "dates-math",
+      "subtopicId": "dates-math-math",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["uso Math.abs"],
+      "prompt": "Completa per ottenere il valore assoluto di -20.",
+      "code": "let risultato = ___(-20);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Math.abs"
+        },
+        {
+          "id": "b",
+          "text": "Math.abs()"
+        },
+        {
+          "id": "c",
+          "text": "Math.absolute"
+        },
+        {
+          "id": "d",
+          "text": "abs"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Math.abs restituisce il valore assoluto di un numero.",
+        "whyCorrect": "Math.abs è il metodo corretto per ottenere il valore assoluto di un numero: accetta un argomento numerico e restituisce sempre un valore positivo.",
+        "whyOthersWrong": {
+          "b": "Math.abs() senza argomento restituisce 0, non calcola il valore assoluto del numero specificato.",
+          "c": "Math.absolute non esiste in JavaScript: il metodo corretto è Math.abs.",
+          "d": "abs non è una funzione globale in JavaScript; serve il prefisso Math. e il nome esatto abs."
+        },
+        "concept": "Math.abs per valori assoluti",
+        "commonMistake": "Usare un nome metodo scorretto o non anteporre Math.",
+        "example": "Math.abs(-5) // 5"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:46:32.823Z"
+    },
+    {
+      "id": "dates-math-fg-0018",
+      "topicId": "dates-math",
+      "subtopicId": "dates-math-math",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["utilizzo Math.abs"],
+      "prompt": "Vuoi ottenere il valore assoluto di un numero negativo. Quale funzione completa la riga?",
+      "code": "const risultato = Math.___(-8);\nconsole.log(risultato);",
+      "options": [
+        {
+          "id": "a",
+          "text": "abs"
+        },
+        {
+          "id": "b",
+          "text": "max"
+        },
+        {
+          "id": "c",
+          "text": "ceil"
+        },
+        {
+          "id": "d",
+          "text": "floor"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Math.abs restituisce il valore assoluto di un numero, cioè sempre non negativo.",
+        "whyCorrect": "Math.abs trasforma sempre il numero fornito nel suo valore assoluto. Nel caso di -8, restituisce 8.",
+        "whyOthersWrong": {
+          "b": "Math.max restituisce il massimo tra i parametri forniti, non il valore assoluto di uno solo.",
+          "c": "Math.ceil arrotonda per eccesso, ma su -8 non ha effetto, restituisce -8.",
+          "d": "Math.floor arrotonda per difetto, ma con -8 dà comunque -8, non cambia segno."
+        },
+        "concept": "Math.abs: valore assoluto",
+        "commonMistake": "Confondere abs con le funzioni di arrotondamento come ceil o floor.",
+        "example": "Math.abs(-5) // 5"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:46:39.488Z"
+    }
+  ]
+}

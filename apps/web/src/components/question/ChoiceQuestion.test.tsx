@@ -4,6 +4,7 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ChoiceQuestion } from './ChoiceQuestion';
 import { FeedbackPanel } from '../feedback/FeedbackPanel';
+import { RichText } from '../ui/RichText';
 
 afterEach(cleanup);
 
@@ -67,6 +68,16 @@ describe('ChoiceQuestion', () => {
     fireEvent.keyDown(screen.getByRole('textbox'), { key: '1' });
     fireEvent.keyDown(window, { key: '1', repeat: true });
     expect(onAnswer).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('RichText', () => {
+  it('rende i backtick come <code> senza mostrarli', () => {
+    const { container } = render(<RichText text={'usa `let` per i contatori'} />);
+    const code = container.querySelector('code.inline-code');
+    expect(code?.textContent).toBe('let');
+    expect(container.textContent).toBe('usa let per i contatori');
+    expect(container.textContent).not.toContain('`');
   });
 });
 

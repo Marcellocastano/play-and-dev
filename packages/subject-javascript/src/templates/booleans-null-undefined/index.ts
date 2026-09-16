@@ -14,17 +14,44 @@ const falsyMc: QuestionTemplate = {
   tags: ['booleani'],
   generate(rng: Rng) {
     const falsyPool = [
-      { text: '0', why: 'Il numero 0 è falsy.' },
-      { text: "''", why: 'La stringa vuota è falsy.' },
-      { text: 'undefined', why: 'undefined è falsy.' },
-      { text: 'NaN', why: 'NaN è falsy.' },
+      {
+        text: '0',
+        why: 'Il numero 0 è uno dei sei valori falsy di JavaScript: in una condizione viene valutato come false.',
+      },
+      {
+        text: "''",
+        why: 'La stringa vuota non contiene caratteri: in una condizione viene valutata come false.',
+      },
+      {
+        text: 'undefined',
+        why: 'undefined è falsy per definizione: rappresenta proprio l’assenza di un valore.',
+      },
+      {
+        text: 'NaN',
+        why: 'NaN è falsy per definizione: in una condizione viene valutato come false.',
+      },
     ];
     const truthyPool = [
-      { text: "'0'", why: "La stringa '0' non è vuota: è truthy." },
-      { text: '[]', why: 'Un array vuoto è un oggetto: è truthy.' },
-      { text: "'false'", why: "La stringa 'false' non è vuota: è truthy (è il booleano false a essere falsy)." },
-      { text: '{}', why: 'Un oggetto vuoto è truthy.' },
-      { text: '-1', why: 'Solo 0 è falsy tra i numeri: -1 è truthy.' },
+      {
+        text: "'0'",
+        why: "La stringa '0' contiene un carattere, quindi non è vuota: in una condizione viene valutata come truthy.",
+      },
+      {
+        text: '[]',
+        why: 'Un array, anche vuoto, è un oggetto: tutti gli oggetti sono truthy, quindi in un `if` entrerebbe nel ramo vero.',
+      },
+      {
+        text: "'false'",
+        why: "'false' è una stringa con del contenuto, quindi è truthy: ad essere falsy è il booleano `false`, non il suo testo.",
+      },
+      {
+        text: '{}',
+        why: 'Un oggetto è sempre truthy, anche quando non contiene proprietà: essere vuoto non lo rende falsy.',
+      },
+      {
+        text: '-1',
+        why: 'Tra i numeri solo 0 e NaN sono falsy: -1 è un numero diverso da zero e quindi truthy.',
+      },
     ];
     const correct = pickOf(rng, falsyPool);
     const distractors = shuffle(truthyPool, rng).slice(0, 3);
@@ -56,7 +83,7 @@ const typeofUndefinedPo: QuestionTemplate = {
   topicId: TOPIC,
   subtopicId: 'bnu-null-undefined',
   type: 'predict-output',
-  difficulty: 'easy',
+  difficulty: 'medium',
   skills: ['undefined', 'typeof'],
   tags: ['tipi'],
   generate(rng: Rng) {
@@ -73,16 +100,28 @@ const typeofUndefinedPo: QuestionTemplate = {
       rng,
       { text: correct, why: correctWhy },
       [
-        { text: 'undefined\nundefined', why: useNull ? 'La variabile è inizializzata a null, non undefined.' : 'Ma questa è la risposta corretta — se compare come distrattore è un bug.' },
-        { text: 'null\nobject', why: useNull ? 'Ma questa è la risposta corretta — se compare come distrattore è un bug.' : 'Una let non inizializzata vale undefined, non null.' },
-        { text: 'undefined\nnull', why: 'typeof undefined è "undefined", non "null".' },
-        { text: 'null\nnull', why: 'typeof null è "object", non "null".' },
+        {
+          text: 'undefined\nundefined',
+          why: `La variabile è inizializzata a null: la prima riga stampa null e \`typeof null\` restituisce 'object'.`,
+        },
+        {
+          text: 'null\nobject',
+          why: `La variabile non è mai inizializzata, quindi la prima riga stampa undefined: per avere null servirebbe un'assegnazione esplicita.`,
+        },
+        {
+          text: 'undefined\nnull',
+          why: `La seconda riga stampa il risultato di typeof, che non è mai la stringa 'null': per undefined dà 'undefined' e per null dà 'object'.`,
+        },
+        {
+          text: 'null\nnull',
+          why: `La seconda riga stampa il risultato di typeof, che non è mai la stringa 'null': \`typeof null\` restituisce 'object' per un bug storico.`,
+        },
       ].filter((d) => d.text !== correct),
     );
     return {
       templateId: 'bnu-typeof-po',
       type: 'predict-output',
-      difficulty: 'easy' as const,
+      difficulty: 'medium' as const,
       topicId: TOPIC,
       subtopicId: 'bnu-null-undefined',
       skills: ['undefined', 'typeof'],
@@ -113,25 +152,115 @@ const nullUndefCmp: QuestionTemplate = {
   skills: ['null', 'undefined', '==', '==='],
   tags: ['confronti'],
   generate(rng: Rng) {
-    const trueFacts = [
-      { text: 'null == undefined è true, ma null === undefined è false', why: 'Con == sono considerati uguali (regola speciale); con === hanno tipi diversi → false.' },
-      { text: 'Una variabile let non inizializzata vale undefined', why: 'undefined è il valore di default; null va assegnato esplicitamente.' },
-      { text: 'x == null è vero sia per null che per undefined', why: 'La regola speciale di == copre entrambi i casi di "nessun valore".' },
-      { text: 'typeof null restituisce "object"', why: 'È un bug storico mai corretto per compatibilità.' },
-      { text: 'null e undefined sono entrambi falsy', why: 'In una condizione si comportano entrambi come false.' },
+    const variants = [
+      {
+        prompt: 'Quale di queste espressioni restituisce `true`?',
+        correct: {
+          text: 'null == undefined',
+          why: 'Per una regola speciale del linguaggio, `==` tratta null e undefined come equivalenti: questa espressione restituisce true.',
+        },
+        wrong: [
+          {
+            text: 'null === undefined',
+            why: 'Il confronto stretto controlla anche il tipo: null e undefined sono tipi diversi, quindi `===` restituisce false.',
+          },
+          {
+            text: "typeof null === 'null'",
+            why: "Per un bug storico `typeof null` restituisce 'object': il confronto con la stringa 'null' dà quindi false.",
+          },
+          {
+            text: 'undefined == 0',
+            why: "La regola speciale di `==` equipara undefined solo a null: con 0 non c'è equivalenza e il risultato è false.",
+          },
+        ],
+      },
+      {
+        prompt: 'Quale di queste espressioni restituisce `false`?',
+        correct: {
+          text: 'null === undefined',
+          why: 'Il confronto stretto controlla anche il tipo: null e undefined sono tipi diversi, quindi `===` restituisce false.',
+        },
+        wrong: [
+          {
+            text: 'null == undefined',
+            why: 'Con il confronto debole la regola speciale li considera equivalenti: `null == undefined` restituisce true, non false.',
+          },
+          {
+            text: 'null == null',
+            why: 'Un valore è sempre uguale a sé stesso: `null == null` restituisce true, non false.',
+          },
+          {
+            text: 'undefined == null',
+            why: 'È la stessa regola speciale di `==`: undefined e null sono considerati equivalenti e il confronto restituisce true.',
+          },
+        ],
+      },
+      {
+        prompt: 'Quale di queste espressioni restituisce `false`?',
+        correct: {
+          text: 'undefined == 0',
+          why: "La regola speciale di `==` equipara undefined solo a null: con 0 non c'è conversione e il risultato è false.",
+        },
+        wrong: [
+          {
+            text: 'null == undefined',
+            why: 'Per la regola speciale di `==` null e undefined sono equivalenti: questa espressione restituisce true.',
+          },
+          {
+            text: '0 == false',
+            why: 'Con `==` il booleano false viene convertito nel numero 0: il confronto è tra 0 e 0 e restituisce true.',
+          },
+          {
+            text: "'' == 0",
+            why: 'Con `==` la stringa vuota viene convertita nel numero 0: il confronto è tra 0 e 0 e restituisce true.',
+          },
+        ],
+      },
+      {
+        prompt: 'Quale di queste espressioni restituisce `true`?',
+        correct: {
+          text: "'' == false",
+          why: 'Con `==` sia la stringa vuota sia false vengono convertiti nel numero 0: il confronto è tra 0 e 0 e restituisce true.',
+        },
+        wrong: [
+          {
+            text: "'' === false",
+            why: 'Il confronto stretto non converte i tipi: una stringa e un booleano sono tipi diversi, quindi restituisce false.',
+          },
+          {
+            text: 'null == 0',
+            why: "La regola speciale equipara null solo a undefined: con 0 non c'è equivalenza e il risultato è false.",
+          },
+          {
+            text: 'undefined === null',
+            why: 'Il confronto stretto distingue i tipi: undefined e null sono diversi e `===` restituisce false.',
+          },
+        ],
+      },
+      {
+        prompt: 'Quale di queste espressioni restituisce `false`?',
+        correct: {
+          text: 'null == 0',
+          why: "La regola speciale di `==` equipara null solo a undefined: con 0 non c'è conversione e il risultato è false.",
+        },
+        wrong: [
+          {
+            text: 'null == undefined',
+            why: 'Per la regola speciale di `==` null e undefined sono equivalenti: questa espressione restituisce true.',
+          },
+          {
+            text: '0 == false',
+            why: 'Con `==` il booleano false viene convertito nel numero 0: il confronto è tra 0 e 0 e restituisce true.',
+          },
+          {
+            text: "'' == false",
+            why: "Con `==` sia '' sia false vengono convertiti in 0: il confronto è tra 0 e 0 e restituisce true.",
+          },
+        ],
+      },
     ];
-    const falseFacts = [
-      { text: 'null e undefined sono esattamente lo stesso valore', why: 'Sono valori di tipi diversi: === li distingue.' },
-      { text: 'null === undefined è true', why: 'I tipi differiscono (object vs undefined): il confronto stretto è false.' },
-      { text: 'undefined è un oggetto vuoto', why: 'undefined è un tipo primitivo a sé, non un oggetto.' },
-      { text: 'Una variabile non inizializzata vale null', why: 'Vale undefined: null va assegnato esplicitamente.' },
-      { text: 'typeof undefined restituisce "object"', why: 'typeof undefined restituisce "undefined"; è null a dare "object".' },
-    ];
-    const built = makeOptions(
-      rng,
-      pickOf(rng, trueFacts),
-      shuffle(falseFacts, rng).slice(0, 3),
-    );
+    const v = pickOf(rng, variants);
+    const built = makeOptions(rng, v.correct, shuffle(v.wrong, rng));
     return {
       templateId: 'bnu-null-undef-cmp',
       type: 'compare',
@@ -139,11 +268,11 @@ const nullUndefCmp: QuestionTemplate = {
       topicId: TOPIC,
       subtopicId: 'bnu-null-undefined',
       skills: ['null', 'undefined'],
-      prompt: 'Quale affermazione su null e undefined è corretta?',
+      prompt: v.prompt,
       ...built,
       explanation: {
         short: '== li considera equivalenti, === no.',
-        whyCorrect: 'È l\'unica coppia di valori diversi considerata uguale da ==.',
+        whyCorrect: "È l'unica coppia di valori diversi considerata uguale da ==.",
         whyOthersWrong: built.whyOthersWrong,
         concept: 'null vs undefined',
         commonMistake: 'Usare === dove si vuole coprire entrambi i casi (serve x == null).',
@@ -167,17 +296,35 @@ const undefFg: QuestionTemplate = {
     const code = `let ${name};\nconsole.log(${name} === ___);`;
     const wrongPool = shuffle(
       [
-        { text: 'null', why: 'undefined === null è false: sono tipi diversi.' },
-        { text: '0', why: 'undefined === 0 è false.' },
-        { text: "''", why: 'undefined === "" è false.' },
-        { text: 'false', why: 'undefined === false è false.' },
-        { text: 'NaN', why: 'undefined === NaN è false (e NaN !== NaN comunque).' },
+        {
+          text: 'null',
+          why: `Il confronto stretto distingue i tipi: ${name} vale undefined e \`undefined === null\` restituisce false.`,
+        },
+        {
+          text: '0',
+          why: `${name} vale undefined: il confronto stretto con il numero 0 dà false, perché \`===\` non converte i tipi.`,
+        },
+        {
+          text: "''",
+          why: `${name} vale undefined: confrontata strettamente con una stringa dà false, anche se la stringa è vuota.`,
+        },
+        {
+          text: 'false',
+          why: `${name} vale undefined, non un booleano: \`undefined === false\` restituisce false.`,
+        },
+        {
+          text: 'NaN',
+          why: `${name} vale undefined, non NaN: \`undefined === NaN\` è false (e NaN non è uguale nemmeno a sé stesso).`,
+        },
       ],
       rng,
     ).slice(0, 3);
     const built = makeOptions(
       rng,
-      { text: 'undefined', why: `Una let non inizializzata vale undefined: il confronto è true.` },
+      {
+        text: 'undefined',
+        why: `Una variabile dichiarata senza valore vale undefined: \`${name} === undefined\` restituisce true.`,
+      },
       wrongPool,
     );
     return {
@@ -217,13 +364,25 @@ const nullCheckBm: QuestionTemplate = {
       rng,
       {
         text: `${name} != null`,
-        why: 'Con il confronto debole != null si coprono sia null che undefined in un colpo solo.',
+        why: `Per la regola speciale di \`==\`, \`${name} != null\` risulta falso sia per null sia per undefined: un solo controllo copre entrambi i casi.`,
       },
       [
-        { text: `${name} !== null`, why: 'Controlla solo null: undefined passerebbe comunque.' },
-        { text: `${name} !== undefined`, why: 'Controlla solo undefined: null passerebbe comunque.' },
-        { text: `typeof ${name} === 'null'`, why: "typeof null è 'object': questo controllo non funziona." },
-        { text: `${name} != undefined`, why: 'È equivalente a != null (funziona), ma la forma idiomatica è != null.' },
+        {
+          text: `${name} !== null`,
+          why: `Il confronto stretto esclude solo null: se ${name} fosse undefined la condizione sarebbe comunque vera e il codice proseguirebbe.`,
+        },
+        {
+          text: `${name} !== undefined`,
+          why: `Esclude solo undefined: un valore null supererebbe il controllo, quindi non copre entrambi i casi richiesti.`,
+        },
+        {
+          text: `typeof ${name} === 'null'`,
+          why: `Per un bug storico \`typeof null\` restituisce 'object': nessun valore produce la stringa 'null', quindi il controllo non funziona.`,
+        },
+        {
+          text: `${name} != undefined`,
+          why: `Funzionerebbe, perché \`undefined == null\` copre entrambi i casi; la forma idiomatica però è \`!= null\`, più breve e riconoscibile.`,
+        },
       ].slice(0, 3),
     );
     return {

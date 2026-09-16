@@ -1,0 +1,313 @@
+{
+  "topicId": "string-methods-advanced",
+  "questions": [
+    {
+      "id": "string-methods-advanced-po-0001",
+      "topicId": "string-methods-advanced",
+      "subtopicId": "string-methods-advanced-split-join",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["split", "join", "array-manipulation"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const testo = 'albero;foglia;rame';\nconst parti = testo.split(';');\nconst output = parti.join('--');\nconsole.log(output);",
+      "options": [
+        {
+          "id": "a",
+          "text": "albero--foglia--rame"
+        },
+        {
+          "id": "b",
+          "text": "alberofoglia--rame"
+        },
+        {
+          "id": "c",
+          "text": "albero;foglia;rame"
+        },
+        {
+          "id": "d",
+          "text": "albero--foglia;rame"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il metodo `split` divide la stringa in un array, che viene poi ricombinato con `join` usando `--` come separatore.",
+        "whyCorrect": "La stringa viene divisa in tre parti su ogni `;`, ottenendo l'array `[ 'albero', 'foglia', 'rame' ]`, che viene poi unito con `join('--')`, producendo `albero--foglia--rame`.",
+        "whyOthersWrong": {
+          "b": "`alberofoglia--rame` è il risultato se la prima virgola fosse unita senza separatore, ma qui tutti gli elementi sono separati da `--`.",
+          "c": "La stringa originale non viene alterata se non si applicano i metodi, ma qui `split` e `join` modificano la forma della stringa.",
+          "d": "`albero--foglia;rame` si ottiene se si uniscono solo i primi due elementi con `--` e si lascia il resto invariato, ma `join` applica il separatore a tutto l'array."
+        },
+        "concept": "split e join",
+        "commonMistake": "Dimenticare che `join` sostituisce ogni virgola tra elementi con il nuovo separatore.",
+        "example": "'a,b,c'.split(',').join('-') // 'a-b-c'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:44.814Z"
+    },
+    {
+      "id": "string-methods-advanced-po-0002",
+      "topicId": "string-methods-advanced",
+      "subtopicId": "string-methods-advanced-replace",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["replace", "replaceAll", "string-search"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const frase = 'verde, verde, blu';\nconsole.log(frase.replace('verde', 'rosso'));",
+      "options": [
+        {
+          "id": "a",
+          "text": "rosso, verde, blu"
+        },
+        {
+          "id": "b",
+          "text": "rosso, rosso, blu"
+        },
+        {
+          "id": "c",
+          "text": "verde, rosso, blu"
+        },
+        {
+          "id": "d",
+          "text": "rosso, blu, verde"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "`replace` sostituisce solo la prima occorrenza trovata.",
+        "whyCorrect": "Il metodo `replace` con una stringa cambia solo la prima occorrenza di 'verde' in 'rosso', lasciando la seconda invariata.",
+        "whyOthersWrong": {
+          "b": "Per sostituire tutte le occorrenze sarebbe necessario `replaceAll` o una regex globale; qui solo la prima è cambiata.",
+          "c": "La seconda occorrenza non viene sostituita, ma la prima sì; questa opzione inverte l'ordine dei colori.",
+          "d": "L'ordine dei colori non viene modificato: `replace` non scambia la posizione degli elementi."
+        },
+        "concept": "replace: solo prima occorrenza",
+        "commonMistake": "Aspettarsi che `replace` cambi tutte le occorrenze invece di una sola.",
+        "example": "'a a a'.replace('a', '-') // '- a a'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:44.815Z"
+    },
+    {
+      "id": "string-methods-advanced-po-0003",
+      "topicId": "string-methods-advanced",
+      "subtopicId": "string-methods-advanced-split-join",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["split", "array-length"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const testo = 'uno due tre';\nconst array = testo.split();\nconsole.log(array.length);",
+      "options": [
+        {
+          "id": "a",
+          "text": "1"
+        },
+        {
+          "id": "b",
+          "text": "3"
+        },
+        {
+          "id": "c",
+          "text": "0"
+        },
+        {
+          "id": "d",
+          "text": "2"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "`split()` senza argomenti restituisce un array con l'intera stringa come unico elemento.",
+        "whyCorrect": "`split()` senza separatore non spezza la stringa, quindi si ottiene un array che contiene la stringa originale come unico elemento.",
+        "whyOthersWrong": {
+          "b": "Per ottenere tre elementi occorreva usare `split(' ')`, che separa su ogni spazio.",
+          "c": "`split()` non restituisce mai un array vuoto se la stringa non è vuota.",
+          "d": "Non ci sono due elementi perché non viene fornito nessun separatore, quindi la stringa resta intera."
+        },
+        "concept": "split senza separatore",
+        "commonMistake": "Aspettarsi che `split()` divida la stringa su ogni carattere o spazio.",
+        "example": "'abc'.split() // [ 'abc' ]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:44.815Z"
+    },
+    {
+      "id": "string-methods-advanced-po-0004",
+      "topicId": "string-methods-advanced",
+      "subtopicId": "string-methods-advanced-replace",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["replaceAll", "replace", "string-replace"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const testo = 'pippo pippo palla';\nconst nuovo = testo.replaceAll('pippo', 'pluto');\nconsole.log(nuovo);",
+      "options": [
+        {
+          "id": "a",
+          "text": "pluto pluto palla"
+        },
+        {
+          "id": "b",
+          "text": "pluto pippo palla"
+        },
+        {
+          "id": "c",
+          "text": "pippo pippo palla"
+        },
+        {
+          "id": "d",
+          "text": "pluto pluto pluto"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "`replaceAll` sostituisce tutte le occorrenze della stringa cercata.",
+        "whyCorrect": "Entrambi i 'pippo' vengono sostituiti da 'pluto', lasciando 'palla' invariato.",
+        "whyOthersWrong": {
+          "b": "Solo `replace` (non `replaceAll`) limita la sostituzione alla prima occorrenza.",
+          "c": "Il testo originale non viene modificato senza assegnare il risultato, ma qui il nuovo valore è usato.",
+          "d": "'palla' non viene sostituito perché non corrisponde all'argomento passato."
+        },
+        "concept": "replaceAll",
+        "commonMistake": "Usare `replace` e aspettarsi il comportamento di `replaceAll`.",
+        "example": "'a a'.replaceAll('a', '-') // '- -'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:44.816Z"
+    },
+    {
+      "id": "string-methods-advanced-po-0005",
+      "topicId": "string-methods-advanced",
+      "subtopicId": "string-methods-advanced-split-join",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["split", "join", "manipolazione array", "stringhe"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const testo = 'mele-pere-uva';\nconst lista = testo.split('-');\nlista[1] = lista[1].toUpperCase();\nconsole.log(lista.join(';'))",
+      "options": [
+        {
+          "id": "a",
+          "text": "mele;PERE;uva"
+        },
+        {
+          "id": "b",
+          "text": "mele-pere-uva"
+        },
+        {
+          "id": "c",
+          "text": "mele-pere-uva;"
+        },
+        {
+          "id": "d",
+          "text": "mele;PERE;uva;"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Dopo lo split e la modifica, la join ricompone la stringa usando il carattere ';' e la seconda parola è maiuscola.",
+        "whyCorrect": "Il metodo split crea l’array [ 'mele', 'pere', 'uva' ], poi lista[1] viene trasformato in 'PERE'. Il join usa ';' e ricompone la stringa come 'mele;PERE;uva'.",
+        "whyOthersWrong": {
+          "b": "La stringa originale non viene ripristinata perché join usa ';', non '-', e la seconda parola è maiuscola, non minuscola.",
+          "c": "L’array non contiene un elemento finale vuoto, quindi join non aggiunge un punto e virgola extra alla fine.",
+          "d": "Come sopra, join non aggiunge un delimitatore extra alla fine, quindi la stringa finisce esattamente dopo 'uva'."
+        },
+        "concept": "split e join su stringhe",
+        "commonMistake": "Pensare che join aggiunga il delimitatore anche dopo l’ultimo elemento.",
+        "example": "['a', 'b'].join('-') // 'a-b'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:55.281Z"
+    },
+    {
+      "id": "string-methods-advanced-po-0006",
+      "topicId": "string-methods-advanced",
+      "subtopicId": "string-methods-advanced-replace",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["replace", "immutabilità stringhe", "manipolazione testo"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "let frase = 'pizza e pizza';\nfrase.replace('pizza', 'pasta');\nconsole.log(frase)",
+      "options": [
+        {
+          "id": "a",
+          "text": "pizza e pizza"
+        },
+        {
+          "id": "b",
+          "text": "pasta e pizza"
+        },
+        {
+          "id": "c",
+          "text": "pasta e pasta"
+        },
+        {
+          "id": "d",
+          "text": "pizza e pasta"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il metodo replace non modifica la stringa originale, serve assegnare il risultato.",
+        "whyCorrect": "Senza riassegnare il risultato di replace, la variabile frase resta invariata: 'pizza e pizza'.",
+        "whyOthersWrong": {
+          "b": "Così sarebbe se avessimo assegnato: frase = frase.replace(...), ma manca l’assegnazione.",
+          "c": "Replace sostituisce solo la prima occorrenza e comunque qui manca la riassegnazione.",
+          "d": "Replace non sostituisce tutte le occorrenze senza usare replaceAll o un'espressione regolare globale e qui manca l’assegnazione."
+        },
+        "concept": "replace non muta la stringa",
+        "commonMistake": "Aspettarsi che replace modifichi la variabile direttamente.",
+        "example": "'a b a'.replace('a', 'z') // 'z b a'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:55.281Z"
+    },
+    {
+      "id": "string-methods-advanced-po-0007",
+      "topicId": "string-methods-advanced",
+      "subtopicId": "string-methods-advanced-split-join",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["split", "join", "manipolazione stringhe"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const parole = 'cane,gatto,topo';\nconst arr = parole.split(',');\narr[1] = arr[1].toUpperCase();\nconsole.log(arr.join('-'));\n",
+      "options": [
+        {
+          "id": "a",
+          "text": "cane-GATTO-topo"
+        },
+        {
+          "id": "b",
+          "text": "cane,gatto,topo"
+        },
+        {
+          "id": "c",
+          "text": "cane-gatto-topo"
+        },
+        {
+          "id": "d",
+          "text": "CANE-GATTO-TOPO"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il secondo elemento diventa maiuscolo, poi gli elementi sono uniti con '-'.",
+        "whyCorrect": "La stringa viene divisa in tre parti, si trasforma solo il secondo elemento in maiuscolo, poi si ricompone con il trattino come separatore. Solo 'gatto' diventa 'GATTO'.",
+        "whyOthersWrong": {
+          "b": "Senza chiamare join il risultato sarebbe ancora un array, ma qui join usa il trattino come separatore, non la virgola, quindi il risultato è diverso.",
+          "c": "Questa opzione ignora che il secondo elemento viene trasformato in maiuscolo: 'gatto' diventa 'GATTO', non resta minuscolo.",
+          "d": "Solo il secondo elemento viene messo in maiuscolo, non tutti: 'cane' e 'topo' restano invariati."
+        },
+        "concept": "split e join su array di stringhe",
+        "commonMistake": "Dimenticare di modificare solo l'elemento voluto o di usare il separatore giusto in join.",
+        "example": "'a,b'.split(',')[1].toUpperCase() // 'B'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:59.351Z"
+    }
+  ]
+}

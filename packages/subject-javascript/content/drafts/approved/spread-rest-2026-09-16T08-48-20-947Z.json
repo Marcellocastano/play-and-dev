@@ -1,0 +1,137 @@
+{
+  "topicId": "spread-rest",
+  "questions": [
+    {
+      "id": "spread-rest-po-0029",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["spread array copia", "immutabilità superficiale"],
+      "prompt": "Cosa stampa questo codice che combina spread su array e modifica successiva?",
+      "code": "const nomi = ['Anna', 'Luca'];\nconst copia = [...nomi];\ncopia[0] = 'Paolo';\nconsole.log(nomi);\nconsole.log(copia);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 'Anna', 'Luca' ]\n[ 'Paolo', 'Luca' ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 'Paolo', 'Luca' ]\n[ 'Paolo', 'Luca' ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 'Anna', 'Luca' ]\n[ 'Anna', 'Luca' ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 'Paolo', 'Luca' ]\n[ 'Anna', 'Luca' ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread su array produce una copia superficiale: modificare la copia non cambia l'originale.",
+        "whyCorrect": "Lo spread `[...nomi]` crea una copia superficiale e indipendente dell'array `nomi`. Cambiando `copia[0]` a 'Paolo', solo la copia viene modificata. `nomi` resta `[ 'Anna', 'Luca' ]` e `copia` diventa `[ 'Paolo', 'Luca' ]`.",
+        "whyOthersWrong": {
+          "b": "Modificando la copia non si modifica anche l'array originale: solo la copia cambia, perché lo spread produce un nuovo array.",
+          "c": "Dopo l'assegnazione, la copia è modificata in posizione 0, quindi non può essere identica a `nomi`.",
+          "d": "L'originale non viene mai cambiato, quindi non può partire con 'Paolo'. Solo la copia riceve la modifica."
+        },
+        "concept": "Spread per copiare array",
+        "commonMistake": "Pensare che la modifica della copia con spread influenzi l'originale.",
+        "example": "const b = [...a]; b[0] = 9;"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:48:20.945Z"
+    },
+    {
+      "id": "spread-rest-po-0030",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-params",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["parametri rest", "funzioni variadiche", "array"],
+      "prompt": "Cosa stampa questo codice che usa un parametro rest e calcola la lunghezza?",
+      "code": "function contaElementi(...elementi) {\n  console.log(elementi.length);\n}\ncontaElementi('a', 'b', 'c');",
+      "options": [
+        {
+          "id": "a",
+          "text": "3"
+        },
+        {
+          "id": "b",
+          "text": "undefined"
+        },
+        {
+          "id": "c",
+          "text": "['a', 'b', 'c']"
+        },
+        {
+          "id": "d",
+          "text": "TypeError"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il parametro rest raccoglie gli argomenti in un array di lunghezza 3.",
+        "whyCorrect": "Il parametro `...elementi` raccoglie tutti gli argomenti in un array, quindi `elementi.length` è 3 dato che vengono passati tre valori.",
+        "whyOthersWrong": {
+          "b": "La proprietà length di un array esiste sempre, anche se è vuoto, e qui vale 3.",
+          "c": "Questa è la rappresentazione dell'array, ma la funzione stampa la sua lunghezza, non l'array in sé.",
+          "d": "Non viene generato alcun errore: il codice è sintatticamente e semanticamente corretto."
+        },
+        "concept": "Rest nei parametri di funzione",
+        "commonMistake": "Confondere il valore del rest con la sua lunghezza o aspettarsi un errore.",
+        "example": "function f(...args) { console.log(args.length); }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:48:20.946Z"
+    },
+    {
+      "id": "spread-rest-po-0031",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-destructuring",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["rest destructuring oggetto", "proprietà oggetto"],
+      "prompt": "Cosa stampa questo codice che usa il rest nel destructuring di oggetto?",
+      "code": "const persona = { nome: 'Marta', età: 30, ruolo: 'dev' };\nconst { nome, ...info } = persona;\nconsole.log(nome);\nconsole.log(info);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Marta\n{ età: 30, ruolo: 'dev' }"
+        },
+        {
+          "id": "b",
+          "text": "Marta\n[ 'età', 'ruolo' ]"
+        },
+        {
+          "id": "c",
+          "text": "{ nome: 'Marta' }\n{ età: 30, ruolo: 'dev' }"
+        },
+        {
+          "id": "d",
+          "text": "undefined\n{ nome: 'Marta', età: 30, ruolo: 'dev' }"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il rest nel destructuring oggetto raccoglie le proprietà non estratte in un nuovo oggetto.",
+        "whyCorrect": "Il destructuring estrae `nome` e raccoglie le altre proprietà (`età` e `ruolo`) in `info`, che è un oggetto separato.",
+        "whyOthersWrong": {
+          "b": "Il rest nel destructuring oggetto crea un oggetto con le proprietà rimanenti, non un array di nomi di proprietà.",
+          "c": "`nome` viene estratto come stringa e non come oggetto con chiave 'nome'.",
+          "d": "`nome` è definito e vale 'Marta', non undefined. Inoltre, `info` non contiene la chiave `nome`."
+        },
+        "concept": "Rest nel destructuring oggetto",
+        "commonMistake": "Pensare che il rest raccolga chiavi in un array o lasci le proprietà originali.",
+        "example": "const { a, ...rest } = obj;"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:48:20.946Z"
+    }
+  ]
+}

@@ -1,0 +1,1337 @@
+{
+  "topicId": "spread-rest",
+  "questions": [
+    {
+      "id": "spread-rest-fb-0002",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-params",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "rest parametri",
+        "posizione parametro"
+      ],
+      "prompt": "La funzione vuole sommare tutti i numeri passati, ma genera un errore di sintassi.",
+      "code": "function somma(...numeri, extra) {\n  return numeri.reduce((s, n) => s + n, 0) + extra;\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "Il parametro rest deve essere ultimo"
+        },
+        {
+          "id": "b",
+          "text": "I parametri non possono avere lo spread"
+        },
+        {
+          "id": "c",
+          "text": "Il parametro rest deve essere un array"
+        },
+        {
+          "id": "d",
+          "text": "Serve chiamare reduce su arguments"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il parametro rest deve comparire solo come ultimo parametro nella lista dei parametri di una funzione.",
+        "whyCorrect": "In JavaScript, il parametro rest deve essere posizionato per ultimo. Metterne altri dopo, come `extra`, porta a un errore di sintassi.",
+        "whyOthersWrong": {
+          "b": "Il parametro rest si usa solo nei parametri, non negli argomenti. Qui lo spread è usato correttamente.",
+          "c": "Il parametro rest diventa automaticamente un array, non occorre specificarlo.",
+          "d": "Nelle arrow function `arguments` non esiste e comunque `numeri` è già un array idoneo a chiamare `reduce`."
+        },
+        "concept": "Rest nei parametri",
+        "commonMistake": "Mettere parametri dopo il rest",
+        "example": "function fn(a, ...rest) { /* ... */ }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:21.870Z"
+    },
+    {
+      "id": "spread-rest-fb-0003",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-destructuring",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "rest destructuring array",
+        "ordine destructuring"
+      ],
+      "prompt": "Questo codice vuole salvare il primo elemento di un array in `primo` e il resto in `resto`.",
+      "code": "const numeri = [1, 2, 3];\nconst [resto, ...primo] = numeri;\nconsole.log(primo);",
+      "options": [
+        {
+          "id": "a",
+          "text": "L'ordine di primo e resto è invertito"
+        },
+        {
+          "id": "b",
+          "text": "Serve usare lo spread anche su numeri"
+        },
+        {
+          "id": "c",
+          "text": "Il rest non funziona sugli array"
+        },
+        {
+          "id": "d",
+          "text": "Manca una variabile temporanea"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Nel destructuring, la variabile rest deve essere per ultima: `[primo, ...resto]` raccoglie i restanti elementi in `resto`.",
+        "whyCorrect": "In `[resto, ...primo]` si assegna il primo elemento a `resto` e gli altri a `primo`, quindi sono invertiti rispetto allo scopo richiesto.",
+        "whyOthersWrong": {
+          "b": "Lo spread serve nella dichiarazione delle variabili, non sull'array sorgente.",
+          "c": "Il rest operator funziona sia su array sia su oggetti nel destructuring.",
+          "d": "Non è necessario introdurre una variabile temporanea, basta ordinare correttamente le variabili nel destructuring."
+        },
+        "concept": "Rest nel destructuring array",
+        "commonMistake": "Invertire l'ordine delle variabili nel destructuring",
+        "example": "const [primo, ...resto] = numeri;"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:21.871Z"
+    },
+    {
+      "id": "spread-rest-fb-0005",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-params",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "rest parametri",
+        "arrow function",
+        "arguments"
+      ],
+      "prompt": "La funzione vuole restituire la somma di tutti gli argomenti passati, ma lancia un errore in esecuzione.",
+      "code": "const somma = () => {\n  return arguments[0] + arguments[1];\n};\nconsole.log(somma(2, 3));",
+      "options": [
+        {
+          "id": "a",
+          "text": "Le arrow function non hanno arguments"
+        },
+        {
+          "id": "b",
+          "text": "Serve il rest operator nei parametri"
+        },
+        {
+          "id": "c",
+          "text": "Gli argomenti devono essere numeri"
+        },
+        {
+          "id": "d",
+          "text": "Manca il return nel chiamante"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le arrow function non dispongono dell'oggetto `arguments` come le funzioni classiche: bisogna usare i parametri rest per raccogliere gli argomenti.",
+        "whyCorrect": "Le arrow function non hanno `arguments`, quindi il riferimento a `arguments[0]` genera un errore.",
+        "whyOthersWrong": {
+          "b": "Usare il rest operator sarebbe corretto, ma l'errore qui è l'assenza di `arguments` nell'arrow function.",
+          "c": "Il problema non riguarda il tipo degli argomenti: anche se fossero stringhe l'errore rimarrebbe.",
+          "d": "Il valore di ritorno della funzione viene comunque stampato, il return manca in caso nella funzione stessa."
+        },
+        "concept": "Rest parametri e arrow function",
+        "commonMistake": "Usare `arguments` nelle arrow function",
+        "example": "const somma = (...args) => args[0] + args[1];"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:21.871Z"
+    },
+    {
+      "id": "spread-rest-fb-0006",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-destructuring",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "rest destructuring oggetto",
+        "proprietà rest"
+      ],
+      "prompt": "Questo codice intende estrarre la proprietà `nome` da un oggetto e raccogliere il resto in `info`, ma non funziona come atteso.",
+      "code": "const persona = { nome: 'Luca', età: 30, città: 'Milano' };\nconst { info, ...nome } = persona;\nconsole.log(nome);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Invertire info e nome nel destructuring"
+        },
+        {
+          "id": "b",
+          "text": "Lo spread va messo solo su info"
+        },
+        {
+          "id": "c",
+          "text": "Serve dichiarare tutte le proprietà"
+        },
+        {
+          "id": "d",
+          "text": "Lo spread non funziona sugli oggetti"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Nel destructuring oggetto, la proprietà da estrarre viene indicata per prima, seguita da `...resto` per raccogliere le rimanenti.",
+        "whyCorrect": "La sintassi corretta è `{ nome, ...info }`, che estrae `nome` e raccoglie le altre proprietà in `info`.",
+        "whyOthersWrong": {
+          "b": "Il rest operator va davanti alla variabile che raccoglie le proprietà residue, non alle singole proprietà.",
+          "c": "Non è obbligatorio dichiarare tutte le proprietà: il rest raccoglie automaticamente quelle non elencate.",
+          "d": "Il rest nel destructuring funziona sia con array che con oggetti."
+        },
+        "concept": "Rest nel destructuring oggetti",
+        "commonMistake": "Invertire nome e variabile rest nel destructuring oggetto",
+        "example": "const { nome, ...info } = persona;"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:21.871Z"
+    },
+    {
+      "id": "spread-rest-fb-0007",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "spread array",
+        "copia superficiale",
+        "mutazione array"
+      ],
+      "prompt": "Il codice vuole copiare un array di oggetti per modificarne uno senza alterare l'originale, ma qualcosa va storto.",
+      "code": "const orig = [{ id: 1 }, { id: 2 }];\nconst copia = [...orig];\ncopia[0].id = 99;\nconsole.log(orig[0].id);",
+      "options": [
+        {
+          "id": "a",
+          "text": "La copia con spread è solo superficiale"
+        },
+        {
+          "id": "b",
+          "text": "Serve JSON.parse(JSON.stringify())"
+        },
+        {
+          "id": "c",
+          "text": "Lo spread non copia gli oggetti"
+        },
+        {
+          "id": "d",
+          "text": "Bisogna ciclare manualmente sugli oggetti"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread su array crea una copia superficiale: se gli elementi sono oggetti, vengono condivisi tra i due array.",
+        "whyCorrect": "Copiare un array con lo spread non copia anche gli oggetti interni: modificare uno di questi oggetti si riflette su entrambi gli array.",
+        "whyOthersWrong": {
+          "b": "Usare JSON.parse(JSON.stringify()) crea una copia profonda ma può introdurre altri problemi: il punto qui è la superficialità dello spread, non la soluzione alternativa.",
+          "c": "Lo spread copia il contenuto dell'array, ma solo i riferimenti agli oggetti, non la struttura interna.",
+          "d": "Copiare manualmente ogni oggetto sarebbe una soluzione, ma la domanda verte sulla natura della copia con spread."
+        },
+        "concept": "Spread e copia superficiale",
+        "commonMistake": "Pensare che lo spread faccia copie profonde",
+        "example": "const copia = [...array]; // copia superficiale"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:21.871Z"
+    },
+    {
+      "id": "spread-rest-fg-0001",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "spread array",
+        "copia superficiale",
+        "unione array"
+      ],
+      "prompt": "Completa la riga per creare una copia indipendente dell'array `lista` usando lo spread.",
+      "code": "const lista = [1, 2, 3];\nconst copia = ___;",
+      "options": [
+        {
+          "id": "a",
+          "text": "[...lista]"
+        },
+        {
+          "id": "b",
+          "text": "lista.slice()"
+        },
+        {
+          "id": "c",
+          "text": "{ ...lista }"
+        },
+        {
+          "id": "d",
+          "text": "[lista]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread `[...lista]` crea una copia superficiale dell'array.",
+        "whyCorrect": "Usare lo spread tra le parentesi quadre espande gli elementi di `lista` in un nuovo array, ottenendo così una copia indipendente degli stessi valori.",
+        "whyOthersWrong": {
+          "b": "Il metodo `slice()` funziona, ma non usa lo spread come richiesto nel prompt: la domanda chiede esplicitamente l'uso dei tre puntini.",
+          "c": "Lo spread tra parentesi graffe crea un oggetto, non un array: il risultato sarebbe un oggetto con chiavi numeriche, non una copia dell'array.",
+          "d": "Racchiudere `lista` tra parentesi quadre produce un array annidato, non una copia piatta: il risultato è `[ [1, 2, 3] ]`."
+        },
+        "concept": "Spread su array",
+        "commonMistake": "Confondere la sintassi di spread tra oggetti e array.",
+        "example": "const nuovo = [...vecchio];"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:17.566Z"
+    },
+    {
+      "id": "spread-rest-fg-0002",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "spread oggetti",
+        "copia oggetto",
+        "unione oggetti"
+      ],
+      "prompt": "Completa la riga per creare un nuovo oggetto che unisce tutte le proprietà di `base` e una proprietà aggiuntiva `visibile: true`.",
+      "code": "const base = { a: 1, b: 2 };\nconst nuovo = { ___, visibile: true };",
+      "options": [
+        {
+          "id": "a",
+          "text": "...base"
+        },
+        {
+          "id": "b",
+          "text": "base"
+        },
+        {
+          "id": "c",
+          "text": "[...base]"
+        },
+        {
+          "id": "d",
+          "text": "base..."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread `...base` espande tutte le proprietà dentro il nuovo oggetto.",
+        "whyCorrect": "Ponendo `...base` tra le parentesi graffe del nuovo oggetto, tutte le proprietà di `base` vengono copiate nel nuovo oggetto insieme a quelle specificate dopo.",
+        "whyOthersWrong": {
+          "b": "Scrivere solo `base` inserisce l'intero oggetto come valore di una proprietà, non espande le chiavi: avresti `{ base: { a: 1, b: 2 }, visibile: true }`.",
+          "c": "La sintassi `[...base]` funziona solo con array e oggetti iterabili, non con oggetti semplici.",
+          "d": "`base...` non è una sintassi valida in JavaScript e genera errore."
+        },
+        "concept": "Spread su oggetti",
+        "commonMistake": "Dimenticare i tre puntini per espandere le proprietà.",
+        "example": "const out = { ...oggetto, extra: 1 };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:17.567Z"
+    },
+    {
+      "id": "spread-rest-fg-0003",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-params",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "parametri rest",
+        "funzioni variadiche"
+      ],
+      "prompt": "Completa la dichiarazione per raccogliere tutti gli argomenti passati a `conta` in un array chiamato `parole`.",
+      "code": "function conta(___) {\n  return parole.length;\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "...parole"
+        },
+        {
+          "id": "b",
+          "text": "parole..."
+        },
+        {
+          "id": "c",
+          "text": "parole"
+        },
+        {
+          "id": "d",
+          "text": "*parole"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il parametro rest si scrive `...parole` per raccogliere gli argomenti.",
+        "whyCorrect": "Usando `...parole` come ultimo parametro, tutti gli argomenti extra sono raccolti in un array chiamato `parole` all'interno della funzione.",
+        "whyOthersWrong": {
+          "b": "`parole...` non è una sintassi prevista in JavaScript e produce errore.",
+          "c": "Senza i tre puntini, `parole` sarebbe solo il primo argomento, non un array di tutti.",
+          "d": "`*parole` ricorda la sintassi Python, ma in JavaScript si usano i tre puntini."
+        },
+        "concept": "Rest nei parametri",
+        "commonMistake": "Dimenticare i tre puntini o usare la sintassi di altri linguaggi.",
+        "example": "function somma(...numeri) { }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:17.567Z"
+    },
+    {
+      "id": "spread-rest-fg-0004",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "spread array",
+        "unione array"
+      ],
+      "prompt": "Completa la riga per creare un nuovo array che unisce tutti gli elementi di `arr1` e `arr2`.",
+      "code": "const arr1 = [1, 2];\nconst arr2 = [3, 4];\nconst insieme = [___];",
+      "options": [
+        {
+          "id": "a",
+          "text": "...arr1, ...arr2"
+        },
+        {
+          "id": "b",
+          "text": "[...arr1, ...arr2]"
+        },
+        {
+          "id": "c",
+          "text": "arr1 + arr2"
+        },
+        {
+          "id": "d",
+          "text": "arr1.concat(arr2)"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread `...arr1, ...arr2` espande gli elementi di entrambi gli array.",
+        "whyCorrect": "Mettendo `...arr1, ...arr2` tra parentesi quadre, si espandono entrambi gli array dentro un nuovo array, unendo i loro elementi.",
+        "whyOthersWrong": {
+          "b": "Un array dentro un array porta a una struttura annidata; qui la domanda vuole una sola coppia di parentesi quadre.",
+          "c": "L'operatore `+` concatena stringhe, e sugli array produce una stringa come '1,23,4'.",
+          "d": "Il metodo `concat` funziona, ma la domanda chiede lo spread, non i metodi legacy."
+        },
+        "concept": "Spread per unire array",
+        "commonMistake": "Usare la sintassi di altri linguaggi o confondere metodi con spread.",
+        "example": "const all = [ ...a, ...b ];"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:17.568Z"
+    },
+    {
+      "id": "spread-rest-fg-0005",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "spread array",
+        "copia non mutante"
+      ],
+      "prompt": "Completa la riga per ottenere una copia dell'array `originale`, aggiungendo il numero 5 in fondo.",
+      "code": "const originale = [1, 2, 3, 4];\nconst copia = ___;\nconsole.log(copia);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[...originale, 5]"
+        },
+        {
+          "id": "b",
+          "text": "[originale, 5]"
+        },
+        {
+          "id": "c",
+          "text": "originale.push(5)"
+        },
+        {
+          "id": "d",
+          "text": "[...originale.push(5)]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread array espande gli elementi dell'originale, a cui si aggiunge il 5.",
+        "whyCorrect": "Con `[...originale, 5]` si crea una copia del contenuto di `originale`, aggiungendo 5 in coda, senza mutare l'array originale.",
+        "whyOthersWrong": {
+          "b": "Senza lo spread, si ottiene un array annidato: `[originale, 5]` produce un array con due elementi, il primo è l'intero array originale.",
+          "c": "Il metodo `push` modifica l'array originale invece di crearne una copia; inoltre restituisce la nuova lunghezza, non l'array.",
+          "d": "`originale.push(5)` restituisce il numero 5 (nuova lunghezza), e quindi lo spread di un numero genera un errore."
+        },
+        "concept": "Spread per copiare array",
+        "commonMistake": "Dimenticare lo spread e ottenere un array annidato.",
+        "example": "const nuovo = [...vecchio, 10];"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:26.498Z"
+    },
+    {
+      "id": "spread-rest-fg-0006",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-params",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "parametro rest",
+        "funzione variadica"
+      ],
+      "prompt": "Completa la definizione per raccogliere tutti gli argomenti passati alla funzione in un array chiamato `valori`.",
+      "code": "function somma(___) {\n  return valori.reduce((tot, v) => tot + v, 0);\n}\nconsole.log(somma(2, 3, 5));",
+      "options": [
+        {
+          "id": "a",
+          "text": "...valori"
+        },
+        {
+          "id": "b",
+          "text": "valori..."
+        },
+        {
+          "id": "c",
+          "text": "valori"
+        },
+        {
+          "id": "d",
+          "text": "...valori, altro"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il parametro rest raccoglie tutti gli argomenti in un array.",
+        "whyCorrect": "Scrivendo `...valori` si usa il parametro rest, che raccoglie tutti gli argomenti della funzione in un array chiamato `valori`.",
+        "whyOthersWrong": {
+          "b": "La sintassi `valori...` non è valida in JavaScript: i tre puntini devono precedere il nome.",
+          "c": "Senza i tre puntini, `valori` riceverebbe solo il primo argomento, non tutti.",
+          "d": "Il parametro rest deve stare da solo come ultimo parametro: aggiungere altri parametri dopo causa errore di sintassi."
+        },
+        "concept": "Rest nei parametri funzione",
+        "commonMistake": "Dimenticare i puntini davanti o aggiungere altri parametri dopo il rest.",
+        "example": "function somma(...numeri) { return numeri.length; }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:26.498Z"
+    },
+    {
+      "id": "spread-rest-fg-0007",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-destructuring",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "rest destructuring array",
+        "estrarre resto"
+      ],
+      "prompt": "Completa la destrutturazione per mettere il primo elemento di `arr` in `testa` e il resto degli elementi in `coda`.",
+      "code": "const arr = [10, 20, 30, 40];\nconst [testa, ___] = arr;\nconsole.log(coda);",
+      "options": [
+        {
+          "id": "a",
+          "text": "...coda"
+        },
+        {
+          "id": "b",
+          "text": "coda..."
+        },
+        {
+          "id": "c",
+          "text": "coda"
+        },
+        {
+          "id": "d",
+          "text": "[...coda]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il rest in destrutturazione raccoglie gli elementi rimanenti.",
+        "whyCorrect": "Con `...coda` dopo la virgola si raccolgono tutti gli elementi che seguono il primo in un array chiamato `coda`.",
+        "whyOthersWrong": {
+          "b": "Posizionare i tre puntini dopo il nome non ha senso in questa sintassi, e genera errore.",
+          "c": "Senza i tre puntini, si assegna il secondo elemento a `coda`, non il resto.",
+          "d": "Usare le parentesi quadre come `[...coda]` qui non è sintassi valida nel pattern della destrutturazione."
+        },
+        "concept": "Rest in destrutturazione array",
+        "commonMistake": "Mettere i puntini nel posto sbagliato o non usarli.",
+        "example": "const [primo, ...resto] = numeri;"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:26.498Z"
+    },
+    {
+      "id": "spread-rest-po-0001",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "spread su array",
+        "copia superficiale array",
+        "mutazione"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const originale = [1, { x: 2 }];\nconst copia = [...originale];\ncopia[1].x = 99;\nconsole.log(originale[1].x);",
+      "options": [
+        {
+          "id": "a",
+          "text": "99"
+        },
+        {
+          "id": "b",
+          "text": "2"
+        },
+        {
+          "id": "c",
+          "text": "undefined"
+        },
+        {
+          "id": "d",
+          "text": "[object Object]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread su array copia solo i riferimenti degli oggetti interni, quindi modificando `copia[1].x` cambia anche `originale[1].x`.",
+        "whyCorrect": "La copia tramite spread è superficiale: sia `originale[1]` che `copia[1]` puntano allo stesso oggetto. Cambiando la proprietà `x` su uno, si riflette anche sull'altro.",
+        "whyOthersWrong": {
+          "b": "Si otterrebbe 2 solo se lo spread fosse profondo, ma in realtà copia soltanto i riferimenti agli oggetti interni, non li clona.",
+          "c": "La proprietà `x` esiste e viene aggiornata, quindi non ritorna undefined.",
+          "d": "Questa sarebbe la rappresentazione di un oggetto stampato come stringa, ma `console.log` stampa il valore della proprietà, cioè un numero."
+        },
+        "concept": "Copia superficiale con spread",
+        "commonMistake": "Pensare che lo spread faccia una copia profonda anche degli oggetti annidati.",
+        "example": "const copia = [...originale]; // copia superficiale"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:18.429Z"
+    },
+    {
+      "id": "spread-rest-po-0002",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-destructuring",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "rest destructuring array",
+        "spread array",
+        "rimozione primo elemento"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const arr = [10, 20, 30, 40];\nconst [primo, ...resto] = arr;\nconsole.log(resto);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 20, 30, 40 ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 10, 20, 30, 40 ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 30, 40 ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 20, 30 ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il rest nel destructuring prende tutti gli elementi dopo il primo, quindi stampa [20, 30, 40].",
+        "whyCorrect": "Con `[primo, ...resto]`, la variabile `resto` contiene tutti i valori dopo il primo dell'array originale.",
+        "whyOthersWrong": {
+          "b": "Include anche il primo elemento, ma con questa sintassi il primo va in `primo`, non in `resto`.",
+          "c": "Con questa risposta si salta due elementi, mentre solo il primo viene escluso.",
+          "d": "Si ottengono solo due elementi, ma il rest prende tutti tranne il primo, quindi tre."
+        },
+        "concept": "Rest nel destructuring di array",
+        "commonMistake": "Credere che il rest raccolga solo gli ultimi due o che includa il primo elemento.",
+        "example": "const [a, ...b] = [1,2,3]; // b = [2,3]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:18.430Z"
+    },
+    {
+      "id": "spread-rest-po-0003",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "spread oggetti",
+        "merge oggetti",
+        "property overriding"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const base = { a: 1, b: 2 };\nconst extra = { b: 3, c: 4 };\nconst unito = { ...base, ...extra };\nconsole.log(unito);",
+      "options": [
+        {
+          "id": "a",
+          "text": "{ a: 1, b: 3, c: 4 }"
+        },
+        {
+          "id": "b",
+          "text": "{ a: 1, b: 2, c: 4 }"
+        },
+        {
+          "id": "c",
+          "text": "{ b: 3, c: 4 }"
+        },
+        {
+          "id": "d",
+          "text": "{ a: 1, b: 2, b: 3, c: 4 }"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le proprietà duplicate vengono sovrascritte da quelle in `extra`, quindi `b` vale 3.",
+        "whyCorrect": "Quando si usano più spread su oggetti, le proprietà più a destra sovrascrivono quelle precedenti, quindi `b` prende il valore 3.",
+        "whyOthersWrong": {
+          "b": "Qui `b` non viene sovrascritta, ma in realtà la seconda occorrenza di `b` sovrascrive la prima.",
+          "c": "Così si perdono le proprietà di `base`, mentre lo spread le include comunque.",
+          "d": "Gli oggetti non possono avere due proprietà con lo stesso nome, l'ultima sovrascrive la precedente."
+        },
+        "concept": "Spread per unire oggetti",
+        "commonMistake": "Non sapere che le proprietà duplicate vengono sovrascritte dall'ultimo spread.",
+        "example": "const c = { ...a, ...b };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:18.430Z"
+    },
+    {
+      "id": "spread-rest-po-0004",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "spread array",
+        "costruzione nuovo array",
+        "ordine"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const a = [1, 2];\nconst b = [3, ...a, 4];\nconsole.log(b);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 3, 1, 2, 4 ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 1, 2, 3, 4 ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 3, [1,2], 4 ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 3, 2, 1, 4 ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread espande gli elementi di `a` in posizione, ottenendo [3, 1, 2, 4].",
+        "whyCorrect": "Con lo spread, ciascun elemento di `a` viene inserito separatamente tra 3 e 4, rispettando l'ordine.",
+        "whyOthersWrong": {
+          "b": "Ordine sbagliato: qui 3 viene dopo gli elementi di `a`, ma nel codice viene prima.",
+          "c": "Lo spread non inserisce l'array come nested, ma ne espande i valori.",
+          "d": "L'ordine degli elementi è invertito rispetto a quello originale."
+        },
+        "concept": "Spread array con altri valori",
+        "commonMistake": "Non notare che lo spread espande l'array, non lo inserisce come elemento singolo.",
+        "example": "const b = [1, ...[2,3], 4]; // [1,2,3,4]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:18.431Z"
+    },
+    {
+      "id": "spread-rest-po-0006",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-params",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "parametri rest",
+        "funzioni variadiche",
+        "array di argomenti"
+      ],
+      "prompt": "Cosa stampa questo codice che usa i parametri rest in una funzione?",
+      "code": "function somma(primo, ...altri) {\n  return altri.reduce((tot, n) => tot + n, primo);\n}\nconsole.log(somma(4, 2, 3));",
+      "options": [
+        {
+          "id": "a",
+          "text": "9"
+        },
+        {
+          "id": "b",
+          "text": "7"
+        },
+        {
+          "id": "c",
+          "text": "4"
+        },
+        {
+          "id": "d",
+          "text": "5"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il parametro `primo` prende 4, `altri` è [2, 3], che vengono sommati partendo da 4.",
+        "whyCorrect": "La funzione prende il primo argomento come valore iniziale e usa rest per raccogliere gli altri in un array. Viene calcolato 4 + 2 + 3 = 9.",
+        "whyOthersWrong": {
+          "b": "Qui si sommano solo 4 + 3, probabilmente non si è capito che entrambi 2 e 3 vanno sommati al valore iniziale.",
+          "c": "Si ottiene 4 se si pensa che l'array `altri` sia vuoto, ma qui contiene 2 e 3.",
+          "d": "Questo risultato deriva forse da 2 + 3, ignorando il parametro `primo` come valore iniziale."
+        },
+        "concept": "Rest nei parametri di funzione",
+        "commonMistake": "Dimenticare che il primo parametro non è incluso nell'array rest.",
+        "example": "function foo(a, ...rest) { /* rest è array */ }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:28.078Z"
+    },
+    {
+      "id": "spread-rest-po-0023",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": [
+        "spread oggetto",
+        "ordine proprietà",
+        "override"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const base = { id: 1, ruolo: 'user' };\nconst extra = { ruolo: 'admin', attivo: true };\nconst unito = { ...base, ...extra };\nconsole.log(unito);",
+      "options": [
+        {
+          "id": "a",
+          "text": "{ id: 1, ruolo: 'admin', attivo: true }"
+        },
+        {
+          "id": "b",
+          "text": "{ ruolo: 'user', attivo: true, id: 1 }"
+        },
+        {
+          "id": "c",
+          "text": "{ id: 1, ruolo: 'user', attivo: true }"
+        },
+        {
+          "id": "d",
+          "text": "{ ruolo: 'admin', id: 1, attivo: true }"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le proprietà duplicate sono sovrascritte dall’ultimo oggetto espanso.",
+        "whyCorrect": "Lo spread espande prima tutte le proprietà di `base`, poi quelle di `extra`. Le chiavi duplicate ('ruolo') vengono sovrascritte dall’ultimo oggetto spread, quindi 'admin' prevale.",
+        "whyOthersWrong": {
+          "b": "L’ordine delle proprietà segue l’inserimento: prima id, poi ruolo, poi attivo. Inoltre la proprietà ruolo viene sovrascritta con 'admin', non resta 'user'.",
+          "c": "La proprietà 'ruolo' deve essere quella dell’oggetto `extra`, quindi 'admin', non 'user'.",
+          "d": "L’ordine degli oggetti spread determina anche quello delle proprietà, e la chiave 'id' precede 'ruolo', quindi 'id' viene prima."
+        },
+        "concept": "Unione oggetti con spread e override",
+        "commonMistake": "Non considerare che le proprietà duplicate vengono sovrascritte dall’ultimo oggetto.",
+        "example": "const o = { ...a, ...b };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:53.067Z"
+    },
+    {
+      "id": "spread-rest-po-0024",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-destructuring",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": [
+        "rest array destructuring",
+        "destructuring multiplo"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const numeri = [10, 20, 30, 40];\nconst [primo, ...[secondo, ...resto]] = numeri;\nconsole.log(primo, secondo, resto);",
+      "options": [
+        {
+          "id": "a",
+          "text": "10 20 [ 30, 40 ]"
+        },
+        {
+          "id": "b",
+          "text": "10 undefined [ 20, 30, 40 ]"
+        },
+        {
+          "id": "c",
+          "text": "10 30 [ 40 ]"
+        },
+        {
+          "id": "d",
+          "text": "10 20 [ 40 ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il rest annidato raccoglie gli ultimi due elementi.",
+        "whyCorrect": "Il primo elemento viene assegnato a 'primo'. Poi si destruttura il resto dell’array: 'secondo' prende il primo valore (20), 'resto' riceve i rimanenti (30, 40).",
+        "whyOthersWrong": {
+          "b": "Il secondo elemento non è undefined: viene estratto tramite la destrutturazione annidata.",
+          "c": "Il secondo elemento preso è 20, non 30. Il rest annidato scatta dopo il secondo valore.",
+          "d": "Il rest raccoglie entrambi gli ultimi due valori, non solo uno."
+        },
+        "concept": "Rest annidato in destructuring array",
+        "commonMistake": "Credere che il rest raccolga solo un elemento o che la destrutturazione annidata non funzioni.",
+        "example": "const [a, ...[b, ...rest]] = arr;"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:53.067Z"
+    },
+    {
+      "id": "spread-rest-po-0025",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": [
+        "spread array",
+        "valori primitivi",
+        "concatenazione spread"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const uno = [1];\nconst due = [2];\nconst risultato = [...uno, ...due, ...[3, ...uno]];\nconsole.log(risultato);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 1, 2, 3, 1 ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 1, 2, [ 3, 1 ] ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 1, 2, 3, [ 1 ] ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 1, 2, 3 ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Gli spread annidati vengono risolti completamente in valori piatti.",
+        "whyCorrect": "Lo spread interno ...[3, ...uno] produce [3, 1], che viene ulteriormente espanso. Si ottiene quindi [1] + [2] + [3, 1], ovvero [1, 2, 3, 1].",
+        "whyOthersWrong": {
+          "b": "Se non si espandesse l’array interno, si otterrebbe un array annidato, ma qui lo spread appiattisce tutto.",
+          "c": "Si avrebbe un array con un elemento annidato solo se non si usasse lo spread anche su uno.",
+          "d": "Vengono uniti anche l’ultimo 1 grazie allo spread annidato, quindi mancherebbe un elemento."
+        },
+        "concept": "Spread array e concetto di flatness",
+        "commonMistake": "Pensare che lo spread annidato crei array dentro array invece di espandere tutto.",
+        "example": "const arr = [...a, ...b, ...[c, ...a]];"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:53.067Z"
+    },
+    {
+      "id": "spread-rest-po-0026",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": [
+        "spread array",
+        "copia superficiale",
+        "mutazione"
+      ],
+      "prompt": "Cosa stampa questo codice che usa lo spread per copiare un array di array e poi modifica un elemento interno?",
+      "code": "const matrice = [[1, 2], [3, 4]];\nconst copia = [...matrice];\ncopia[0][1] = 99;\nconsole.log(matrice[0]);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 1, 99 ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 1, 2 ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 99, 2 ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 3, 4 ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread copia solo il primo livello: gli array interni sono condivisi tra `matrice` e `copia`, quindi la modifica si riflette su entrambi.",
+        "whyCorrect": "Usando lo spread per copiare un array di array si ottiene una copia superficiale: entrambi gli array condividono i sotto-array interni. Modificando `copia[0][1]`, anche `matrice[0][1]` viene aggiornato, quindi `console.log(matrice[0])` stampa `[ 1, 99 ]`.",
+        "whyOthersWrong": {
+          "b": "La risposta `[ 1, 2 ]` sarebbe corretta solo se lo spread producesse una copia profonda, ma in realtà gli array interni restano condivisi, quindi la modifica si riflette anche sull'originale.",
+          "c": "La risposta `[ 99, 2 ]` deriva dall'invertire i valori o da una confusione sugli indici. In realtà viene modificato il secondo elemento, non il primo.",
+          "d": "`[ 3, 4 ]` è il secondo sotto-array, che non viene modificato: il `console.log` mostra il primo sotto-array dopo la modifica."
+        },
+        "concept": "spread copia superficiale",
+        "commonMistake": "Pensare che lo spread su array annidati crei copie indipendenti anche degli array interni.",
+        "example": "const b = [...a]; b[0][0] = 123; // anche a[0][0]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:35:01.134Z"
+    },
+    {
+      "id": "spread-rest-po-0027",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-destructuring",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": [
+        "rest destructuring",
+        "oggetto",
+        "ordine delle proprietà"
+      ],
+      "prompt": "Cosa stampa questo codice che usa il rest nel destructuring di oggetto dove una proprietà viene ridefinita dopo lo spread?",
+      "code": "const persona = { nome: 'Anna', età: 30, città: 'Milano' };\nconst { nome, ...info } = persona;\nconst nuova = { ...info, nome: 'Luca' };\nconsole.log(nuova);",
+      "options": [
+        {
+          "id": "a",
+          "text": "{ età: 30, città: 'Milano', nome: 'Luca' }"
+        },
+        {
+          "id": "b",
+          "text": "{ nome: 'Anna', età: 30, città: 'Milano' }"
+        },
+        {
+          "id": "c",
+          "text": "{ nome: 'Luca', età: 30, città: 'Milano' }"
+        },
+        {
+          "id": "d",
+          "text": "{ età: 30, città: 'Milano' }"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Quando si espande prima un oggetto e poi si aggiunge una proprietà con lo stesso nome, quest'ultima sovrascrive il valore precedente.",
+        "whyCorrect": "La proprietà `nome` viene esclusa da `info` durante il destructuring, quindi dopo lo spread in `nuova` si aggiunge `nome: 'Luca'`, che viene inserita dopo le altre proprietà. L'oggetto risultante è `{ età: 30, città: 'Milano', nome: 'Luca' }`.",
+        "whyOthersWrong": {
+          "b": "Qui la proprietà `nome` rimarrebbe 'Anna', ma in realtà viene rimossa da `info` e poi reinserita con valore 'Luca', quindi non può essere 'Anna'.",
+          "c": "L'ordine delle proprietà in output riflette l'ordine di inserimento: prima `età` e `città` (dallo spread), poi `nome`. In Node vengono mostrate in quest'ordine.",
+          "d": "Questa opzione manca della proprietà `nome`, che viene invece aggiunta esplicitamente dopo lo spread."
+        },
+        "concept": "rest destructuring oggetti e sovrascrittura",
+        "commonMistake": "Credere che lo spread in oggetti mantenga anche le proprietà escluse dal destructuring, o che l'ordine sia diverso.",
+        "example": "const nuovo = { ...base, nome: 'Nuovo' };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:35:01.134Z"
+    },
+    {
+      "id": "spread-rest-po-0029",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "spread array copia",
+        "immutabilità superficiale"
+      ],
+      "prompt": "Cosa stampa questo codice che combina spread su array e modifica successiva?",
+      "code": "const nomi = ['Anna', 'Luca'];\nconst copia = [...nomi];\ncopia[0] = 'Paolo';\nconsole.log(nomi);\nconsole.log(copia);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 'Anna', 'Luca' ]\n[ 'Paolo', 'Luca' ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 'Paolo', 'Luca' ]\n[ 'Paolo', 'Luca' ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 'Anna', 'Luca' ]\n[ 'Anna', 'Luca' ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 'Paolo', 'Luca' ]\n[ 'Anna', 'Luca' ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread su array produce una copia superficiale: modificare la copia non cambia l'originale.",
+        "whyCorrect": "Lo spread `[...nomi]` crea una copia superficiale e indipendente dell'array `nomi`. Cambiando `copia[0]` a 'Paolo', solo la copia viene modificata. `nomi` resta `[ 'Anna', 'Luca' ]` e `copia` diventa `[ 'Paolo', 'Luca' ]`.",
+        "whyOthersWrong": {
+          "b": "Modificando la copia non si modifica anche l'array originale: solo la copia cambia, perché lo spread produce un nuovo array.",
+          "c": "Dopo l'assegnazione, la copia è modificata in posizione 0, quindi non può essere identica a `nomi`.",
+          "d": "L'originale non viene mai cambiato, quindi non può partire con 'Paolo'. Solo la copia riceve la modifica."
+        },
+        "concept": "Spread per copiare array",
+        "commonMistake": "Pensare che la modifica della copia con spread influenzi l'originale.",
+        "example": "const b = [...a]; b[0] = 9;"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:48:20.945Z"
+    },
+    {
+      "id": "spread-rest-po-0030",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-params",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "parametri rest",
+        "funzioni variadiche",
+        "array"
+      ],
+      "prompt": "Cosa stampa questo codice che usa un parametro rest e calcola la lunghezza?",
+      "code": "function contaElementi(...elementi) {\n  console.log(elementi.length);\n}\ncontaElementi('a', 'b', 'c');",
+      "options": [
+        {
+          "id": "a",
+          "text": "3"
+        },
+        {
+          "id": "b",
+          "text": "undefined"
+        },
+        {
+          "id": "c",
+          "text": "['a', 'b', 'c']"
+        },
+        {
+          "id": "d",
+          "text": "TypeError"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il parametro rest raccoglie gli argomenti in un array di lunghezza 3.",
+        "whyCorrect": "Il parametro `...elementi` raccoglie tutti gli argomenti in un array, quindi `elementi.length` è 3 dato che vengono passati tre valori.",
+        "whyOthersWrong": {
+          "b": "La proprietà length di un array esiste sempre, anche se è vuoto, e qui vale 3.",
+          "c": "Questa è la rappresentazione dell'array, ma la funzione stampa la sua lunghezza, non l'array in sé.",
+          "d": "Non viene generato alcun errore: il codice è sintatticamente e semanticamente corretto."
+        },
+        "concept": "Rest nei parametri di funzione",
+        "commonMistake": "Confondere il valore del rest con la sua lunghezza o aspettarsi un errore.",
+        "example": "function f(...args) { console.log(args.length); }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:48:20.946Z"
+    },
+    {
+      "id": "spread-rest-po-0031",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-destructuring",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "rest destructuring oggetto",
+        "proprietà oggetto"
+      ],
+      "prompt": "Cosa stampa questo codice che usa il rest nel destructuring di oggetto?",
+      "code": "const persona = { nome: 'Marta', età: 30, ruolo: 'dev' };\nconst { nome, ...info } = persona;\nconsole.log(nome);\nconsole.log(info);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Marta\n{ età: 30, ruolo: 'dev' }"
+        },
+        {
+          "id": "b",
+          "text": "Marta\n[ 'età', 'ruolo' ]"
+        },
+        {
+          "id": "c",
+          "text": "{ nome: 'Marta' }\n{ età: 30, ruolo: 'dev' }"
+        },
+        {
+          "id": "d",
+          "text": "undefined\n{ nome: 'Marta', età: 30, ruolo: 'dev' }"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il rest nel destructuring oggetto raccoglie le proprietà non estratte in un nuovo oggetto.",
+        "whyCorrect": "Il destructuring estrae `nome` e raccoglie le altre proprietà (`età` e `ruolo`) in `info`, che è un oggetto separato.",
+        "whyOthersWrong": {
+          "b": "Il rest nel destructuring oggetto crea un oggetto con le proprietà rimanenti, non un array di nomi di proprietà.",
+          "c": "`nome` viene estratto come stringa e non come oggetto con chiave 'nome'.",
+          "d": "`nome` è definito e vale 'Marta', non undefined. Inoltre, `info` non contiene la chiave `nome`."
+        },
+        "concept": "Rest nel destructuring oggetto",
+        "commonMistake": "Pensare che il rest raccolga chiavi in un array o lasci le proprietà originali.",
+        "example": "const { a, ...rest } = obj;"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:48:20.946Z"
+    },
+    {
+      "id": "spread-rest-po-0032",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": [
+        "spread array",
+        "shallow copy",
+        "modifica array annidato"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const dati = [{ x: 1 }, { y: 2 }];\nconst copia = [...dati];\ncopia[0].x = 42;\nconsole.log(dati[0].x);\nconsole.log(copia === dati);\nconsole.log(copia[0] === dati[0]);",
+      "options": [
+        {
+          "id": "a",
+          "text": "42\nfalse\ntrue"
+        },
+        {
+          "id": "b",
+          "text": "1\ntrue\ntrue"
+        },
+        {
+          "id": "c",
+          "text": "1\nfalse\nfalse"
+        },
+        {
+          "id": "d",
+          "text": "42\nfalse\nfalse"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread copia l'array ma non gli oggetti interni, quindi modificare `copia[0].x` modifica anche `dati[0].x`. Gli array sono distinti, ma gli oggetti all'interno sono condivisi.",
+        "whyCorrect": "Lo spread crea una copia superficiale dell'array, quindi `copia !== dati`, ma gli oggetti al loro interno sono gli stessi (`copia[0] === dati[0]`). Modificando una proprietà interna si cambia il riferimento condiviso, quindi la modifica appare in entrambi.",
+        "whyOthersWrong": {
+          "b": "`copia` e `dati` sono due array distinti, quindi `copia === dati` è falso. Inoltre, modificare `copia[0].x` imposta anche `dati[0].x` a 42, non 1.",
+          "c": "La copia con spread è superficiale: sia l'array che gli oggetti interni hanno riferimenti diversi solo per l'array, non per gli oggetti. Quindi `copia[0] === dati[0]` è vero.",
+          "d": "Anche se `copia[0].x` viene cambiato, l'oggetto interno è lo stesso di `dati[0]`, quindi `copia[0] === dati[0]` è vero, non falso."
+        },
+        "concept": "Spread su array e oggetti",
+        "commonMistake": "Credere che lo spread effettui una copia profonda sugli array di oggetti.",
+        "example": "const copia = [...originale]; // copia superficiale"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:48:25.040Z"
+    },
+    {
+      "id": "spread-rest-po-0033",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": [
+        "spread array",
+        "spread oggetto",
+        "shallow copy"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const persona = { nome: 'Luca', hobby: ['tennis', 'scacchi'] };\nconst copia = { ...persona };\ncopia.hobby.push('yoga');\nconsole.log(persona.hobby);\nconsole.log(copia === persona);\nconsole.log(copia.hobby === persona.hobby);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 'tennis', 'scacchi', 'yoga' ]\nfalse\ntrue"
+        },
+        {
+          "id": "b",
+          "text": "[ 'tennis', 'scacchi', 'yoga' ]\ntrue\ntrue"
+        },
+        {
+          "id": "c",
+          "text": "[ 'tennis', 'scacchi' ]\nfalse\nfalse"
+        },
+        {
+          "id": "d",
+          "text": "[ 'tennis', 'scacchi', 'yoga' ]\nfalse\nfalse"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread copia solo il primo livello: `copia` e `persona` sono oggetti diversi, ma l'array `hobby` al loro interno resta condiviso. Quindi aggiungendo 'yoga' la modifica si riflette su entrambi.",
+        "whyCorrect": "Con lo spread l'oggetto esterno viene copiato superficialmente: `copia` e `persona` sono oggetti distinti (`false`), ma la proprietà `hobby` fa riferimento allo stesso array per entrambi (`true`). Per questo la modifica si riflette su entrambi.",
+        "whyOthersWrong": {
+          "b": "Gli oggetti `copia` e `persona` non sono uguali: lo spread crea un nuovo oggetto, quindi il confronto con `===` restituisce `false`. Solo l'array `hobby` rimane condiviso.",
+          "c": "Lo spread non effettua una copia profonda: quando si aggiunge 'yoga' a `copia.hobby`, anche `persona.hobby` viene modificato. L'array mostrato sarà arricchito, non quello originale.",
+          "d": "L'array `hobby` rimane condiviso tra i due oggetti dopo la copia superficiale, ma gli oggetti esterni non sono uguali con `===`, quindi la terza riga stampa `true`, non `false`."
+        },
+        "concept": "Spread copia superficiale",
+        "commonMistake": "Aspettarsi che lo spread copi anche gli oggetti o array annidati, mentre in realtà crea solo una copia del primo livello.",
+        "example": "const nuovo = { ...vecchio }; // copia solo le proprietà, non gli oggetti annidati"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:48:29.523Z"
+    },
+    {
+      "id": "spread-rest-fb-0034",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "copia superficiale",
+        "spread su array"
+      ],
+      "prompt": "Il codice vuole creare una copia di `numeri` per modificarla senza toccare l'originale, ma dopo la modifica anche `numeri` viene alterato. Qual è la causa?",
+      "code": "const numeri = [[1, 2], [3, 4]];\nconst copia = [...numeri];\ncopia[0][0] = 99;\nconsole.log(numeri);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Lo spread copia solo l'array esterno, non gli interni"
+        },
+        {
+          "id": "b",
+          "text": "Lo spread muta entrambi gli array per errore"
+        },
+        {
+          "id": "c",
+          "text": "Serve uno spread doppio per copiare tutto"
+        },
+        {
+          "id": "d",
+          "text": "Lo spread funziona solo su array di numeri semplici"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread copia solo l'array più esterno: gli array interni restano condivisi.",
+        "whyCorrect": "Lo spread effettua una copia superficiale dell'array, quindi gli array annidati rimangono riferimenti condivisi tra la copia e l'originale. Modificando un elemento interno, il cambiamento si riflette su entrambi.",
+        "whyOthersWrong": {
+          "b": "Lo spread non modifica direttamente nessuno dei due array: restituisce un nuovo array contenente gli stessi riferimenti degli elementi originali, quindi la mutazione si propaga solo agli oggetti condivisi.",
+          "c": "Non esiste un 'doppio spread' automatico: bisognerebbe copiare manualmente ogni array interno per ottenere una copia profonda.",
+          "d": "Lo spread funziona su qualunque array, non solo su numeri. Il problema nasce con valori mutabili come array o oggetti, non con il tipo di elemento."
+        },
+        "concept": "Spread copia superficiale",
+        "commonMistake": "Pensare che lo spread crei una copia profonda di array annidati.",
+        "example": "const copia = [...arr]; // array annidati restano condivisi"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:59:14.057Z"
+    }
+  ]
+}

@@ -1,0 +1,313 @@
+{
+  "topicId": "objects-advanced",
+  "questions": [
+    {
+      "id": "objects-advanced-po-0001",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["computed property names", "object shorthand", "template literals"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const prefisso = 'id';\nconst numero = 7;\nconst utente = {\n  nome: 'Luca',\n  [prefisso + numero]: 42\n};\nconsole.log(Object.keys(utente));",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 'nome', 'id7' ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 'nome', 'prefisso7' ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 'nome', '7' ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 'nome', 'id' ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le chiavi computate con [expr] valutano l'espressione come nome della proprietà.",
+        "whyCorrect": "La chiave computata [prefisso + numero] produce 'id7'. Quindi l'oggetto ha le chiavi 'nome' e 'id7'.",
+        "whyOthersWrong": {
+          "b": "'prefisso' non viene usato come stringa letterale, ma come variabile. La chiave è 'id7', non 'prefisso7'.",
+          "c": "La chiave non è solo il numero, ma il risultato della concatenazione.",
+          "d": "Viene concatenato anche '7', quindi la chiave non è solo 'id' ma 'id7'."
+        },
+        "concept": "Chiavi computate nei letterali oggetto",
+        "commonMistake": "Dimenticare che [variabile] calcola l'espressione, non prende il nome letterale.",
+        "example": "const o = { [prefix + 1]: 'x' };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:17.372Z"
+    },
+    {
+      "id": "objects-advanced-po-0002",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-chaining",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["optional chaining", "nullish coalescing", "default values"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const libro = { titolo: '1984', autore: { nome: 'Orwell' } };\nconsole.log(libro.autore?.cognome ?? 'sconosciuto');",
+      "options": [
+        {
+          "id": "a",
+          "text": "sconosciuto"
+        },
+        {
+          "id": "b",
+          "text": "undefined"
+        },
+        {
+          "id": "c",
+          "text": "null"
+        },
+        {
+          "id": "d",
+          "text": "[object Object]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Optional chaining restituisce undefined per proprietà mancanti e ?? fornisce un default.",
+        "whyCorrect": "libro.autore?.cognome è undefined, quindi l'operatore ?? restituisce 'sconosciuto' come valore di default.",
+        "whyOthersWrong": {
+          "b": "Il valore undefined viene rimpiazzato da 'sconosciuto' a causa dell'operatore ??.",
+          "c": "Solo null o undefined attivano l'operatore ??, ma il valore di default è 'sconosciuto', non null.",
+          "d": "Non viene mai restituito l'oggetto autore, ma la proprietà 'cognome', che non esiste."
+        },
+        "concept": "Optional chaining e nullish coalescing",
+        "commonMistake": "Dimenticare che ?? vale per undefined e null, non per tutti i falsy.",
+        "example": "utente.dati?.email ?? 'manca'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:17.373Z"
+    },
+    {
+      "id": "objects-advanced-po-0003",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["object property shorthand", "object literals"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const nome = 'Arianna';\nconst persona = { nome };\nconsole.log(persona);",
+      "options": [
+        {
+          "id": "a",
+          "text": "{ nome: 'Arianna' }"
+        },
+        {
+          "id": "b",
+          "text": "{ 'nome': nome }"
+        },
+        {
+          "id": "c",
+          "text": "{ nome: nome }"
+        },
+        {
+          "id": "d",
+          "text": "{ 'Arianna': nome }"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La shorthand nelle proprietà oggetto usa il valore della variabile come valore della proprietà.",
+        "whyCorrect": "Utilizzando la shorthand, la chiave è 'nome' e il valore è il contenuto della variabile nome, ovvero 'Arianna'.",
+        "whyOthersWrong": {
+          "b": "Questo rappresenta un oggetto con chiave 'nome' e valore la stringa 'nome', non il contenuto della variabile.",
+          "c": "Anche se valido, console.log mostra comunque { nome: 'Arianna' } perché nome ha valore 'Arianna'.",
+          "d": "Qui la chiave sarebbe 'Arianna', ma la shorthand crea la chiave col nome della variabile, non col suo valore."
+        },
+        "concept": "Shorthand delle proprietà oggetto",
+        "commonMistake": "Pensare che la shorthand usi il nome della variabile come valore.",
+        "example": "const u = { id }; // equivale a { id: id }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:17.373Z"
+    },
+    {
+      "id": "objects-advanced-po-0004",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-chaining",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["optional chaining", "nested object access"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const dati = {};\nconsole.log(dati.utente?.email);",
+      "options": [
+        {
+          "id": "a",
+          "text": "undefined"
+        },
+        {
+          "id": "b",
+          "text": "TypeError"
+        },
+        {
+          "id": "c",
+          "text": "null"
+        },
+        {
+          "id": "d",
+          "text": "[object Object]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "L'optional chaining restituisce undefined se la proprietà mancante.",
+        "whyCorrect": "dati.utente è undefined, quindi dati.utente?.email restituisce undefined senza errore.",
+        "whyOthersWrong": {
+          "b": "Senza l'optional chaining ci sarebbe un TypeError, ma qui viene restituito undefined.",
+          "c": "La proprietà mancante porta a undefined, non a null, a meno che non sia esplicitamente null.",
+          "d": "Non viene restituito un oggetto, ma il valore della proprietà, che è undefined."
+        },
+        "concept": "Optional chaining sugli oggetti",
+        "commonMistake": "Aspettarsi un errore quando una proprietà non esiste senza considerare l'optional chaining.",
+        "example": "utente?.indirizzo // undefined se utente manca"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:17.373Z"
+    },
+    {
+      "id": "objects-advanced-po-0005",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["Object.entries", "iterazione oggetti", "destructuring"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const animale = { specie: \"gatto\", zampe: 4 };\nfor (const [chiave, valore] of Object.entries(animale)) {\n  console.log(chiave + \":\" + valore);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "specie:gatto\nzampe:4"
+        },
+        {
+          "id": "b",
+          "text": "gatto:specie\n4:zampe"
+        },
+        {
+          "id": "c",
+          "text": "['specie', 'gatto']\n['zampe', 4]"
+        },
+        {
+          "id": "d",
+          "text": "[specie]:gatto\n[zampe]:4"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Object.entries restituisce array di [chiave, valore], che vengono destrutturati nella for-of.",
+        "whyCorrect": "Il ciclo scorre su ogni coppia [chiave, valore] dell'oggetto e concatena i valori, ottenendo specie:gatto e zampe:4.",
+        "whyOthersWrong": {
+          "b": "Invertire chiave e valore è un errore comune, ma l'ordine di destrutturazione è [chiave, valore], non il contrario.",
+          "c": "console.log stampa stringhe, non array letterali, quindi non vengono stampati array ma stringhe formattate.",
+          "d": "Le parentesi quadre non fanno parte dell'output: compaiono solo in letterali array o chiavi computate, non nella stampa di stringhe."
+        },
+        "concept": "Object.entries e destrutturazione",
+        "commonMistake": "Confondere l'ordine di chiave e valore o aspettarsi la stampa di array.",
+        "example": "for (const [k, v] of Object.entries(o)) { console.log(k + ':' + v); }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:26.179Z"
+    },
+    {
+      "id": "objects-advanced-po-0006",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["shorthand proprietà", "chiavi computate", "letterali oggetto"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const chiave = \"colore\";\nconst valore = \"rosso\";\nconst auto = { tipo: \"SUV\", [chiave]: valore };\nconsole.log(Object.keys(auto));",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 'tipo', 'colore' ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 'tipo', 'chiave' ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 'tipo', 'valore' ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 'tipo', 'rosso' ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La chiave computata usa il valore di chiave come nome della proprietà.",
+        "whyCorrect": "La chiave tra parentesi quadre viene valutata e il suo valore, 'colore', diventa il nome della proprietà nell'oggetto.",
+        "whyOthersWrong": {
+          "b": "Senza parentesi quadre, 'chiave' sarebbe il nome letterale, ma qui viene valutata come variabile.",
+          "c": "Qui viene confuso il concetto di chiave (nome proprietà) con il valore associato.",
+          "d": "Il valore 'rosso' è il valore della proprietà, non il suo nome; solo le chiavi compaiono in Object.keys."
+        },
+        "concept": "Chiavi computate nei letterali oggetto",
+        "commonMistake": "Dimenticare che le parentesi quadre valutano l'espressione, non usano il nome letterale.",
+        "example": "const o = { [chiave]: valore };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:26.180Z"
+    },
+    {
+      "id": "objects-advanced-po-0007",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-chaining",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["optional chaining", "operatori nullish", "valori di default"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const persona = {\n  nome: \"Laura\",\n  indirizzo: { citta: \"Milano\" }\n};\nconsole.log(persona.indirizzo?.citta ?? \"sconosciuta\");\nconsole.log(persona.telefono?.numero ?? \"nessun numero\");",
+      "options": [
+        {
+          "id": "a",
+          "text": "Milano\nnessun numero"
+        },
+        {
+          "id": "b",
+          "text": "Milano\nundefined"
+        },
+        {
+          "id": "c",
+          "text": "undefined\nnessun numero"
+        },
+        {
+          "id": "d",
+          "text": "sconosciuta\nnessun numero"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il chaining accede in sicurezza e ?? fornisce il default solo se null o undefined.",
+        "whyCorrect": "La città è presente e stampata, mentre persona.telefono è undefined, quindi il secondo log fornisce il valore di default.",
+        "whyOthersWrong": {
+          "b": "Il secondo log usa ??, quindi stampa 'nessun numero' se il valore è undefined, non undefined letterale.",
+          "c": "La città esiste: optional chaining non restituisce undefined qui, quindi la prima riga non può essere undefined.",
+          "d": "\"sconosciuta\" sarebbe stampato solo se persona.indirizzo fosse null o undefined, ma non lo è."
+        },
+        "concept": "Optional chaining e nullish coalescing",
+        "commonMistake": "Aspettarsi che ?? agisca anche su valori falsy come stringhe vuote.",
+        "example": "utente.info?.email ?? 'non disponibile'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:26.180Z"
+    }
+  ]
+}

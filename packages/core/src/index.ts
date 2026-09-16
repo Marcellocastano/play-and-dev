@@ -4,6 +4,7 @@ export * from './subject/registry.js';
 export * from './question/types.js';
 export * from './question/generator.js';
 export * from './question/validate.js';
+export * from './question/quality.js';
 export * from './question/distractors.js';
 export * from './question/antiDup.js';
 export * from './session/engine.js';

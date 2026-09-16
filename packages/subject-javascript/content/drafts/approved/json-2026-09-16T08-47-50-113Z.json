@@ -1,0 +1,93 @@
+{
+  "topicId": "json",
+  "questions": [
+    {
+      "id": "json-fg-0026",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["api-recognition", "serializzazione-oggetti"],
+      "prompt": "Completa il codice per ottenere la rappresentazione JSON dell'array `numeri`.",
+      "code": "const numeri = [1, 2, 3];\nconst json = ___;",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON.stringify(numeri)"
+        },
+        {
+          "id": "b",
+          "text": "numeri.toJSON()"
+        },
+        {
+          "id": "c",
+          "text": "JSON.parse(numeri)"
+        },
+        {
+          "id": "d",
+          "text": "String(numeri)"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La funzione `JSON.stringify` trasforma un array in una stringa JSON, che può essere trasmessa o salvata.",
+        "whyCorrect": "`JSON.stringify(numeri)` genera la stringa '[1,2,3]', rappresentazione JSON dell'array. È il metodo standard per serializzare strutture in formato JSON.",
+        "whyOthersWrong": {
+          "b": "`numeri.toJSON()` non è definito sugli array standard, quindi restituisce undefined o lancia un errore in ambienti stretti.",
+          "c": "`JSON.parse` si usa con una stringa JSON come input, non con array: qui genera un errore perché `numeri` non è una stringa.",
+          "d": "`String(numeri)` restituisce '1,2,3', che non è una stringa JSON valida ma solo la rappresentazione con virgole degli elementi."
+        },
+        "concept": "Serializzare array con JSON.stringify",
+        "commonMistake": "Confondere metodi di serializzazione e conversione in stringa.",
+        "example": "JSON.stringify([1, 2, 3]) // '[1,2,3]'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:46.775Z"
+    },
+    {
+      "id": "json-fg-0027",
+      "topicId": "json",
+      "subtopicId": "json-parse",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["api-recognition", "deserializzazione"],
+      "prompt": "Completa il codice per ottenere un oggetto a partire dalla stringa JSON specificata.",
+      "code": "const stringa = '{\"nome\":\"Luca\"}';\nconst oggetto = ___;",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON.parse(stringa)"
+        },
+        {
+          "id": "b",
+          "text": "stringa.parse()"
+        },
+        {
+          "id": "c",
+          "text": "JSON.stringify(stringa)"
+        },
+        {
+          "id": "d",
+          "text": "Object.create(stringa)"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La funzione `JSON.parse` converte una stringa JSON in un oggetto JavaScript.",
+        "whyCorrect": "`JSON.parse(stringa)` analizza la stringa JSON e produce l'oggetto corrispondente, permettendo di accedere alle sue proprietà in JavaScript.",
+        "whyOthersWrong": {
+          "b": "`stringa.parse()` non è un metodo esistente sulle stringhe JavaScript e produrrebbe un errore.",
+          "c": "`JSON.stringify(stringa)` produce una stringa tra virgolette doppie, non un oggetto: serializza, non deserializza.",
+          "d": "`Object.create(stringa)` crea un nuovo oggetto con `stringa` come prototipo, ma non analizza il JSON né restituisce le proprietà desiderate."
+        },
+        "concept": "Deserializzare testo JSON in oggetto",
+        "commonMistake": "Usare stringify o metodi inesistenti invece di parse.",
+        "example": "JSON.parse('{\"a\":1}') // { a: 1 }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:46.776Z"
+    }
+  ]
+}

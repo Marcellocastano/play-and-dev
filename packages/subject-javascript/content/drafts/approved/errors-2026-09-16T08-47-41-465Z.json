@@ -1,0 +1,93 @@
+{
+  "topicId": "errors",
+  "questions": [
+    {
+      "id": "errors-po-0029",
+      "topicId": "errors",
+      "subtopicId": "errors-throw",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["gestione errori", "throw", "oggetto Error"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "function controllaValore(x) {\n  if (typeof x !== 'number') {\n    throw new TypeError('atteso un numero');\n  }\n  return x * 2;\n}\n\ntry {\n  console.log(controllaValore('5'));\n} catch (errore) {\n  console.log(errore.name);\n  console.log(errore.message);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "TypeError\natteso un numero"
+        },
+        {
+          "id": "b",
+          "text": "TypeError\nundefined"
+        },
+        {
+          "id": "c",
+          "text": "ReferenceError\natteso un numero"
+        },
+        {
+          "id": "d",
+          "text": "TypeError\ncontrollaValore is not a function"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La funzione lancia un TypeError personalizzato: il catch stampa nome e messaggio.",
+        "whyCorrect": "Il blocco `try` invoca la funzione con una stringa, attivando il ramo di errore che lancia un `TypeError` con messaggio 'atteso un numero'. Il catch stampa prima `name` (TypeError) e poi `message` (atteso un numero).",
+        "whyOthersWrong": {
+          "b": "La proprietà `message` di un oggetto `Error` personalizzato contiene il messaggio specificato ('atteso un numero'), non `undefined`.",
+          "c": "Viene lanciato un `TypeError` perché il valore passato non è di tipo numero, non un `ReferenceError` che riguarda nomi non definiti.",
+          "d": "Il messaggio 'controllaValore is not a function' sarebbe generato se si tentasse di chiamare qualcosa che non è una funzione, ma qui la funzione esiste e viene chiamata."
+        },
+        "concept": "throw e oggetto Error",
+        "commonMistake": "Pensare che il messaggio di errore venga ignorato o che si generi un altro tipo di errore.",
+        "example": "throw new TypeError('Parametro non valido');"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:41.462Z"
+    },
+    {
+      "id": "errors-po-0030",
+      "topicId": "errors",
+      "subtopicId": "errors-native",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["errori nativi", "ReferenceError", "scope delle variabili"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "try {\n  let x = 3;\n  console.log(y);\n} catch (e) {\n  console.log(e.name);\n}\nconsole.log('dopo');",
+      "options": [
+        {
+          "id": "a",
+          "text": "ReferenceError\ndopo"
+        },
+        {
+          "id": "b",
+          "text": "TypeError\ndopo"
+        },
+        {
+          "id": "c",
+          "text": "ReferenceError"
+        },
+        {
+          "id": "d",
+          "text": "dopo\nReferenceError"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Stampando una variabile non dichiarata si genera ReferenceError, poi il programma continua.",
+        "whyCorrect": "L’accesso a `y` (non dichiarato) genera un `ReferenceError`, il cui nome viene stampato nel catch. Dopo il blocco try/catch, viene stampato 'dopo'.",
+        "whyOthersWrong": {
+          "b": "Un `TypeError` si verifica quando si fa qualcosa di non valido su un tipo, non quando manca una variabile.",
+          "c": "Dopo il blocco catch, il codice prosegue e viene stampato anche 'dopo'.",
+          "d": "L’ordine è quello del flusso di esecuzione: prima l’errore nel catch, poi 'dopo'."
+        },
+        "concept": "Errori nativi: ReferenceError",
+        "commonMistake": "Confondere ReferenceError (variabile non definita) con TypeError o pensare che l’errore interrompa il resto del programma.",
+        "example": "try { console.log(foo); } catch(e) { console.log(e.name); }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:41.464Z"
+    }
+  ]
+}

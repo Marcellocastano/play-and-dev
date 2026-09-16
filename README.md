@@ -52,6 +52,36 @@ Senza `OPENAI_API_KEY` gli endpoint rispondono `503 { error: 'ai_unavailable' }`
 
 Per un subject "coming soon" basta la `SubjectDefinition` con `status: 'coming-soon'` e liste vuote (vedi `subject-placeholders`).
 
+## Contenuti: template generativi + banca curata
+
+Le domande di `@lg/subject-javascript` arrivano da due fonti: i template generativi in
+`src/templates/` (dati variati via RNG) e la banca curata in `content/<topic>.json`,
+caricata come `QuestionTemplate` da `src/bank/` (un template per gruppo
+`topicId:type:difficulty`, minimo 6 domande — sotto soglia il gruppo non entra nel subject).
+Il runtime non importa JSON: `src/bank/data.generated.ts` è rigenerato ad ogni approvazione.
+
+Il flusso di authoring AI è offline e manuale:
+
+```bash
+npm run content:author -w @lg/subject-javascript -- \
+  --topic errors --type predict-output --difficulty medium --count 7
+# genera bozze in content/drafts/ (system prompt: scripts/author.prompt.md,
+# key letta da apps/server/.env; modello di default gpt-4.1, override con --model)
+
+npm run content:review -w @lg/subject-javascript
+# stampa compatta delle bozze in attesa per la revisione umana
+
+npm run content:approve -w @lg/subject-javascript -- content/drafts/<file>.json [id...]
+# senza id approva tutta la bozza; con --reject <file> id... rimuove gli id dalla bozza.
+# L'approvazione aggiorna content/<topic>.json e rigenera data.generated.ts.
+
+npm run content:dump -w @lg/subject-javascript -- <seed> [--why]
+# dump di ogni template (generativi e banca) per ispezione
+```
+
+Regole di qualità e formato delle domande: `packages/subject-javascript/CONTENT_GUIDE.md`
+(il gate `qualityIssues` di `@lg/core` le applica nei test, bozze incluse).
+
 ## Aggiungere un question type
 
 1. In `@lg/core` registra la definizione nel `QuestionTypeRegistry` (`PHASE1_QUESTION_TYPES` in `src/question/types.ts`): `id`, `label`, `requiresCode`.

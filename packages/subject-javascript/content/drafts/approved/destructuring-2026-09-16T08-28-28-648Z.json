@@ -1,0 +1,93 @@
+{
+  "topicId": "destructuring",
+  "questions": [
+    {
+      "id": "destructuring-fb-0006",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["destructuring oggetti", "parametri funzione"],
+      "prompt": "La funzione accetta un oggetto opzioni e dovrebbe estrarre livello con default 1, ma lancia TypeError se si chiama senza argomenti.",
+      "code": "function imposta({ livello = 1 }) {\n  console.log(livello);\n}\nimposta();",
+      "options": [
+        {
+          "id": "a",
+          "text": "Serve un default per tutto il parametro"
+        },
+        {
+          "id": "b",
+          "text": "Livello deve essere passato sempre"
+        },
+        {
+          "id": "c",
+          "text": "La destructuring va fatta dentro la funzione"
+        },
+        {
+          "id": "d",
+          "text": "La funzione deve restituire livello"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Destrutturare undefined causa TypeError: serve un default.",
+        "whyCorrect": "Quando si destruttura direttamente un parametro, bisogna dargli un default come `{ livello = 1 } = {}` per gestire il caso senza argomenti.",
+        "whyOthersWrong": {
+          "b": "Non è obbligatorio passare sempre livello: un valore di default nel destructuring permette di non specificarlo.",
+          "c": "La destructuring nei parametri funzione è corretta ed è una pratica comune.",
+          "d": "Restituire livello non risolve il problema del TypeError, che nasce dalla destrutturazione di undefined."
+        },
+        "concept": "Default nel destructuring parametri funzione",
+        "commonMistake": "Dimenticare di fornire un oggetto vuoto come default per destrutturare parametri opzionali.",
+        "example": "function f({ x = 1 } = {}) { ... }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:28:19.779Z"
+    },
+    {
+      "id": "destructuring-fb-0007",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["destructuring oggetti", "rinominare proprietà", "default in destructuring"],
+      "prompt": "Il codice vuole estrarre la proprietà `età` dall'oggetto `persona`, assegnarla a una variabile `anni`, e se non c'è, usare il default 18. Tuttavia, il risultato non è quello voluto: stampando, ottiene undefined invece di 18. Dov'è l'errore?",
+      "code": "const persona = {};\nconst { anni: età = 18 } = persona;\nconsole.log(età);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Rinominato nella direzione sbagliata: 'anni: età'"
+        },
+        {
+          "id": "b",
+          "text": "Default applicato solo se tutta la variabile manca"
+        },
+        {
+          "id": "c",
+          "text": "Serve usare [età] per estrarre la proprietà"
+        },
+        {
+          "id": "d",
+          "text": "La sintassi va usata solo nei parametri di funzione"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La sintassi di rinomina va da proprietà originale a nuovo nome: andava scritto { età: anni = 18 }.",
+        "whyCorrect": "La sintassi di destructuring per rinominare è { proprietà: variabile }, quindi per assegnare il valore di età a anni scriveremmo { età: anni = 18 }. Nel codice, 'anni: età' cerca una proprietà 'anni' che non esiste.",
+        "whyOthersWrong": {
+          "b": "Il default viene applicato quando la proprietà manca o vale undefined, non quando manca la variabile creata.",
+          "c": "I nomi tra parentesi quadre servono per gli array, non per gli oggetti: qui va usata la sintassi con parentesi graffe.",
+          "d": "Il destructuring è valido sia nelle dichiarazioni che nei parametri di funzione; non c'è questa limitazione."
+        },
+        "concept": "Rinominare proprietà in destructuring oggetti",
+        "commonMistake": "Invertire l'ordine proprietà:variabile nella rinomina.",
+        "example": "const { età: anni = 18 } = {};\nconsole.log(anni); // 18"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:28:28.646Z"
+    }
+  ]
+}

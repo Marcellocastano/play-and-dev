@@ -1,5 +1,5 @@
 import type { QuestionTemplate } from '@lg/core';
-import { fmt, makeOptions, pickInt, pickInts, pickOf, retry, shuffle, type Rng } from '../helpers.js';
+import { fmt, makeOptions, pickInt, pickInts, retry, type Rng } from '../helpers.js';
 
 const TOPIC = 'loops';
 const DD = 'dd-loops';
@@ -20,11 +20,23 @@ const forCountPo: QuestionTemplate = {
       const code = `for (let i = ${start}; i < ${n}; i++) {\n  console.log(i);\n}`;
       const built = makeOptions(
         rng,
-        { text: lines, why: `i va da ${start} a ${n - 1}.` },
+        {
+          text: lines,
+          why: `Il ciclo parte da i = ${start} e si ferma quando i raggiunge ${n}: stampa i valori da ${start} a ${n - 1}, uno per riga.`,
+        },
         [
-          { text: Array.from({ length: n - start }, (_, i) => i + start + 1).join('\n'), why: `Il contatore parte da ${start}: questa sequenza è spostata di 1.` },
-          { text: Array.from({ length: n - start + 1 }, (_, i) => i + start).join('\n'), why: `La condizione i < ${n} esclude ${n}.` },
-          { text: fmt(n - start), why: 'Il corpo stampa i ad ogni iterazione, non solo il conteggio.' },
+          {
+            text: Array.from({ length: n - start }, (_, i) => i + start + 1).join('\n'),
+            why: `Il contatore parte da ${start}, non da ${start + 1}: questa sequenza è spostata di 1 in avanti.`,
+          },
+          {
+            text: Array.from({ length: n - start + 1 }, (_, i) => i + start).join('\n'),
+            why: `La condizione \`i < ${n}\` esclude ${n}: questa sequenza include una riga di troppo, come se fosse \`i <= ${n}\`.`,
+          },
+          {
+            text: fmt(n - start),
+            why: 'Il corpo stampa `i` a ogni iterazione su righe separate, non il numero totale di giri: il conteggio non viene mai stampato.',
+          },
         ],
       );
       return {
@@ -42,7 +54,8 @@ const forCountPo: QuestionTemplate = {
           whyCorrect: `i < ${n} ferma il ciclo prima di ${n}.`,
           whyOthersWrong: built.whyOthersWrong,
           concept: 'Ciclo for con contatore',
-          commonMistake: 'Includere il limite superiore o partire dal valore sbagliato (off-by-one).',
+          commonMistake:
+            'Includere il limite superiore o partire dal valore sbagliato (off-by-one).',
           example: 'for (let i = 0; i < 3; i++) stampa 0, 1, 2',
         },
         deepDiveRef: DD,
@@ -66,11 +79,23 @@ const sumPo: QuestionTemplate = {
       const code = `const valori = [${arr.join(', ')}];\nlet somma = 0;\nfor (let i = 0; i < valori.length; i++) {\n  somma += valori[i];\n}\nconsole.log(somma);`;
       const built = makeOptions(
         rng,
-        { text: fmt(sum), why: `La somma ${arr.join(' + ')} vale ${sum}.` },
+        {
+          text: fmt(sum),
+          why: `Il ciclo scorre tutti gli indici validi e accumula ogni elemento: ${arr.join(' + ')} vale ${sum}.`,
+        },
         [
-          { text: fmt(sum - arr[arr.length - 1]!), why: 'Manca l\'ultimo elemento: il ciclo arriva a length - 1 incluso.' },
-          { text: fmt(arr.length), why: 'somma accumula i valori, non il conteggio.' },
-          { text: fmt(arr[0]!), why: 'somma parte da 0 e accumula tutto, non solo il primo elemento.' },
+          {
+            text: fmt(sum - arr[arr.length - 1]!),
+            why: `Questo risultato corrisponderebbe a fermarsi un'iterazione prima: la condizione \`i < valori.length\` include anche l'ultimo elemento ${arr[arr.length - 1]}.`,
+          },
+          {
+            text: fmt(arr.length),
+            why: `\`somma\` accumula i valori degli elementi, non il numero di iterazioni: ${arr.length} è solo quanti elementi ha l'array.`,
+          },
+          {
+            text: fmt(arr[0]!),
+            why: `\`somma\` parte da 0 e ad ogni giro aggiunge un elemento: il totale ${sum} include tutto l'array, non solo il primo valore ${arr[0]}.`,
+          },
         ],
       );
       return {
@@ -88,7 +113,7 @@ const sumPo: QuestionTemplate = {
           whyCorrect: 'somma += valori[i] per ogni indice valido.',
           whyOthersWrong: built.whyOthersWrong,
           concept: 'Pattern accumulatore con for',
-          commonMistake: 'Fermarsi un\'iterazione prima (i < length - 1).',
+          commonMistake: "Fermarsi un'iterazione prima (i < length - 1).",
           example: 'Idioma equivalente: valori.reduce((s, x) => s + x, 0)',
         },
         deepDiveRef: DD,
@@ -112,11 +137,23 @@ const forOfPo: QuestionTemplate = {
       const code = `const lista = [${arr.join(', ')}];\nfor (const v of lista) {\n  console.log(v);\n}`;
       const built = makeOptions(
         rng,
-        { text: lines, why: 'for...of scorre i valori uno a uno, nell\'ordine.' },
+        {
+          text: lines,
+          why: `\`for...of\` scorre i valori dell'array uno a uno, nell'ordine: stampa ${arr.join(', ')} su righe separate.`,
+        },
         [
-          { text: '0\n1\n2', why: 'for...of itera sui valori, non sugli indici.' },
-          { text: fmt(arr), why: 'Ogni console.log stampa un valore per riga, non l\'array intero.' },
-          { text: arr.slice().reverse().join('\n'), why: 'for...of va in avanti, dal primo all\'ultimo.' },
+          {
+            text: '0\n1\n2',
+            why: `\`for...of\` itera sui valori, non sugli indici: gli indici 0, 1, 2 non compaiono mai nell'output.`,
+          },
+          {
+            text: fmt(arr),
+            why: "Ogni `console.log` riceve un singolo valore e stampa una riga: l'array intero non viene mai stampato in una volta.",
+          },
+          {
+            text: arr.slice().reverse().join('\n'),
+            why: `\`for...of\` percorre l'array in avanti, dal primo elemento all'ultimo: l'ordine resta ${arr.join(', ')}.`,
+          },
         ],
       );
       return {
@@ -130,7 +167,7 @@ const forOfPo: QuestionTemplate = {
         code,
         ...built,
         explanation: {
-          short: 'for...of stampa ogni valore dell\'array su una riga.',
+          short: "for...of stampa ogni valore dell'array su una riga.",
           whyCorrect: `v assume ${arr.join(', ')} in sequenza.`,
           whyOthersWrong: built.whyOthersWrong,
           concept: 'for...of sugli array',
@@ -157,13 +194,22 @@ const offByFb: QuestionTemplate = {
     const built = makeOptions(
       rng,
       {
-        text: 'i <= a.length scorre un indice di troppo: a[3] è undefined. Serve i < a.length',
-        why: `L'ultimo indice valido è ${arr.length - 1}; con <= si accede a a[${arr.length}].`,
+        text: '`<=` scorre un indice di troppo',
+        why: `Con \`i <= a.length\` l'ultimo giro accede a \`a[${arr.length}]\`, che non esiste perché gli indici validi sono 0…${arr.length - 1}: da qui la riga undefined.`,
       },
       [
-        { text: 'console.log non funziona dentro un for', why: 'Funziona benissimo: il problema è la condizione del ciclo.' },
-        { text: 'Il ciclo non parte perché i = 0', why: 'Partire da 0 è corretto: gli indici vanno da 0.' },
-        { text: 'a.length non esiste', why: 'length esiste: è il confronto con <= a essere sbagliato.' },
+        {
+          text: '`i++` salta un elemento',
+          why: `\`i++\` avanza di un indice alla volta, che è il comportamento corretto: il problema è \`<=\`, che ammette i = ${arr.length}.`,
+        },
+        {
+          text: '`a[i]` va scritto `a.i`',
+          why: `\`a.i\` cercherebbe la proprietà letterale "i", non l'elemento in posizione i: \`a[i]\` è la scrittura corretta.`,
+        },
+        {
+          text: 'Il ciclo deve partire da `i = 1`',
+          why: `Gli indici degli array partono da 0: partendo da 1 si salterebbe il primo elemento ${arr[0]}, e il problema resterebbe.`,
+        },
       ],
     );
     return {
@@ -173,7 +219,8 @@ const offByFb: QuestionTemplate = {
       topicId: TOPIC,
       subtopicId: 'loops-for',
       skills: ['for'],
-      prompt: 'Questo codice stampa gli elementi ma produce una riga "undefined" in più. Qual è il bug?',
+      prompt:
+        'Questo codice stampa gli elementi ma produce una riga "undefined" in più. Qual è il bug?',
       code,
       ...built,
       explanation: {
@@ -204,11 +251,23 @@ const whileFg: QuestionTemplate = {
     const code = `let i = ${start};\nwhile (i ___ ${n}) {\n  console.log(i);\n  i++;\n}`;
     const built = makeOptions(
       rng,
-      { text: '<', why: `i < ${n} esegue il corpo per i = ${start}…${n - 1}.` },
+      {
+        text: '<',
+        why: `Con \`i < ${n}\` il corpo gira per i = ${start}…${n - 1} e stampa esattamente ${expected}.`,
+      },
       [
-        { text: '<=', why: `i <= ${n} includerebbe anche i = ${n}: una riga in più.` },
-        { text: '>', why: `i > ${n} è falso subito: il ciclo non partirebbe.` },
-        { text: '==', why: `i == ${n} è falso all'inizio (i = ${start}): il ciclo non partirebbe.` },
+        {
+          text: '<=',
+          why: `Con \`i <= ${n}\` il ciclo eseguirebbe un giro in più e stamperebbe anche ${n}, che non è richiesto.`,
+        },
+        {
+          text: '>',
+          why: `Con i = ${start}, la condizione \`i > ${n}\` è falsa fin dal primo controllo: il corpo non verrebbe mai eseguito.`,
+        },
+        {
+          text: '==',
+          why: `Con i = ${start}, \`i == ${n}\` è falso all'ingresso: il ciclo non partirebbe e non verrebbe stampato nulla.`,
+        },
       ],
     );
     return {
@@ -243,22 +302,27 @@ const forOfCmp: QuestionTemplate = {
   skills: ['for...of', 'for'],
   tags: ['cicli'],
   generate(rng: Rng) {
-    const trueStatements = [
-      { text: 'for...of è più leggibile quando servono solo i valori', why: 'Elimina il boilerplate del contatore.' },
-      { text: 'Il for classico serve quando ti serve l\'indice', why: 'for...of non espone la posizione.' },
-      { text: 'for...of itera sui valori dell\'array', why: 'È la sua definizione: valori, non chiavi.' },
-      { text: 'Con for...of non rischi l\'off-by-one sugli indici', why: 'Non ci sono indici da sbagliare.' },
-    ];
-    const falseStatements = [
-      { text: 'for...of è sempre più veloce e va usato sempre', why: 'Senza indice non puoi conoscere la posizione: non sempre basta.' },
-      { text: 'for...of scorre le chiavi, il for i valori', why: 'È il contrario: for...of scorre i valori; for...in le chiavi.' },
-      { text: 'for...of e for classico sono identici', why: 'for...of non espone l\'indice: non sono intercambiabili.' },
-      { text: 'for...of non funziona sugli array', why: 'Gli array sono iterabili: for...of è fatto apposta.' },
-    ];
+    const arr = pickInts(rng, 3, 1, 9, true);
     const built = makeOptions(
       rng,
-      pickOf(rng, trueStatements),
-      shuffle(falseStatements, rng).slice(0, 3),
+      {
+        text: '`of` → valori, `in` → indici',
+        why: `\`for...of\` scorre i valori ${arr.join(', ')}; \`for...in\` scorre le chiavi, cioè gli indici '0', '1', '2' come stringhe.`,
+      },
+      [
+        {
+          text: '`of` → indici, `in` → valori',
+          why: `Il comportamento è l'esatto contrario: \`of\` dà i valori ${arr.join(', ')}, \`in\` dà le chiavi '0', '1', '2'.`,
+        },
+        {
+          text: '`of` e `in` danno i valori',
+          why: `\`for...in\` non dà i valori: su un array produce gli indici come stringhe ('0', '1', '2'), non ${arr.join(', ')}.`,
+        },
+        {
+          text: '`of` e `in` danno gli indici',
+          why: `\`for...of\` non dà gli indici: produce direttamente i valori ${arr.join(', ')}, senza modo di risalire alla posizione.`,
+        },
+      ],
     );
     return {
       templateId: 'loop-forof-cmp',
@@ -267,14 +331,15 @@ const forOfCmp: QuestionTemplate = {
       topicId: TOPIC,
       subtopicId: 'loops-for-of',
       skills: ['for...of'],
-      prompt: 'Quale affermazione su for...of è corretta?',
+      prompt: `Con \`const lista = [${arr.join(', ')}]\`, cosa scorrono \`for (const v of lista)\` e \`for (const k in lista)\`?`,
       ...built,
       explanation: {
-        short: 'for...of per i valori; for classico quando serve l\'indice o il controllo del passo.',
-        whyCorrect: 'Il for classico permette i, i += 2, cicli all\'indietro ecc.',
+        short:
+          "for...of per i valori; for classico quando serve l'indice o il controllo del passo.",
+        whyCorrect: "Il for classico permette i, i += 2, cicli all'indietro ecc.",
         whyOthersWrong: built.whyOthersWrong,
         concept: 'for vs for...of',
-        commonMistake: 'Usare for...of e poi cercare l\'indice con indexOf.',
+        commonMistake: "Usare for...of e poi cercare l'indice con indexOf.",
         example: 'for (const v of arr) vs for (let i = 0; i < arr.length; i++)',
       },
       deepDiveRef: DD,

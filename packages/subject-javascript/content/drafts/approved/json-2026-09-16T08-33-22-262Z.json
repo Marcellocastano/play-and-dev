@@ -1,0 +1,225 @@
+{
+  "topicId": "json",
+  "questions": [
+    {
+      "id": "json-fg-0001",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["serializzazione oggetti", "comportamento undefined"],
+      "prompt": "Completa il codice per serializzare l'oggetto in JSON, sapendo che la proprietà con valore undefined NON deve apparire nel risultato.",
+      "code": "const oggetto = { nome: \"Luca\", età: undefined };\nconst testo = ___;\nconsole.log(testo);",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON.stringify(oggetto)"
+        },
+        {
+          "id": "b",
+          "text": "JSON.parse(oggetto)"
+        },
+        {
+          "id": "c",
+          "text": "oggetto.toString()"
+        },
+        {
+          "id": "d",
+          "text": "JSON.encode(oggetto)"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Solo JSON.stringify serializza correttamente l'oggetto eliminando le proprietà undefined.",
+        "whyCorrect": "JSON.stringify converte l'oggetto in una stringa JSON e, come da specifica, omette le proprietà con valore undefined.",
+        "whyOthersWrong": {
+          "b": "JSON.parse accetta solo stringhe JSON, non oggetti: dà errore di tipo e non esegue la serializzazione.",
+          "c": "toString su un oggetto restituisce '[object Object]', non una rappresentazione JSON.",
+          "d": "JSON.encode non esiste in JavaScript: è un nome che può confondere con altre librerie."
+        },
+        "concept": "JSON.stringify e proprietà undefined",
+        "commonMistake": "Usare metodi inesistenti o aspettarsi che toString serializzi un oggetto.",
+        "example": "JSON.stringify({ a: 1, b: undefined }) // '{\"a\":1}'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:04.913Z"
+    },
+    {
+      "id": "json-fg-0002",
+      "topicId": "json",
+      "subtopicId": "json-parse",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["parse JSON", "accesso proprietà"],
+      "prompt": "Completa il codice per ottenere il valore della proprietà x dall'oggetto JSON fornito come stringa.",
+      "code": "const json = '{\"x\": 7}';\nconst oggetto = ___;\nconsole.log(oggetto.x);",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON.parse(json)"
+        },
+        {
+          "id": "b",
+          "text": "JSON.stringify(json)"
+        },
+        {
+          "id": "c",
+          "text": "json.parse()"
+        },
+        {
+          "id": "d",
+          "text": "parseJSON(json)"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "JSON.parse trasforma la stringa in oggetto, restituendo l'accesso a x.",
+        "whyCorrect": "JSON.parse converte la stringa in un oggetto JavaScript, così si può accedere direttamente alla proprietà x.",
+        "whyOthersWrong": {
+          "b": "JSON.stringify trasformerebbe 'json' in una stringa letterale, non in un oggetto.",
+          "c": "json.parse non è una funzione valida: 'json' è una stringa, non un oggetto con metodi.",
+          "d": "parseJSON non è definita in JavaScript standard, anche se il nome può trarre in inganno."
+        },
+        "concept": "Uso di JSON.parse",
+        "commonMistake": "Confondere parse e stringify, o usare nomi di funzioni inesistenti.",
+        "example": "JSON.parse('{\"a\":2}') // { a: 2 }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:04.913Z"
+    },
+    {
+      "id": "json-fg-0003",
+      "topicId": "json",
+      "subtopicId": "json-parse",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["gestione errori", "try-catch", "parse JSON"],
+      "prompt": "Completa il codice per evitare che un errore blocchi il programma quando si effettua il parse di testo JSON non valido.",
+      "code": "const input = \"{ nome: 'Anna' }\";\nlet risultato;\ntry {\n  risultato = ___;\n} catch (e) {\n  risultato = 'Errore';\n}\nconsole.log(risultato);",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON.parse(input)"
+        },
+        {
+          "id": "b",
+          "text": "parseJSON(input)"
+        },
+        {
+          "id": "c",
+          "text": "JSON.stringify(input)"
+        },
+        {
+          "id": "d",
+          "text": "input.toJSON()"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Solo JSON.parse può lanciare errori su testo non valido.",
+        "whyCorrect": "JSON.parse genera un errore se il formato non rispetta la sintassi JSON, quindi va usato nel blocco try/catch.",
+        "whyOthersWrong": {
+          "b": "parseJSON non è una funzione standard: produce ReferenceError.",
+          "c": "JSON.stringify converte in stringa ma non lancia errori su formato errato.",
+          "d": "input è una stringa, non ha il metodo toJSON, quindi si ottiene TypeError."
+        },
+        "concept": "Gestione errori su JSON.parse",
+        "commonMistake": "Usare funzioni non standard o metodi non esistenti sulle stringhe.",
+        "example": "try { JSON.parse('testo') } catch (e) { /* gestisci errore */ }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:04.914Z"
+    },
+    {
+      "id": "json-fg-0006",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["serializzare funzioni", "comportamento JSON"],
+      "prompt": "Completa il codice per serializzare l'oggetto senza includere la funzione come proprietà.",
+      "code": "const dati = { nome: \"Sara\", saluta: function() { return \"ciao\"; } };\nconst stringa = ___;\nconsole.log(stringa); // Deve stampare '{\"nome\":\"Sara\"}'",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON.stringify(dati)"
+        },
+        {
+          "id": "b",
+          "text": "JSON.stringify(dati.saluta)"
+        },
+        {
+          "id": "c",
+          "text": "JSON.stringify(Object.keys(dati))"
+        },
+        {
+          "id": "d",
+          "text": "JSON.stringify([dati])"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "JSON.stringify ignora le proprietà funzione negli oggetti.",
+        "whyCorrect": "Quando si serializza un oggetto con proprietà funzione, queste vengono omesse e non appaiono nella stringa JSON risultante.",
+        "whyOthersWrong": {
+          "b": "Serializzare una funzione restituisce undefined, quindi la stringa risultante sarebbe undefined.",
+          "c": "Serializzare Object.keys(dati) crea una stringa JSON con le chiavi come array, non con i valori.",
+          "d": "Serializzare un array con dati produce una rappresentazione JSON di un array, non dell'oggetto stesso."
+        },
+        "concept": "Funzioni omesse da JSON.stringify",
+        "commonMistake": "Pensare che le funzioni vengano incluse o convertite.",
+        "example": "JSON.stringify({ a: 1, f: () => 2 }) // '{\"a\":1}'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:18.773Z"
+    },
+    {
+      "id": "json-fg-0007",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["Serializzare oggetti con JSON.stringify"],
+      "prompt": "Completare il codice per ottenere una stringa JSON che rappresenta l'oggetto `dati`.",
+      "code": "const dati = { nome: \"Luca\", età: 30 };\nconst risultato = ___;\nconsole.log(risultato);",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON.stringify(dati)"
+        },
+        {
+          "id": "b",
+          "text": "JSON.parse(dati)"
+        },
+        {
+          "id": "c",
+          "text": "String(dati)"
+        },
+        {
+          "id": "d",
+          "text": "dati.toString()"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "JSON.stringify converte un oggetto JavaScript in una stringa JSON.",
+        "whyCorrect": "JSON.stringify è il metodo corretto per serializzare oggetti JavaScript in formato JSON. Con questo metodo otteniamo una stringa rappresentazione dell'oggetto.",
+        "whyOthersWrong": {
+          "b": "JSON.parse converte una stringa JSON in un oggetto, ma qui serve l’operazione inversa: serializzare, non deserializzare.",
+          "c": "String applicato a un oggetto restituisce '[object Object]', non una stringa JSON valida.",
+          "d": "toString sugli oggetti restituisce '[object Object]', che non è una rappresentazione JSON."
+        },
+        "concept": "Serializzazione con JSON.stringify",
+        "commonMistake": "Usare String o toString invece di JSON.stringify per serializzare oggetti.",
+        "example": "JSON.stringify({ a: 1 }) // '{\"a\":1}'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:22.261Z"
+    }
+  ]
+}

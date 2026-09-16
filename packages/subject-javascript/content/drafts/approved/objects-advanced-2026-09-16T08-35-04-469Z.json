@@ -1,0 +1,269 @@
+{
+  "topicId": "objects-advanced",
+  "questions": [
+    {
+      "id": "objects-advanced-po-0015",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["Object.entries", "array destructuring", "iterazione"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const dati = { x: 2, y: 3 };\nfor (const [chiave, valore] of Object.entries(dati)) {\n  console.log(chiave + valore);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "x2\ny3"
+        },
+        {
+          "id": "b",
+          "text": "xy\n23"
+        },
+        {
+          "id": "c",
+          "text": "x,y\n2,3"
+        },
+        {
+          "id": "d",
+          "text": "x:2\ny:3"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Object.entries restituisce array di coppie [chiave, valore], che destrutturiamo in chiave e valore. Concatenando stampiamo prima x2 poi y3.",
+        "whyCorrect": "Destrutturando le coppie, otteniamo prima 'x' e 2, poi 'y' e 3, quindi la concatenazione produce 'x2' e 'y3' su due righe.",
+        "whyOthersWrong": {
+          "b": "Concatenare chiave e valore non produce 'xy' o '23', perché ogni iterazione restituisce una coppia distinta e non aggrega tutto insieme.",
+          "c": "Questa risposta riflette le stringhe di array ma il ciclo stampa ogni elemento separatamente, non l'array completo.",
+          "d": "Non vengono usati i due punti tra chiave e valore, ma la semplice concatenazione senza caratteri intermedi."
+        },
+        "concept": "Object.entries e destrutturazione",
+        "commonMistake": "Credere che Object.entries restituisca una stringa o che il ciclo produca output con due punti o virgole.",
+        "example": "for (const [k, v] of Object.entries({ a: 1 })) { console.log(k + v); }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:48.066Z"
+    },
+    {
+      "id": "objects-advanced-po-0016",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["chiavi computate", "undefined property", "oggetto letterale"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const key = 'eta';\nconst persona = { nome: 'Eva', [key]: 28 };\nconsole.log(persona['nome'] + '-' + persona.eta + '-' + persona[key]);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Eva-28-28"
+        },
+        {
+          "id": "b",
+          "text": "Eva-undefined-28"
+        },
+        {
+          "id": "c",
+          "text": "Eva-28-undefined"
+        },
+        {
+          "id": "d",
+          "text": "Eva-undefined-undefined"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La chiave computata '[key]' viene valutata come 'eta', quindi tutte le modalità di accesso funzionano e restituiscono sempre il valore 28.",
+        "whyCorrect": "persona.eta e persona[key] accedono entrambe alla stessa proprietà, quindi entrambe restituiscono 28. 'nome' è sempre 'Eva'.",
+        "whyOthersWrong": {
+          "b": "persona.eta esiste effettivamente, perché la chiave computata crea la proprietà 'eta'.",
+          "c": "persona[key] accede correttamente: key vale 'eta', quindi restituisce 28.",
+          "d": "Nessuna delle proprietà usate è undefined: sia la chiave computata sia quella letterale sono presenti."
+        },
+        "concept": "Chiavi computate nei letterali oggetto",
+        "commonMistake": "Pensare che solo la notazione con parentesi quadre possa accedere alla chiave computata.",
+        "example": "const o = { [k]: 1 }; o[k]; o.k;"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:48.067Z"
+    },
+    {
+      "id": "objects-advanced-po-0017",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-chaining",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["optional chaining", "nullish coalescing", "default value"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const cliente = { nome: 'Anna', preferenze: null };\nconst res = cliente.preferenze?.colore ?? 'blu';\nconsole.log(res);",
+      "options": [
+        {
+          "id": "a",
+          "text": "blu"
+        },
+        {
+          "id": "b",
+          "text": "undefined"
+        },
+        {
+          "id": "c",
+          "text": "null"
+        },
+        {
+          "id": "d",
+          "text": "TypeError"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "L'optional chaining su preferenze null restituisce undefined, quindi il valore di default 'blu' viene usato.",
+        "whyCorrect": "Dato che 'preferenze' è null, 'preferenze?.colore' restituisce undefined, quindi con '??' viene usato 'blu'.",
+        "whyOthersWrong": {
+          "b": "'undefined' sarebbe il risultato se non ci fosse l'operatore '??', ma qui il default viene applicato.",
+          "c": "'null' non viene mai stampato: la proprietà non viene acceduta perché il valore è null.",
+          "d": "Non si verifica alcun errore: l'optional chaining evita il tentativo di accedere a una proprietà su null."
+        },
+        "concept": "Optional chaining e nullish coalescing",
+        "commonMistake": "Credere che ?. su null lanci errore o che ?? non si applichi a undefined.",
+        "example": "obj?.prop ?? 'default';"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:48.067Z"
+    },
+    {
+      "id": "objects-advanced-po-0018",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["Object.keys", "ordine delle proprietà", "proprietà numeriche"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const dati = { 3: 'c', 1: 'a', 2: 'b', z: 'd' };\nconsole.log(Object.keys(dati));",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ '1', '2', '3', 'z' ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 'z', '3', '1', '2' ]"
+        },
+        {
+          "id": "c",
+          "text": "[ '3', '1', '2', 'z' ]"
+        },
+        {
+          "id": "d",
+          "text": "[ '1', '2', 'z', '3' ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le chiavi numeriche vengono elencate per ordine crescente, seguite da quelle stringa in ordine di inserimento.",
+        "whyCorrect": "Object.keys mette prima le chiavi 'numeriche' (ordinate), poi tutte le altre (inserite dopo), quindi [ '1', '2', '3', 'z' ].",
+        "whyOthersWrong": {
+          "b": "Qui l'ordine non rispetta la regola di ordinamento speciale per le chiavi numeriche.",
+          "c": "Le chiavi numeriche non vengono mantenute nell'ordine di inserimento ma ordinate, quindi non possono essere '3', '1', '2'.",
+          "d": "La stringa 'z' viene sempre dopo tutte le chiavi numeriche, non in mezzo a esse."
+        },
+        "concept": "Ordine delle proprietà con Object.keys",
+        "commonMistake": "Aspettarsi l'ordine di inserimento anche per chiavi numeriche.",
+        "example": "Object.keys({ 2:'a', 1:'b', x:'c' }) // [ '1', '2', 'x' ]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:48.067Z"
+    },
+    {
+      "id": "objects-advanced-po-0019",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["proprietà shorthand", "overwriting", "precedenza tra proprietà"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const nome = 'Luca';\nconst utente = { nome: 'Anna', nome };\nconsole.log(utente.nome);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Luca"
+        },
+        {
+          "id": "b",
+          "text": "Anna"
+        },
+        {
+          "id": "c",
+          "text": "undefined"
+        },
+        {
+          "id": "d",
+          "text": "nome"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Nel letterale oggetto, la proprietà shorthand 'nome' sovrascrive la precedente, quindi il valore finale è quello della variabile.",
+        "whyCorrect": "La proprietà 'nome' impostata con shorthand viene dopo quella letterale, quindi sovrascrive 'Anna' con 'Luca'.",
+        "whyOthersWrong": {
+          "b": "La proprietà 'nome' letterale viene sovrascritta dalla shorthand, che compare dopo.",
+          "c": "La proprietà esiste ed è valorizzata, quindi non è undefined.",
+          "d": "Viene stampato il valore associato, non il nome della proprietà."
+        },
+        "concept": "Shorthand e precedenza nelle proprietà",
+        "commonMistake": "Pensare che la prima definizione prevalga sulle successive.",
+        "example": "const x = 2; const obj = { x: 1, x };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:48.067Z"
+    },
+    {
+      "id": "objects-advanced-po-0020",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["Object.entries", "destructuring", "modifica oggetto durante iterazione"],
+      "prompt": "Cosa stampa questo codice, considerando come vengono trattate le nuove proprietà aggiunte durante il ciclo?",
+      "code": "const dati = { a: 10, b: 20 };\nfor (const [chiave, valore] of Object.entries(dati)) {\n  if (chiave === 'a') {\n    dati.c = 30;\n  }\n  console.log(chiave, valore);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "a 10\nb 20"
+        },
+        {
+          "id": "b",
+          "text": "a 10\nb 20\nc 30"
+        },
+        {
+          "id": "c",
+          "text": "a 10\nb 20\nc undefined"
+        },
+        {
+          "id": "d",
+          "text": "a 10\nc 30\nb 20"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Object.entries crea l'array prima del ciclo: aggiunte successive non vengono iterate.",
+        "whyCorrect": "Quando si invoca Object.entries, viene creato un array con le coppie chiave-valore presenti in quel momento. Le modifiche (come l'aggiunta di `c`) durante il ciclo non influenzano il risultato del ciclo, quindi vengono stampati solo 'a 10' e 'b 20'.",
+        "whyOthersWrong": {
+          "b": "L'opzione include 'c 30', ma questa chiave viene aggiunta all'oggetto dopo che Object.entries ha già creato l'array iniziale, quindi non può comparire nell'iterazione.",
+          "c": "'c undefined' non viene stampato perché 'c' non era presente nell'oggetto al momento della chiamata di Object.entries e quindi non fa parte delle voci iterate.",
+          "d": "L'ordine 'a 10', 'c 30', 'b 20' suggerisce un aggiornamento in tempo reale durante l'iterazione, ma Object.entries restituisce una fotografia statica dell'oggetto."
+        },
+        "concept": "Object.entries e oggetti mutabili",
+        "commonMistake": "Pensare che modifiche all'oggetto durante il ciclo influenzino l'array di Object.entries.",
+        "example": "for (const [k, v] of Object.entries(obj)) { ... }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:35:04.467Z"
+    }
+  ]
+}

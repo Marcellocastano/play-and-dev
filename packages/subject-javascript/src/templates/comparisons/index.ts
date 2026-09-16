@@ -1,5 +1,14 @@
 import type { QuestionTemplate } from '@lg/core';
-import { fmt, makeOptions, pickInt, pickName, pickOf, retry, shuffle, type Rng } from '../helpers.js';
+import {
+  fmt,
+  makeOptions,
+  pickInt,
+  pickName,
+  pickOf,
+  retry,
+  shuffle,
+  type Rng,
+} from '../helpers.js';
 
 const TOPIC = 'comparisons';
 const DD = 'dd-comparisons';
@@ -17,11 +26,23 @@ const strictPo: QuestionTemplate = {
     const code = `console.log(${v} === '${v}');`;
     const built = makeOptions(
       rng,
-      { text: 'false', why: `Il numero ${v} e la stringa '${v}' hanno tipi diversi: === è false.` },
+      {
+        text: 'false',
+        why: `\`===\` non converte i tipi: il numero ${v} e la stringa '${v}' hanno tipi diversi, quindi il confronto restituisce false.`,
+      },
       [
-        { text: 'true', why: 'Sarebbe true con == (con coercion), ma === confronta anche il tipo.' },
-        { text: fmt(v), why: 'Il confronto restituisce un booleano, non il valore confrontato.' },
-        { text: 'TypeError', why: 'Il confronto tra tipi diversi non è un errore: restituisce false.' },
+        {
+          text: 'true',
+          why: `Sarebbe true solo con \`==\`, che converte '${v}' in numero: \`===\` confronta anche il tipo e number e string sono diversi.`,
+        },
+        {
+          text: fmt(v),
+          why: `Un confronto con \`===\` restituisce un booleano (true o false), non il valore confrontato: ${v} non è un esito possibile.`,
+        },
+        {
+          text: 'TypeError',
+          why: 'Confrontare due tipi diversi non è un errore in JavaScript: `===` restituisce semplicemente false.',
+        },
       ],
     );
     return {
@@ -36,7 +57,7 @@ const strictPo: QuestionTemplate = {
       ...built,
       explanation: {
         short: `=== non converte i tipi: number ≠ string → false.`,
-        whyCorrect: 'L\'uguaglianza stretta richiede stesso tipo e stesso valore.',
+        whyCorrect: "L'uguaglianza stretta richiede stesso tipo e stesso valore.",
         whyOthersWrong: built.whyOthersWrong,
         concept: 'Uguaglianza stretta ===',
         commonMistake: 'Aspettarsi la conversione automatica come con ==.',
@@ -52,7 +73,7 @@ const looseVsStrictCmp: QuestionTemplate = {
   topicId: TOPIC,
   subtopicId: 'comparisons-loose',
   type: 'compare',
-  difficulty: 'easy',
+  difficulty: 'medium',
   skills: ['==', '==='],
   tags: ['confronti'],
   generate(rng: Rng) {
@@ -60,30 +81,60 @@ const looseVsStrictCmp: QuestionTemplate = {
       const v = pickInt(rng, 1, 9);
       const s = pickOf(rng, ['a', 'x', 'js']);
       const trueExprs = [
-        { text: `${v} == '${v}'`, why: '== converte la stringa in numero: true.' },
-        { text: 'null == undefined', why: 'Regola speciale di ==: sono considerati uguali.' },
-        { text: `'${s}' === '${s}'`, why: 'Stesso tipo e stesso valore: true.' },
-        { text: `0 == ''`, why: "== converte '' in 0: true." },
-        { text: `${v} === ${v}`, why: 'Identici in tipo e valore: true.' },
+        {
+          text: `${v} == '${v}'`,
+          why: `Con \`==\` la stringa '${v}' viene convertita nel numero ${v}: il confronto è tra ${v} e ${v}, quindi true.`,
+        },
+        {
+          text: 'null == undefined',
+          why: 'Per la regola speciale di `==`, null e undefined sono considerati equivalenti: il confronto restituisce true.',
+        },
+        {
+          text: `'${s}' === '${s}'`,
+          why: `Le due stringhe hanno lo stesso tipo e lo stesso contenuto: \`===\` restituisce true.`,
+        },
+        {
+          text: `0 == ''`,
+          why: 'Con `==` la stringa vuota viene convertita nel numero 0: il confronto è tra 0 e 0, quindi true.',
+        },
+        {
+          text: `${v} === ${v}`,
+          why: `I due operandi sono identici in tipo e in valore: \`===\` restituisce true.`,
+        },
       ];
       const falseExprs = [
-        { text: `${v} === '${v}'`, why: 'Tipi diversi (number vs string): === è false.' },
-        { text: 'null === undefined', why: 'Tipi diversi: il confronto stretto è false.' },
-        { text: `0 === ''`, why: "number ≠ string: === è false." },
-        { text: `'${v}' === ${v}`, why: 'Tipi diversi: === non converte.' },
-        { text: `NaN === NaN`, why: 'NaN non è mai uguale a sé stesso.' },
+        {
+          text: `${v} === '${v}'`,
+          why: `\`===\` non converte i tipi: number e string sono diversi, quindi il confronto restituisce false.`,
+        },
+        {
+          text: 'null === undefined',
+          why: 'Il confronto stretto distingue i tipi: null e undefined sono diversi, quindi `===` restituisce false.',
+        },
+        {
+          text: `0 === ''`,
+          why: `Il confronto stretto non converte la stringa vuota in numero: number e string sono tipi diversi e \`===\` dà false.`,
+        },
+        {
+          text: `'${v}' === ${v}`,
+          why: `\`===\` non converte i tipi: la stringa '${v}' e il numero ${v} restano diversi, quindi false.`,
+        },
+        {
+          text: `NaN === NaN`,
+          why: 'NaN è l’unico valore non uguale a sé stesso in JavaScript: il confronto restituisce sempre false.',
+        },
       ];
       const correct = pickOf(rng, trueExprs);
       const distractors = shuffle(falseExprs, rng).slice(0, 3);
       const built = makeOptions(
         rng,
         { text: correct.text, why: correct.why },
-        distractors.map((d) => ({ text: `${d.text}  // false`, why: d.why })),
+        distractors.map((d) => ({ text: d.text, why: d.why })),
       );
       return {
         templateId: 'cmp-loose-vs-strict',
         type: 'compare',
-        difficulty: 'easy' as const,
+        difficulty: 'medium' as const,
         topicId: TOPIC,
         subtopicId: 'comparisons-loose',
         skills: ['==', '==='],
@@ -120,11 +171,23 @@ const strOrderMc: QuestionTemplate = {
       const correct = a < b; // sempre true per costruzione
       const built = makeOptions(
         rng,
-        { text: 'true', why: `'${b}' viene dopo '${a}' in ordine alfabetico: '${a}' < '${b}' è true.` },
+        {
+          text: 'true',
+          why: `'${b}' viene dopo '${a}' in ordine alfabetico: '${a}' < '${b}' è true.`,
+        },
         [
-          { text: 'false', why: 'Le stringhe si confrontano lessicograficamente: qui il confronto è vero.' },
-          { text: 'TypeError', why: 'Confrontare stringhe è lecito: nessun errore.' },
-          { text: 'NaN', why: 'Il confronto restituisce un booleano, mai NaN.' },
+          {
+            text: 'false',
+            why: `Il confronto lessicografico parte dal primo carattere: '${a}' viene prima di '${b}' nell'ordine dei caratteri, quindi il risultato è true.`,
+          },
+          {
+            text: 'TypeError',
+            why: 'Confrontare due stringhe con `<` è perfettamente lecito in JavaScript: non viene lanciato alcun errore.',
+          },
+          {
+            text: 'NaN',
+            why: 'Un confronto con `<` restituisce sempre un booleano (true o false): NaN non è un esito possibile.',
+          },
         ],
       );
       void correct;
@@ -166,13 +229,22 @@ const assignFb: QuestionTemplate = {
     const built = makeOptions(
       rng,
       {
-        text: `Usa = (assegnazione) invece di ===: ${name} viene sovrascritta e la condizione è sempre vera`,
-        why: `if (${name} = ${v}) assegna ${v} e valuta ${v} (truthy): il blocco si esegue sempre.`,
+        text: '`=`, non `===`, nella condizione',
+        why: `\`if (${name} = ${v})\` non confronta: assegna ${v} a ${name} e valuta il risultato, che è truthy. Il blocco si esegue sempre; serviva \`===\`.`,
       },
       [
-        { text: 'if non accetta numeri come condizione', why: 'if accetta qualunque valore: i numeri diversi da 0 sono truthy.' },
-        { text: 'Manca else', why: 'else è opzionale: non è il problema qui.' },
-        { text: 'console.log è sbagliato', why: 'Il console.log è corretto; è la condizione a essere buggata.' },
+        {
+          text: `\`${name}\` va confrontato con \`'${v}'\``,
+          why: `Il problema non è il tipo del valore ma l'operatore: anche \`if (${name} === '${v}')\` confronta, mentre \`=\` assegna ${v} a prescindere.`,
+        },
+        {
+          text: '`if` non accetta numeri',
+          why: `\`if\` accetta qualunque valore e ne valuta la veridicità: il bug è che \`=\` assegna ${v} (truthy) invece di confrontare.`,
+        },
+        {
+          text: 'Manca il ramo `else`',
+          why: 'Il ramo `else` è opzionale: il bug è la `=` dentro la condizione, che assegna invece di confrontare e rende il blocco sempre eseguito.',
+        },
       ],
     );
     return {
@@ -219,12 +291,21 @@ const numStrPo: QuestionTemplate = {
       rng,
       {
         text: String(result),
-        why: `'${a}' < '${b}' si valuta carattere per carattere: '${a[0]}' vs '${b[0]}' → ${result}.`,
+        why: `Il confronto tra stringhe è lessicografico: si guarda il primo carattere diverso, '${a[0]}' contro '${b[0]}', e il risultato è ${result}.`,
       },
       [
-        { text: String(!result), why: 'Il confronto lessicografico guarda il primo carattere diverso, non il valore numerico.' },
-        { text: 'TypeError', why: 'Confrontare due stringhe è perfettamente lecito.' },
-        { text: 'undefined', why: 'Il confronto restituisce sempre un booleano.' },
+        {
+          text: String(!result),
+          why: `Il confronto non guarda il valore numerico delle stringhe: decide il primo carattere, '${a[0]}' contro '${b[0]}', e dà ${result}.`,
+        },
+        {
+          text: 'TypeError',
+          why: 'Confrontare due stringhe con `<` è perfettamente lecito: non viene lanciato alcun errore.',
+        },
+        {
+          text: 'undefined',
+          why: 'Un confronto con `<` produce sempre un booleano: l’espressione non può restituire undefined.',
+        },
       ],
     );
     return {
@@ -263,11 +344,23 @@ const safeEqBm: QuestionTemplate = {
     const v = pickInt(rng, 1, 9);
     const built = makeOptions(
       rng,
-      { text: `${name} === ${v}`, why: '=== evita conversioni implicite: il confronto è prevedibile.' },
+      {
+        text: `${name} === ${v}`,
+        why: `\`${name} === ${v}\` confronta senza conversioni implicite: è vero solo se tipo e valore coincidono, quindi è la scrittura prevedibile.`,
+      },
       [
-        { text: `${name} == ${v}`, why: '== converte i tipi (es. 5 == "5" è true): fonte di bug.' },
-        { text: `${name} = ${v}`, why: '= è assegnazione: cambia il valore invece di confrontarlo.' },
-        { text: `${name}.equals(${v})`, why: 'Il metodo .equals() non esiste in JavaScript (è di Java).' },
+        {
+          text: `${name} == ${v}`,
+          why: `\`==\` converte i tipi prima di confrontare: \`5 == '5'\` darebbe true anche con tipi diversi, una fonte classica di bug.`,
+        },
+        {
+          text: `${name} = ${v}`,
+          why: `\`=\` è assegnazione: cambierebbe il valore di ${name} invece di confrontarlo, e in una condizione valuterebbe ${v}.`,
+        },
+        {
+          text: `${name}.equals(${v})`,
+          why: 'In JavaScript non esiste un metodo `.equals()` (è tipico di Java): la chiamata lancerebbe un TypeError.',
+        },
       ],
     );
     return {

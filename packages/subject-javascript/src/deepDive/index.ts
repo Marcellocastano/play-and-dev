@@ -37,7 +37,7 @@ export const deepDives: DeepDive[] = [
     },
     {
       heading: 'Temporal Dead Zone',
-      body: 'let e const esistono dalla riga di dichiarazione: prima, sono nella TDZ e leggerle lancia ReferenceError. È un comportamento più sicuro dell\'hoisting di var.',
+      body: "let e const esistono dalla riga di dichiarazione: prima, sono nella TDZ e leggerle lancia ReferenceError. È un comportamento più sicuro dell'hoisting di var.",
     },
     {
       heading: 'Errori comuni',
@@ -132,7 +132,7 @@ export const deepDives: DeepDive[] = [
     },
     {
       heading: 'Incremento e decremento',
-      body: 'x++ e ++x incrementano di 1. La differenza: x++ restituisce il valore PRIMA dell\'incremento, ++x DOPO.',
+      body: "x++ e ++x incrementano di 1. La differenza: x++ restituisce il valore PRIMA dell'incremento, ++x DOPO.",
       code: 'let a = 1; let b = a++; // b=1, a=2\nlet c = 1; let d = ++c; // d=2, c=2',
     },
     {
@@ -167,11 +167,11 @@ export const deepDives: DeepDive[] = [
   dd('conditionals', 'if/else, ternario e switch', [
     {
       heading: 'if / else if / else',
-      body: 'Le condizioni si valutano dall\'alto: il primo ramo vero vince e gli altri si saltano. else cattura tutto il resto.',
+      body: "Le condizioni si valutano dall'alto: il primo ramo vero vince e gli altri si saltano. else cattura tutto il resto.",
     },
     {
       heading: 'Ternario',
-      body: 'cond ? a : b è un\'espressione: produce un valore. Ottimo per assegnazioni brevi, pessimo per logiche complesse.',
+      body: "cond ? a : b è un'espressione: produce un valore. Ottimo per assegnazioni brevi, pessimo per logiche complesse.",
       code: 'const msg = x > 10 ? "grande" : "piccolo";',
     },
     {
@@ -200,11 +200,11 @@ export const deepDives: DeepDive[] = [
     },
     {
       heading: 'break e continue',
-      body: 'break esce subito dal ciclo; continue salta all\'iterazione successiva.',
+      body: "break esce subito dal ciclo; continue salta all'iterazione successiva.",
     },
     {
       heading: 'Errori comuni',
-      body: 'i <= length (un elemento in più → undefined); while senza incremento (infinito); modificare l\'array mentre lo scorri.',
+      body: "i <= length (un elemento in più → undefined); while senza incremento (infinito); modificare l'array mentre lo scorri.",
     },
   ]),
   dd('functions', 'Funzioni', [
@@ -253,7 +253,7 @@ export const deepDives: DeepDive[] = [
     },
     {
       heading: 'Aggiungere e togliere',
-      body: 'push/pop in coda, unshift/shift in testa. push ritorna la nuova length; pop e shift ritornano l\'elemento rimosso.',
+      body: "push/pop in coda, unshift/shift in testa. push ritorna la nuova length; pop e shift ritornano l'elemento rimosso.",
       code: 'const a = [1, 2];\na.push(3); // a = [1,2,3], ritorna 3\na.pop();   // ritorna 3, a = [1,2]',
     },
     {
@@ -297,7 +297,7 @@ export const deepDives: DeepDive[] = [
     },
     {
       heading: 'reduce',
-      body: 'Comprime l\'array in un valore: reduce((acc, el) => ..., iniziale). Dai sempre il valore iniziale.',
+      body: "Comprime l'array in un valore: reduce((acc, el) => ..., iniziale). Dai sempre il valore iniziale.",
       code: '[1,2,3].reduce((s, n) => s + n, 0) // 6',
     },
     {
@@ -306,7 +306,7 @@ export const deepDives: DeepDive[] = [
     },
     {
       heading: 'Non mutano',
-      body: 'map/filter/find/reduce lasciano l\'array originale intatto — a differenza di push, sort, splice.',
+      body: "map/filter/find/reduce lasciano l'array originale intatto — a differenza di push, sort, splice.",
     },
   ]),
   dd('destructuring', 'Destructuring', [
@@ -327,6 +327,125 @@ export const deepDives: DeepDive[] = [
     {
       heading: 'Errori comuni',
       body: 'Invertire la rinomina ({ a: b } crea b, non a); destrutturare null/undefined (TypeError); pensare che il default scatti con null (scatta solo con undefined).',
+    },
+  ]),
+  dd('spread-rest', 'Spread e rest: i tre puntini', [
+    {
+      heading: 'Spread: espandere',
+      body: 'In posizione di valore, ... sparge gli elementi: [...a, 4] copia a in un array nuovo, {...o, x: 1} copia le proprietà in un oggetto nuovo. L\u2019originale non viene toccato e le chiavi duplicate vincono da destra a sinistra.',
+      code: 'const base = [1, 2];\nconst copia = [...base, 3]; // [1,2,3]\nconst o = { ...{ a: 1 }, a: 9 }; // { a: 9 }',
+    },
+    {
+      heading: 'Copia superficiale',
+      body: 'Lo spread copia solo il primo livello: gli oggetti e gli array interni restano condivisi tra originale e copia. Modificare copia.interno.x modifica anche originale.interno.x.',
+    },
+    {
+      heading: 'Rest: raccogliere',
+      body: 'In posizione di dichiarazione (parametri, destructuring) ... raccoglie il resto in un array vero o in un oggetto. function f(primo, ...altri) e const { a, ...resto } = obj. Il parametro rest deve essere l\u2019ultimo.',
+      code: 'const [primo, ...altri] = [1, 2, 3]; // altri = [2,3]\nconst { a, ...resto } = { a: 1, b: 2 }; // resto = { b: 2 }',
+    },
+    {
+      heading: 'Errori comuni',
+      body: 'Confondere le due direzioni (spread espande, rest raccoglie), mettere un rest non in coda (SyntaxError), aspettarsi una copia profonda.',
+    },
+  ]),
+  dd('string-methods-advanced', 'Metodi avanzati delle stringhe', [
+    {
+      heading: 'split e join',
+      body: 's.split(sep) spezza in array (split("") spezza in caratteri, split() senza argomento dà [s]); arr.join(sep) ricompone in stringa. Insieme permettono trasformazioni: split → map → join.',
+      code: "'a-b-c'.split('-') // ['a','b','c']\n['x','y'].join(', ') // 'x, y'",
+    },
+    {
+      heading: 'trim e pad',
+      body: 'trim() toglie gli spazi ai bordi (anche trimStart/trimEnd); padStart(n, fill) e padEnd(n, fill) allungano fino a n caratteri, utili per allineare e formattare.',
+      code: "'  ok '.trim() // 'ok'\n'7'.padStart(3, '0') // '007'",
+    },
+    {
+      heading: 'replace, at e controlli',
+      body: 'replace(a, b) sostituisce solo la PRIMA occorrenza (per tutte: replaceAll o regex /g). at(i) legge anche con indici negativi (at(-1) = ultimo). startsWith/endsWith rispondono true/false.',
+      code: "'a.a.a'.replace('a', 'x') // 'x.a.a'\n'ciao'.at(-1) // 'o'",
+    },
+    {
+      heading: 'Errori comuni',
+      body: 'Aspettarsi che replace sostituisca tutto; dimenticare che le stringhe sono immutabili (assegna il risultato); confondere split() e split("").',
+    },
+  ]),
+  dd('objects-advanced', 'Oggetti avanzati', [
+    {
+      heading: 'keys, values, entries',
+      body: 'Gli oggetti non sono iterabili con for...of: si convertono prima. Object.keys(o) dà le chiavi, Object.values(o) i valori, Object.entries(o) coppie [chiave, valore] — perfetto per map e filter.',
+      code: "Object.entries({ a: 1, b: 2 }).map(([k, v]) => `${k}=${v}`) // ['a=1','b=2']",
+    },
+    {
+      heading: 'Shorthand e chiavi computate',
+      body: 'Se la variabile ha lo stesso nome della chiave basta scriverla una volta: { nome } ≡ { nome: nome }. Per chiavi calcolate servono le quadre: { [expr]: valore }.',
+      code: 'const nome = "Ada";\nconst o = { nome, ["et" + "a"]: 30 }; // { nome: "Ada", eta: 30 }',
+    },
+    {
+      heading: 'Optional chaining e ??',
+      body: 'a?.b restituisce undefined se a è null/undefined invece di lanciare TypeError; funziona anche su metodi (o?.m()) e indici (a?.[i]). ?? usa il default SOLO con null/undefined, a differenza di || che scatta su tutti i falsy — 0 e "" restano validi con ??.',
+      code: 'user?.indirizzo?.citta ?? "n/d"\n0 ?? 5 // 0  |  0 || 5 // 5',
+    },
+    {
+      heading: 'Errori comuni',
+      body: 'for...of su un oggetto (TypeError); usare || e perdere 0/"" come valori; dimenticare le quadre nelle chiavi computate.',
+    },
+  ]),
+  dd('errors', 'Gestione degli errori', [
+    {
+      heading: 'throw',
+      body: 'throw valore interrompe l\u2019esecuzione e risale lo stack fino a un catch. Si lancia sempre un oggetto Error — new Error("msg") — perché porta name, message e stack trace.',
+      code: 'if (n < 0) {\n  throw new RangeError("n negativo");\n}',
+    },
+    {
+      heading: 'try / catch / finally',
+      body: 'Il codice a rischio sta in try; catch riceve l\u2019errore lanciato; finally gira SEMPRE (errore o no, anche con return nel try) ed è il posto per il cleanup.',
+      code: 'try {\n  JSON.parse(testo);\n} catch (e) {\n  console.log(e.message);\n} finally {\n  console.log("sempre");\n}',
+    },
+    {
+      heading: 'Gli errori nativi',
+      body: 'Il linguaggio lancia ReferenceError per nomi non definiti o TDZ, TypeError per operazioni su tipi sbagliati (chiamare un non-funzione, riassegnare una const, leggere proprietà di null), RangeError per valori fuori intervallo (array di lunghezza negativa, toFixed(200)).',
+    },
+    {
+      heading: 'Errori comuni',
+      body: 'Lanciare stringhe invece di Error; confondere ReferenceError e TypeError; catch vuoti che nascondono i bug — almeno logga o rilancia.',
+    },
+  ]),
+  dd('json', 'JSON: serializzare e parsare', [
+    {
+      heading: 'JSON.stringify',
+      body: 'Converte un valore in testo JSON. Omette le proprietà undefined, function e Symbol (negli array diventano null); Date diventa la sua stringa ISO; Map e Set diventano {}. Accetta spaziatura: stringify(o, null, 2).',
+      code: 'JSON.stringify({ a: 1, f: () => {}, d: new Date(0) })\n// \'{"a":1,"d":"1970-01-01T00:00:00.000Z"}\'',
+    },
+    {
+      heading: 'JSON.parse',
+      body: 'Testo JSON → valori JavaScript. Il JSON esige doppie virgolette e niente virgole finali: su input non valido LANCIA SyntaxError, quindi va protetto con try/catch.',
+      code: "JSON.parse('{\"x\": 1}').x // 1\nJSON.parse('{x: 1}') // SyntaxError",
+    },
+    {
+      heading: 'Copia profonda via JSON',
+      body: 'JSON.parse(JSON.stringify(o)) clona strutture annidate pure (oggetti/array/primitivi). Limiti: perde funzioni e undefined, Date → stringhe, fallisce sui cicli (TypeError). Per i casi complessi esiste structuredClone.',
+    },
+  ]),
+  dd('dates-math', 'Date e Math', [
+    {
+      heading: 'Math',
+      body: 'Math.max/min su argomenti (per array: Math.max(...a)), Math.abs, Math.floor/round/ceil/trunc, Math.random() ∈ [0,1) — per un intero tra 1 e n: Math.floor(Math.random() * n) + 1.',
+      code: 'Math.floor(Math.random() * 6) + 1 // dado 1-6',
+    },
+    {
+      heading: 'Number e parsing',
+      body: 'Number.isInteger(x) è il test corretto (non x % 1). parseInt legge le cifre iniziali ("12px" → 12) e tronca i decimali; parseFloat li tiene; Number(s) è più severo: "12px" → NaN, "" → 0.',
+      code: "parseInt('12px') // 12\nNumber('12px')   // NaN",
+    },
+    {
+      heading: 'Date',
+      body: 'new Date(y, m, d) ha i MESI 0-based (0 = gennaio) e i giorni 1-based. getTime() dà i millisecondi dall\u2019epoch: è l\u2019unico confronto affidabile, perché date1 === date2 confronta oggetti.',
+      code: 'new Date(2024, 0, 1) // 1 gennaio\nd1.getTime() === d2.getTime()',
+    },
+    {
+      heading: 'Errori comuni',
+      body: 'Confondere l\u2019indice del mese; usare === tra Date; aspettarsi precisione decimale perfetta (0.1 + 0.2 === 0.3 è false — usa toFixed o centesimi interi).',
     },
   ]),
   dd('closures-advanced', 'Closure avanzate', [

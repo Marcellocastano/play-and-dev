@@ -1,0 +1,137 @@
+{
+  "topicId": "dates-math",
+  "questions": [
+    {
+      "id": "dates-math-fb-0015",
+      "topicId": "dates-math",
+      "subtopicId": "dates-math-number",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["parsing numeri", "differenza parseInt/Number", "gestione stringhe"],
+      "prompt": "Il codice dovrebbe convertire una stringa come '25.7kg' in un numero decimale, ma ottiene sempre NaN. Qual è la causa?",
+      "code": "const input = '25.7kg';\nconst valore = Number(input);\nconsole.log(valore);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Number restituisce NaN se la stringa contiene testo extra"
+        },
+        {
+          "id": "b",
+          "text": "parseInt converte i decimali in modo errato"
+        },
+        {
+          "id": "c",
+          "text": "La stringa deve essere convertita prima in array"
+        },
+        {
+          "id": "d",
+          "text": "Math.floor avrebbe arrotondato correttamente"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Number restituisce NaN se la stringa contiene caratteri non numerici, mentre parseFloat o parseInt interpretano la parte iniziale numerica.",
+        "whyCorrect": "Number tenta di convertire l'intera stringa: non essendo un numero valido a causa del suffisso 'kg', restituisce NaN. parseFloat('25.7kg') invece avrebbe prodotto 25.7.",
+        "whyOthersWrong": {
+          "b": "parseInt avrebbe restituito 25, scartando la parte decimale e il testo, ma qui non viene usato parseInt: il problema è proprio l'uso di Number.",
+          "c": "Non è necessario convertire la stringa in array per estrarre il numero: la conversione numerica è indipendente dalla rappresentazione interna della stringa.",
+          "d": "Math.floor può arrotondare solo un valore già numerico, ma qui Number restituisce NaN, quindi Math.floor(NaN) resterebbe comunque NaN."
+        },
+        "concept": "parseInt/parseFloat vs Number",
+        "commonMistake": "Usare Number invece di parseInt o parseFloat su stringhe con testo misto.",
+        "example": "parseFloat('25.7kg') // 25.7"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:46:49.089Z"
+    },
+    {
+      "id": "dates-math-fb-0016",
+      "topicId": "dates-math",
+      "subtopicId": "dates-math-date",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["creazione date", "mesi 0-based", "ordine degli argomenti"],
+      "prompt": "Il codice dovrebbe creare una data rappresentante il 20 novembre 2023, ma la data ottenuta è errata (un altro mese viene visualizzato). Qual è il problema?",
+      "code": "const data = new Date(2023, 11, 20);\nconsole.log(data.toLocaleDateString('it-IT'));",
+      "options": [
+        {
+          "id": "a",
+          "text": "Il valore del mese è 0-based, 11 è dicembre"
+        },
+        {
+          "id": "b",
+          "text": "I giorni in Date partono da zero"
+        },
+        {
+          "id": "c",
+          "text": "Gli anni in Date sono 0-based"
+        },
+        {
+          "id": "d",
+          "text": "L'ordine dei parametri di Date è errato"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il parametro mese in Date parte da 0: 11 corrisponde a dicembre, non a novembre.",
+        "whyCorrect": "In JavaScript il secondo parametro di Date (mese) è 0-based, quindi 11 indica dicembre. Per novembre bisognava scrivere 10.",
+        "whyOthersWrong": {
+          "b": "I giorni partono da 1, quindi il terzo parametro 20 indica correttamente il ventesimo giorno del mese.",
+          "c": "L'anno in Date è sempre il valore numerico completo (es. 2023) e non è 0-based.",
+          "d": "L'ordine dei parametri (anno, mese, giorno) è corretto secondo la documentazione Date."
+        },
+        "concept": "Date: mesi 0-based",
+        "commonMistake": "Dimenticare che il parametro mese parte da 0 e non da 1.",
+        "example": "new Date(2023, 10, 20) // 20 novembre 2023"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:46:49.090Z"
+    },
+    {
+      "id": "dates-math-fb-0017",
+      "topicId": "dates-math",
+      "subtopicId": "dates-math-math",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["Math.max/min", "spread operator", "uso array"],
+      "prompt": "Il codice dovrebbe stampare il valore minimo in un array di numeri, ma stampa NaN. Qual è la causa?",
+      "code": "const numeri = [4, 2, 8, 5];\nconst minimo = Math.min(numeri);\nconsole.log(minimo);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Math.min non accetta array come singolo argomento"
+        },
+        {
+          "id": "b",
+          "text": "Math.min può gestire solo due argomenti"
+        },
+        {
+          "id": "c",
+          "text": "L'array contiene un valore undefined"
+        },
+        {
+          "id": "d",
+          "text": "Bisogna usare Math.floor sull'array"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Math.min richiede argomenti separati, non un array; passato un array, restituisce NaN.",
+        "whyCorrect": "Math.min(numeri) tenta di convertire l'intero array in numero, ottenendo NaN: bisogna usare lo spread operator (...numeri) per passare i valori separatamente.",
+        "whyOthersWrong": {
+          "b": "Math.min accetta qualsiasi numero di argomenti, non solo due: il problema è che l'array non viene 'spacchettato'.",
+          "c": "L'array non contiene valori undefined: tutti gli elementi sono numeri validi.",
+          "d": "Math.floor serve ad arrotondare, ma qui l'errore è nel passaggio dell'array al posto degli argomenti."
+        },
+        "concept": "Math.min/max con array",
+        "commonMistake": "Dimenticare che Math.min/max non accettano array come unico argomento.",
+        "example": "Math.min(...[4,2,8,5]) // 2"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:46:49.090Z"
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "topicId": "spread-rest",
+  "questions": [
+    {
+      "id": "spread-rest-fb-0002",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-params",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["rest parametri", "posizione parametro"],
+      "prompt": "La funzione vuole sommare tutti i numeri passati, ma genera un errore di sintassi.",
+      "code": "function somma(...numeri, extra) {\n  return numeri.reduce((s, n) => s + n, 0) + extra;\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "Il parametro rest deve essere ultimo"
+        },
+        {
+          "id": "b",
+          "text": "I parametri non possono avere lo spread"
+        },
+        {
+          "id": "c",
+          "text": "Il parametro rest deve essere un array"
+        },
+        {
+          "id": "d",
+          "text": "Serve chiamare reduce su arguments"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il parametro rest deve comparire solo come ultimo parametro nella lista dei parametri di una funzione.",
+        "whyCorrect": "In JavaScript, il parametro rest deve essere posizionato per ultimo. Metterne altri dopo, come `extra`, porta a un errore di sintassi.",
+        "whyOthersWrong": {
+          "b": "Il parametro rest si usa solo nei parametri, non negli argomenti. Qui lo spread è usato correttamente.",
+          "c": "Il parametro rest diventa automaticamente un array, non occorre specificarlo.",
+          "d": "Nelle arrow function `arguments` non esiste e comunque `numeri` è già un array idoneo a chiamare `reduce`."
+        },
+        "concept": "Rest nei parametri",
+        "commonMistake": "Mettere parametri dopo il rest",
+        "example": "function fn(a, ...rest) { /* ... */ }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:21.870Z"
+    },
+    {
+      "id": "spread-rest-fb-0003",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-destructuring",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["rest destructuring array", "ordine destructuring"],
+      "prompt": "Questo codice vuole salvare il primo elemento di un array in `primo` e il resto in `resto`.",
+      "code": "const numeri = [1, 2, 3];\nconst [resto, ...primo] = numeri;\nconsole.log(primo);",
+      "options": [
+        {
+          "id": "a",
+          "text": "L'ordine di primo e resto è invertito"
+        },
+        {
+          "id": "b",
+          "text": "Serve usare lo spread anche su numeri"
+        },
+        {
+          "id": "c",
+          "text": "Il rest non funziona sugli array"
+        },
+        {
+          "id": "d",
+          "text": "Manca una variabile temporanea"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Nel destructuring, la variabile rest deve essere per ultima: `[primo, ...resto]` raccoglie i restanti elementi in `resto`.",
+        "whyCorrect": "In `[resto, ...primo]` si assegna il primo elemento a `resto` e gli altri a `primo`, quindi sono invertiti rispetto allo scopo richiesto.",
+        "whyOthersWrong": {
+          "b": "Lo spread serve nella dichiarazione delle variabili, non sull'array sorgente.",
+          "c": "Il rest operator funziona sia su array sia su oggetti nel destructuring.",
+          "d": "Non è necessario introdurre una variabile temporanea, basta ordinare correttamente le variabili nel destructuring."
+        },
+        "concept": "Rest nel destructuring array",
+        "commonMistake": "Invertire l'ordine delle variabili nel destructuring",
+        "example": "const [primo, ...resto] = numeri;"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:21.871Z"
+    },
+    {
+      "id": "spread-rest-fb-0005",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-params",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["rest parametri", "arrow function", "arguments"],
+      "prompt": "La funzione vuole restituire la somma di tutti gli argomenti passati, ma lancia un errore in esecuzione.",
+      "code": "const somma = () => {\n  return arguments[0] + arguments[1];\n};\nconsole.log(somma(2, 3));",
+      "options": [
+        {
+          "id": "a",
+          "text": "Le arrow function non hanno arguments"
+        },
+        {
+          "id": "b",
+          "text": "Serve il rest operator nei parametri"
+        },
+        {
+          "id": "c",
+          "text": "Gli argomenti devono essere numeri"
+        },
+        {
+          "id": "d",
+          "text": "Manca il return nel chiamante"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le arrow function non dispongono dell'oggetto `arguments` come le funzioni classiche: bisogna usare i parametri rest per raccogliere gli argomenti.",
+        "whyCorrect": "Le arrow function non hanno `arguments`, quindi il riferimento a `arguments[0]` genera un errore.",
+        "whyOthersWrong": {
+          "b": "Usare il rest operator sarebbe corretto, ma l'errore qui è l'assenza di `arguments` nell'arrow function.",
+          "c": "Il problema non riguarda il tipo degli argomenti: anche se fossero stringhe l'errore rimarrebbe.",
+          "d": "Il valore di ritorno della funzione viene comunque stampato, il return manca in caso nella funzione stessa."
+        },
+        "concept": "Rest parametri e arrow function",
+        "commonMistake": "Usare `arguments` nelle arrow function",
+        "example": "const somma = (...args) => args[0] + args[1];"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:21.871Z"
+    },
+    {
+      "id": "spread-rest-fb-0006",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-destructuring",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["rest destructuring oggetto", "proprietà rest"],
+      "prompt": "Questo codice intende estrarre la proprietà `nome` da un oggetto e raccogliere il resto in `info`, ma non funziona come atteso.",
+      "code": "const persona = { nome: 'Luca', età: 30, città: 'Milano' };\nconst { info, ...nome } = persona;\nconsole.log(nome);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Invertire info e nome nel destructuring"
+        },
+        {
+          "id": "b",
+          "text": "Lo spread va messo solo su info"
+        },
+        {
+          "id": "c",
+          "text": "Serve dichiarare tutte le proprietà"
+        },
+        {
+          "id": "d",
+          "text": "Lo spread non funziona sugli oggetti"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Nel destructuring oggetto, la proprietà da estrarre viene indicata per prima, seguita da `...resto` per raccogliere le rimanenti.",
+        "whyCorrect": "La sintassi corretta è `{ nome, ...info }`, che estrae `nome` e raccoglie le altre proprietà in `info`.",
+        "whyOthersWrong": {
+          "b": "Il rest operator va davanti alla variabile che raccoglie le proprietà residue, non alle singole proprietà.",
+          "c": "Non è obbligatorio dichiarare tutte le proprietà: il rest raccoglie automaticamente quelle non elencate.",
+          "d": "Il rest nel destructuring funziona sia con array che con oggetti."
+        },
+        "concept": "Rest nel destructuring oggetti",
+        "commonMistake": "Invertire nome e variabile rest nel destructuring oggetto",
+        "example": "const { nome, ...info } = persona;"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:21.871Z"
+    },
+    {
+      "id": "spread-rest-fb-0007",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["spread array", "copia superficiale", "mutazione array"],
+      "prompt": "Il codice vuole copiare un array di oggetti per modificarne uno senza alterare l'originale, ma qualcosa va storto.",
+      "code": "const orig = [{ id: 1 }, { id: 2 }];\nconst copia = [...orig];\ncopia[0].id = 99;\nconsole.log(orig[0].id);",
+      "options": [
+        {
+          "id": "a",
+          "text": "La copia con spread è solo superficiale"
+        },
+        {
+          "id": "b",
+          "text": "Serve JSON.parse(JSON.stringify())"
+        },
+        {
+          "id": "c",
+          "text": "Lo spread non copia gli oggetti"
+        },
+        {
+          "id": "d",
+          "text": "Bisogna ciclare manualmente sugli oggetti"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread su array crea una copia superficiale: se gli elementi sono oggetti, vengono condivisi tra i due array.",
+        "whyCorrect": "Copiare un array con lo spread non copia anche gli oggetti interni: modificare uno di questi oggetti si riflette su entrambi gli array.",
+        "whyOthersWrong": {
+          "b": "Usare JSON.parse(JSON.stringify()) crea una copia profonda ma può introdurre altri problemi: il punto qui è la superficialità dello spread, non la soluzione alternativa.",
+          "c": "Lo spread copia il contenuto dell'array, ma solo i riferimenti agli oggetti, non la struttura interna.",
+          "d": "Copiare manualmente ogni oggetto sarebbe una soluzione, ma la domanda verte sulla natura della copia con spread."
+        },
+        "concept": "Spread e copia superficiale",
+        "commonMistake": "Pensare che lo spread faccia copie profonde",
+        "example": "const copia = [...array]; // copia superficiale"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:21.871Z"
+    }
+  ]
+}

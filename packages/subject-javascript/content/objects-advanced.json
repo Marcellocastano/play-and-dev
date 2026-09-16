@@ -1,0 +1,1241 @@
+{
+  "topicId": "objects-advanced",
+  "questions": [
+    {
+      "id": "objects-advanced-po-0001",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "computed property names",
+        "object shorthand",
+        "template literals"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const prefisso = 'id';\nconst numero = 7;\nconst utente = {\n  nome: 'Luca',\n  [prefisso + numero]: 42\n};\nconsole.log(Object.keys(utente));",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 'nome', 'id7' ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 'nome', 'prefisso7' ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 'nome', '7' ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 'nome', 'id' ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le chiavi computate con [expr] valutano l'espressione come nome della proprietà.",
+        "whyCorrect": "La chiave computata [prefisso + numero] produce 'id7'. Quindi l'oggetto ha le chiavi 'nome' e 'id7'.",
+        "whyOthersWrong": {
+          "b": "'prefisso' non viene usato come stringa letterale, ma come variabile. La chiave è 'id7', non 'prefisso7'.",
+          "c": "La chiave non è solo il numero, ma il risultato della concatenazione.",
+          "d": "Viene concatenato anche '7', quindi la chiave non è solo 'id' ma 'id7'."
+        },
+        "concept": "Chiavi computate nei letterali oggetto",
+        "commonMistake": "Dimenticare che [variabile] calcola l'espressione, non prende il nome letterale.",
+        "example": "const o = { [prefix + 1]: 'x' };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:17.372Z"
+    },
+    {
+      "id": "objects-advanced-po-0002",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-chaining",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "optional chaining",
+        "nullish coalescing",
+        "default values"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const libro = { titolo: '1984', autore: { nome: 'Orwell' } };\nconsole.log(libro.autore?.cognome ?? 'sconosciuto');",
+      "options": [
+        {
+          "id": "a",
+          "text": "sconosciuto"
+        },
+        {
+          "id": "b",
+          "text": "undefined"
+        },
+        {
+          "id": "c",
+          "text": "null"
+        },
+        {
+          "id": "d",
+          "text": "[object Object]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Optional chaining restituisce undefined per proprietà mancanti e ?? fornisce un default.",
+        "whyCorrect": "libro.autore?.cognome è undefined, quindi l'operatore ?? restituisce 'sconosciuto' come valore di default.",
+        "whyOthersWrong": {
+          "b": "Il valore undefined viene rimpiazzato da 'sconosciuto' a causa dell'operatore ??.",
+          "c": "Solo null o undefined attivano l'operatore ??, ma il valore di default è 'sconosciuto', non null.",
+          "d": "Non viene mai restituito l'oggetto autore, ma la proprietà 'cognome', che non esiste."
+        },
+        "concept": "Optional chaining e nullish coalescing",
+        "commonMistake": "Dimenticare che ?? vale per undefined e null, non per tutti i falsy.",
+        "example": "utente.dati?.email ?? 'manca'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:17.373Z"
+    },
+    {
+      "id": "objects-advanced-po-0003",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "object property shorthand",
+        "object literals"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const nome = 'Arianna';\nconst persona = { nome };\nconsole.log(persona);",
+      "options": [
+        {
+          "id": "a",
+          "text": "{ nome: 'Arianna' }"
+        },
+        {
+          "id": "b",
+          "text": "{ 'nome': nome }"
+        },
+        {
+          "id": "c",
+          "text": "{ nome: nome }"
+        },
+        {
+          "id": "d",
+          "text": "{ 'Arianna': nome }"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La shorthand nelle proprietà oggetto usa il valore della variabile come valore della proprietà.",
+        "whyCorrect": "Utilizzando la shorthand, la chiave è 'nome' e il valore è il contenuto della variabile nome, ovvero 'Arianna'.",
+        "whyOthersWrong": {
+          "b": "Questo rappresenta un oggetto con chiave 'nome' e valore la stringa 'nome', non il contenuto della variabile.",
+          "c": "Anche se valido, console.log mostra comunque { nome: 'Arianna' } perché nome ha valore 'Arianna'.",
+          "d": "Qui la chiave sarebbe 'Arianna', ma la shorthand crea la chiave col nome della variabile, non col suo valore."
+        },
+        "concept": "Shorthand delle proprietà oggetto",
+        "commonMistake": "Pensare che la shorthand usi il nome della variabile come valore.",
+        "example": "const u = { id }; // equivale a { id: id }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:17.373Z"
+    },
+    {
+      "id": "objects-advanced-po-0004",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-chaining",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "optional chaining",
+        "nested object access"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const dati = {};\nconsole.log(dati.utente?.email);",
+      "options": [
+        {
+          "id": "a",
+          "text": "undefined"
+        },
+        {
+          "id": "b",
+          "text": "TypeError"
+        },
+        {
+          "id": "c",
+          "text": "null"
+        },
+        {
+          "id": "d",
+          "text": "[object Object]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "L'optional chaining restituisce undefined se la proprietà mancante.",
+        "whyCorrect": "dati.utente è undefined, quindi dati.utente?.email restituisce undefined senza errore.",
+        "whyOthersWrong": {
+          "b": "Senza l'optional chaining ci sarebbe un TypeError, ma qui viene restituito undefined.",
+          "c": "La proprietà mancante porta a undefined, non a null, a meno che non sia esplicitamente null.",
+          "d": "Non viene restituito un oggetto, ma il valore della proprietà, che è undefined."
+        },
+        "concept": "Optional chaining sugli oggetti",
+        "commonMistake": "Aspettarsi un errore quando una proprietà non esiste senza considerare l'optional chaining.",
+        "example": "utente?.indirizzo // undefined se utente manca"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:17.373Z"
+    },
+    {
+      "id": "objects-advanced-po-0005",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "Object.entries",
+        "iterazione oggetti",
+        "destructuring"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const animale = { specie: \"gatto\", zampe: 4 };\nfor (const [chiave, valore] of Object.entries(animale)) {\n  console.log(chiave + \":\" + valore);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "specie:gatto\nzampe:4"
+        },
+        {
+          "id": "b",
+          "text": "gatto:specie\n4:zampe"
+        },
+        {
+          "id": "c",
+          "text": "['specie', 'gatto']\n['zampe', 4]"
+        },
+        {
+          "id": "d",
+          "text": "[specie]:gatto\n[zampe]:4"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Object.entries restituisce array di [chiave, valore], che vengono destrutturati nella for-of.",
+        "whyCorrect": "Il ciclo scorre su ogni coppia [chiave, valore] dell'oggetto e concatena i valori, ottenendo specie:gatto e zampe:4.",
+        "whyOthersWrong": {
+          "b": "Invertire chiave e valore è un errore comune, ma l'ordine di destrutturazione è [chiave, valore], non il contrario.",
+          "c": "console.log stampa stringhe, non array letterali, quindi non vengono stampati array ma stringhe formattate.",
+          "d": "Le parentesi quadre non fanno parte dell'output: compaiono solo in letterali array o chiavi computate, non nella stampa di stringhe."
+        },
+        "concept": "Object.entries e destrutturazione",
+        "commonMistake": "Confondere l'ordine di chiave e valore o aspettarsi la stampa di array.",
+        "example": "for (const [k, v] of Object.entries(o)) { console.log(k + ':' + v); }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:26.179Z"
+    },
+    {
+      "id": "objects-advanced-po-0006",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "shorthand proprietà",
+        "chiavi computate",
+        "letterali oggetto"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const chiave = \"colore\";\nconst valore = \"rosso\";\nconst auto = { tipo: \"SUV\", [chiave]: valore };\nconsole.log(Object.keys(auto));",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 'tipo', 'colore' ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 'tipo', 'chiave' ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 'tipo', 'valore' ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 'tipo', 'rosso' ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La chiave computata usa il valore di chiave come nome della proprietà.",
+        "whyCorrect": "La chiave tra parentesi quadre viene valutata e il suo valore, 'colore', diventa il nome della proprietà nell'oggetto.",
+        "whyOthersWrong": {
+          "b": "Senza parentesi quadre, 'chiave' sarebbe il nome letterale, ma qui viene valutata come variabile.",
+          "c": "Qui viene confuso il concetto di chiave (nome proprietà) con il valore associato.",
+          "d": "Il valore 'rosso' è il valore della proprietà, non il suo nome; solo le chiavi compaiono in Object.keys."
+        },
+        "concept": "Chiavi computate nei letterali oggetto",
+        "commonMistake": "Dimenticare che le parentesi quadre valutano l'espressione, non usano il nome letterale.",
+        "example": "const o = { [chiave]: valore };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:26.180Z"
+    },
+    {
+      "id": "objects-advanced-po-0007",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-chaining",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "optional chaining",
+        "operatori nullish",
+        "valori di default"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const persona = {\n  nome: \"Laura\",\n  indirizzo: { citta: \"Milano\" }\n};\nconsole.log(persona.indirizzo?.citta ?? \"sconosciuta\");\nconsole.log(persona.telefono?.numero ?? \"nessun numero\");",
+      "options": [
+        {
+          "id": "a",
+          "text": "Milano\nnessun numero"
+        },
+        {
+          "id": "b",
+          "text": "Milano\nundefined"
+        },
+        {
+          "id": "c",
+          "text": "undefined\nnessun numero"
+        },
+        {
+          "id": "d",
+          "text": "sconosciuta\nnessun numero"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il chaining accede in sicurezza e ?? fornisce il default solo se null o undefined.",
+        "whyCorrect": "La città è presente e stampata, mentre persona.telefono è undefined, quindi il secondo log fornisce il valore di default.",
+        "whyOthersWrong": {
+          "b": "Il secondo log usa ??, quindi stampa 'nessun numero' se il valore è undefined, non undefined letterale.",
+          "c": "La città esiste: optional chaining non restituisce undefined qui, quindi la prima riga non può essere undefined.",
+          "d": "\"sconosciuta\" sarebbe stampato solo se persona.indirizzo fosse null o undefined, ma non lo è."
+        },
+        "concept": "Optional chaining e nullish coalescing",
+        "commonMistake": "Aspettarsi che ?? agisca anche su valori falsy come stringhe vuote.",
+        "example": "utente.info?.email ?? 'non disponibile'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:26:26.180Z"
+    },
+    {
+      "id": "objects-advanced-fg-0008",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "object-to-array",
+        "iteration"
+      ],
+      "prompt": "Completa il codice per ottenere un array con i nomi delle proprietà dell'oggetto `persona`.",
+      "code": "const persona = { nome: \"Luca\", età: 28 };\nconst chiavi = ___(persona);\nconsole.log(chiavi);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Object.keys"
+        },
+        {
+          "id": "b",
+          "text": "Object.values"
+        },
+        {
+          "id": "c",
+          "text": "Object.entries"
+        },
+        {
+          "id": "d",
+          "text": "Array.from"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Object.keys restituisce un array con i nomi delle proprietà.",
+        "whyCorrect": "Con Object.keys otteniamo un array che contiene tutte le chiavi (nomi delle proprietà) proprie e enumerabili dell'oggetto, come richiesto dal prompt.",
+        "whyOthersWrong": {
+          "b": "Object.values restituisce i valori delle proprietà, non i loro nomi: avresti ottenuto ['Luca', 28].",
+          "c": "Object.entries restituisce un array di coppie [chiave, valore], non solo le chiavi.",
+          "d": "Array.from genera un array da un iterabile, ma un oggetto semplice non lo è senza un metodo specifico."
+        },
+        "concept": "Object.keys",
+        "commonMistake": "Confondere tra keys, values ed entries.",
+        "example": "Object.keys({ a: 1, b: 2 }) // ['a', 'b']"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:13.173Z"
+    },
+    {
+      "id": "objects-advanced-fg-0009",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "object-to-array",
+        "iteration"
+      ],
+      "prompt": "Compila la riga che trasforma l'oggetto `auto` in array di valori.",
+      "code": "const auto = { marca: \"Fiat\", anno: 2020 };\nconst valori = ___(auto);\nconsole.log(valori);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Object.values"
+        },
+        {
+          "id": "b",
+          "text": "Object.keys"
+        },
+        {
+          "id": "c",
+          "text": "Object.entries"
+        },
+        {
+          "id": "d",
+          "text": "Array.of"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Object.values restituisce i valori delle proprietà.",
+        "whyCorrect": "Object.values crea un array contenente i valori delle proprietà enumerabili di un oggetto, esattamente come richiesto nel prompt.",
+        "whyOthersWrong": {
+          "b": "Object.keys restituisce solo le chiavi (nomi delle proprietà), non i valori.",
+          "c": "Object.entries restituisce array di coppie [chiave, valore].",
+          "d": "Array.of crea un array dagli argomenti forniti, non legge le proprietà dell'oggetto."
+        },
+        "concept": "Object.values",
+        "commonMistake": "Scambiare values con keys o entries.",
+        "example": "Object.values({ x: 5, y: 6 }) // [5, 6]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:13.174Z"
+    },
+    {
+      "id": "objects-advanced-fg-0010",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "computed-properties"
+      ],
+      "prompt": "Completa per usare una chiave computata basata sulla variabile `chiaveDinamica`.",
+      "code": "const chiaveDinamica = \"eta\";\nconst persona = { nome: \"Anna\", ___: 32 };\nconsole.log(persona);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[chiaveDinamica]"
+        },
+        {
+          "id": "b",
+          "text": "chiaveDinamica"
+        },
+        {
+          "id": "c",
+          "text": "{chiaveDinamica}"
+        },
+        {
+          "id": "d",
+          "text": "(chiaveDinamica)"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le chiavi computate vanno tra parentesi quadre.",
+        "whyCorrect": "Le parentesi quadre fanno valutare il valore della variabile come nome della proprietà, non la stringa \"chiaveDinamica\".",
+        "whyOthersWrong": {
+          "b": "Senza le parentesi, la chiave sarà letteralmente chiamata 'chiaveDinamica', non 'eta'.",
+          "c": "{chiaveDinamica} non è sintassi valida per una chiave di oggetto.",
+          "d": "(chiaveDinamica) è una semplice espressione e non definisce una proprietà nell'oggetto."
+        },
+        "concept": "Chiavi computate",
+        "commonMistake": "Dimenticare le parentesi quadre nella definizione.",
+        "example": "const k = 'id'; const o = { [k]: 42 };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:13.175Z"
+    },
+    {
+      "id": "objects-advanced-fg-0011",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-chaining",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "nullish-coalescing"
+      ],
+      "prompt": "Completa per assegnare 'ospite' solo se il valore di `nome` è null o undefined.",
+      "code": "const nome = null;\nconst nomeFinale = nome ___ \"ospite\";\nconsole.log(nomeFinale);",
+      "options": [
+        {
+          "id": "a",
+          "text": "??"
+        },
+        {
+          "id": "b",
+          "text": "||"
+        },
+        {
+          "id": "c",
+          "text": "&"
+        },
+        {
+          "id": "d",
+          "text": "&&"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "?? verifica solo null o undefined, non tutti i valori falsy.",
+        "whyCorrect": "L'operatore ?? restituisce il valore a sinistra se non è null/undefined, altrimenti quello a destra. Così 'ospite' si ottiene solo nei casi indicati.",
+        "whyOthersWrong": {
+          "b": "|| restituisce il valore di destra anche se nome è '', 0 o false, valori che potrebbero essere legittimi.",
+          "c": "& è un operatore bitwise e non serve per i valori di default.",
+          "d": "&& restituisce il primo valore falsy o quello a destra, non è usato per i default."
+        },
+        "concept": "Nullish coalescing (??)",
+        "commonMistake": "Usare || e perdere valori falsy validi.",
+        "example": "nome ?? 'ospite'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:13.176Z"
+    },
+    {
+      "id": "objects-advanced-fb-0008",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "Object.entries",
+        "for...of",
+        "iterare oggetti"
+      ],
+      "prompt": "Il seguente codice vuole stampare ogni coppia chiave/valore dell'oggetto `utente` su una riga, ma invece ottiene un errore. Dove si trova il problema?",
+      "code": "const utente = { nome: \"Sofia\", eta: 31 };\nfor (const [chiave, valore] of utente) {\n  console.log(chiave, valore);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "Un oggetto non è iterabile direttamente"
+        },
+        {
+          "id": "b",
+          "text": "Le coppie chiave/valore non vengono destrutturate"
+        },
+        {
+          "id": "c",
+          "text": "for...of non si può usare con const"
+        },
+        {
+          "id": "d",
+          "text": "Le chiavi non sono stringhe"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Gli oggetti non sono iterabili con for...of: serve Object.entries.",
+        "whyCorrect": "Il ciclo for...of funziona solo su oggetti iterabili come array. Un oggetto standard non lo è, quindi bisogna usare Object.entries per ottenere le coppie come array.",
+        "whyOthersWrong": {
+          "b": "La destrutturazione [chiave, valore] sarebbe corretta se si iterasse su un array di coppie, ma qui il problema è che utente non è iterabile.",
+          "c": "Non c'è nessun problema a usare const nel ciclo for...of; i valori vengono dichiarati come const ad ogni iterazione.",
+          "d": "Le chiavi degli oggetti in JavaScript sono sempre stringhe, ma questo non causa errori di iterazione."
+        },
+        "concept": "Iterazione di oggetti con entries",
+        "commonMistake": "Provare a iterare un oggetto con for...of senza Object.entries.",
+        "example": "for (const [k, v] of Object.entries(obj)) { ... }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:21.279Z"
+    },
+    {
+      "id": "objects-advanced-fb-0009",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "computed property",
+        "letterali oggetto",
+        "sintassi"
+      ],
+      "prompt": "Questo codice vuole creare un oggetto con una chiave dinamica, ma non ottiene il risultato atteso. Dove sta l'errore?",
+      "code": "const campo = \"eta\";\nconst persona = {\n  campo: 29\n};\nconsole.log(persona);",
+      "options": [
+        {
+          "id": "a",
+          "text": "La chiave dinamica va messa tra parentesi quadre"
+        },
+        {
+          "id": "b",
+          "text": "Manca il valore per la proprietà 'campo'"
+        },
+        {
+          "id": "c",
+          "text": "Bisogna usare una funzione per le chiavi dinamiche"
+        },
+        {
+          "id": "d",
+          "text": "Le parentesi graffe non sono corrette"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Per una chiave dinamica serve la sintassi [campo], non campo.",
+        "whyCorrect": "Scrivere campo come chiave crea sempre la proprietà 'campo', non la variabile. Bisogna usare parentesi quadre: {[campo]: 29}.",
+        "whyOthersWrong": {
+          "b": "Un valore c'è: 29. Il problema è nella chiave non dinamica, non nel valore.",
+          "c": "Non serve alcuna funzione per creare chiavi dinamiche, basta la sintassi con parentesi quadre.",
+          "d": "La struttura delle parentesi graffe è corretta per i letterali oggetto; l'errore è nella chiave."
+        },
+        "concept": "Chiavi computate nei letterali oggetto",
+        "commonMistake": "Dimenticare le parentesi quadre per le chiavi dinamiche.",
+        "example": "const obj = { [chiave]: valore }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:21.280Z"
+    },
+    {
+      "id": "objects-advanced-fb-0011",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-chaining",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "nullish coalescing",
+        "default values",
+        "coercion"
+      ],
+      "prompt": "Il codice vuole mostrare un messaggio di default se `utente.email` è assente, ma finisce per sostituire anche valori validi come stringa vuota. Dov'è l'errore?",
+      "code": "const utente = { email: \"\" };\nconst email = utente.email || \"Nessuna email\";\nconsole.log(email);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Usa || invece di ?? per il valore di default"
+        },
+        {
+          "id": "b",
+          "text": "Deve controllare se utente esiste"
+        },
+        {
+          "id": "c",
+          "text": "Serve l'optional chaining sull'email"
+        },
+        {
+          "id": "d",
+          "text": "Deve usare Object.hasOwnProperty"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "|| scarta anche valori falsy come la stringa vuota.",
+        "whyCorrect": "L'operatore || restituisce il default non solo per null/undefined ma anche per '', 0, false: per i soli nullish bisogna usare ?? .",
+        "whyOthersWrong": {
+          "b": "utente esiste, e il problema non è la presenza di utente ma il comportamento di ||.",
+          "c": "L'optional chaining serve solo se utente potrebbe essere undefined; qui c'è sempre.",
+          "d": "Object.hasOwnProperty non risolve il problema del fallback sul valore vuoto."
+        },
+        "concept": "Differenza tra || e ??",
+        "commonMistake": "Usare || per i default e perdere valori falsy legittimi.",
+        "example": "const email = utente.email ?? 'Nessuna email';"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:21.280Z"
+    },
+    {
+      "id": "objects-advanced-po-0015",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": [
+        "Object.entries",
+        "array destructuring",
+        "iterazione"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const dati = { x: 2, y: 3 };\nfor (const [chiave, valore] of Object.entries(dati)) {\n  console.log(chiave + valore);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "x2\ny3"
+        },
+        {
+          "id": "b",
+          "text": "xy\n23"
+        },
+        {
+          "id": "c",
+          "text": "x,y\n2,3"
+        },
+        {
+          "id": "d",
+          "text": "x:2\ny:3"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Object.entries restituisce array di coppie [chiave, valore], che destrutturiamo in chiave e valore. Concatenando stampiamo prima x2 poi y3.",
+        "whyCorrect": "Destrutturando le coppie, otteniamo prima 'x' e 2, poi 'y' e 3, quindi la concatenazione produce 'x2' e 'y3' su due righe.",
+        "whyOthersWrong": {
+          "b": "Concatenare chiave e valore non produce 'xy' o '23', perché ogni iterazione restituisce una coppia distinta e non aggrega tutto insieme.",
+          "c": "Questa risposta riflette le stringhe di array ma il ciclo stampa ogni elemento separatamente, non l'array completo.",
+          "d": "Non vengono usati i due punti tra chiave e valore, ma la semplice concatenazione senza caratteri intermedi."
+        },
+        "concept": "Object.entries e destrutturazione",
+        "commonMistake": "Credere che Object.entries restituisca una stringa o che il ciclo produca output con due punti o virgole.",
+        "example": "for (const [k, v] of Object.entries({ a: 1 })) { console.log(k + v); }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:48.066Z"
+    },
+    {
+      "id": "objects-advanced-po-0016",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": [
+        "chiavi computate",
+        "undefined property",
+        "oggetto letterale"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const key = 'eta';\nconst persona = { nome: 'Eva', [key]: 28 };\nconsole.log(persona['nome'] + '-' + persona.eta + '-' + persona[key]);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Eva-28-28"
+        },
+        {
+          "id": "b",
+          "text": "Eva-undefined-28"
+        },
+        {
+          "id": "c",
+          "text": "Eva-28-undefined"
+        },
+        {
+          "id": "d",
+          "text": "Eva-undefined-undefined"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La chiave computata '[key]' viene valutata come 'eta', quindi tutte le modalità di accesso funzionano e restituiscono sempre il valore 28.",
+        "whyCorrect": "persona.eta e persona[key] accedono entrambe alla stessa proprietà, quindi entrambe restituiscono 28. 'nome' è sempre 'Eva'.",
+        "whyOthersWrong": {
+          "b": "persona.eta esiste effettivamente, perché la chiave computata crea la proprietà 'eta'.",
+          "c": "persona[key] accede correttamente: key vale 'eta', quindi restituisce 28.",
+          "d": "Nessuna delle proprietà usate è undefined: sia la chiave computata sia quella letterale sono presenti."
+        },
+        "concept": "Chiavi computate nei letterali oggetto",
+        "commonMistake": "Pensare che solo la notazione con parentesi quadre possa accedere alla chiave computata.",
+        "example": "const o = { [k]: 1 }; o[k]; o.k;"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:48.067Z"
+    },
+    {
+      "id": "objects-advanced-po-0017",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-chaining",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": [
+        "optional chaining",
+        "nullish coalescing",
+        "default value"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const cliente = { nome: 'Anna', preferenze: null };\nconst res = cliente.preferenze?.colore ?? 'blu';\nconsole.log(res);",
+      "options": [
+        {
+          "id": "a",
+          "text": "blu"
+        },
+        {
+          "id": "b",
+          "text": "undefined"
+        },
+        {
+          "id": "c",
+          "text": "null"
+        },
+        {
+          "id": "d",
+          "text": "TypeError"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "L'optional chaining su preferenze null restituisce undefined, quindi il valore di default 'blu' viene usato.",
+        "whyCorrect": "Dato che 'preferenze' è null, 'preferenze?.colore' restituisce undefined, quindi con '??' viene usato 'blu'.",
+        "whyOthersWrong": {
+          "b": "'undefined' sarebbe il risultato se non ci fosse l'operatore '??', ma qui il default viene applicato.",
+          "c": "'null' non viene mai stampato: la proprietà non viene acceduta perché il valore è null.",
+          "d": "Non si verifica alcun errore: l'optional chaining evita il tentativo di accedere a una proprietà su null."
+        },
+        "concept": "Optional chaining e nullish coalescing",
+        "commonMistake": "Credere che ?. su null lanci errore o che ?? non si applichi a undefined.",
+        "example": "obj?.prop ?? 'default';"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:48.067Z"
+    },
+    {
+      "id": "objects-advanced-po-0018",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": [
+        "Object.keys",
+        "ordine delle proprietà",
+        "proprietà numeriche"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const dati = { 3: 'c', 1: 'a', 2: 'b', z: 'd' };\nconsole.log(Object.keys(dati));",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ '1', '2', '3', 'z' ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 'z', '3', '1', '2' ]"
+        },
+        {
+          "id": "c",
+          "text": "[ '3', '1', '2', 'z' ]"
+        },
+        {
+          "id": "d",
+          "text": "[ '1', '2', 'z', '3' ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le chiavi numeriche vengono elencate per ordine crescente, seguite da quelle stringa in ordine di inserimento.",
+        "whyCorrect": "Object.keys mette prima le chiavi 'numeriche' (ordinate), poi tutte le altre (inserite dopo), quindi [ '1', '2', '3', 'z' ].",
+        "whyOthersWrong": {
+          "b": "Qui l'ordine non rispetta la regola di ordinamento speciale per le chiavi numeriche.",
+          "c": "Le chiavi numeriche non vengono mantenute nell'ordine di inserimento ma ordinate, quindi non possono essere '3', '1', '2'.",
+          "d": "La stringa 'z' viene sempre dopo tutte le chiavi numeriche, non in mezzo a esse."
+        },
+        "concept": "Ordine delle proprietà con Object.keys",
+        "commonMistake": "Aspettarsi l'ordine di inserimento anche per chiavi numeriche.",
+        "example": "Object.keys({ 2:'a', 1:'b', x:'c' }) // [ '1', '2', 'x' ]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:48.067Z"
+    },
+    {
+      "id": "objects-advanced-po-0019",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": [
+        "proprietà shorthand",
+        "overwriting",
+        "precedenza tra proprietà"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const nome = 'Luca';\nconst utente = { nome: 'Anna', nome };\nconsole.log(utente.nome);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Luca"
+        },
+        {
+          "id": "b",
+          "text": "Anna"
+        },
+        {
+          "id": "c",
+          "text": "undefined"
+        },
+        {
+          "id": "d",
+          "text": "nome"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Nel letterale oggetto, la proprietà shorthand 'nome' sovrascrive la precedente, quindi il valore finale è quello della variabile.",
+        "whyCorrect": "La proprietà 'nome' impostata con shorthand viene dopo quella letterale, quindi sovrascrive 'Anna' con 'Luca'.",
+        "whyOthersWrong": {
+          "b": "La proprietà 'nome' letterale viene sovrascritta dalla shorthand, che compare dopo.",
+          "c": "La proprietà esiste ed è valorizzata, quindi non è undefined.",
+          "d": "Viene stampato il valore associato, non il nome della proprietà."
+        },
+        "concept": "Shorthand e precedenza nelle proprietà",
+        "commonMistake": "Pensare che la prima definizione prevalga sulle successive.",
+        "example": "const x = 2; const obj = { x: 1, x };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:48.067Z"
+    },
+    {
+      "id": "objects-advanced-po-0020",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": [
+        "Object.entries",
+        "destructuring",
+        "modifica oggetto durante iterazione"
+      ],
+      "prompt": "Cosa stampa questo codice, considerando come vengono trattate le nuove proprietà aggiunte durante il ciclo?",
+      "code": "const dati = { a: 10, b: 20 };\nfor (const [chiave, valore] of Object.entries(dati)) {\n  if (chiave === 'a') {\n    dati.c = 30;\n  }\n  console.log(chiave, valore);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "a 10\nb 20"
+        },
+        {
+          "id": "b",
+          "text": "a 10\nb 20\nc 30"
+        },
+        {
+          "id": "c",
+          "text": "a 10\nb 20\nc undefined"
+        },
+        {
+          "id": "d",
+          "text": "a 10\nc 30\nb 20"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Object.entries crea l'array prima del ciclo: aggiunte successive non vengono iterate.",
+        "whyCorrect": "Quando si invoca Object.entries, viene creato un array con le coppie chiave-valore presenti in quel momento. Le modifiche (come l'aggiunta di `c`) durante il ciclo non influenzano il risultato del ciclo, quindi vengono stampati solo 'a 10' e 'b 20'.",
+        "whyOthersWrong": {
+          "b": "L'opzione include 'c 30', ma questa chiave viene aggiunta all'oggetto dopo che Object.entries ha già creato l'array iniziale, quindi non può comparire nell'iterazione.",
+          "c": "'c undefined' non viene stampato perché 'c' non era presente nell'oggetto al momento della chiamata di Object.entries e quindi non fa parte delle voci iterate.",
+          "d": "L'ordine 'a 10', 'c 30', 'b 20' suggerisce un aggiornamento in tempo reale durante l'iterazione, ma Object.entries restituisce una fotografia statica dell'oggetto."
+        },
+        "concept": "Object.entries e oggetti mutabili",
+        "commonMistake": "Pensare che modifiche all'oggetto durante il ciclo influenzino l'array di Object.entries.",
+        "example": "for (const [k, v] of Object.entries(obj)) { ... }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:35:04.467Z"
+    },
+    {
+      "id": "objects-advanced-fg-0021",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "Oggetti",
+        "Iterazione",
+        "Object.entries"
+      ],
+      "prompt": "Completa per ottenere un array di coppie chiave/valore dell'oggetto `prodotto`.",
+      "code": "const prodotto = { nome: \"penna\", prezzo: 2 };\nconst coppie = ___;",
+      "options": [
+        {
+          "id": "a",
+          "text": "Object.entries(prodotto)"
+        },
+        {
+          "id": "b",
+          "text": "Object.keys(prodotto)"
+        },
+        {
+          "id": "c",
+          "text": "Object.values(prodotto)"
+        },
+        {
+          "id": "d",
+          "text": "[prodotto]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Object.entries produce array di [chiave, valore] per ogni proprietà.",
+        "whyCorrect": "La funzione Object.entries restituisce un array in cui ogni elemento è una coppia [chiave, valore], che permette di iterare facilmente su tutte le proprietà e i loro valori.",
+        "whyOthersWrong": {
+          "b": "Object.keys restituisce solo i nomi delle proprietà come stringhe, senza i valori associati.",
+          "c": "Object.values restituisce solo i valori delle proprietà, non le coppie complete.",
+          "d": "Mettere l'oggetto tra parentesi quadre crea un array con l'oggetto come unico elemento, nessuna trasformazione in coppie."
+        },
+        "concept": "Object.entries",
+        "commonMistake": "Confondere Object.keys, Object.values e Object.entries.",
+        "example": "Object.entries({ a: 1, b: 2 }) // [['a', 1], ['b', 2]]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:52.467Z"
+    },
+    {
+      "id": "objects-advanced-fg-0022",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "Oggetti",
+        "Shorthand proprietà"
+      ],
+      "prompt": "Completa per usare la shorthand delle proprietà: la chiave e la variabile si chiamano allo stesso modo.",
+      "code": "const colore = \"rosso\";\nconst frutta = { nome: \"mela\", ___ };",
+      "options": [
+        {
+          "id": "a",
+          "text": "colore"
+        },
+        {
+          "id": "b",
+          "text": "colore: colore"
+        },
+        {
+          "id": "c",
+          "text": "\"colore\""
+        },
+        {
+          "id": "d",
+          "text": "\"colore\": colore"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La shorthand delle proprietà consente di scrivere solo il nome della variabile.",
+        "whyCorrect": "In JavaScript, se la chiave e la variabile hanno lo stesso nome, si può omettere il valore: scrivere solo 'colore' equivale a 'colore: colore'.",
+        "whyOthersWrong": {
+          "b": "Scrivere 'colore: colore' funziona, ma non usa la shorthand richiesta: il prompt chiede di essere concisi.",
+          "c": "Mettere solo '\"colore\"' crea una chiave chiamata 'colore' ma senza valore; serve anche il valore.",
+          "d": "Questa sintassi richiede due nomi, non è una shorthand, e non è più breve di 'colore: colore'."
+        },
+        "concept": "Shorthand delle proprietà",
+        "commonMistake": "Scrivere sempre la coppia chiave: valore anche quando non serve.",
+        "example": "const persona = { nome, età };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:52.468Z"
+    },
+    {
+      "id": "objects-advanced-fb-0022",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "Object.keys",
+        "iterazione",
+        "proprietà oggetto"
+      ],
+      "prompt": "Il codice dovrebbe stampare tutte le chiavi di `dati` una per riga, ma invece stampa solo i numeri 0 e 1. Dov'è l'errore?",
+      "code": "const dati = { x: 10, y: 20 };\nfor (let i in Object.keys(dati)) {\n  console.log(i);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "Si itera sugli indici dell'array, non sulle chiavi"
+        },
+        {
+          "id": "b",
+          "text": "Object.keys non funziona su oggetti con numeri"
+        },
+        {
+          "id": "c",
+          "text": "Manca la conversione da oggetto a array"
+        },
+        {
+          "id": "d",
+          "text": "La variabile 'dati' deve essere un array"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "'for...in' cicla sugli indici dell'array, non sulle chiavi dell'oggetto.",
+        "whyCorrect": "'for...in' restituisce gli indici dell'array prodotto da Object.keys, quindi '0' e '1', invece delle chiavi 'x' e 'y'. Serve 'for...of' per ottenere i valori dell'array.",
+        "whyOthersWrong": {
+          "b": "Object.keys funziona su oggetti con chiavi stringa o numeriche; il problema non è nei dati.",
+          "c": "Object.keys già restituisce un array, quindi non manca alcuna conversione.",
+          "d": "Per usare Object.keys l'oggetto può essere anche un oggetto normale, non solo un array."
+        },
+        "concept": "Usare Object.keys con il ciclo corretto",
+        "commonMistake": "Confondere 'for...in' (indici) e 'for...of' (valori) sugli array.",
+        "example": "for (const chiave of Object.keys(obj)) { ... }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:48:07.117Z"
+    },
+    {
+      "id": "objects-advanced-fb-0024",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-chaining",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "optional chaining",
+        "proprietà annidate"
+      ],
+      "prompt": "Il codice vorrebbe leggere la proprietà 'telefono' di `utente.contatti` senza errore se `contatti` non esiste, ma in realtà ottiene un TypeError. Dov'è l'errore?",
+      "code": "const utente = { nome: 'Luca' };\nconsole.log(utente.contatti.telefono);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Manca l'optional chaining con ?. dopo 'contatti'"
+        },
+        {
+          "id": "b",
+          "text": "Si usa '.' invece di '[]' per accedere a 'telefono'"
+        },
+        {
+          "id": "c",
+          "text": "La variabile 'utente' non ha la proprietà 'telefono'"
+        },
+        {
+          "id": "d",
+          "text": "Doveva essere una funzione, non un oggetto"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Serve il chaining opzionale per evitare l'errore se 'contatti' non c'è.",
+        "whyCorrect": "Accedendo a una proprietà di 'undefined', senza l'optional chaining, si ottiene un TypeError. Con 'utente.contatti?.telefono', invece, si ottiene undefined senza errore.",
+        "whyOthersWrong": {
+          "b": "Sia '.' che '[]' servono per accedere a proprietà, ma il problema non riguarda la notazione.",
+          "c": "Il problema non è la mancanza della proprietà 'telefono', ma la mancanza di 'contatti', che causa l'errore accedendo a 'undefined'.",
+          "d": "L'oggetto va bene: il problema è l'accesso alla proprietà annidata, non il tipo di 'utente'."
+        },
+        "concept": "Optional chaining su proprietà annidate",
+        "commonMistake": "Dimenticare '?.' quando una proprietà può mancare.",
+        "example": "console.log(obj.nodo?.valore);"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:48:07.117Z"
+    },
+    {
+      "id": "objects-advanced-fb-0026",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "proprietà shorthand",
+        "chiavi computate"
+      ],
+      "prompt": "Questo codice vuole creare un oggetto con una proprietà dinamica e una proprietà `eta` usando la shorthand, ma la proprietà dinamica non viene creata con il nome atteso. Dove si trova l'errore?",
+      "code": "const chiave = 'ruolo';\nconst eta = 28;\nconst utente = {\n  chiave: 'admin',\n  eta\n};\nconsole.log(utente);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Manca l'uso delle parentesi quadre per la chiave computata"
+        },
+        {
+          "id": "b",
+          "text": "Si usa la variabile eta senza valore"
+        },
+        {
+          "id": "c",
+          "text": "La proprietà ruolo è scritta come stringa invece di variabile"
+        },
+        {
+          "id": "d",
+          "text": "Serve Object.assign per ottenere il risultato"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le chiavi computate richiedono le parentesi quadre nel letterale.",
+        "whyCorrect": "Per ottenere una chiave dinamica col valore di una variabile bisogna scrivere [chiave]: 'admin'. Scrivere solo chiave: 'admin' crea la proprietà 'chiave', non 'ruolo'.",
+        "whyOthersWrong": {
+          "b": "La variabile eta è dichiarata e valorizzata; la shorthand funziona correttamente in questo caso.",
+          "c": "La proprietà ruolo non viene nemmeno creata: la chiave è sempre 'chiave', non importa se la stringa fosse variabile o meno.",
+          "d": "Object.assign non serve per creare una chiave calcolata: il problema è la sintassi delle parentesi quadre."
+        },
+        "concept": "Chiavi computate nei letterali oggetto",
+        "commonMistake": "Dimenticare le parentesi quadre per una chiave calcolata.",
+        "example": "const o = { [chiave]: valore };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:59:02.465Z"
+    },
+    {
+      "id": "objects-advanced-fb-0027",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-chaining",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "optional chaining",
+        "valori di default"
+      ],
+      "prompt": "Il codice qui sotto dovrebbe restituire il valore di `utente.info.telefono` se esiste, oppure 'non disponibile' se manca, ma quando `info` manca viene lanciato un errore. Dov'è l'errore nel codice?",
+      "code": "const utente = {};\nconst telefono = utente.info.telefono ?? 'non disponibile';\nconsole.log(telefono);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Manca l'optional chaining su info"
+        },
+        {
+          "id": "b",
+          "text": "Si usa ?? invece di || per il default"
+        },
+        {
+          "id": "c",
+          "text": "utente non è definito come oggetto annidato"
+        },
+        {
+          "id": "d",
+          "text": "Si cerca di accedere a una proprietà numerica"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Senza ?. su info, accedere a telefono causa errore se info manca.",
+        "whyCorrect": "Quando info non esiste, accedere a utente.info.telefono causa un TypeError; serve utente.info?.telefono per evitare l'errore.",
+        "whyOthersWrong": {
+          "b": "L'operatore ?? è corretto qui perché consente di fornire un default solo se il valore a sinistra è null o undefined.",
+          "c": "utente è definito come oggetto, il problema è che info non esiste come proprietà.",
+          "d": "Nessuna proprietà numerica viene usata; l'errore non dipende da questo."
+        },
+        "concept": "Optional chaining per accessi sicuri",
+        "commonMistake": "Omettere ?. e causare un TypeError su proprietà annidate.",
+        "example": "const tel = utente.info?.telefono ?? 'non disponibile';"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:59:02.465Z"
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "topicId": "errors",
+  "questions": [
+    {
+      "id": "errors-po-0004",
+      "topicId": "errors",
+      "subtopicId": "errors-try-catch",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["flusso try/catch/finally", "gestione errori", "ordine esecuzione blocchi"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "function f() {\n  try {\n    console.log('inizio');\n    throw new Error('errore');\n  } catch (e) {\n    console.log(e.message);\n  } finally {\n    console.log('sempre');\n  }\n}\nf();",
+      "options": [
+        {
+          "id": "a",
+          "text": "inizio\nerrore\nsempre"
+        },
+        {
+          "id": "b",
+          "text": "inizio\nsempre"
+        },
+        {
+          "id": "c",
+          "text": "errore\ninizio\nsempre"
+        },
+        {
+          "id": "d",
+          "text": "inizio\nsempre\nerrore"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Dopo il throw, si entra nel catch (che stampa 'errore'), poi finalmente esegue il blocco finally.",
+        "whyCorrect": "Il blocco try stampa 'inizio', poi viene lanciato un errore. Si entra nel catch che stampa il messaggio 'errore', e infine il blocco finally viene eseguito sempre, stampando 'sempre'.",
+        "whyOthersWrong": {
+          "b": "Senza il catch, il messaggio d'errore non verrebbe stampato. In realtà, 'errore' compare per via del catch.",
+          "c": "'errore' non viene mai stampato prima di 'inizio', perché 'inizio' è il primo console.log eseguito.",
+          "d": "'errore' viene stampato subito dopo 'inizio', prima di 'sempre'; 'sempre' non anticipa il messaggio d'errore."
+        },
+        "concept": "Esecuzione completa di try/catch/finally",
+        "commonMistake": "Pensare che finally venga eseguito solo se non c'è errore o che catch non venga raggiunto.",
+        "example": "try { ... } catch(e) { ... } finally { ... }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:22:13.396Z"
+    },
+    {
+      "id": "errors-po-0005",
+      "topicId": "errors",
+      "subtopicId": "errors-throw",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["lanciare errori", "uso di throw", "oggetto Error"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "try {\n  throw new Error('fallito');\n} catch (e) {\n  console.log(typeof e);\n  console.log(e.name);\n  console.log(e.message);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "object\nError\nfallito"
+        },
+        {
+          "id": "b",
+          "text": "string\nError\nfallito"
+        },
+        {
+          "id": "c",
+          "text": "object\nTypeError\nfallito"
+        },
+        {
+          "id": "d",
+          "text": "object\nError\nundefined"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "throw new Error crea un oggetto di tipo Error con name 'Error' e message 'fallito'.",
+        "whyCorrect": "Il tipo di e è object, il suo name è 'Error' (valore predefinito del costruttore Error) e message è 'fallito', quindi vengono stampate queste tre righe esattamente.",
+        "whyOthersWrong": {
+          "b": "Se si lancia una stringa, typeof sarebbe 'string', ma qui viene lanciato un oggetto Error.",
+          "c": "Il name è Error, non TypeError, perché viene costruito con Error e non TypeError.",
+          "d": "Il message è esplicitamente impostato su 'fallito', non è undefined."
+        },
+        "concept": "throw new Error e proprietà name/message",
+        "commonMistake": "Scambiare il tipo o confondere le proprietà dell'oggetto Error.",
+        "example": "throw new Error('test'); // e.message === 'test'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:22:13.397Z"
+    },
+    {
+      "id": "errors-po-0006",
+      "topicId": "errors",
+      "subtopicId": "errors-native",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["errori nativi", "riconoscere ReferenceError", "scope delle variabili"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "try {\n  let x = y + 1;\n} catch (e) {\n  console.log(e.name);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "ReferenceError"
+        },
+        {
+          "id": "b",
+          "text": "TypeError"
+        },
+        {
+          "id": "c",
+          "text": "SyntaxError"
+        },
+        {
+          "id": "d",
+          "text": "RangeError"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Accedere a una variabile mai definita lancia ReferenceError.",
+        "whyCorrect": "La variabile y non è mai stata dichiarata, quindi valutare y + 1 genera un ReferenceError, che viene catturato e il suo name stampato.",
+        "whyOthersWrong": {
+          "b": "TypeError si verifica per operazioni su tipi errati (es. chiamare qualcosa che non è funzione), non per variabili non definite.",
+          "c": "SyntaxError avviene già in fase di parsing, ma qui la sintassi è corretta: l'errore avviene in esecuzione.",
+          "d": "RangeError si verifica per valori fuori intervallo, ad esempio in array o funzioni matematiche."
+        },
+        "concept": "ReferenceError e variabili non definite",
+        "commonMistake": "Scambiare ReferenceError con TypeError per variabili mancanti.",
+        "example": "console.log(a); // ReferenceError"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:22:13.398Z"
+    },
+    {
+      "id": "errors-po-0007",
+      "topicId": "errors",
+      "subtopicId": "errors-try-catch",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["flusso finally", "try/catch senza errori", "ordine esecuzione"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "let risorsa = [];\ntry {\n  risorsa.push('aperta');\n  console.log('dentro try');\n} finally {\n  risorsa.push('chiusa');\n}\nconsole.log(risorsa.join('-'));",
+      "options": [
+        {
+          "id": "a",
+          "text": "dentro try\naperta-chiusa"
+        },
+        {
+          "id": "b",
+          "text": "dentro try\naperta"
+        },
+        {
+          "id": "c",
+          "text": "aperta-chiusa\ndentro try"
+        },
+        {
+          "id": "d",
+          "text": "dentro try\nchiusa-aperta"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "finally viene eseguito anche se non ci sono errori, aggiornando l'array.",
+        "whyCorrect": "Il corpo del try stampa 'dentro try' e aggiunge 'aperta', il finally aggiunge 'chiusa', quindi l'array finale sarà 'aperta-chiusa'.",
+        "whyOthersWrong": {
+          "b": "Manca il push dentro finally, che viene comunque eseguito e aggiunge 'chiusa'.",
+          "c": "L'ordine delle stampe è sbagliato: il console.log nel try viene eseguito prima del join.",
+          "d": "La sequenza dei push è 'aperta' poi 'chiusa', non il contrario."
+        },
+        "concept": "finally sempre eseguito",
+        "commonMistake": "Credere che finally giri solo con errori o scambiare l’ordine delle istruzioni.",
+        "example": "try { ... } finally { ... }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:22:13.398Z"
+    },
+    {
+      "id": "errors-po-0009",
+      "topicId": "errors",
+      "subtopicId": "errors-native",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["errori nativi", "comprendere ReferenceError e TypeError"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "try {\n  y++;\n} catch (e) {\n  console.log(e.name);\n}\ntry {\n  (3)();\n} catch (e) {\n  console.log(e.name);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "ReferenceError\nTypeError"
+        },
+        {
+          "id": "b",
+          "text": "TypeError\nReferenceError"
+        },
+        {
+          "id": "c",
+          "text": "ReferenceError\nReferenceError"
+        },
+        {
+          "id": "d",
+          "text": "TypeError\nTypeError"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "`y` non è definito (ReferenceError), chiamare `3()` è un TypeError.",
+        "whyCorrect": "L'espressione `y++` tenta di usare una variabile mai dichiarata, generando un ReferenceError. `(3)()` tenta di invocare un numero come funzione, quindi genera un TypeError.",
+        "whyOthersWrong": {
+          "b": "L'invocazione di un numero genera TypeError, ma la prima eccezione riguarda una variabile non dichiarata, che è ReferenceError.",
+          "c": "La seconda eccezione non è ReferenceError: `3` esiste (è un numero), ma non è una funzione, quindi il problema è di tipo.",
+          "d": "La prima eccezione è ReferenceError poiché `y` non è definita, non TypeError."
+        },
+        "concept": "Errori nativi ReferenceError e TypeError",
+        "commonMistake": "Confondere ReferenceError (variabile non dichiarata) con TypeError (operazione su tipo sbagliato).",
+        "example": "try { z++ } catch(e) { console.log(e.name) }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:22:26.247Z"
+    }
+  ]
+}

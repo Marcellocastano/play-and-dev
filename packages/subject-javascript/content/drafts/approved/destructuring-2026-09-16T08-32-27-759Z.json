@@ -1,0 +1,313 @@
+{
+  "topicId": "destructuring",
+  "questions": [
+    {
+      "id": "destructuring-po-0011",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["rinominare proprietà", "default nel destructuring", "lettura di oggetti"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const dati = { x: 7 };\nconst { x: y = 10, z = 3 } = dati;\nconsole.log(y);\nconsole.log(z);",
+      "options": [
+        {
+          "id": "a",
+          "text": "7\n3"
+        },
+        {
+          "id": "b",
+          "text": "10\nundefined"
+        },
+        {
+          "id": "c",
+          "text": "7\nundefined"
+        },
+        {
+          "id": "d",
+          "text": "undefined\n3"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La variabile y prende valore 7 dalla proprietà x, mentre z prende il default 3.",
+        "whyCorrect": "Nel destructuring, `x: y = 10` significa che y prende il valore di x; dato che x c'è ed è 7, y vale 7. La proprietà z non esiste, quindi usa il default e z vale 3.",
+        "whyOthersWrong": {
+          "b": "z ha un valore di default specificato (3), quindi non può essere undefined.",
+          "c": "Il default su z assicura che abbia sempre un valore, e y prende il 7 dalla proprietà x.",
+          "d": "La proprietà x è presente, quindi y non è undefined, e z prende il default 3."
+        },
+        "concept": "Destructuring oggetti con rinomina e default",
+        "commonMistake": "Confondere l'ordine della rinomina o pensare che il default si applichi anche se la proprietà esiste.",
+        "example": "const { a: nuovo = 1 } = { a: 5 }; // nuovo = 5"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:16.101Z"
+    },
+    {
+      "id": "destructuring-po-0012",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-arrays",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["assegnamento per posizione", "default di elemento mancante"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const arr = [1];\nconst [primo, secondo = 42, terzo = 99] = arr;\nconsole.log(primo);\nconsole.log(secondo);\nconsole.log(terzo);",
+      "options": [
+        {
+          "id": "a",
+          "text": "1\n42\n99"
+        },
+        {
+          "id": "b",
+          "text": "1\nundefined\nundefined"
+        },
+        {
+          "id": "c",
+          "text": "1\nundefined\n99"
+        },
+        {
+          "id": "d",
+          "text": "1\n42\nundefined"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Manca il secondo e terzo elemento, quindi i default vengono usati.",
+        "whyCorrect": "L'array ha solo un elemento, quindi secondo e terzo non sono definiti; entrambi prendono il valore di default specificato nel destructuring.",
+        "whyOthersWrong": {
+          "b": "Il default viene usato quando manca un elemento, quindi secondo e terzo non possono essere undefined.",
+          "c": "Solo il secondo elemento manca, ma anche il terzo manca, quindi anche terzo prende il default.",
+          "d": "Il terzo elemento manca e ha un default, quindi non può essere undefined."
+        },
+        "concept": "Destructuring array con valori di default",
+        "commonMistake": "Pensare che i default valgano solo per il primo elemento mancante.",
+        "example": "const [a, b = 2] = [1]; // a = 1, b = 2"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:16.102Z"
+    },
+    {
+      "id": "destructuring-po-0013",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["destructuring parametri funzione", "default nei parametri"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "function saluta({ nome = 'Mario', saluto = 'Ciao' }) {\n  console.log(saluto + ', ' + nome);\n}\nsaluta({ nome: 'Luisa' });",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ciao, Luisa"
+        },
+        {
+          "id": "b",
+          "text": "undefined, Luisa"
+        },
+        {
+          "id": "c",
+          "text": "Ciao, Mario"
+        },
+        {
+          "id": "d",
+          "text": "undefined, Mario"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La funzione usa 'Luisa' e il default 'Ciao' per saluto.",
+        "whyCorrect": "L'oggetto passato ha solo la proprietà nome, quindi saluto prende il valore di default 'Ciao' e nome prende 'Luisa'.",
+        "whyOthersWrong": {
+          "b": "Il valore di default per saluto è 'Ciao', quindi non può essere undefined.",
+          "c": "La proprietà nome è fornita ('Luisa'), quindi il default 'Mario' non viene usato.",
+          "d": "Sia nome che saluto hanno default, ma almeno uno viene fornito nell'oggetto, quindi non sono undefined."
+        },
+        "concept": "Default nel destructuring nei parametri funzione",
+        "commonMistake": "Pensare che i default non si applichino se la proprietà manca solo nell'oggetto passato.",
+        "example": "function f({x = 1}) { console.log(x); } f({}); // 1"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:16.103Z"
+    },
+    {
+      "id": "destructuring-po-0014",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-arrays",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["rest operator", "destructuring array"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const numeri = [4, 5, 6, 7];\nconst [primo, ...altri] = numeri;\nconsole.log(primo);\nconsole.log(altri);",
+      "options": [
+        {
+          "id": "a",
+          "text": "4\n[ 5, 6, 7 ]"
+        },
+        {
+          "id": "b",
+          "text": "4\n5"
+        },
+        {
+          "id": "c",
+          "text": "4\n[ 4, 5, 6, 7 ]"
+        },
+        {
+          "id": "d",
+          "text": "4\nundefined"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il rest operator prende tutti gli elementi dopo il primo.",
+        "whyCorrect": "Il primo elemento va in primo, il resto dell'array viene raccolto nell'array altri tramite il rest operator.",
+        "whyOthersWrong": {
+          "b": "Il rest operator raccoglie in un array, non un singolo valore.",
+          "c": "Il rest operator prende solo gli elementi successivi, non tutto l'array.",
+          "d": "Il rest operator crea sempre un array, anche se vuoto, non undefined."
+        },
+        "concept": "Rest operator nel destructuring array",
+        "commonMistake": "Pensare che il rest operator prenda solo il prossimo elemento o tutto l'array.",
+        "example": "const [a, ...b] = [1,2,3]; // a=1, b=[2,3]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:16.103Z"
+    },
+    {
+      "id": "destructuring-po-0015",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-arrays",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["salto di elementi", "assegnamento posizionale"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const valori = [10, 20, 30, 40];\nconst [ , secondo, , quarto ] = valori;\nconsole.log(secondo);\nconsole.log(quarto);",
+      "options": [
+        {
+          "id": "a",
+          "text": "20\n40"
+        },
+        {
+          "id": "b",
+          "text": "20\n30"
+        },
+        {
+          "id": "c",
+          "text": "10\n40"
+        },
+        {
+          "id": "d",
+          "text": "10\n30"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Gli elementi saltati vengono ignorati, secondo e quarto prendono la posizione.",
+        "whyCorrect": "Il primo e il terzo elemento sono saltati: secondo prende il secondo valore (20) e quarto prende il quarto valore (40).",
+        "whyOthersWrong": {
+          "b": "Il terzo elemento (30) non viene assegnato a quarto, ma il quarto (40).",
+          "c": "Il secondo prende il secondo valore, non il primo; quarto prende il quarto.",
+          "d": "Né il secondo né il quarto valore corrispondono a queste posizioni."
+        },
+        "concept": "Destructuring array saltando elementi",
+        "commonMistake": "Dimenticare che le virgole vuote saltano la posizione corrispondente.",
+        "example": "const [ , b, , d ] = [1,2,3,4]; // b=2, d=4"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:16.103Z"
+    },
+    {
+      "id": "destructuring-po-0016",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-objects",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["destructuring oggetti", "rinomina", "valori di default"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const animale = { specie: 'gatto', zampe: 4 };\nconst { specie: tipo, colore = 'nero' } = animale;\nconsole.log(tipo);\nconsole.log(colore);",
+      "options": [
+        {
+          "id": "a",
+          "text": "gatto\nnero"
+        },
+        {
+          "id": "b",
+          "text": "specie\nnero"
+        },
+        {
+          "id": "c",
+          "text": "gatto\nundefined"
+        },
+        {
+          "id": "d",
+          "text": "tipo\nnero"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La proprietà specie viene rinominata in tipo, colore prende il default.",
+        "whyCorrect": "La proprietà specie dell'oggetto viene estratta e rinominata in tipo, quindi tipo vale 'gatto'. Colore non esiste nell'oggetto, quindi riceve il valore di default 'nero'.",
+        "whyOthersWrong": {
+          "b": "La variabile tipo contiene il valore di specie ('gatto'), non il nome della proprietà ('specie').",
+          "c": "Colore non viene lasciata undefined: non trovandola nell'oggetto prende il valore di default specificato, cioè 'nero'.",
+          "d": "Console.log stampa i valori delle variabili, non i loro nomi; tipo vale 'gatto', non 'tipo'."
+        },
+        "concept": "Destructuring oggetti con rinomina e default",
+        "commonMistake": "Confondere il nome della proprietà con quello della variabile di destinazione o trascurare il default.",
+        "example": "const { a: nuovoNome = 42 } = {}; // nuovoNome = 42"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:22.808Z"
+    },
+    {
+      "id": "destructuring-po-0017",
+      "topicId": "destructuring",
+      "subtopicId": "destructuring-arrays",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["destructuring", "default values", "array manipulation"],
+      "prompt": "Cosa stampa questo codice che usa il destructuring di array con valori di default e rest?",
+      "code": "const arr = [undefined, 3, 5];\nconst [a = 1, b = 2, ...rest] = arr;\nconsole.log(a);\nconsole.log(b);\nconsole.log(rest);",
+      "options": [
+        {
+          "id": "a",
+          "text": "1\n3\n[ 5 ]"
+        },
+        {
+          "id": "b",
+          "text": "undefined\n3\n[ 5 ]"
+        },
+        {
+          "id": "c",
+          "text": "1\n2\n[ 3, 5 ]"
+        },
+        {
+          "id": "d",
+          "text": "undefined\n2\n[ 5 ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il valore undefined attiva il default per 'a', mentre 'b' prende il secondo elemento. Il rest raccoglie il restante.",
+        "whyCorrect": "'a' assume il valore 1 perché nella posizione 0 di arr c'è undefined e quindi scatta il valore di default. 'b' prende 3, il valore alla posizione 1. Il rest operator raccoglie il valore rimanente (5) in un array.",
+        "whyOthersWrong": {
+          "b": "Se il primo elemento fosse undefined senza default, avremmo undefined, ma qui 'a = 1' fornisce il valore di default.",
+          "c": "'b' prende il secondo elemento dell'array, cioè 3, non il valore di default 2. Il rest parte dalla terza posizione, quindi raccoglie solo 5, non 3 e 5.",
+          "d": "'a' avrebbe undefined solo senza valore di default, ma qui il default è 1. 'b' prende comunque 3, non 2, e il rest parte dalla terza posizione."
+        },
+        "concept": "Destructuring di array: default e rest",
+        "commonMistake": "Credere che undefined non attivi il valore di default, o che rest prenda più elementi di quanti ne restino.",
+        "example": "const [a = 1, b = 2, ...rest] = [undefined, 3, 5];"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:27.758Z"
+    }
+  ]
+}

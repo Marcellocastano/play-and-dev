@@ -19,12 +19,27 @@ const reassignPo: QuestionTemplate = {
       const code = `let ${name} = ${a};\n${name} = ${b};\nconsole.log(${name});`;
       const built = makeOptions(
         rng,
-        { text: fmt(b), why: `La riassegnazione sovrascrive il valore: ${name} vale ${b}.` },
+        {
+          text: fmt(b),
+          why: `La riga \`${name} = ${b}\` sovrascrive il valore precedente, quindi il log stampa ${b}.`,
+        },
         [
-          { text: fmt(a), why: `${a} era il valore iniziale, ma viene sostituito dalla riassegnazione.` },
-          { text: fmt(a + b), why: 'La riassegnazione sostituisce, non somma: il primo valore va perso.' },
-          { text: 'undefined', why: 'La variabile è dichiarata e valorizzata: non vale undefined.' },
-          { text: 'Errore', why: 'Riassegnare una variabile let è perfettamente lecito.' },
+          {
+            text: fmt(a),
+            why: `${a} era il valore della prima riga, ma \`${name} = ${b}\` lo sostituisce prima della stampa: stampare ${a} vorrebbe dire ignorare la riassegnazione.`,
+          },
+          {
+            text: fmt(a + b),
+            why: `L'assegnazione non accumula: \`${name} = ${b}\` sostituisce il valore, quindi ${a} e ${b} non si sommano.`,
+          },
+          {
+            text: 'undefined',
+            why: `${name} viene dichiarata e inizializzata nella prima riga, quindi non è mai undefined: dopo la riassegnazione vale ${b}.`,
+          },
+          {
+            text: 'Errore',
+            why: 'Riassegnare una variabile `let` è perfettamente lecito: solo `const` farebbe fallire la seconda assegnazione.',
+          },
         ],
       );
       return {
@@ -42,7 +57,8 @@ const reassignPo: QuestionTemplate = {
           whyCorrect: `\`${name} = ${b}\` sostituisce il valore precedente; console.log stampa ${b}.`,
           whyOthersWrong: built.whyOthersWrong,
           concept: 'Riassegnazione di una variabile let',
-          commonMistake: 'Pensare che il primo valore resti "in coda" o che le assegnazioni si sommino.',
+          commonMistake:
+            'Pensare che il primo valore resti "in coda" o che le assegnazioni si sommino.',
           example: 'let x = 1; x = 2; // x vale 2',
         },
         deepDiveRef: DD,
@@ -63,11 +79,23 @@ const constMc: QuestionTemplate = {
     const name = pickName(rng);
     const built = makeOptions(
       rng,
-      { text: 'const', why: '`const` dichiara una costante: non può essere riassegnata.' },
+      {
+        text: 'const',
+        why: 'Solo `const` crea un binding che non può essere riassegnato: è la scelta per un valore fisso.',
+      },
       [
-        { text: 'let', why: '`let` crea una variabile riassegnabile, non una costante.' },
-        { text: 'var', why: '`var` è la forma storica e anch\'essa è riassegnabile.' },
-        { text: 'function', why: '`function` dichiara una funzione, non una costante.' },
+        {
+          text: 'let',
+          why: 'Con `let` la variabile resta modificabile: una riassegnazione successiva andrebbe a buon fine, quindi non garantisce che il valore non cambi mai.',
+        },
+        {
+          text: 'var',
+          why: 'Anche `var` permette la riassegnazione e in più porta con sé comportamenti legacy come lo scope di funzione: non crea una costante.',
+        },
+        {
+          text: 'final',
+          why: 'In JavaScript `final` non è una parola chiave: esiste in Java, mentre qui le costanti si dichiarano con `const`.',
+        },
       ],
     );
     return {
@@ -84,7 +112,8 @@ const constMc: QuestionTemplate = {
         whyCorrect: '`const` è la parola chiave per le costanti in JavaScript.',
         whyOthersWrong: built.whyOthersWrong,
         concept: 'Dichiarazione di costanti',
-        commonMistake: 'Confondere const con "valore immutabile": gli oggetti const possono cambiare dentro.',
+        commonMistake:
+          'Confondere const con "valore immutabile": gli oggetti const possono cambiare dentro.',
         example: `const ${name} = 10; ${name} = 20; // TypeError`,
       },
       deepDiveRef: DD,
@@ -108,13 +137,22 @@ const constBug: QuestionTemplate = {
     const built = makeOptions(
       rng,
       {
-        text: `${name} è una const e non può essere riassegnata`,
-        why: 'Esatto: riassegnare una const lancia TypeError. Servirebbe let.',
+        text: 'Si riassegna una `const`',
+        why: `La riga \`${name} = ${b}\` tenta di riassegnare una costante: l'esecuzione si ferma con un TypeError prima del log. Per stampare ${b} serviva \`let\` alla prima riga.`,
       },
       [
-        { text: 'console.log non può stampare numeri', why: 'console.log stampa qualunque valore, numeri inclusi.' },
-        { text: 'Manca il punto e virgola dopo la dichiarazione', why: 'Il punto e virgola finale è opzionale e non è il problema.' },
-        { text: `${name} non è stata dichiarata`, why: `${name} è dichiarata con const alla prima riga.` },
+        {
+          text: `Manca \`let\` davanti a \`${name} = ${b}\``,
+          why: `Aggiungere \`let\` alla seconda riga tenterebbe di ridichiarare ${name} nello stesso scope, che è un errore: il problema è che la prima riga usa \`const\` invece di \`let\`.`,
+        },
+        {
+          text: '`const` non accetta numeri',
+          why: '`const` accetta qualunque tipo di valore, numeri compresi: ciò che vieta è la riassegnazione fatta alla riga successiva, non il contenuto.',
+        },
+        {
+          text: `\`${name}\` va dichiarata due volte`,
+          why: `Dichiarare di nuovo ${name} nello stesso scope è un errore di sintassi: per cambiare valore bastava dichiararla una volta sola con \`let\`.`,
+        },
       ],
     );
     return {
@@ -155,11 +193,23 @@ const letFg: QuestionTemplate = {
     const code = `___ ${name} = ${a};\n${name} = ${name} + ${b};\nconsole.log(${name});`;
     const built = makeOptions(
       rng,
-      { text: 'let', why: '`let` dichiara una variabile riassegnabile con scope di blocco: la scelta moderna.' },
+      {
+        text: 'let',
+        why: 'La seconda riga riassegna la variabile: `let` permette la riassegnazione e ha scope di blocco, la scelta moderna.',
+      },
       [
-        { text: 'const', why: 'Con const la seconda riga lancerebbe TypeError: non è riassegnabile.' },
-        { text: 'var', why: 'var funzionerebbe, ma ha scope di funzione e comportamenti legacy: la prassi moderna è let.' },
-        { text: 'function', why: 'function dichiara una funzione, non una variabile numerica.' },
+        {
+          text: 'const',
+          why: `Con \`const\` la riga \`${name} = ${name} + ${b}\` lancerebbe un TypeError, perché una costante non può essere riassegnata.`,
+        },
+        {
+          text: 'var',
+          why: '`var` funzionerebbe perché permette la riassegnazione, ma ha scope di funzione e comportamenti datati: per una variabile mutabile la prassi moderna è `let`.',
+        },
+        {
+          text: 'static',
+          why: 'In JavaScript `static` non dichiara variabili: serve solo per i membri statici delle classi, quindi la parola chiave giusta è `let`.',
+        },
       ],
     );
     return {
@@ -174,7 +224,8 @@ const letFg: QuestionTemplate = {
       ...built,
       explanation: {
         short: '`let` dichiara una variabile riassegnabile con scope di blocco.',
-        whyCorrect: 'La variabile viene riassegnata nella seconda riga: serve let (o var, ma è sconsigliato).',
+        whyCorrect:
+          'La variabile viene riassegnata nella seconda riga: serve let (o var, ma è sconsigliato).',
         whyOthersWrong: built.whyOthersWrong,
         concept: 'let vs const vs var',
         commonMistake: 'Usare const "per abitudine" anche dove serve riassegnare.',
@@ -195,24 +246,26 @@ const letVarCmp: QuestionTemplate = {
   tags: ['variabili', 'scope'],
   generate(rng: Rng) {
     const name = pickName(rng);
+    const v = pickInt(rng, 1, 99);
+    const code = `if (true) {\n  var ${name} = ${v};\n}\nconsole.log(${name});`;
     const built = makeOptions(
       rng,
       {
-        text: `let resta confinata al blocco; var dichiarata nel blocco è visibile anche fuori`,
-        why: 'var ha scope di funzione: ignora i blocchi if/for e "esce" dal blocco.',
+        text: `\`var\` → ${v}, \`let\` → ReferenceError`,
+        why: `Con \`var\` la dichiarazione ignora il blocco e resta visibile fuori, quindi stampa ${v}; con \`let\` la variabile muore dentro le graffe e la riga finale lancia un ReferenceError.`,
       },
       [
         {
-          text: `let e var si comportano allo stesso modo dentro un blocco`,
-          why: 'No: let ha scope di blocco, var no — è la differenza principale.',
+          text: `\`var\` → ReferenceError, \`let\` → ${v}`,
+          why: `Il comportamento è invertito: è \`var\` a ignorare il blocco e a stampare ${v}, mentre \`let\` è confinata alle graffe e fuori produce un errore.`,
         },
         {
-          text: `var resta confinata al blocco; let è visibile ovunque`,
-          why: 'È l\'esatto contrario: è var a ignorare i blocchi.',
+          text: `${v} in entrambi i casi`,
+          why: `Con \`let\` la variabile dichiarata nel blocco non esiste più dopo la graffa di chiusura: la stampa finale lancia un ReferenceError invece di mostrare ${v}.`,
         },
         {
-          text: `Nessuna delle due può essere dichiarata dentro un blocco`,
-          why: 'Entrambe si possono dichiarare in un blocco; cambia solo la loro visibilità.',
+          text: 'ReferenceError in entrambi i casi',
+          why: `\`var\` non ha scope di blocco: la dichiarazione dentro l'if resta valida anche dopo, quindi con \`var\` il log stampa ${v} senza errori.`,
         },
       ],
     );
@@ -222,15 +275,17 @@ const letVarCmp: QuestionTemplate = {
       difficulty: 'medium' as const,
       topicId: TOPIC,
       subtopicId: 'variables-var',
-      skills: ['let', 'var', 'scope'],
-      prompt: `In \`if (true) { ... ${name} = 1; }\`, qual è la differenza tra dichiarare ${name} con let e con var?`,
+      skills: ['var', 'scope'],
+      prompt: 'Cosa stampa con `var`? E sostituendo `var` con `let`?',
+      code,
       ...built,
       explanation: {
-        short: 'let ha scope di blocco; var ha scope di funzione e ignora i blocchi.',
-        whyCorrect: 'Una var dichiarata in un if resta visibile (e vale) anche dopo la graffa.',
+        short: `var ignora i blocchi: stampa ${v}. Con let sarebbe ReferenceError.`,
+        whyCorrect:
+          'var ha scope di funzione, non di blocco: la dichiarazione "esce" dalle graffe.',
         whyOthersWrong: built.whyOthersWrong,
-        concept: 'Scope di blocco vs scope di funzione',
-        commonMistake: 'Aspettarsi che var rispetti i confini di un blocco.',
+        concept: 'Scope di funzione di var vs scope di blocco di let',
+        commonMistake: 'Aspettarsi che var rispetti i confini di un blocco come let.',
         example: 'if (true) { var v = 1; let l = 2; } // v esiste ancora, l no',
       },
       deepDiveRef: DD,
@@ -252,11 +307,23 @@ const hoistPo: QuestionTemplate = {
     const code = `console.log(${name});\nvar ${name} = ${v};`;
     const built = makeOptions(
       rng,
-      { text: 'undefined', why: 'var viene "sollevata" (hoisting) ma non il valore: stampa undefined.' },
+      {
+        text: 'undefined',
+        why: `L'hoisting solleva la dichiarazione di ${name} in cima ma non l'assegnazione: al momento del log la variabile esiste e vale undefined.`,
+      },
       [
-        { text: fmt(v), why: `Il valore ${v} non è ancora assegnato al momento del console.log.` },
-        { text: 'ReferenceError', why: 'Con var non c\'è ReferenceError: la dichiarazione è sollevata in cima.' },
-        { text: 'null', why: 'Una var non inizializzata vale undefined, non null.' },
+        {
+          text: fmt(v),
+          why: `L'assegnazione \`${name} = ${v}\` resta alla sua riga, dopo il console.log: stampare ${v} vorrebbe dire che anche il valore viene sollevato.`,
+        },
+        {
+          text: 'ReferenceError',
+          why: `Con \`var\` la dichiarazione è sollevata in cima allo scope, quindi il nome esiste già: un ReferenceError si avrebbe solo con \`let\` o \`const\`, che hanno la TDZ.`,
+        },
+        {
+          text: 'null',
+          why: 'Una variabile `var` dichiarata senza valore vale `undefined`, non `null`: `null` va assegnato esplicitamente.',
+        },
       ],
     );
     return {
@@ -270,11 +337,12 @@ const hoistPo: QuestionTemplate = {
       code,
       ...built,
       explanation: {
-        short: 'L\'hoisting solleva la dichiarazione ma non l\'assegnazione: stampa undefined.',
+        short: "L'hoisting solleva la dichiarazione ma non l'assegnazione: stampa undefined.",
         whyCorrect: 'È come scrivere: var x; console.log(x); x = v.',
         whyOthersWrong: built.whyOthersWrong,
         concept: 'Hoisting di var',
-        commonMistake: 'Confondere il caso con let/const, che invece lancerebbero ReferenceError (TDZ).',
+        commonMistake:
+          'Confondere il caso con let/const, che invece lancerebbero ReferenceError (TDZ).',
         example: 'console.log(y); let y = 1; // ReferenceError, a differenza di var',
       },
       deepDiveRef: DD,

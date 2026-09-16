@@ -18,11 +18,23 @@ const ternaryFg: QuestionTemplate = {
     const code = `const msg = ${name} ___ ${t} ? 'ok' : 'no';`;
     const built = makeOptions(
       rng,
-      { text: '>=', why: `La condizione ${name} >= ${t} produce true/false, che il ternario usa.` },
+      {
+        text: '>=',
+        why: `La condizione \`${name} >= ${t}\` restituisce true quando ${name} è almeno ${t}: è ciò che serve al ternario.`,
+      },
       [
-        { text: '=>', why: '=> è la sintassi delle arrow function, non un confronto.' },
-        { text: '?', why: '? apre il ramo "vero" del ternario, non è l\'operatore di confronto.' },
-        { text: '=', why: '= è assegnazione: renderebbe la condizione sempre vera e sovrascriverebbe la variabile.' },
+        {
+          text: '=>',
+          why: '`=>` è la sintassi delle arrow function, non un operatore di confronto: in quel punto darebbe un errore di sintassi.',
+        },
+        {
+          text: '?',
+          why: '`?` apre il ramo "vero" del ternario e arriva dopo la condizione: qui serve un operatore che confronti ${name} con ${t}.',
+        },
+        {
+          text: '=',
+          why: `\`=\` assegnerebbe ${t} a ${name} invece di confrontarlo: la condizione risulterebbe sempre vera e la variabile verrebbe sovrascritta.`,
+        },
       ],
     );
     return {
@@ -68,12 +80,21 @@ const ifelsePo: QuestionTemplate = {
         rng,
         {
           text: correctText,
-          why: `${v} > ${t} è ${yes}, quindi si esegue il ramo ${yes ? 'if' : 'else'}.`,
+          why: `La condizione \`${name} > ${t}\` con ${name} = ${v} vale ${yes}: si esegue il ramo ${yes ? 'if' : 'else'} e si stampa '${correctText}'.`,
         },
         [
-          { text: yes ? 'sotto' : 'sopra', why: `La condizione ${v} > ${t} è ${yes ? 'vera' : 'falsa'}: si esegue l'altro ramo.` },
-          { text: 'sopra\nsotto', why: 'if/else esegue un solo ramo.' },
-          { text: 'undefined', why: 'Entrambi i rami stampano una stringa.' },
+          {
+            text: yes ? 'sotto' : 'sopra',
+            why: `La condizione ${v} > ${t} vale ${yes}: il ramo che stampa '${yes ? 'sotto' : 'sopra'}' non viene raggiunto.`,
+          },
+          {
+            text: 'sopra\nsotto',
+            why: 'Un `if/else` esegue un solo ramo: scelto quello corrispondente alla condizione, l’altro viene saltato.',
+          },
+          {
+            text: 'undefined',
+            why: 'Entrambi i rami contengono un `console.log` con una stringa: qualunque sia la condizione, qualcosa viene stampato.',
+          },
         ],
       );
       return {
@@ -91,7 +112,8 @@ const ifelsePo: QuestionTemplate = {
           whyCorrect: `Il ramo ${yes ? 'if' : 'else'} è quello eseguito.`,
           whyOthersWrong: built2.whyOthersWrong,
           concept: 'Diramazione if/else',
-          commonMistake: 'Leggere la condizione al contrario o pensare che si eseguano entrambi i rami.',
+          commonMistake:
+            'Leggere la condizione al contrario o pensare che si eseguano entrambi i rami.',
           example: 'if (x > 0) { ... } else { ... } // un solo ramo',
         },
         deepDiveRef: DD,
@@ -105,7 +127,7 @@ const switchFb: QuestionTemplate = {
   topicId: TOPIC,
   subtopicId: 'conditionals-switch',
   type: 'find-the-bug',
-  difficulty: 'medium',
+  difficulty: 'hard',
   skills: ['switch', 'break'],
   tags: ['condizioni', 'bug'],
   generate(rng: Rng) {
@@ -120,19 +142,28 @@ const switchFb: QuestionTemplate = {
     const built = makeOptions(
       rng,
       {
-        text: `Manca break: dopo '${cases[g - 1]}' lo switch prosegue e stampa anche i casi successivi`,
-        why: 'Senza break il flusso "cade" nei casi successivi (fallthrough).',
+        text: 'Manca `break` dopo ogni `case`',
+        why: `Lo switch trova \`case ${g}\` e stampa '${cases[g - 1]}', ma senza \`break\` l'esecuzione prosegue nei casi successivi (fallthrough) e stampa anche il resto.`,
       },
       [
-        { text: 'switch non accetta numeri', why: 'switch funziona con qualunque valore, numeri inclusi.' },
-        { text: 'default va messo per primo', why: 'default può stare in fondo; il problema è il fallthrough.' },
-        { text: `case ${g} non è valido`, why: `La sintassi case ${g}: è corretta.` },
+        {
+          text: '`default` deve stare per primo',
+          why: 'La posizione di `default` è libera: qui sta in fondo, ed è comunque quello che viene eseguito per i casi non corrispondenti.',
+        },
+        {
+          text: '`switch` confronta con `==`',
+          why: `\`switch\` confronta con l'uguaglianza stretta \`===\`, e qui \`case ${g}\` corrisponde proprio al valore di \`g\`: il confronto funziona. Il problema è che, trovata la corrispondenza, l'esecuzione continua nei \`case\` successivi perché manca \`break\`.`,
+        },
+        {
+          text: '`case` richiede le parentesi',
+          why: 'La sintassi `case valore:` è quella corretta: le parentesi non servono e il codice compila e gira senza errori.',
+        },
       ],
     );
     return {
       templateId: 'cond-switch-fb',
       type: 'find-the-bug',
-      difficulty: 'medium' as const,
+      difficulty: 'hard' as const,
       topicId: TOPIC,
       subtopicId: 'conditionals-switch',
       skills: ['switch'],
@@ -144,7 +175,7 @@ const switchFb: QuestionTemplate = {
         whyCorrect: 'Ogni case va chiuso con break (o return).',
         whyOthersWrong: built.whyOthersWrong,
         concept: 'Fallthrough dello switch',
-        commonMistake: 'Dimenticare il break e ottenere l\'esecuzione a cascata.',
+        commonMistake: "Dimenticare il break e ottenere l'esecuzione a cascata.",
         example: 'case 1: console.log("x"); break;',
       },
       deepDiveRef: DD,
@@ -168,11 +199,23 @@ const elseIfMc: QuestionTemplate = {
       const code = `const v = ${v};\nif (v >= ${t2}) {\n  console.log('alto');\n} else if (v >= ${t1}) {\n  console.log('medio');\n} else {\n  console.log('basso');\n}`;
       const built = makeOptions(
         rng,
-        { text: 'medio', why: `${v} < ${t2} ma ${v} >= ${t1}: entra nel secondo ramo.` },
+        {
+          text: 'medio',
+          why: `La prima condizione ${v} >= ${t2} è falsa, ma la seconda ${v} >= ${t1} è vera: si esegue il ramo \`else if\` e si stampa 'medio'.`,
+        },
         [
-          { text: 'alto', why: `${v} >= ${t2} è falso: il primo ramo non si esegue.` },
-          { text: 'basso', why: `${v} >= ${t1} è vero: non si arriva all'else.` },
-          { text: 'medio\nbasso', why: 'Solo il primo ramo con condizione vera viene eseguito.' },
+          {
+            text: 'alto',
+            why: `Per stampare 'alto' servirebbe ${v} >= ${t2}, ma ${v} è minore di ${t2}: il primo ramo viene saltato.`,
+          },
+          {
+            text: 'basso',
+            why: `Il ramo \`else\` si raggiunge solo se nessuna condizione è vera: qui ${v} >= ${t1} è vera, quindi si ferma a 'medio'.`,
+          },
+          {
+            text: 'medio\nbasso',
+            why: "In una catena `if/else if/else` si esegue solo il primo ramo con condizione vera: dopo 'medio' l'`else` viene saltato.",
+          },
         ],
       );
       return {
@@ -204,29 +247,40 @@ const switchBm: QuestionTemplate = {
   topicId: TOPIC,
   subtopicId: 'conditionals-switch',
   type: 'best-method',
-  difficulty: 'easy',
+  difficulty: 'medium',
   skills: ['switch'],
   tags: ['condizioni', 'best-practice'],
   generate(rng: Rng) {
     const n = pickInt(rng, 4, 9);
-    const thing = pickOf(rng, ['un comando', 'un giorno', 'uno stato', 'un codice']);
     const built = makeOptions(
       rng,
-      { text: 'switch sul valore', why: 'Con molti casi sullo stesso valore, switch è più leggibile e manutenibile.' },
+      {
+        text: 'Uno `switch` con `default`',
+        why: `Con ${n} casi distinti più un fallback, lo \`switch\` elenca i casi in modo leggibile e \`default\` copre tutto il resto.`,
+      },
       [
-        { text: `${n} if separati`, why: 'If indipendenti senza else valutano tutte le condizioni: ridondante e rischioso.' },
-        { text: 'ternari annidati', why: 'I ternari annidati diventano illeggibili oltre 2 livelli.' },
-        { text: 'un ciclo for', why: 'Il for ripete codice, non seleziona tra casi.' },
+        {
+          text: `Una catena di ${n} \`if\` separati`,
+          why: `Senza \`else\` ogni \`if\` viene valutato anche dopo aver trovato il caso giusto, e manca un punto unico per il fallback: la struttura non è pensata per ${n} alternative.`,
+        },
+        {
+          text: 'Ternari `? :` annidati',
+          why: `Annidare ${n} ternari produce un'unica espressione illeggibile e fragile: i ternari sono adatti a due esiti, non a una lista di casi.`,
+        },
+        {
+          text: 'Un solo `if` con `||`',
+          why: `\`||\` unisce le condizioni in un unico vero/falso: non permette di distinguere quale dei ${n} valori è arrivato né di assegnare azioni diverse.`,
+        },
       ],
     );
     return {
       templateId: 'cond-switch-bm',
       type: 'best-method',
-      difficulty: 'easy' as const,
+      difficulty: 'medium' as const,
       topicId: TOPIC,
       subtopicId: 'conditionals-switch',
       skills: ['switch'],
-      prompt: `Devi confrontare ${thing} con ${n} valori possibili diversi. Qual è la struttura più adatta?`,
+      prompt: `Devi confrontare \`comando\` con ${n} valori distinti, ognuno con la propria azione, più un caso di fallback, in modo leggibile. Qual è la struttura più adatta?`,
       ...built,
       explanation: {
         short: 'switch è pensato per confrontare un valore con molti casi.',

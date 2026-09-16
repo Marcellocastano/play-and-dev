@@ -1,0 +1,929 @@
+{
+  "topicId": "array-methods",
+  "questions": [
+    {
+      "id": "array-methods-fb-0001",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["map", "trasformazione elemento"],
+      "prompt": "Il seguente codice dovrebbe restituire un array con i numeri raddoppiati, ma invece stampa [ undefined, undefined, undefined ]. Qual è la causa?",
+      "code": "const numeri = [2, 4, 6];\nconst doppi = numeri.map(function(n) {\n  n * 2;\n});\nconsole.log(doppi);",
+      "options": [
+        {
+          "id": "a",
+          "text": "La callback non restituisce un valore esplicitamente"
+        },
+        {
+          "id": "b",
+          "text": "map modifica l'array originale invece di restituirne uno nuovo"
+        },
+        {
+          "id": "c",
+          "text": "La funzione deve accettare due argomenti invece di uno"
+        },
+        {
+          "id": "d",
+          "text": "Il metodo corretto sarebbe forEach anziché map"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Se la callback di map non restituisce nulla, nell'array risultante ci saranno undefined.",
+        "whyCorrect": "L'assenza di return nella funzione di callback fa sì che ogni chiamata restituisca undefined; map raccoglie questi undefined e li mette nel nuovo array.",
+        "whyOthersWrong": {
+          "b": "map non muta l'array originale ma ne crea sempre uno nuovo; la modifica dell'array di partenza non c'entra con l'output undefined.",
+          "c": "La callback di map può accettare uno, due o tre argomenti, ma ne basta uno solo; il problema è la mancanza di return, non il numero di parametri.",
+          "d": "forEach serve a iterare, ma non restituisce un array; il problema non è la scelta del metodo, ma come viene scritta la callback di map."
+        },
+        "concept": "Return nella callback di map",
+        "commonMistake": "Dimenticare il return nella funzione passata a map.",
+        "example": "[2, 4, 6].map(n => n * 2)"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:23.573Z"
+    },
+    {
+      "id": "array-methods-fb-0002",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["map", "immutabilità", "output"],
+      "prompt": "Il codice dovrebbe stampare un array con i nomi in maiuscolo, ma invece stampa ['mario', 'luigi', 'peach']. Qual è l'errore?",
+      "code": "const nomi = ['mario', 'luigi', 'peach'];\nnomi.map(nome => nome.toUpperCase());\nconsole.log(nomi);",
+      "options": [
+        {
+          "id": "a",
+          "text": "map non modifica l'array originale"
+        },
+        {
+          "id": "b",
+          "text": "toUpperCase restituisce sempre undefined"
+        },
+        {
+          "id": "c",
+          "text": "La callback di map è scritta in modo errato"
+        },
+        {
+          "id": "d",
+          "text": "map va usato solo su array di numeri"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "map restituisce un nuovo array, non muta quello originale.",
+        "whyCorrect": "map non muta l'array su cui viene chiamato: produce un nuovo array con i risultati, ma qui non viene usato e quindi nomi rimane uguale.",
+        "whyOthersWrong": {
+          "b": "toUpperCase restituisce la stringa in maiuscolo e non undefined; il problema è che il risultato di map viene ignorato.",
+          "c": "La callback di map è corretta: nome => nome.toUpperCase() restituisce la stringa in maiuscolo. Il problema è l'uso del risultato.",
+          "d": "map si usa con array di qualsiasi tipo di elemento, non solo numeri; non è questo il limite rilevante qui."
+        },
+        "concept": "Immutabilità di map",
+        "commonMistake": "Aspettarsi che map modifichi l'array originale.",
+        "example": "const maiuscoli = nomi.map(n => n.toUpperCase());"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:23.574Z"
+    },
+    {
+      "id": "array-methods-fb-0003",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["filter", "condizione"],
+      "prompt": "Questo codice dovrebbe restituire tutti i numeri maggiori di 5, ma invece restituisce sempre un array vuoto. Dove sta l'errore?",
+      "code": "const numeri = [3, 8, 1, 6];\nconst grandi = numeri.filter(function(n) {\n  n > 5;\n});\nconsole.log(grandi);",
+      "options": [
+        {
+          "id": "a",
+          "text": "La callback non restituisce il valore di confronto"
+        },
+        {
+          "id": "b",
+          "text": "filter richiede una funzione freccia"
+        },
+        {
+          "id": "c",
+          "text": "filter non si usa su numeri"
+        },
+        {
+          "id": "d",
+          "text": "La condizione va scritta tra parentesi quadre"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Se la callback di filter non restituisce nulla, nessun elemento viene tenuto.",
+        "whyCorrect": "La funzione di callback non restituisce espressamente il valore booleano della condizione, quindi filter riceve undefined e nessun elemento passa il filtro.",
+        "whyOthersWrong": {
+          "b": "filter accetta sia funzioni tradizionali che frecce; non è obbligatorio usare una funzione freccia.",
+          "c": "filter si usa perfettamente anche con array di numeri; il tipo degli elementi non è rilevante.",
+          "d": "La condizione va espressa come espressione booleana, non tra parentesi quadre; non è un array di condizioni."
+        },
+        "concept": "Return nella callback di filter",
+        "commonMistake": "Dimenticare il return nella funzione passata a filter.",
+        "example": "numeri.filter(n => n > 5)"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:23.574Z"
+    },
+    {
+      "id": "array-methods-fb-0004",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["find", "differenza tra find e filter"],
+      "prompt": "Il codice dovrebbe restituire tutti i prodotti con prezzo superiore a 20, ma invece restituisce solo uno di essi (il primo che trova). Perché?",
+      "code": "const prodotti = [\n  { nome: 'penna', prezzo: 10 },\n  { nome: 'libro', prezzo: 25 },\n  { nome: 'zaino', prezzo: 30 }\n];\nconst costosi = prodotti.find(p => p.prezzo > 20);\nconsole.log(costosi);",
+      "options": [
+        {
+          "id": "a",
+          "text": "find restituisce solo il primo elemento trovato"
+        },
+        {
+          "id": "b",
+          "text": "La condizione è scritta in modo sbagliato"
+        },
+        {
+          "id": "c",
+          "text": "find non si usa sugli oggetti"
+        },
+        {
+          "id": "d",
+          "text": "Serve una callback con due parametri"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "find restituisce solo il primo elemento che passa la condizione.",
+        "whyCorrect": "find restituisce il primo elemento che soddisfa la condizione, mentre per restituire tutti serve filter.",
+        "whyOthersWrong": {
+          "b": "La condizione è corretta e filtra per prezzo maggiore di 20; il comportamento dipende dal metodo usato.",
+          "c": "find si usa anche su array di oggetti, purché la callback ritorni un valore booleano.",
+          "d": "La callback di find può prendere anche un solo parametro; non è richiesto il secondo parametro."
+        },
+        "concept": "Differenza tra find e filter",
+        "commonMistake": "Usare find al posto di filter per ottenere più risultati.",
+        "example": "prodotti.filter(p => p.prezzo > 20)"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:23.574Z"
+    },
+    {
+      "id": "array-methods-fb-0005",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-reduce",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["reduce", "valore iniziale", "array vuoto"],
+      "prompt": "Il codice dovrebbe restituire la somma dei numeri, ma lanciando un errore se l'array è vuoto. Perché succede?",
+      "code": "const numeri = [];\nconst somma = numeri.reduce((acc, n) => acc + n);\nconsole.log(somma);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Manca un valore iniziale per reduce"
+        },
+        {
+          "id": "b",
+          "text": "La callback di reduce è scritta male"
+        },
+        {
+          "id": "c",
+          "text": "reduce non funziona con array di numeri"
+        },
+        {
+          "id": "d",
+          "text": "Serve una variabile globale per l'accumulatore"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "reduce senza valore iniziale su array vuoto lancia TypeError.",
+        "whyCorrect": "reduce senza secondo argomento come valore iniziale non sa cosa usare per l'accumulatore se l'array è vuoto, perciò lancia un TypeError.",
+        "whyOthersWrong": {
+          "b": "La callback è corretta: acc + n somma i numeri; il problema è l'assenza del valore iniziale.",
+          "c": "reduce è stato progettato per funzionare proprio con array di numeri (o di altro tipo).",
+          "d": "Non serve nessuna variabile globale: reduce gestisce internamente l'accumulatore."
+        },
+        "concept": "reduce e valore iniziale",
+        "commonMistake": "Omettere il valore iniziale di reduce su un array che può essere vuoto.",
+        "example": "numeri.reduce((acc, n) => acc + n, 0)"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:23.575Z"
+    },
+    {
+      "id": "array-methods-fb-0006",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["filter", "immutabilità"],
+      "prompt": "Il codice dovrebbe rimuovere le parole più corte di 5 lettere dall'array, ma invece l'array originale rimane invariato. Quale spiegazione è corretta?",
+      "code": "const parole = ['casa', 'scuola', 'libro', 'telefono'];\nparole.filter(p => p.length >= 5);\nconsole.log(parole);",
+      "options": [
+        {
+          "id": "a",
+          "text": "filter non modifica l'array originale"
+        },
+        {
+          "id": "b",
+          "text": "La condizione nella callback non funziona"
+        },
+        {
+          "id": "c",
+          "text": "filter non può essere usato su stringhe"
+        },
+        {
+          "id": "d",
+          "text": "Serve il return nella callback"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "filter restituisce un nuovo array e non muta quello originale.",
+        "whyCorrect": "filter restituisce un nuovo array con gli elementi filtrati; se non si assegna il risultato a una variabile, l'array di partenza resta invariato.",
+        "whyOthersWrong": {
+          "b": "La condizione nella callback funziona correttamente: p.length >= 5 filtra bene le parole con almeno 5 lettere.",
+          "c": "filter funziona su qualsiasi array, incluse stringhe come elementi.",
+          "d": "La callback è una funzione freccia che restituisce implicitamente il risultato della condizione, quindi il return non manca."
+        },
+        "concept": "Immutabilità di filter",
+        "commonMistake": "Aspettarsi che filter modifichi l'array originale.",
+        "example": "const soloLunghe = parole.filter(p => p.length >= 5);"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:23.575Z"
+    },
+    {
+      "id": "array-methods-fb-0007",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["individuare return mancanti", "debuggare trasformazioni con map"],
+      "prompt": "Questo codice dovrebbe creare un nuovo array con le lunghezze di ciascuna parola, ma stampa [ undefined, undefined, undefined ]. Qual è il problema?",
+      "code": "const parole = [\"cane\", \"gatto\", \"topo\"];\nconst lunghezze = parole.map((parola) => {\n  parola.length;\n});\nconsole.log(lunghezze);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Manca il return nella funzione di map"
+        },
+        {
+          "id": "b",
+          "text": "Serve forEach invece di map"
+        },
+        {
+          "id": "c",
+          "text": "Bisogna usare parole.lunghezza invece di parola.length"
+        },
+        {
+          "id": "d",
+          "text": "Map modifica accidentalmente l’array originale"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Nel corpo della callback manca il return: senza di esso, ogni iterazione restituisce undefined invece della lunghezza della parola.",
+        "whyCorrect": "Nella callback passata a map, senza un return esplicito, la funzione restituisce undefined per ogni elemento. Per ottenere le lunghezze bisogna scrivere `return parola.length;` oppure usare la sintassi compatta senza parentesi graffe.",
+        "whyOthersWrong": {
+          "b": "forEach non restituisce alcun array, quindi anche sostituendo map con forEach non si otterrebbe il risultato voluto, ma semplicemente undefined.",
+          "c": "Non esiste la proprietà lunghezza su parole; bisogna accedere a length su ciascuna parola, come già avviene. La proprietà corretta è parola.length.",
+          "d": "map non muta mai l’array originale, ma restituisce un nuovo array. Il problema non è la mutazione, ma il valore restituito dalla callback."
+        },
+        "concept": "return nella callback di map",
+        "commonMistake": "Scrivere una callback con le graffe ma senza return, pensando che l’ultima espressione venga restituita automaticamente.",
+        "example": "[\"ciao\"].map(parola => parola.length) // [4]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:27.717Z"
+    },
+    {
+      "id": "array-methods-fg-0002",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["usare map"],
+      "prompt": "Completa la callback per ottenere un array di stringhe 'valore: X'.",
+      "code": "const valori = [5, 6];\nconst stringhe = valori.map(v => ___ );\nconsole.log(stringhe);",
+      "options": [
+        {
+          "id": "a",
+          "text": "`valore: ${v}`"
+        },
+        {
+          "id": "b",
+          "text": "'valore: v'"
+        },
+        {
+          "id": "c",
+          "text": "'valore:' + valori"
+        },
+        {
+          "id": "d",
+          "text": "v + ' : valore'"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le stringhe dinamiche si creano con il template literal `${v}`.",
+        "whyCorrect": "L'espressione `valore: ${v}` inserisce il valore attuale nella stringa come richiesto.",
+        "whyOthersWrong": {
+          "b": "Le virgolette singole racchiudono solo il testo letterale, quindi v non viene interpolato.",
+          "c": "valori rappresenta l'intero array, non il singolo elemento v, e la sintassi non è richiesta.",
+          "d": "L'ordine è sbagliato: la stringa risultante sarebbe '5 : valore' invece di 'valore: 5'."
+        },
+        "concept": "map: template literal",
+        "commonMistake": "Dimenticare l'interpolazione per inserire variabili nelle stringhe.",
+        "example": "[1, 2].map(x => `valore: ${x}`)"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:17.747Z"
+    },
+    {
+      "id": "array-methods-fg-0003",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["usare find"],
+      "prompt": "Completa la funzione per ottenere il primo nome con più di 4 lettere.",
+      "code": "const nomi = [\"Ana\", \"Marco\", \"Lisa\"];\nconst risultato = nomi.find(nome => ___ );\nconsole.log(risultato);",
+      "options": [
+        {
+          "id": "a",
+          "text": "nome.length > 4"
+        },
+        {
+          "id": "b",
+          "text": "nome.length >= 4"
+        },
+        {
+          "id": "c",
+          "text": "nome.length == 4"
+        },
+        {
+          "id": "d",
+          "text": "nome.length < 4"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "find restituisce il primo elemento che rispetta la condizione.",
+        "whyCorrect": "nome.length > 4 trova il primo nome con più di 4 lettere, ovvero 'Marco'.",
+        "whyOthersWrong": {
+          "b": "nome.length >= 4 includerebbe anche 'Lisa', che però non ha più di 4 lettere.",
+          "c": "nome.length == 4 trova solo 'Lisa', non nomi più lunghi di 4 lettere.",
+          "d": "nome.length < 4 trova solo 'Ana', che non soddisfa il criterio richiesto."
+        },
+        "concept": "find: prima corrispondenza",
+        "commonMistake": "Usare >= al posto di > o confondere find con filter.",
+        "example": "[\"Ada\", \"Marco\", \"Lisa\"].find(n => n.length > 4)"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:17.748Z"
+    },
+    {
+      "id": "array-methods-fg-0005",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["filtrare array", "usare filter"],
+      "prompt": "Completa la callback per ottenere solo i numeri maggiori di 5.",
+      "code": "const numeri = [2, 6, 8, 3];\nconst grandi = numeri.filter(n => ___ );\nconsole.log(grandi);",
+      "options": [
+        {
+          "id": "a",
+          "text": "n > 5"
+        },
+        {
+          "id": "b",
+          "text": "n >= 8"
+        },
+        {
+          "id": "c",
+          "text": "n < 5"
+        },
+        {
+          "id": "d",
+          "text": "n === 5"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "`n > 5` seleziona i numeri desiderati con filter.",
+        "whyCorrect": "`filter` passa solo gli elementi per cui la condizione è vera: qui, i maggiori di 5 sono 6 e 8.",
+        "whyOthersWrong": {
+          "b": "`n >= 8` filtra solo gli 8, quindi il risultato sarebbe [8], non tutti i numeri maggiori di 5.",
+          "c": "`n < 5` seleziona quelli minori di 5 (2 e 3), il contrario di quanto richiesto.",
+          "d": "`n === 5` prende solo i 5, che nell'array non ci sono: risultato []."
+        },
+        "concept": "filter: selezione tramite condizione",
+        "commonMistake": "Sbagliare la condizione logica nella callback di filter.",
+        "example": "[2, 6, 8, 3].filter(n => n > 5) // [6, 8]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:29.631Z"
+    },
+    {
+      "id": "array-methods-fg-0006",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-reduce",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["usare reduce", "aggregare valori"],
+      "prompt": "Completa la chiamata per calcolare la somma dei numeri con reduce.",
+      "code": "const numeri = [1, 2, 3];\nconst somma = numeri.reduce((totale, n) => totale + n, ___ );\nconsole.log(somma);",
+      "options": [
+        {
+          "id": "a",
+          "text": "0"
+        },
+        {
+          "id": "b",
+          "text": "1"
+        },
+        {
+          "id": "c",
+          "text": "undefined"
+        },
+        {
+          "id": "d",
+          "text": "null"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il valore iniziale corretto per la somma è 0.",
+        "whyCorrect": "Passando 0 come valore iniziale, la somma si calcola partendo da zero e include tutti gli elementi.",
+        "whyOthersWrong": {
+          "b": "Con 1 come iniziale il risultato sarebbe maggiore di quanto atteso (aggiunge 1 in più).",
+          "c": "Se passi undefined come iniziale, il primo elemento viene usato come accumulatore ma non va bene per somme generiche, e su array vuoti causa errore.",
+          "d": "Usare null non è corretto: la somma parte da null e i risultati sarebbero errati (null + n = NaN)."
+        },
+        "concept": "reduce: valore iniziale dell'accumulatore",
+        "commonMistake": "Omettere o usare il valore iniziale sbagliato in reduce.",
+        "example": "[1, 2, 3].reduce((a, n) => a + n, 0) // 6"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:29.631Z"
+    },
+    {
+      "id": "array-methods-fg-0007",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["usare find", "ricercare elemento"],
+      "prompt": "Completa la chiamata per trovare il primo nome di 4 lettere.",
+      "code": "const nomi = ['Luca', 'Anna', 'Paolo'];\nconst trovato = nomi.find(nome => ___ );\nconsole.log(trovato);",
+      "options": [
+        {
+          "id": "a",
+          "text": "nome.length === 4"
+        },
+        {
+          "id": "b",
+          "text": "nome.length > 4"
+        },
+        {
+          "id": "c",
+          "text": "nome.length !== 4"
+        },
+        {
+          "id": "d",
+          "text": "nome.length < 4"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La condizione corretta è `nome.length === 4`.",
+        "whyCorrect": "Con `find`, serve la condizione esatta che seleziona solo i nomi di 4 lettere, quindi 'Luca'.",
+        "whyOthersWrong": {
+          "b": "`nome.length > 4` filtra solo i nomi più lunghi, quindi 'Paolo', che però ha 5 lettere.",
+          "c": "`nome.length !== 4` esclude proprio i nomi di 4 lettere, restituendo invece un nome diverso o undefined.",
+          "d": "`nome.length < 4` selezionerebbe solo nomi più corti, che in questo array non ci sono."
+        },
+        "concept": "find: trovare il primo che soddisfa una condizione",
+        "commonMistake": "Confondere la condizione e ottenere l'elemento sbagliato.",
+        "example": "['Luca', 'Anna', 'Paolo'].find(n => n.length === 4) // 'Luca'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:29.631Z"
+    },
+    {
+      "id": "array-methods-po-0008",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["map", "trasformazione elemento per elemento"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const parole = [\"gatto\", \"cane\", \"lupo\"];\nconst maiuscole = parole.map((p) => p.toUpperCase());\nconsole.log(maiuscole);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 'GATTO', 'CANE', 'LUPO' ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 'gatto', 'cane', 'lupo' ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 'Gatto', 'Cane', 'Lupo' ]"
+        },
+        {
+          "id": "d",
+          "text": "[ undefined, undefined, undefined ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il metodo map applica `.toUpperCase()` a ogni parola e restituisce un nuovo array con tutte le parole in maiuscolo.",
+        "whyCorrect": "Il metodo `map` chiama la funzione passata su ogni elemento, restituendo un array dove ogni parola è stata convertita in maiuscolo tramite `toUpperCase()`.",
+        "whyOthersWrong": {
+          "b": "Senza una trasformazione, `map` restituirebbe l'array originale, ma qui ogni elemento viene realmente trasformato in maiuscolo.",
+          "c": "La funzione `toUpperCase()` restituisce tutte le lettere maiuscole, non solo l'iniziale.",
+          "d": "Questo succede solo se la funzione non restituisce nulla (dimenticando il return), ma qui il valore è ritornato correttamente."
+        },
+        "concept": "map e trasformazione degli elementi",
+        "commonMistake": "Dimenticare che la funzione di map deve ritornare il valore trasformato.",
+        "example": "[1,2,3].map(n => n * 2) // [2,4,6]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:47.978Z"
+    },
+    {
+      "id": "array-methods-po-0009",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["filter", "selezione condizionale"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const numeri = [3, 7, 2, 9, 5];\nconst maggioriDiCinque = numeri.filter((n) => n > 5);\nconsole.log(maggioriDiCinque);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 7, 9 ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 7, 2, 9, 5 ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 9 ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 3, 7, 2, 9, 5 ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Filter restituisce un array con solo gli elementi che soddisfano la condizione `n > 5`, cioè 7 e 9.",
+        "whyCorrect": "La funzione di callback di `filter` tiene solo i numeri maggiori di 5. Nell'array, questi sono 7 e 9.",
+        "whyOthersWrong": {
+          "b": "Questa opzione include numeri che non sono maggiori di 5, come 2 e 5.",
+          "c": "`filter` seleziona tutti gli elementi che soddisfano la condizione, non solo il primo.",
+          "d": "Qui si mostra l'array originale, ma filter restituisce solo gli elementi che rispettano la condizione."
+        },
+        "concept": "filter per selezionare elementi",
+        "commonMistake": "Confondere filter con find e aspettarsi solo il primo elemento.",
+        "example": "[1,2,3,4].filter(x => x % 2 === 0) // [2, 4]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:47.978Z"
+    },
+    {
+      "id": "array-methods-po-0010",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["map", "uso dell'indice"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const lettere = [\"a\", \"b\", \"c\"];\nconst conIndice = lettere.map((l, i) => l + i);\nconsole.log(conIndice);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 'a0', 'b1', 'c2' ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 'a1', 'b2', 'c3' ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 0, 1, 2 ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 'a', 'b', 'c' ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Map passa anche l'indice all'interno della funzione, quindi ogni lettera viene concatenata al suo indice.",
+        "whyCorrect": "La funzione di `map` aggiunge all'elemento corrente il suo indice, quindi si ottiene 'a0', 'b1' e 'c2'.",
+        "whyOthersWrong": {
+          "b": "Gli indici in JavaScript partono da 0, quindi 'a1' sarebbe solo se l'indice partisse da 1.",
+          "c": "Qui viene restituito solo l'indice, ma la funzione concatena lettera e indice.",
+          "d": "Questo sarebbe il risultato se la funzione non facesse alcuna trasformazione."
+        },
+        "concept": "map e parametri callback",
+        "commonMistake": "Dimenticare che il secondo argomento della funzione di map è l'indice, che parte da 0.",
+        "example": "[ 'x', 'y' ].map((v,i) => v+i) // [ 'x0', 'y1' ]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:47.979Z"
+    },
+    {
+      "id": "array-methods-po-0011",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-reduce",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["reduce", "valore iniziale", "concatenazione stringhe"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const nomi = [\"Anna\", \"Luca\", \"Rita\"];\nconst frase = nomi.reduce((acc, nome) => acc + \"-\" + nome);\nconsole.log(frase);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Anna-Luca-Rita"
+        },
+        {
+          "id": "b",
+          "text": "undefined-Anna-Luca-Rita"
+        },
+        {
+          "id": "c",
+          "text": "AnnaRita"
+        },
+        {
+          "id": "d",
+          "text": "Luca-Rita"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Reduce concatena i nomi separandoli con un trattino, iniziando dal primo elemento (se non viene fornito valore iniziale).",
+        "whyCorrect": "Senza valore iniziale, acc prende il primo elemento, poi concatena gli altri con il trattino, risultando in 'Anna-Luca-Rita'.",
+        "whyOthersWrong": {
+          "b": "Il valore iniziale non è undefined: reduce usa il primo elemento come base se non specificato.",
+          "c": "Riduce concatena tutti i nomi, non solo il primo e l'ultimo. Il trattino viene sempre aggiunto.",
+          "d": "Questa sarebbe la concatenazione solo degli ultimi due nomi, non di tutti."
+        },
+        "concept": "reduce senza valore iniziale",
+        "commonMistake": "Pensare che reduce inizi con undefined o salti elementi.",
+        "example": "[\"a\",\"b\",\"c\"].reduce((a,b) => a + \",\" + b) // 'a,b,c'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:47.979Z"
+    },
+    {
+      "id": "array-methods-po-0012",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["filter", "condizione su proprietà oggetto"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const libri = [\n  { titolo: \"JS Facile\", pagine: 120 },\n  { titolo: \"JS Avanzato\", pagine: 320 },\n  { titolo: \"CSS\", pagine: 200 }\n];\nconst voluminosi = libri.filter(libro => libro.pagine > 150);\nconsole.log(voluminosi.map(libro => libro.titolo));",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 'JS Avanzato', 'CSS' ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 'JS Facile', 'JS Avanzato', 'CSS' ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 'JS Avanzato' ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 'CSS' ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Filter seleziona i libri con più di 150 pagine, quindi solo 'JS Avanzato' e 'CSS' vengono inclusi nell'output.",
+        "whyCorrect": "Vengono selezionati i libri con più di 150 pagine: 'JS Avanzato' (320) e 'CSS' (200). 'JS Facile' ha solo 120 pagine.",
+        "whyOthersWrong": {
+          "b": "Questa opzione include anche 'JS Facile', che non supera le 150 pagine.",
+          "c": "Questa opzione considera solo 'JS Avanzato', ma anche 'CSS' ha più di 150 pagine.",
+          "d": "'CSS' è incluso, ma manca anche 'JS Avanzato', che rispetta la condizione."
+        },
+        "concept": "filter su array di oggetti",
+        "commonMistake": "Dimenticare di applicare la condizione corretta su una proprietà dell'oggetto.",
+        "example": "[{a:1},{a:2}].filter(o => o.a>1) // [{a:2}]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:47.979Z"
+    },
+    {
+      "id": "array-methods-po-0014",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["filter", "predicate", "array"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const studenti = [\n  { nome: 'Anna', voto: 28 },\n  { nome: 'Luca', voto: 18 },\n  { nome: 'Sara', voto: 30 }\n];\nconst promossi = studenti.filter(studente => studente.voto >= 28);\nconsole.log(promossi.length);",
+      "options": [
+        {
+          "id": "a",
+          "text": "3"
+        },
+        {
+          "id": "b",
+          "text": "1"
+        },
+        {
+          "id": "c",
+          "text": "2"
+        },
+        {
+          "id": "d",
+          "text": "0"
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": {
+        "short": "La funzione filter seleziona gli oggetti con voto almeno 28, quindi due studenti risultano promossi.",
+        "whyCorrect": "Sia 'Anna' (28) che 'Sara' (30) hanno voto >= 28, quindi filter restituisce due elementi: promossi.length vale 2.",
+        "whyOthersWrong": {
+          "a": "Filter restituisce solo gli elementi che soddisfano la condizione, non tutti. Tre sarebbe la lunghezza senza alcun filtro.",
+          "b": "Solo uno studente ha 30, ma la condizione include anche chi ha 28, quindi sono due.",
+          "d": "Ci sono due studenti con voto almeno 28: il risultato non può essere zero."
+        },
+        "concept": "filter su array di oggetti",
+        "commonMistake": "Credere che filter cerchi solo valori strettamente maggiori, o solo il massimo.",
+        "example": "[{v:2},{v:5}].filter(x => x.v > 2) // [{v:5}]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:31:54.723Z"
+    },
+    {
+      "id": "array-methods-fg-0019",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["array-map", "callback-function"],
+      "prompt": "Completa la callback per ottenere un nuovo array con ogni numero aumentato di 10.",
+      "code": "const numeri = [2, 4, 6];\nconst risultato = numeri.map(num => ___);\nconsole.log(risultato);",
+      "options": [
+        {
+          "id": "a",
+          "text": "num + 10"
+        },
+        {
+          "id": "b",
+          "text": "numeri + 10"
+        },
+        {
+          "id": "c",
+          "text": "num => num + 10"
+        },
+        {
+          "id": "d",
+          "text": "num * 10"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Per trasformare ogni elemento, va restituito `num + 10` nella callback di map.",
+        "whyCorrect": "La funzione map applica la callback a ogni elemento dell'array, quindi scrivere `num + 10` restituisce per ogni elemento il valore desiderato incrementato di 10.",
+        "whyOthersWrong": {
+          "b": "Qui si usa `numeri`, che rappresenta l'intero array, non il singolo elemento. La callback deve usare il parametro ricevuto (`num`).",
+          "c": "Qui si tenta di restituire una funzione invece di un valore numerico. Map si aspetta che la callback restituisca un valore, non una funzione.",
+          "d": "Questo moltiplica ogni numero per 10, non lo incrementa di 10 come richiesto dal prompt."
+        },
+        "concept": "Sintassi di map con callback",
+        "commonMistake": "Usare l'intero array o una funzione invece di restituire il valore trasformato.",
+        "example": "[1, 2].map(x => x + 10) // [11, 12]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:46:32.231Z"
+    },
+    {
+      "id": "array-methods-fg-0020",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["array-filter", "callback-function"],
+      "prompt": "Completa la condizione nella callback per filtrare solo i numeri dispari.",
+      "code": "const numeri = [1, 2, 3, 4];\nconst dispari = numeri.filter(n => ___);\nconsole.log(dispari);",
+      "options": [
+        {
+          "id": "a",
+          "text": "n % 2 === 1"
+        },
+        {
+          "id": "b",
+          "text": "n % 2 == 0"
+        },
+        {
+          "id": "c",
+          "text": "n > 1"
+        },
+        {
+          "id": "d",
+          "text": "n != 3"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il filtro per i numeri dispari è `n % 2 === 1`.",
+        "whyCorrect": "L'operatore modulo restituisce il resto della divisione, quindi per i numeri dispari il resto di n diviso 2 è 1.",
+        "whyOthersWrong": {
+          "b": "Questa condizione seleziona i numeri pari, perché il resto della divisione per 2 è zero solo per i numeri pari.",
+          "c": "Questo seleziona solo i numeri maggiori di 1, includendo sia pari che dispari, quindi non filtra i dispari.",
+          "d": "Questa condizione esclude solo il numero 3, ma non filtra tutti e soli i numeri dispari."
+        },
+        "concept": "Uso di filter con condizioni",
+        "commonMistake": "Confondere il resto per i numeri pari e dispari.",
+        "example": "[1,2,3,4].filter(n => n % 2 === 1) // [1,3]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:46:32.232Z"
+    },
+    {
+      "id": "array-methods-fg-0021",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-reduce",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["array-reduce", "accumulatore"],
+      "prompt": "Completa la chiamata per calcolare il prodotto di tutti i numeri dell'array.",
+      "code": "const valori = [2, 3, 4];\nconst prodotto = valori.reduce((acc, n) => ___, 1);\nconsole.log(prodotto);",
+      "options": [
+        {
+          "id": "a",
+          "text": "acc * n"
+        },
+        {
+          "id": "b",
+          "text": "acc + n"
+        },
+        {
+          "id": "c",
+          "text": "acc / n"
+        },
+        {
+          "id": "d",
+          "text": "n * n"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Per il prodotto di tutti gli elementi si usa `acc * n`.",
+        "whyCorrect": "Con `reduce`, per calcolare il prodotto bisogna moltiplicare l'accumulatore per ogni valore e restituire il risultato a ogni passaggio.",
+        "whyOthersWrong": {
+          "b": "Questa callback esegue una somma, non un prodotto, quindi restituirebbe la somma totale invece del prodotto.",
+          "c": "Qui si divide l'accumulatore per il valore corrente, ottenendo un risultato completamente diverso dal prodotto.",
+          "d": "Questa espressione moltiplica ogni valore per se stesso, non accumula il prodotto di tutti gli elementi."
+        },
+        "concept": "Uso di reduce per aggregazioni",
+        "commonMistake": "Usare un'operazione diversa (somma/divisione) invece della moltiplicazione.",
+        "example": "[2, 3, 4].reduce((acc, n) => acc * n, 1) // 24"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:46:32.233Z"
+    }
+  ]
+}

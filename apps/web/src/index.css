@@ -2020,6 +2020,18 @@ kbd {
   white-space: pre-wrap;
   font-family: 'SFMono-Regular', Consolas, monospace;
 }
+.inline-code {
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: 1em;
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: #e7ecda;
+  color: inherit;
+}
+.answer-text .inline-code {
+  all: unset;
+  font-family: inherit;
+}
 .answer-arrow {
   margin-left: auto;
   color: #82956a;
@@ -2182,12 +2194,7 @@ kbd {
   line-height: 1.85;
 }
 .explanation-section li {
-  margin: 15px 0;
-}
-.explanation-section li strong {
-  color: #51613f;
-  font-size: 12px;
-  display: block;
+  margin: 12px 0;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }

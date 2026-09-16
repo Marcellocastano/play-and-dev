@@ -1,0 +1,181 @@
+{
+  "topicId": "dates-math",
+  "questions": [
+    {
+      "id": "dates-math-fg-0001",
+      "topicId": "dates-math",
+      "subtopicId": "dates-math-math",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["uso Math.max", "funzioni statiche Math"],
+      "prompt": "Completa la riga per trovare il valore massimo tra 5, 10 e 7.",
+      "code": "const massimo = ___;\nconsole.log(massimo);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Math.max(5, 10, 7)"
+        },
+        {
+          "id": "b",
+          "text": "Math.maximum(5, 10, 7)"
+        },
+        {
+          "id": "c",
+          "text": "max(5, 10, 7)"
+        },
+        {
+          "id": "d",
+          "text": "Math.max[5, 10, 7]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Math.max calcola il massimo tra i numeri dati.",
+        "whyCorrect": "Math.max è il metodo corretto per ottenere il massimo tra i valori forniti come argomenti separati.",
+        "whyOthersWrong": {
+          "b": "Math.maximum non esiste: la funzione giusta per il massimo è Math.max.",
+          "c": "max non è definita come funzione globale in JavaScript, serve Math.max.",
+          "d": "Math.max si usa con le parentesi tonde e argomenti separati, non con le quadre e array."
+        },
+        "concept": "Math.max",
+        "commonMistake": "Confondere Math.max con una funzione chiamata maximum o usare sintassi errata.",
+        "example": "Math.max(4, 8, 1) // 8"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:27:33.887Z"
+    },
+    {
+      "id": "dates-math-fg-0002",
+      "topicId": "dates-math",
+      "subtopicId": "dates-math-math",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["Math.random", "numeri casuali"],
+      "prompt": "Completa per ottenere un numero casuale compreso tra 0 (incluso) e 1 (escluso).",
+      "code": "const casuale = ___;\nconsole.log(typeof casuale);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Math.random()"
+        },
+        {
+          "id": "b",
+          "text": "random()"
+        },
+        {
+          "id": "c",
+          "text": "Math.rand()"
+        },
+        {
+          "id": "d",
+          "text": "Math.random"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Math.random() restituisce un float casuale tra 0 e 1.",
+        "whyCorrect": "Math.random() va chiamato con le parentesi per ottenere il numero casuale; non è necessario passare argomenti.",
+        "whyOthersWrong": {
+          "b": "random() non è definita come funzione globale: serve sempre Math.random().",
+          "c": "Math.rand non esiste in JavaScript, la funzione si chiama Math.random.",
+          "d": "Math.random senza parentesi è la funzione stessa, non il suo risultato."
+        },
+        "concept": "Math.random",
+        "commonMistake": "Dimenticare le parentesi o confondere il nome della funzione.",
+        "example": "let x = Math.random();"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:27:33.888Z"
+    },
+    {
+      "id": "dates-math-fg-0003",
+      "topicId": "dates-math",
+      "subtopicId": "dates-math-number",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["isInteger", "controllo tipo"],
+      "prompt": "Completa per controllare se il valore 7 è un numero intero.",
+      "code": "const risultato = ___;\nconsole.log(risultato);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Number.isInteger(7)"
+        },
+        {
+          "id": "b",
+          "text": "Number.isInt(7)"
+        },
+        {
+          "id": "c",
+          "text": "isInteger(7)"
+        },
+        {
+          "id": "d",
+          "text": "Number.isInteger('7')"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Number.isInteger verifica se il valore è un intero.",
+        "whyCorrect": "Number.isInteger(7) restituisce true perché 7 è effettivamente un numero intero.",
+        "whyOthersWrong": {
+          "b": "Number.isInt non esiste: la funzione corretta è Number.isInteger.",
+          "c": "isInteger non è definita globalmente senza il prefisso Number.",
+          "d": "Number.isInteger('7') restituisce false perché '7' è una stringa."
+        },
+        "concept": "Number.isInteger",
+        "commonMistake": "Confondere il nome della funzione o passare una stringa invece di un numero.",
+        "example": "Number.isInteger(3.5) // false"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:27:33.889Z"
+    },
+    {
+      "id": "dates-math-fg-0006",
+      "topicId": "dates-math",
+      "subtopicId": "dates-math-date",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["creare date", "mesi 0-based"],
+      "prompt": "Vuoi creare una data che rappresenta il primo maggio 2024. Quale valore completa correttamente il mese?",
+      "code": "const d = new Date(2024, ___, 1);",
+      "options": [
+        {
+          "id": "a",
+          "text": "4"
+        },
+        {
+          "id": "b",
+          "text": "5"
+        },
+        {
+          "id": "c",
+          "text": "3"
+        },
+        {
+          "id": "d",
+          "text": "1"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il mese di maggio corrisponde a 4 perché i mesi partono da 0.",
+        "whyCorrect": "In JavaScript il mese 4 corrisponde a maggio, perché gennaio è 0 e aprile è 3.",
+        "whyOthersWrong": {
+          "b": "Il valore 5 produce giugno, perché i mesi partono da 0 e 5 è il sesto mese.",
+          "c": "3 indica aprile, non maggio, a causa dell'indicizzazione da zero.",
+          "d": "1 indica febbraio, poiché 0 è gennaio e 1 è il secondo mese."
+        },
+        "concept": "Mesi 0-based in Date",
+        "commonMistake": "Dimenticare che i mesi vanno da 0 a 11.",
+        "example": "new Date(2022, 11, 25) // 25 dicembre 2022"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:27:44.377Z"
+    }
+  ]
+}

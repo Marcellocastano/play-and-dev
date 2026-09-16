@@ -1,0 +1,137 @@
+{
+  "topicId": "objects-advanced",
+  "questions": [
+    {
+      "id": "objects-advanced-fb-0008",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["Object.entries", "for...of", "iterare oggetti"],
+      "prompt": "Il seguente codice vuole stampare ogni coppia chiave/valore dell'oggetto `utente` su una riga, ma invece ottiene un errore. Dove si trova il problema?",
+      "code": "const utente = { nome: \"Sofia\", eta: 31 };\nfor (const [chiave, valore] of utente) {\n  console.log(chiave, valore);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "Un oggetto non è iterabile direttamente"
+        },
+        {
+          "id": "b",
+          "text": "Le coppie chiave/valore non vengono destrutturate"
+        },
+        {
+          "id": "c",
+          "text": "for...of non si può usare con const"
+        },
+        {
+          "id": "d",
+          "text": "Le chiavi non sono stringhe"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Gli oggetti non sono iterabili con for...of: serve Object.entries.",
+        "whyCorrect": "Il ciclo for...of funziona solo su oggetti iterabili come array. Un oggetto standard non lo è, quindi bisogna usare Object.entries per ottenere le coppie come array.",
+        "whyOthersWrong": {
+          "b": "La destrutturazione [chiave, valore] sarebbe corretta se si iterasse su un array di coppie, ma qui il problema è che utente non è iterabile.",
+          "c": "Non c'è nessun problema a usare const nel ciclo for...of; i valori vengono dichiarati come const ad ogni iterazione.",
+          "d": "Le chiavi degli oggetti in JavaScript sono sempre stringhe, ma questo non causa errori di iterazione."
+        },
+        "concept": "Iterazione di oggetti con entries",
+        "commonMistake": "Provare a iterare un oggetto con for...of senza Object.entries.",
+        "example": "for (const [k, v] of Object.entries(obj)) { ... }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:21.279Z"
+    },
+    {
+      "id": "objects-advanced-fb-0009",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["computed property", "letterali oggetto", "sintassi"],
+      "prompt": "Questo codice vuole creare un oggetto con una chiave dinamica, ma non ottiene il risultato atteso. Dove sta l'errore?",
+      "code": "const campo = \"eta\";\nconst persona = {\n  campo: 29\n};\nconsole.log(persona);",
+      "options": [
+        {
+          "id": "a",
+          "text": "La chiave dinamica va messa tra parentesi quadre"
+        },
+        {
+          "id": "b",
+          "text": "Manca il valore per la proprietà 'campo'"
+        },
+        {
+          "id": "c",
+          "text": "Bisogna usare una funzione per le chiavi dinamiche"
+        },
+        {
+          "id": "d",
+          "text": "Le parentesi graffe non sono corrette"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Per una chiave dinamica serve la sintassi [campo], non campo.",
+        "whyCorrect": "Scrivere campo come chiave crea sempre la proprietà 'campo', non la variabile. Bisogna usare parentesi quadre: {[campo]: 29}.",
+        "whyOthersWrong": {
+          "b": "Un valore c'è: 29. Il problema è nella chiave non dinamica, non nel valore.",
+          "c": "Non serve alcuna funzione per creare chiavi dinamiche, basta la sintassi con parentesi quadre.",
+          "d": "La struttura delle parentesi graffe è corretta per i letterali oggetto; l'errore è nella chiave."
+        },
+        "concept": "Chiavi computate nei letterali oggetto",
+        "commonMistake": "Dimenticare le parentesi quadre per le chiavi dinamiche.",
+        "example": "const obj = { [chiave]: valore }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:21.280Z"
+    },
+    {
+      "id": "objects-advanced-fb-0011",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-chaining",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["nullish coalescing", "default values", "coercion"],
+      "prompt": "Il codice vuole mostrare un messaggio di default se `utente.email` è assente, ma finisce per sostituire anche valori validi come stringa vuota. Dov'è l'errore?",
+      "code": "const utente = { email: \"\" };\nconst email = utente.email || \"Nessuna email\";\nconsole.log(email);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Usa || invece di ?? per il valore di default"
+        },
+        {
+          "id": "b",
+          "text": "Deve controllare se utente esiste"
+        },
+        {
+          "id": "c",
+          "text": "Serve l'optional chaining sull'email"
+        },
+        {
+          "id": "d",
+          "text": "Deve usare Object.hasOwnProperty"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "|| scarta anche valori falsy come la stringa vuota.",
+        "whyCorrect": "L'operatore || restituisce il default non solo per null/undefined ma anche per '', 0, false: per i soli nullish bisogna usare ?? .",
+        "whyOthersWrong": {
+          "b": "utente esiste, e il problema non è la presenza di utente ma il comportamento di ||.",
+          "c": "L'optional chaining serve solo se utente potrebbe essere undefined; qui c'è sempre.",
+          "d": "Object.hasOwnProperty non risolve il problema del fallback sul valore vuoto."
+        },
+        "concept": "Differenza tra || e ??",
+        "commonMistake": "Usare || per i default e perdere valori falsy legittimi.",
+        "example": "const email = utente.email ?? 'Nessuna email';"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:21.280Z"
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "topicId": "objects-advanced",
+  "questions": [
+    {
+      "id": "objects-advanced-fg-0008",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["object-to-array", "iteration"],
+      "prompt": "Completa il codice per ottenere un array con i nomi delle proprietà dell'oggetto `persona`.",
+      "code": "const persona = { nome: \"Luca\", età: 28 };\nconst chiavi = ___(persona);\nconsole.log(chiavi);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Object.keys"
+        },
+        {
+          "id": "b",
+          "text": "Object.values"
+        },
+        {
+          "id": "c",
+          "text": "Object.entries"
+        },
+        {
+          "id": "d",
+          "text": "Array.from"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Object.keys restituisce un array con i nomi delle proprietà.",
+        "whyCorrect": "Con Object.keys otteniamo un array che contiene tutte le chiavi (nomi delle proprietà) proprie e enumerabili dell'oggetto, come richiesto dal prompt.",
+        "whyOthersWrong": {
+          "b": "Object.values restituisce i valori delle proprietà, non i loro nomi: avresti ottenuto ['Luca', 28].",
+          "c": "Object.entries restituisce un array di coppie [chiave, valore], non solo le chiavi.",
+          "d": "Array.from genera un array da un iterabile, ma un oggetto semplice non lo è senza un metodo specifico."
+        },
+        "concept": "Object.keys",
+        "commonMistake": "Confondere tra keys, values ed entries.",
+        "example": "Object.keys({ a: 1, b: 2 }) // ['a', 'b']"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:13.173Z"
+    },
+    {
+      "id": "objects-advanced-fg-0009",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-entries",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["object-to-array", "iteration"],
+      "prompt": "Compila la riga che trasforma l'oggetto `auto` in array di valori.",
+      "code": "const auto = { marca: \"Fiat\", anno: 2020 };\nconst valori = ___(auto);\nconsole.log(valori);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Object.values"
+        },
+        {
+          "id": "b",
+          "text": "Object.keys"
+        },
+        {
+          "id": "c",
+          "text": "Object.entries"
+        },
+        {
+          "id": "d",
+          "text": "Array.of"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Object.values restituisce i valori delle proprietà.",
+        "whyCorrect": "Object.values crea un array contenente i valori delle proprietà enumerabili di un oggetto, esattamente come richiesto nel prompt.",
+        "whyOthersWrong": {
+          "b": "Object.keys restituisce solo le chiavi (nomi delle proprietà), non i valori.",
+          "c": "Object.entries restituisce array di coppie [chiave, valore].",
+          "d": "Array.of crea un array dagli argomenti forniti, non legge le proprietà dell'oggetto."
+        },
+        "concept": "Object.values",
+        "commonMistake": "Scambiare values con keys o entries.",
+        "example": "Object.values({ x: 5, y: 6 }) // [5, 6]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:13.174Z"
+    },
+    {
+      "id": "objects-advanced-fg-0010",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-literals",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["computed-properties"],
+      "prompt": "Completa per usare una chiave computata basata sulla variabile `chiaveDinamica`.",
+      "code": "const chiaveDinamica = \"eta\";\nconst persona = { nome: \"Anna\", ___: 32 };\nconsole.log(persona);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[chiaveDinamica]"
+        },
+        {
+          "id": "b",
+          "text": "chiaveDinamica"
+        },
+        {
+          "id": "c",
+          "text": "{chiaveDinamica}"
+        },
+        {
+          "id": "d",
+          "text": "(chiaveDinamica)"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le chiavi computate vanno tra parentesi quadre.",
+        "whyCorrect": "Le parentesi quadre fanno valutare il valore della variabile come nome della proprietà, non la stringa \"chiaveDinamica\".",
+        "whyOthersWrong": {
+          "b": "Senza le parentesi, la chiave sarà letteralmente chiamata 'chiaveDinamica', non 'eta'.",
+          "c": "{chiaveDinamica} non è sintassi valida per una chiave di oggetto.",
+          "d": "(chiaveDinamica) è una semplice espressione e non definisce una proprietà nell'oggetto."
+        },
+        "concept": "Chiavi computate",
+        "commonMistake": "Dimenticare le parentesi quadre nella definizione.",
+        "example": "const k = 'id'; const o = { [k]: 42 };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:13.175Z"
+    },
+    {
+      "id": "objects-advanced-fg-0011",
+      "topicId": "objects-advanced",
+      "subtopicId": "objects-advanced-chaining",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["nullish-coalescing"],
+      "prompt": "Completa per assegnare 'ospite' solo se il valore di `nome` è null o undefined.",
+      "code": "const nome = null;\nconst nomeFinale = nome ___ \"ospite\";\nconsole.log(nomeFinale);",
+      "options": [
+        {
+          "id": "a",
+          "text": "??"
+        },
+        {
+          "id": "b",
+          "text": "||"
+        },
+        {
+          "id": "c",
+          "text": "&"
+        },
+        {
+          "id": "d",
+          "text": "&&"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "?? verifica solo null o undefined, non tutti i valori falsy.",
+        "whyCorrect": "L'operatore ?? restituisce il valore a sinistra se non è null/undefined, altrimenti quello a destra. Così 'ospite' si ottiene solo nei casi indicati.",
+        "whyOthersWrong": {
+          "b": "|| restituisce il valore di destra anche se nome è '', 0 o false, valori che potrebbero essere legittimi.",
+          "c": "& è un operatore bitwise e non serve per i valori di default.",
+          "d": "&& restituisce il primo valore falsy o quello a destra, non è usato per i default."
+        },
+        "concept": "Nullish coalescing (??)",
+        "commonMistake": "Usare || e perdere valori falsy validi.",
+        "example": "nome ?? 'ospite'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:34:13.176Z"
+    }
+  ]
+}

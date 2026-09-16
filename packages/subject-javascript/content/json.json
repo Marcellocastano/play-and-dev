@@ -1,0 +1,1197 @@
+{
+  "topicId": "json",
+  "questions": [
+    {
+      "id": "json-fg-0001",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["serializzazione oggetti", "comportamento undefined"],
+      "prompt": "Completa il codice per serializzare l'oggetto in JSON, sapendo che la proprietà con valore undefined NON deve apparire nel risultato.",
+      "code": "const oggetto = { nome: \"Luca\", età: undefined };\nconst testo = ___;\nconsole.log(testo);",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON.stringify(oggetto)"
+        },
+        {
+          "id": "b",
+          "text": "JSON.parse(oggetto)"
+        },
+        {
+          "id": "c",
+          "text": "oggetto.toString()"
+        },
+        {
+          "id": "d",
+          "text": "JSON.encode(oggetto)"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Solo JSON.stringify serializza correttamente l'oggetto eliminando le proprietà undefined.",
+        "whyCorrect": "JSON.stringify converte l'oggetto in una stringa JSON e, come da specifica, omette le proprietà con valore undefined.",
+        "whyOthersWrong": {
+          "b": "JSON.parse accetta solo stringhe JSON, non oggetti: dà errore di tipo e non esegue la serializzazione.",
+          "c": "toString su un oggetto restituisce '[object Object]', non una rappresentazione JSON.",
+          "d": "JSON.encode non esiste in JavaScript: è un nome che può confondere con altre librerie."
+        },
+        "concept": "JSON.stringify e proprietà undefined",
+        "commonMistake": "Usare metodi inesistenti o aspettarsi che toString serializzi un oggetto.",
+        "example": "JSON.stringify({ a: 1, b: undefined }) // '{\"a\":1}'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:04.913Z"
+    },
+    {
+      "id": "json-fg-0002",
+      "topicId": "json",
+      "subtopicId": "json-parse",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["parse JSON", "accesso proprietà"],
+      "prompt": "Completa il codice per ottenere il valore della proprietà x dall'oggetto JSON fornito come stringa.",
+      "code": "const json = '{\"x\": 7}';\nconst oggetto = ___;\nconsole.log(oggetto.x);",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON.parse(json)"
+        },
+        {
+          "id": "b",
+          "text": "JSON.stringify(json)"
+        },
+        {
+          "id": "c",
+          "text": "json.parse()"
+        },
+        {
+          "id": "d",
+          "text": "parseJSON(json)"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "JSON.parse trasforma la stringa in oggetto, restituendo l'accesso a x.",
+        "whyCorrect": "JSON.parse converte la stringa in un oggetto JavaScript, così si può accedere direttamente alla proprietà x.",
+        "whyOthersWrong": {
+          "b": "JSON.stringify trasformerebbe 'json' in una stringa letterale, non in un oggetto.",
+          "c": "json.parse non è una funzione valida: 'json' è una stringa, non un oggetto con metodi.",
+          "d": "parseJSON non è definita in JavaScript standard, anche se il nome può trarre in inganno."
+        },
+        "concept": "Uso di JSON.parse",
+        "commonMistake": "Confondere parse e stringify, o usare nomi di funzioni inesistenti.",
+        "example": "JSON.parse('{\"a\":2}') // { a: 2 }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:04.913Z"
+    },
+    {
+      "id": "json-fg-0003",
+      "topicId": "json",
+      "subtopicId": "json-parse",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["gestione errori", "try-catch", "parse JSON"],
+      "prompt": "Completa il codice per evitare che un errore blocchi il programma quando si effettua il parse di testo JSON non valido.",
+      "code": "const input = \"{ nome: 'Anna' }\";\nlet risultato;\ntry {\n  risultato = ___;\n} catch (e) {\n  risultato = 'Errore';\n}\nconsole.log(risultato);",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON.parse(input)"
+        },
+        {
+          "id": "b",
+          "text": "parseJSON(input)"
+        },
+        {
+          "id": "c",
+          "text": "JSON.stringify(input)"
+        },
+        {
+          "id": "d",
+          "text": "input.toJSON()"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Solo JSON.parse può lanciare errori su testo non valido.",
+        "whyCorrect": "JSON.parse genera un errore se il formato non rispetta la sintassi JSON, quindi va usato nel blocco try/catch.",
+        "whyOthersWrong": {
+          "b": "parseJSON non è una funzione standard: produce ReferenceError.",
+          "c": "JSON.stringify converte in stringa ma non lancia errori su formato errato.",
+          "d": "input è una stringa, non ha il metodo toJSON, quindi si ottiene TypeError."
+        },
+        "concept": "Gestione errori su JSON.parse",
+        "commonMistake": "Usare funzioni non standard o metodi non esistenti sulle stringhe.",
+        "example": "try { JSON.parse('testo') } catch (e) { /* gestisci errore */ }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:04.914Z"
+    },
+    {
+      "id": "json-fg-0006",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["serializzare funzioni", "comportamento JSON"],
+      "prompt": "Completa il codice per serializzare l'oggetto senza includere la funzione come proprietà.",
+      "code": "const dati = { nome: \"Sara\", saluta: function() { return \"ciao\"; } };\nconst stringa = ___;\nconsole.log(stringa); // Deve stampare '{\"nome\":\"Sara\"}'",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON.stringify(dati)"
+        },
+        {
+          "id": "b",
+          "text": "JSON.stringify(dati.saluta)"
+        },
+        {
+          "id": "c",
+          "text": "JSON.stringify(Object.keys(dati))"
+        },
+        {
+          "id": "d",
+          "text": "JSON.stringify([dati])"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "JSON.stringify ignora le proprietà funzione negli oggetti.",
+        "whyCorrect": "Quando si serializza un oggetto con proprietà funzione, queste vengono omesse e non appaiono nella stringa JSON risultante.",
+        "whyOthersWrong": {
+          "b": "Serializzare una funzione restituisce undefined, quindi la stringa risultante sarebbe undefined.",
+          "c": "Serializzare Object.keys(dati) crea una stringa JSON con le chiavi come array, non con i valori.",
+          "d": "Serializzare un array con dati produce una rappresentazione JSON di un array, non dell'oggetto stesso."
+        },
+        "concept": "Funzioni omesse da JSON.stringify",
+        "commonMistake": "Pensare che le funzioni vengano incluse o convertite.",
+        "example": "JSON.stringify({ a: 1, f: () => 2 }) // '{\"a\":1}'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:18.773Z"
+    },
+    {
+      "id": "json-fg-0007",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["Serializzare oggetti con JSON.stringify"],
+      "prompt": "Completare il codice per ottenere una stringa JSON che rappresenta l'oggetto `dati`.",
+      "code": "const dati = { nome: \"Luca\", età: 30 };\nconst risultato = ___;\nconsole.log(risultato);",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON.stringify(dati)"
+        },
+        {
+          "id": "b",
+          "text": "JSON.parse(dati)"
+        },
+        {
+          "id": "c",
+          "text": "String(dati)"
+        },
+        {
+          "id": "d",
+          "text": "dati.toString()"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "JSON.stringify converte un oggetto JavaScript in una stringa JSON.",
+        "whyCorrect": "JSON.stringify è il metodo corretto per serializzare oggetti JavaScript in formato JSON. Con questo metodo otteniamo una stringa rappresentazione dell'oggetto.",
+        "whyOthersWrong": {
+          "b": "JSON.parse converte una stringa JSON in un oggetto, ma qui serve l’operazione inversa: serializzare, non deserializzare.",
+          "c": "String applicato a un oggetto restituisce '[object Object]', non una stringa JSON valida.",
+          "d": "toString sugli oggetti restituisce '[object Object]', che non è una rappresentazione JSON."
+        },
+        "concept": "Serializzazione con JSON.stringify",
+        "commonMistake": "Usare String o toString invece di JSON.stringify per serializzare oggetti.",
+        "example": "JSON.stringify({ a: 1 }) // '{\"a\":1}'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:22.261Z"
+    },
+    {
+      "id": "json-fb-0001",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["serializzazione oggetti", "gestione valori non serializzabili"],
+      "prompt": "Questo codice dovrebbe serializzare un oggetto includendo tutte le sue proprietà, ma la proprietà 'b' sparisce dal risultato.",
+      "code": "const obj = { a: 1, b: undefined };\nconst testo = JSON.stringify(obj);\nconsole.log(testo);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Le proprietà con undefined non vengono incluse"
+        },
+        {
+          "id": "b",
+          "text": "JSON.stringify non gestisce oggetti annidati"
+        },
+        {
+          "id": "c",
+          "text": "Serve passare un replacer per vedere tutto"
+        },
+        {
+          "id": "d",
+          "text": "Manca l'opzione per le proprietà nulle"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "JSON.stringify omette le proprietà con valore undefined.",
+        "whyCorrect": "Quando si serializza un oggetto, tutte le proprietà che hanno valore undefined vengono omesse dall'output JSON. Quindi 'b' non compare nella stringa risultante.",
+        "whyOthersWrong": {
+          "b": "JSON.stringify serializza perfettamente oggetti annidati finché tutte le proprietà sono serializzabili; il problema qui non riguarda l'annidamento.",
+          "c": "Un replacer permette di filtrare o modificare le proprietà, ma il comportamento standard senza replacer è già corretto: undefined viene omesso comunque.",
+          "d": "Non esiste alcuna opzione che includa le proprietà nulle: null viene serializzato, undefined viene omesso, ed è proprio questo il caso."
+        },
+        "concept": "Serializzazione di proprietà undefined",
+        "commonMistake": "Aspettarsi che undefined venga convertito in null o una stringa.",
+        "example": "JSON.stringify({ x: undefined, y: 2 }) // '{\"y\":2}'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:21.246Z"
+    },
+    {
+      "id": "json-fb-0002",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["serializzazione funzioni", "differenza tra valori serializzabili e non"],
+      "prompt": "Si vorrebbe includere una funzione nell'oggetto serializzato, ma nell'output la proprietà 'metodo' non appare affatto.",
+      "code": "const persona = {\n  nome: 'Luca',\n  metodo: function() { return 'ciao'; }\n};\nconsole.log(JSON.stringify(persona));",
+      "options": [
+        {
+          "id": "a",
+          "text": "Le funzioni vengono omesse dalla serializzazione"
+        },
+        {
+          "id": "b",
+          "text": "Le funzioni vengono convertite in stringhe"
+        },
+        {
+          "id": "c",
+          "text": "Serve passare la funzione come stringa"
+        },
+        {
+          "id": "d",
+          "text": "Il metodo va invocato prima di serializzare"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le funzioni non vengono incluse da JSON.stringify.",
+        "whyCorrect": "Durante la serializzazione con JSON.stringify, le proprietà il cui valore è una funzione vengono completamente ignorate: non compaiono affatto nel risultato.",
+        "whyOthersWrong": {
+          "b": "Se ci si aspetta che le funzioni vengano convertite automaticamente in stringhe, si sbaglia: vengono semplicemente omesse.",
+          "c": "Convertire la funzione in stringa manualmente cambierebbe il tipo, ma di default JSON.stringify non fa questa conversione.",
+          "d": "Invocare il metodo prima della serializzazione serve solo a ottenere il risultato della funzione, non a includerla come funzione nell'oggetto."
+        },
+        "concept": "Serializzazione delle funzioni",
+        "commonMistake": "Credere che le funzioni vengano incluse come stringhe o oggetti.",
+        "example": "JSON.stringify({ f: () => 1 }) // '{}'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:21.246Z"
+    },
+    {
+      "id": "json-fb-0003",
+      "topicId": "json",
+      "subtopicId": "json-parse",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["parsing JSON", "gestione errori sintassi"],
+      "prompt": "Si vuole convertire una stringa JSON in oggetto, ma il codice lancia un errore invece di restituire il risultato desiderato.",
+      "code": "const testo = \"{'a': 1, 'b': 2}\";\nconst oggetto = JSON.parse(testo);\nconsole.log(oggetto);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Il JSON valido richiede virgolette doppie"
+        },
+        {
+          "id": "b",
+          "text": "JSON.parse non gestisce numeri"
+        },
+        {
+          "id": "c",
+          "text": "Le parentesi graffe non sono permesse"
+        },
+        {
+          "id": "d",
+          "text": "Serve parseInt prima di JSON.parse"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le chiavi e le stringhe JSON usano sempre virgolette doppie.",
+        "whyCorrect": "Il formato JSON ammette solo virgolette doppie per chiavi e stringhe. Usando virgolette singole, JSON.parse solleva un SyntaxError.",
+        "whyOthersWrong": {
+          "b": "JSON.parse gestisce perfettamente i numeri nel formato JSON corretto; l'errore qui è dovuto alla sintassi, non ai numeri.",
+          "c": "Le parentesi graffe sono richieste per gli oggetti JSON; il problema non è questo.",
+          "d": "parseInt serve per convertire stringhe numeriche in numeri, ma qui si sta cercando di parsare un oggetto."
+        },
+        "concept": "Regole di sintassi del JSON",
+        "commonMistake": "Usare virgolette singole pensando siano valide in JSON.",
+        "example": "JSON.parse('{\"a\": 1}') // { a: 1 }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:21.247Z"
+    },
+    {
+      "id": "json-fb-0004",
+      "topicId": "json",
+      "subtopicId": "json-deep-copy",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["deep copy", "limiti della serializzazione"],
+      "prompt": "L'obiettivo era clonare in profondità un oggetto che contiene una data, ma nell'oggetto clonato la data non è più una istanza di Date.",
+      "code": "const originale = { data: new Date('2022-01-01') };\nconst copia = JSON.parse(JSON.stringify(originale));\nconsole.log(copia.data instanceof Date);",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON non conserva i tipi Date: diventano stringhe"
+        },
+        {
+          "id": "b",
+          "text": "La funzione JSON.stringify non copia i metodi"
+        },
+        {
+          "id": "c",
+          "text": "Bisogna serializzare la data manualmente"
+        },
+        {
+          "id": "d",
+          "text": "Le istanze di Date sono bloccate da JSON.parse"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le date diventano stringhe con JSON, non oggetti Date.",
+        "whyCorrect": "JSON.stringify serializza le Date come stringhe ISO, e JSON.parse ricostruisce una stringa, non una vera istanza di Date.",
+        "whyOthersWrong": {
+          "b": "Non sono i metodi a mancare, ma proprio la natura di Date: quell'attributo è ora una stringa.",
+          "c": "Serializzare manualmente la data non risolve perché la questione è la ricostruzione dell'oggetto Date, che richiede una conversione esplicita dopo il parse.",
+          "d": "JSON.parse non blocca le Date: non ha semplicemente modo di distinguere una stringa che rappresenta una data da una qualsiasi altra stringa."
+        },
+        "concept": "Limitazioni della copia profonda via JSON",
+        "commonMistake": "Aspettarsi che Date rimanga di tipo Date dopo la copia.",
+        "example": "JSON.parse(JSON.stringify({ d: new Date() })).d // stringa"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:21.247Z"
+    },
+    {
+      "id": "json-fb-0005",
+      "topicId": "json",
+      "subtopicId": "json-deep-copy",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["deep copy", "gestione strutture cicliche"],
+      "prompt": "Si prova a clonare un oggetto che fa riferimento a sé stesso, ma il codice provoca un errore invece di restituire la copia.",
+      "code": "const oggetto = {};\noggetto.me = oggetto;\nconst copia = JSON.parse(JSON.stringify(oggetto));",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON.stringify lancia su oggetti con riferimenti ciclici"
+        },
+        {
+          "id": "b",
+          "text": "Serve un replacer per i riferimenti ciclici"
+        },
+        {
+          "id": "c",
+          "text": "JSON.parse non gestisce le proprietà ricorsive"
+        },
+        {
+          "id": "d",
+          "text": "Manca un'opzione deepClone in JSON.stringify"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "JSON.stringify non può serializzare riferimenti ciclici: lancia TypeError.",
+        "whyCorrect": "Se si prova a serializzare un oggetto con riferimenti ciclici, JSON.stringify solleva un TypeError e l'operazione si interrompe.",
+        "whyOthersWrong": {
+          "b": "Un replacer personalizzato potrebbe aiutare a filtrare i riferimenti ciclici, ma non risolve automaticamente il problema: di default l'errore si verifica comunque.",
+          "c": "L'errore si verifica già durante la serializzazione e JSON.parse non entra proprio in gioco.",
+          "d": "Non esiste alcuna opzione 'deepClone' integrata in JSON.stringify; la funzione serve solo a serializzare."
+        },
+        "concept": "Riferimenti ciclici e serializzazione JSON",
+        "commonMistake": "Tentare di clonare strutture cicliche con JSON.stringify.",
+        "example": "const a = {}; a.me = a; JSON.stringify(a) // TypeError"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:21.247Z"
+    },
+    {
+      "id": "json-fb-0006",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["analizzare codice", "riconoscere limiti di JSON.stringify"],
+      "prompt": "Un programmatore vuole serializzare un oggetto che contiene una funzione e una proprietà `undefined`, per inviarlo tramite AJAX. Tuttavia, nota che il risultato della serializzazione non è come si aspettava: alcune informazioni mancano nel testo JSON prodotto. Individua il problema.",
+      "code": "const utente = {\n  nome: \"Mario\",\n  saluta: function() { return \"Ciao\"; },\n  cognome: undefined\n};\nconst dati = JSON.stringify(utente);\nconsole.log(dati);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Le proprietà funzione e undefined vengono omesse"
+        },
+        {
+          "id": "b",
+          "text": "La funzione viene serializzata come stringa"
+        },
+        {
+          "id": "c",
+          "text": "La proprietà undefined diventa null"
+        },
+        {
+          "id": "d",
+          "text": "Viene lanciato un errore di serializzazione"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le funzioni e le proprietà `undefined` vengono ignorate da `JSON.stringify`, quindi non compaiono nel testo prodotto.",
+        "whyCorrect": "Nel processo di serializzazione con `JSON.stringify`, sia le proprietà che contengono funzioni sia quelle con valore `undefined` vengono completamente omesse dal risultato. Nel JSON finale resta solo la proprietà `nome`.",
+        "whyOthersWrong": {
+          "b": "Le funzioni non vengono mai convertite in stringa da `JSON.stringify`; vengono semplicemente scartate senza apparire nel testo serializzato.",
+          "c": "Le proprietà `undefined` non vengono trasformate in `null`, ma omesse del tutto dal JSON risultante. Solo se il valore fosse esplicitamente `null` verrebbe incluso.",
+          "d": "Non si verifica alcun errore: `JSON.stringify` gestisce normalmente funzioni e `undefined` omettendole, senza interrompere il programma."
+        },
+        "concept": "Omissione di tipi non supportati da JSON",
+        "commonMistake": "Credere che funzioni o `undefined` vengano serializzati come stringa o `null`.",
+        "example": "JSON.stringify({ ok: undefined, foo: function() {}, x: 1 }) // '{\"x\":1}'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:29.916Z"
+    },
+    {
+      "id": "json-fb-0007",
+      "topicId": "json",
+      "subtopicId": "json-parse",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["debugging JSON.parse", "gestione degli errori di parsing"],
+      "prompt": "Un utente riceve una stringa JSON da un servizio esterno e vuole convertirla in oggetto JavaScript. Tuttavia, il codice va in errore appena eseguito. Qual è la causa più probabile del problema?",
+      "code": "const risposta = \"{'id': 123, 'attivo': true}\";\nconst obj = JSON.parse(risposta);\nconsole.log(obj.id);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Le virgolette usate sono singole invece che doppie"
+        },
+        {
+          "id": "b",
+          "text": "Il valore booleano non è scritto in maiuscolo"
+        },
+        {
+          "id": "c",
+          "text": "Manca una virgola tra le proprietà"
+        },
+        {
+          "id": "d",
+          "text": "Le chiavi dovrebbero essere senza virgolette"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il formato JSON richiede virgolette doppie per le chiavi e le stringhe, altrimenti `JSON.parse` lancia un errore di sintassi.",
+        "whyCorrect": "In JSON valido, tutte le chiavi e le stringhe vanno racchiuse tra virgolette doppie. Usando virgolette singole, `JSON.parse` lancia un `SyntaxError` senza nemmeno iniziare il parsing.",
+        "whyOthersWrong": {
+          "b": "Il valore booleano `true` è corretto in minuscolo in JSON; il problema non è la capitalizzazione, ma l'uso delle virgolette.",
+          "c": "Nel testo fornito la virgola tra le proprietà è presente; l'errore non dipende dalla punteggiatura, ma dalla sintassi delle stringhe.",
+          "d": "In JSON le chiavi devono sempre essere tra doppie virgolette, non senza. Senza virgolette sarebbe sintassi JavaScript valida (oggetto letterale), non JSON."
+        },
+        "concept": "Sintassi corretta del formato JSON",
+        "commonMistake": "Usare virgolette singole nelle chiavi o nei valori JSON.",
+        "example": "JSON.parse('{\"id\": 123}') // corretto; JSON.parse('{id: 123}') // errore"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:29.916Z"
+    },
+    {
+      "id": "json-po-0008",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["serializzazione", "tipi avanzati", "omissioni JSON"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const dati = {\n  oggi: new Date('2024-01-01T12:00:00Z'),\n  attivo: true,\n  mappa: new Map([[\"chiave\", 42]])\n};\nconsole.log(JSON.stringify(dati));",
+      "options": [
+        {
+          "id": "a",
+          "text": "{\"oggi\":\"2024-01-01T12:00:00.000Z\",\"attivo\":true,\"mappa\":{}}"
+        },
+        {
+          "id": "b",
+          "text": "{\"oggi\":1704110400000,\"attivo\":true,\"mappa\":{\"chiave\":42}}"
+        },
+        {
+          "id": "c",
+          "text": "{\"oggi\":\"Mon Jan 01 2024 13:00:00 GMT+0100\",\"attivo\":true,\"mappa\":{}}"
+        },
+        {
+          "id": "d",
+          "text": "{\"oggi\":{\"date\":\"2024-01-01\"},\"attivo\":true,\"mappa\":{}}"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "JSON.stringify trasforma Date in stringa ISO e Map in oggetto vuoto.",
+        "whyCorrect": "Un oggetto Date viene serializzato come stringa ISO, mentre una Map diventa un oggetto vuoto perché JSON.stringify non sa serializzarla. Boolean e altre proprietà primitive restano invariati.",
+        "whyOthersWrong": {
+          "b": "Date non viene convertito in timestamp numerico, e Map non diventa oggetto con chiavi e valori: entrambi sono trattamenti non previsti da JSON.stringify.",
+          "c": "Date non viene serializzato come stringa locale, ma sempre come stringa ISO (formato internazionale), e Map resta un oggetto vuoto.",
+          "d": "Date non viene trasformato in oggetto con proprietà date; JSON.stringify restituisce semplicemente la stringa ISO, e Map rimane vuota."
+        },
+        "concept": "Serializzazione di tipi speciali",
+        "commonMistake": "Aspettarsi che Map venga serializzata come oggetto chiave/valore.",
+        "example": "JSON.stringify({ data: new Date(), m: new Map() })"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:46.861Z"
+    },
+    {
+      "id": "json-po-0009",
+      "topicId": "json",
+      "subtopicId": "json-parse",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["parsing", "errori sintassi", "virgolette"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "try {\n  console.log(JSON.parse(\"{ x: 1 }\"));\n} catch (e) {\n  console.log(e.name);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "SyntaxError"
+        },
+        {
+          "id": "b",
+          "text": "{ x: 1 }"
+        },
+        {
+          "id": "c",
+          "text": "{ x: undefined }"
+        },
+        {
+          "id": "d",
+          "text": "{ x: null }"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "JSON richiede virgolette doppie per i nomi delle proprietà.",
+        "whyCorrect": "La stringa non è un JSON valido perché mancano le virgolette doppie intorno alla chiave; JSON.parse lancia un SyntaxError.",
+        "whyOthersWrong": {
+          "b": "La sintassi non è accettata in JSON, solo in oggetti letterali JS. Il parser lancia errore.",
+          "c": "undefined non è ammesso come valore in JSON; inoltre la sintassi della chiave è scorretta.",
+          "d": "La chiave senza virgolette blocca il parser prima di poter convertire alcun valore."
+        },
+        "concept": "Parsiing JSON e sintassi valida",
+        "commonMistake": "Usare nomi proprietà senza virgolette doppie in JSON.",
+        "example": "JSON.parse('{ \"a\": 1 }') // { a: 1 }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:46.862Z"
+    },
+    {
+      "id": "json-po-0010",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["serializzazione", "array", "undefined e funzioni"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const arr = [42, undefined, function() {}, null];\nconsole.log(JSON.stringify(arr));",
+      "options": [
+        {
+          "id": "a",
+          "text": "[42,null,null,null]"
+        },
+        {
+          "id": "b",
+          "text": "[42,,null]"
+        },
+        {
+          "id": "c",
+          "text": "[42,undefined,null,null]"
+        },
+        {
+          "id": "d",
+          "text": "[42,null,null]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "undefined e funzioni in array diventano null nel JSON.",
+        "whyCorrect": "Negli array, undefined e funzioni vengono serializzati come null, quindi ogni elemento mantiene la sua posizione e il risultato contiene null dove servono.",
+        "whyOthersWrong": {
+          "b": "JSON.stringify mantiene la posizione degli elementi e inserisce null, non lascia buchi.",
+          "c": "undefined non è una stringa JSON valida, quindi viene convertito in null.",
+          "d": "L'array originale ha quattro elementi, non tre: null sostituisce undefined e la funzione."
+        },
+        "concept": "Serializzazione di array con tipi speciali",
+        "commonMistake": "Pensare che undefined scompaia o che il buco resti vuoto.",
+        "example": "JSON.stringify([1, undefined, function(){}, null]) // '[1,null,null,null]'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:46.862Z"
+    },
+    {
+      "id": "json-po-0011",
+      "topicId": "json",
+      "subtopicId": "json-parse",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["parsing", "numeri speciali", "notazione scientifica", "NaN"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "try {\n  const x = JSON.parse('{\"n\":NaN}');\n  console.log(x.n);\n} catch(e) {\n  console.log(e.name);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "SyntaxError"
+        },
+        {
+          "id": "b",
+          "text": "NaN"
+        },
+        {
+          "id": "c",
+          "text": "undefined"
+        },
+        {
+          "id": "d",
+          "text": "null"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "NaN non è un valore valido nel testo JSON.",
+        "whyCorrect": "Solo numeri decimali, stringhe, null, true e false sono permessi come valori letterali JSON; NaN non è riconosciuto e genera SyntaxError.",
+        "whyOthersWrong": {
+          "b": "NaN non può apparire come valore in JSON: il parser si blocca prima e lancia errore.",
+          "c": "Nessun valore viene restituito, perché avviene un errore di parse.",
+          "d": "Se il valore fosse null, tutto funzionerebbe, ma qui la sintassi è illegale e non si arriva mai a leggere la proprietà."
+        },
+        "concept": "Parsing e valori ammessi in JSON",
+        "commonMistake": "Aspettarsi che NaN sia supportato come valore JSON.",
+        "example": "JSON.parse('{\"x\":null}') // { x: null }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:46.863Z"
+    },
+    {
+      "id": "json-po-0012",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["Serializzare oggetti complessi", "Conoscere limiti di JSON.stringify"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const ogg = {\n  uno: 1,\n  due: undefined,\n  tre: Symbol('a'),\n  quattro: function() {},\n  cinque: [2, undefined, function(){}, Symbol('b')]\n};\nconsole.log(JSON.stringify(ogg));",
+      "options": [
+        {
+          "id": "a",
+          "text": "{\"uno\":1,\"cinque\":[2,null,null,null]}"
+        },
+        {
+          "id": "b",
+          "text": "{\"uno\":1,\"cinque\":[2,null,null]}"
+        },
+        {
+          "id": "c",
+          "text": "{\"uno\":1,\"cinque\":[2,null,null,null],\"due\":null}"
+        },
+        {
+          "id": "d",
+          "text": "{\"uno\":1,\"cinque\":[2,null,null],\"tre\":null}"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "undefined, funzioni e Symbol vengono omessi negli oggetti ma diventano null negli array.",
+        "whyCorrect": "In un oggetto, le proprietà con undefined, Symbol e funzioni vengono completamente omesse. In un array, questi valori vengono sostituiti con null, quindi l'array mantiene la lunghezza ma con null dove c'erano undefined, funzioni o Symbol.",
+        "whyOthersWrong": {
+          "b": "L'array 'cinque' ha quattro elementi; anche se i valori non sono serializzabili, i posti nell'array vengono riempiti con null, quindi serve un array con quattro elementi.",
+          "c": "La proprietà 'due' ha valore undefined e quindi viene completamente omessa, non sostituita con null.",
+          "d": "La proprietà 'tre' è Symbol e quindi viene omessa, ma l'array 'cinque' deve contenere quattro elementi, non tre."
+        },
+        "concept": "Cosa viene serializzato con JSON.stringify",
+        "commonMistake": "Aspettarsi che undefined e funzioni diventino null anche nelle proprietà oggetto.",
+        "example": "JSON.stringify({a: undefined, b: [1, undefined]}) // '{\"b\":[1,null]}'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:56.640Z"
+    },
+    {
+      "id": "json-po-0014",
+      "topicId": "json",
+      "subtopicId": "json-deep-copy",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["Copia profonda di oggetti", "Gestione riferimenti ciclici"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const oggetto = {};\noggetto.meStesso = oggetto;\nconsole.log(JSON.stringify(oggetto));",
+      "options": [
+        {
+          "id": "a",
+          "text": "TypeError"
+        },
+        {
+          "id": "b",
+          "text": "{}"
+        },
+        {
+          "id": "c",
+          "text": "{\"meStesso\":null}"
+        },
+        {
+          "id": "d",
+          "text": "{\"meStesso\":{}}"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "JSON.stringify lancia TypeError su riferimenti ciclici.",
+        "whyCorrect": "La presenza di riferimenti circolari (l'oggetto si riferisce a sé stesso) fa sì che JSON.stringify sollevi un TypeError, perché non può rappresentare cicli in JSON.",
+        "whyOthersWrong": {
+          "b": "Se non ci fosse alcun ciclo, verrebbe stampato '{}', ma qui il ciclo genera un errore.",
+          "c": "I riferimenti ciclici non vengono sostituiti con null; viene lanciato un errore invece di produrre output.",
+          "d": "JSON.stringify non crea nuovi oggetti annidati per i cicli; si blocca con un errore invece di serializzare."
+        },
+        "concept": "Limiti di JSON.stringify sui riferimenti ciclici",
+        "commonMistake": "Pensare che i cicli vengano ignorati o sostituiti, invece generano errore.",
+        "example": "const a = {}; a.b = a; JSON.stringify(a); // TypeError"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:56.641Z"
+    },
+    {
+      "id": "json-po-0015",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["JSON.stringify", "valori speciali", "serializzazione oggetti"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const oggetto = { nome: \"Mario\", eta: undefined, attivo: true };\nconsole.log(JSON.stringify(oggetto));",
+      "options": [
+        {
+          "id": "a",
+          "text": "{\"nome\":\"Mario\",\"attivo\":true}"
+        },
+        {
+          "id": "b",
+          "text": "{\"nome\":\"Mario\",\"eta\":null,\"attivo\":true}"
+        },
+        {
+          "id": "c",
+          "text": "{\"nome\":\"Mario\",\"eta\":undefined,\"attivo\":true}"
+        },
+        {
+          "id": "d",
+          "text": "{\"nome\":\"Mario\",\"eta\":false,\"attivo\":true}"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "I valori `undefined` vengono omessi da `JSON.stringify` negli oggetti.",
+        "whyCorrect": "La proprietà `eta` con valore `undefined` viene ignorata durante la serializzazione di un oggetto, quindi il risultato include solo `nome` e `attivo`.",
+        "whyOthersWrong": {
+          "b": "Se una proprietà ha valore `undefined` in un oggetto, `JSON.stringify` la elimina completamente invece di convertirla in `null`.",
+          "c": "Il testo `undefined` non è mai prodotto da `JSON.stringify` come valore letterale in JSON.",
+          "d": "Non avviene nessuna conversione automatica da `undefined` a `false` nella serializzazione JSON degli oggetti."
+        },
+        "concept": "Omissione di proprietà undefined",
+        "commonMistake": "Aspettarsi che `undefined` venga convertito in `null` o serializzato letteralmente.",
+        "example": "JSON.stringify({ x: undefined, y: 2 }) // '{\"y\":2}'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:48.726Z"
+    },
+    {
+      "id": "json-po-0016",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["array e JSON.stringify", "elementi undefined", "serializzazione JSON"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const arr = [1, undefined, 3];\nconsole.log(JSON.stringify(arr));",
+      "options": [
+        {
+          "id": "a",
+          "text": "[1,null,3]"
+        },
+        {
+          "id": "b",
+          "text": "[1,3]"
+        },
+        {
+          "id": "c",
+          "text": "[1,undefined,3]"
+        },
+        {
+          "id": "d",
+          "text": "[1,0,3]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Negli array, `undefined` viene trasformato in `null` nel JSON.",
+        "whyCorrect": "Quando un elemento di un array è `undefined`, `JSON.stringify` lo converte in `null` invece di ometterlo, mantenendo la posizione.",
+        "whyOthersWrong": {
+          "b": "Gli array serializzati mantengono il numero di elementi, anche se alcuni sono null o undefined.",
+          "c": "`undefined` non è un valore valido in JSON e viene sostituito da `null` negli array.",
+          "d": "Nessuna conversione automatica di `undefined` in `0` avviene durante la serializzazione."
+        },
+        "concept": "undefined negli array JSON",
+        "commonMistake": "Pensare che `undefined` venga rimosso o serializzato letteralmente.",
+        "example": "JSON.stringify([2, undefined]) // '[2,null]'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:48.727Z"
+    },
+    {
+      "id": "json-po-0017",
+      "topicId": "json",
+      "subtopicId": "json-parse",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["JSON.parse", "parsing array", "accedere ai dati"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const testo = '[10, 20, 30]';\nconst arr = JSON.parse(testo);\nconsole.log(arr[1]);",
+      "options": [
+        {
+          "id": "a",
+          "text": "20"
+        },
+        {
+          "id": "b",
+          "text": "[10,20,30]"
+        },
+        {
+          "id": "c",
+          "text": "1"
+        },
+        {
+          "id": "d",
+          "text": "undefined"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "`JSON.parse` trasforma la stringa in array, accessibile normalmente.",
+        "whyCorrect": "La stringa rappresenta un array di numeri; dopo il parse, `arr[1]` corrisponde al secondo elemento, cioè `20`.",
+        "whyOthersWrong": {
+          "b": "L'output sarebbe questo solo se si stampasse direttamente l'array, non uno dei suoi elementi.",
+          "c": "L'indice 1 non restituisce la posizione, ma il valore all'indice.",
+          "d": "L'array ha effettivamente tre elementi, con indice 1 valido."
+        },
+        "concept": "Parsing di array JSON",
+        "commonMistake": "Confondere l'indice con il valore o aspettarsi l'intero array come output.",
+        "example": "JSON.parse('[1,2,3]')[2] // 3"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:48.728Z"
+    },
+    {
+      "id": "json-po-0018",
+      "topicId": "json",
+      "subtopicId": "json-deep-copy",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["deep copy con JSON", "Date e JSON", "tipi speciali"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const orig = { data: new Date(\"2023-01-01T00:00:00Z\") };\nconst copia = JSON.parse(JSON.stringify(orig));\nconsole.log(typeof copia.data);",
+      "options": [
+        {
+          "id": "a",
+          "text": "string"
+        },
+        {
+          "id": "b",
+          "text": "object"
+        },
+        {
+          "id": "c",
+          "text": "date"
+        },
+        {
+          "id": "d",
+          "text": "undefined"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le date diventano stringhe ISO dopo la copia via JSON.",
+        "whyCorrect": "Una proprietà Date viene serializzata in una stringa; dopo il parse, il valore non è più un oggetto Date ma una stringa, quindi `typeof copia.data` restituisce `string`.",
+        "whyOthersWrong": {
+          "b": "Il valore non è più un oggetto, ma una semplice stringa che rappresenta la data.",
+          "c": "`typeof` non restituisce mai `date`, il tipo `Date` non è riconosciuto nativamente come tipo.",
+          "d": "La proprietà `data` viene copiata come stringa e non risulta mai undefined."
+        },
+        "concept": "Limiti del deep copy con JSON e i tipi speciali",
+        "commonMistake": "Aspettarsi che gli oggetti Date restino tali dopo un deep copy via JSON.",
+        "example": "typeof JSON.parse(JSON.stringify({ d: new Date() })).d // 'string'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:48.728Z"
+    },
+    {
+      "id": "json-po-0019",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "serializzazione oggetti",
+        "comportamento proprietà speciali",
+        "lettura output JSON"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const persona = {\n  nome: \"Anna\",\n  saluta: function() { return \"Ciao\"; },\n  età: undefined,\n  hobby: [\"lettura\", undefined, \"sport\"]\n};\nconsole.log(JSON.stringify(persona));",
+      "options": [
+        {
+          "id": "a",
+          "text": "{\"nome\":\"Anna\",\"hobby\":[\"lettura\",null,\"sport\"]}"
+        },
+        {
+          "id": "b",
+          "text": "{\"nome\":\"Anna\",\"saluta\":null,\"età\":null,\"hobby\":[\"lettura\",null,\"sport\"]}"
+        },
+        {
+          "id": "c",
+          "text": "{\"nome\":\"Anna\",\"saluta\":\"Ciao\",\"hobby\":[\"lettura\",null,\"sport\"]}"
+        },
+        {
+          "id": "d",
+          "text": "{\"nome\":\"Anna\",\"saluta\":null,\"hobby\":[\"lettura\",\"sport\"]}"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le proprietà con funzioni e undefined vengono omesse, mentre gli undefined nell'array diventano null.",
+        "whyCorrect": "Le proprietà `saluta` (funzione) e `età` (undefined) vengono omesse nell'oggetto serializzato. Tuttavia, gli elementi undefined nell'array vengono convertiti in null. Il risultato finale contiene solo le proprietà serializzabili e l'array con null al posto di undefined.",
+        "whyOthersWrong": {
+          "b": "Qui le proprietà `saluta` e `età` vengono serializzate come null, ma in realtà JSON.stringify le omette del tutto se sono funzioni o undefined in oggetti, quindi non appaiono nell'output.",
+          "c": "La proprietà `saluta` non viene serializzata come stringa con il valore restituito dalla funzione, perché JSON.stringify ignora direttamente le proprietà funzione.",
+          "d": "L'array `hobby` perde l'elemento undefined, ma in JSON.stringify viene invece convertito in null e mantenuto nella stessa posizione."
+        },
+        "concept": "Omissione di proprietà non serializzabili",
+        "commonMistake": "Pensare che undefined o funzioni vengano serializzati come null o stringhe.",
+        "example": "JSON.stringify({ a: 1, b: undefined, c: function(){} }) // '{\"a\":1}'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:59.116Z"
+    },
+    {
+      "id": "json-po-0020",
+      "topicId": "json",
+      "subtopicId": "json-parse",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["gestione errori", "parsing", "sintassi JSON", "lettura di errori"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "try {\n  const x = JSON.parse('{ nome: \"Marco\" }');\n  console.log(x.nome);\n} catch (e) {\n  console.log(e.name);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "SyntaxError"
+        },
+        {
+          "id": "b",
+          "text": "Marco"
+        },
+        {
+          "id": "c",
+          "text": "undefined"
+        },
+        {
+          "id": "d",
+          "text": "ReferenceError"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le chiavi JSON devono essere tra virgolette doppie: senza, JSON.parse lancia SyntaxError.",
+        "whyCorrect": "In JSON, le chiavi degli oggetti devono essere stringhe racchiuse tra virgolette doppie. Qui non lo sono, quindi JSON.parse lancia SyntaxError. Il blocco catch stampa il nome dell'errore.",
+        "whyOthersWrong": {
+          "b": "Non viene stampato il valore di `nome` perché il parsing fallisce prima di assegnare la variabile `x`.",
+          "c": "Il blocco try fallisce subito a causa dell'errore di sintassi nel testo JSON, quindi `x` non viene mai definito.",
+          "d": "ReferenceError viene lanciato solo in caso di variabili non definite o errori simili, ma qui il problema è la sintassi del JSON."
+        },
+        "concept": "Parsing e sintassi JSON",
+        "commonMistake": "Dimenticare le virgolette doppie sulle chiavi JSON.",
+        "example": "JSON.parse('{\"x\":1}') // { x: 1 }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:59.116Z"
+    },
+    {
+      "id": "json-po-0021",
+      "topicId": "json",
+      "subtopicId": "json-deep-copy",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["copia profonda", "serializzazione oggetti complessi", "limiti JSON"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const mappa = { a: 1 };\nconst dati = {\n  titolo: \"libro\",\n  data: new Date(2022, 0, 1),\n  info: mappa\n};\nconst copia = JSON.parse(JSON.stringify(dati));\nconsole.log(typeof copia.data);\nconsole.log(copia.data instanceof Date);\nconsole.log(copia.info === mappa);",
+      "options": [
+        {
+          "id": "a",
+          "text": "string\nfalse\nfalse"
+        },
+        {
+          "id": "b",
+          "text": "object\ntrue\ntrue"
+        },
+        {
+          "id": "c",
+          "text": "string\ntrue\nfalse"
+        },
+        {
+          "id": "d",
+          "text": "object\nfalse\ntrue"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La proprietà `data` diventa stringa, non più Date, e gli oggetti sono copiati profondamente.",
+        "whyCorrect": "Dopo la serializzazione, la proprietà `data` è una stringa, quindi `typeof` restituisce 'string' e non è più un'istanza di Date. Inoltre, la proprietà `info` è un nuovo oggetto, quindi non è strettamente uguale all'originale.",
+        "whyOthersWrong": {
+          "b": "La proprietà `data` non resta oggetto né istanza di Date: diventa una stringa. Inoltre, `info` non è uguale all'originale a causa della copia profonda.",
+          "c": "`copia.data` è una stringa, ma il controllo `instanceof Date` restituisce false, non true.",
+          "d": "Come sopra: dopo la copia, `data` è una stringa, non un oggetto, e `info` non è lo stesso riferimento dell'originale."
+        },
+        "concept": "Copia profonda via JSON",
+        "commonMistake": "Dimenticare che Date diventa stringa e oggetti vengono copiati.",
+        "example": "JSON.parse(JSON.stringify({ x: new Date() })).x instanceof Date // false"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:33:59.117Z"
+    },
+    {
+      "id": "json-fg-0026",
+      "topicId": "json",
+      "subtopicId": "json-stringify",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["api-recognition", "serializzazione-oggetti"],
+      "prompt": "Completa il codice per ottenere la rappresentazione JSON dell'array `numeri`.",
+      "code": "const numeri = [1, 2, 3];\nconst json = ___;",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON.stringify(numeri)"
+        },
+        {
+          "id": "b",
+          "text": "numeri.toJSON()"
+        },
+        {
+          "id": "c",
+          "text": "JSON.parse(numeri)"
+        },
+        {
+          "id": "d",
+          "text": "String(numeri)"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La funzione `JSON.stringify` trasforma un array in una stringa JSON, che può essere trasmessa o salvata.",
+        "whyCorrect": "`JSON.stringify(numeri)` genera la stringa '[1,2,3]', rappresentazione JSON dell'array. È il metodo standard per serializzare strutture in formato JSON.",
+        "whyOthersWrong": {
+          "b": "`numeri.toJSON()` non è definito sugli array standard, quindi restituisce undefined o lancia un errore in ambienti stretti.",
+          "c": "`JSON.parse` si usa con una stringa JSON come input, non con array: qui genera un errore perché `numeri` non è una stringa.",
+          "d": "`String(numeri)` restituisce '1,2,3', che non è una stringa JSON valida ma solo la rappresentazione con virgole degli elementi."
+        },
+        "concept": "Serializzare array con JSON.stringify",
+        "commonMistake": "Confondere metodi di serializzazione e conversione in stringa.",
+        "example": "JSON.stringify([1, 2, 3]) // '[1,2,3]'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:46.775Z"
+    },
+    {
+      "id": "json-fg-0027",
+      "topicId": "json",
+      "subtopicId": "json-parse",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["api-recognition", "deserializzazione"],
+      "prompt": "Completa il codice per ottenere un oggetto a partire dalla stringa JSON specificata.",
+      "code": "const stringa = '{\"nome\":\"Luca\"}';\nconst oggetto = ___;",
+      "options": [
+        {
+          "id": "a",
+          "text": "JSON.parse(stringa)"
+        },
+        {
+          "id": "b",
+          "text": "stringa.parse()"
+        },
+        {
+          "id": "c",
+          "text": "JSON.stringify(stringa)"
+        },
+        {
+          "id": "d",
+          "text": "Object.create(stringa)"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La funzione `JSON.parse` converte una stringa JSON in un oggetto JavaScript.",
+        "whyCorrect": "`JSON.parse(stringa)` analizza la stringa JSON e produce l'oggetto corrispondente, permettendo di accedere alle sue proprietà in JavaScript.",
+        "whyOthersWrong": {
+          "b": "`stringa.parse()` non è un metodo esistente sulle stringhe JavaScript e produrrebbe un errore.",
+          "c": "`JSON.stringify(stringa)` produce una stringa tra virgolette doppie, non un oggetto: serializza, non deserializza.",
+          "d": "`Object.create(stringa)` crea un nuovo oggetto con `stringa` come prototipo, ma non analizza il JSON né restituisce le proprietà desiderate."
+        },
+        "concept": "Deserializzare testo JSON in oggetto",
+        "commonMistake": "Usare stringify o metodi inesistenti invece di parse.",
+        "example": "JSON.parse('{\"a\":1}') // { a: 1 }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:47:46.776Z"
+    }
+  ]
+}

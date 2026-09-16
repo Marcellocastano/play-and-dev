@@ -1,0 +1,313 @@
+{
+  "topicId": "errors",
+  "questions": [
+    {
+      "id": "errors-fb-0014",
+      "topicId": "errors",
+      "subtopicId": "errors-try-catch",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["flusso try/catch/finally", "gestione errori"],
+      "prompt": "Questo codice dovrebbe sempre stampare 'Cleanup eseguito', sia che si verifichi un errore che no. Tuttavia, a volte la riga non viene stampata. Individua il problema.",
+      "code": "function operazione() {\n  try {\n    JSON.parse('{ invalid json }');\n  } catch (e) {\n    console.log('Errore catturato');\n    return;\n  }\n  console.log('Cleanup eseguito');\n}\noperazione();",
+      "options": [
+        {
+          "id": "a",
+          "text": "Il cleanup non è nel blocco finally"
+        },
+        {
+          "id": "b",
+          "text": "Manca il controllo sul tipo dell’errore"
+        },
+        {
+          "id": "c",
+          "text": "Il catch non gestisce correttamente l’errore"
+        },
+        {
+          "id": "d",
+          "text": "Il try non include abbastanza codice"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il blocco 'finally' garantisce che il cleanup venga eseguito sempre, anche dopo un 'return' nel catch.",
+        "whyCorrect": "Se il cleanup non è messo in un blocco 'finally', non viene eseguito se c'è un 'return' dentro il catch. Solo 'finally' garantisce l'esecuzione in ogni caso.",
+        "whyOthersWrong": {
+          "b": "Controllare il tipo dell’errore non influisce sulla stampa del cleanup: il problema è che la pulizia non viene mai eseguita se il flusso esce dal catch con return.",
+          "c": "Il catch cattura e gestisce l’errore correttamente, stampando il messaggio; il vero problema è che la pulizia non è garantita dopo il return.",
+          "d": "Il try include tutto il codice che può generare un errore; spostare più codice nel try non risolve la mancata esecuzione del cleanup."
+        },
+        "concept": "Blocco finally in try/catch",
+        "commonMistake": "Ignorare che 'finally' si esegue anche in presenza di return.",
+        "example": "try { ... } finally { cleanup(); }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:44.005Z"
+    },
+    {
+      "id": "errors-fb-0015",
+      "topicId": "errors",
+      "subtopicId": "errors-throw",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["throw errori corretti", "creazione oggetto Error"],
+      "prompt": "Il codice dovrebbe sollevare un errore personalizzato con nome e messaggio, ma alcune informazioni si perdono. Qual è il problema?",
+      "code": "function calcola(x) {\n  if (typeof x !== 'number') {\n    throw 'Parametro non valido';\n  }\n  return x * 2;\n}\ntry {\n  calcola('ciao');\n} catch (e) {\n  console.log(e.name);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "Si lancia una stringa invece di Error"
+        },
+        {
+          "id": "b",
+          "text": "Il messaggio d’errore è troppo generico"
+        },
+        {
+          "id": "c",
+          "text": "La funzione non restituisce il valore corretto"
+        },
+        {
+          "id": "d",
+          "text": "Il catch dovrebbe essere prima della chiamata"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lanciare una stringa fa perdere le proprietà name e stack dell’oggetto Error.",
+        "whyCorrect": "Lanciando una stringa si perde il nome e lo stack dell'errore; solo un oggetto Error fornisce queste informazioni standard.",
+        "whyOthersWrong": {
+          "b": "Il testo del messaggio può essere migliorato, ma non è questo il problema che fa perdere nome e stack.",
+          "c": "La funzione non arriva mai a restituire un valore perché viene lanciato un errore prima di ogni return in caso di parametro non valido.",
+          "d": "Il catch non può precedere la chiamata: la struttura try/catch è già corretta nel codice dato."
+        },
+        "concept": "throw con oggetto Error",
+        "commonMistake": "Lanciare stringhe invece di oggetti Error.",
+        "example": "throw new Error('Parametro non valido');"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:44.007Z"
+    },
+    {
+      "id": "errors-fb-0016",
+      "topicId": "errors",
+      "subtopicId": "errors-native",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["riconoscere errori nativi", "differenza ReferenceError/TypeError"],
+      "prompt": "Il seguente codice dovrebbe gestire il caso di una proprietà non esistente sull’oggetto, ma si verifica un errore diverso dal previsto. Qual è la causa?",
+      "code": "let persona = null;\ntry {\n  console.log(persona.nome);\n} catch (e) {\n  if (e.name === 'ReferenceError') {\n    console.log('Variabile non definita');\n  } else {\n    console.log('Altro errore');\n  }\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "Si verifica un TypeError, non ReferenceError"
+        },
+        {
+          "id": "b",
+          "text": "Il try/catch non cattura gli errori"
+        },
+        {
+          "id": "c",
+          "text": "La variabile persona non è dichiarata"
+        },
+        {
+          "id": "d",
+          "text": "La proprietà nome non esiste su persona"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Accedere a una proprietà di null genera TypeError, non ReferenceError.",
+        "whyCorrect": "Cercare di accedere a una proprietà su null produce sempre un TypeError, perché null non è un oggetto.",
+        "whyOthersWrong": {
+          "b": "Il blocco try/catch cattura l’errore, ma il nome dell’errore è diverso da quello atteso.",
+          "c": "La variabile persona è dichiarata ed è null; l’errore non riguarda la dichiarazione.",
+          "d": "Il problema non è solo l’inesistenza della proprietà, ma che il valore sia null: è qui che si genera un TypeError."
+        },
+        "concept": "TypeError vs ReferenceError",
+        "commonMistake": "Credere che accedere a proprietà di null produca ReferenceError.",
+        "example": "console.log(null.foo); // TypeError"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:44.007Z"
+    },
+    {
+      "id": "errors-fb-0017",
+      "topicId": "errors",
+      "subtopicId": "errors-try-catch",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["catch errori", "gestione errori"],
+      "prompt": "Il codice dovrebbe notificare ogni errore, ma durante i test non viene stampato nulla in caso di errore. Qual è il problema?",
+      "code": "function sommaNumeri(a, b) {\n  if (typeof a !== 'number' || typeof b !== 'number') {\n    throw new Error('Parametri non numerici');\n  }\n  return a + b;\n}\ntry {\n  sommaNumeri('uno', 'due');\n} catch (e) {\n  // errore ignorato\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "L’errore viene catturato ma non gestito"
+        },
+        {
+          "id": "b",
+          "text": "I parametri non sono mai controllati"
+        },
+        {
+          "id": "c",
+          "text": "Il try non copre la funzione"
+        },
+        {
+          "id": "d",
+          "text": "Il throw è fuori dalla funzione"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il catch non gestisce l’errore: viene ignorato, quindi non si ha notifica.",
+        "whyCorrect": "L’errore viene effettivamente catturato, ma il blocco catch è vuoto: per notificare l’errore, bisognerebbe almeno stampare un messaggio all’interno.",
+        "whyOthersWrong": {
+          "b": "I parametri sono controllati correttamente e, se non numerici, viene lanciato un errore.",
+          "c": "Il try include la chiamata a sommaNumeri, quindi copre la funzione coinvolta nell’errore.",
+          "d": "Il throw si trova correttamente all’interno della funzione e viene eseguito quando serve."
+        },
+        "concept": "Importanza della gestione nel blocco catch",
+        "commonMistake": "Lasciare il blocco catch vuoto rende invisibili gli errori.",
+        "example": "catch (e) { console.log(e.message); }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:44.008Z"
+    },
+    {
+      "id": "errors-fb-0018",
+      "topicId": "errors",
+      "subtopicId": "errors-native",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["riconoscere errori nativi", "differenza RangeError/TypeError"],
+      "prompt": "L'obiettivo è generare un RangeError per un indice fuori limite, ma viene prodotto un errore diverso. Dov’è il bug?",
+      "code": "let arr = [10, 20, 30];\ntry {\n  console.log(arr[5].toString());\n} catch (e) {\n  if (e instanceof RangeError) {\n    console.log('Indice fuori range');\n  } else {\n    console.log('Altro errore');\n  }\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "Si ottiene un TypeError, non un RangeError"
+        },
+        {
+          "id": "b",
+          "text": "L’indice 5 non esiste nell’array"
+        },
+        {
+          "id": "c",
+          "text": "La verifica dell’indice è nel posto sbagliato"
+        },
+        {
+          "id": "d",
+          "text": "Manca il controllo sul tipo di arr"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Accedere a una proprietà su undefined genera TypeError, non RangeError.",
+        "whyCorrect": "Quando si accede a arr[5], si ottiene undefined: chiamare un metodo su undefined produce un TypeError, non RangeError.",
+        "whyOthersWrong": {
+          "b": "Il problema non è solo l’inesistenza dell’indice, ma il fatto che si chiama un metodo su un valore undefined.",
+          "c": "La verifica dell’indice sarebbe utile ma non è la causa dell’errore nativo diverso.",
+          "d": "Il tipo di arr è corretto; il problema nasce quando si tenta di usare toString su undefined."
+        },
+        "concept": "TypeError vs RangeError su array",
+        "commonMistake": "Confondere errori generati da accessi invalidi sugli array.",
+        "example": "([1][5]).toString() // TypeError"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:44.008Z"
+    },
+    {
+      "id": "errors-fb-0019",
+      "topicId": "errors",
+      "subtopicId": "errors-try-catch",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["flusso finally", "cleanup risorse"],
+      "prompt": "Il seguente codice dovrebbe sempre chiudere la connessione, anche se si verifica un errore. In alcuni casi, però, la funzione di chiusura non viene richiamata. Qual è l’errore?",
+      "code": "function connetti() {\n  // ...\n}\nfunction chiudi() {\n  console.log('Connessione chiusa');\n}\ntry {\n  connetti();\n  throw new Error('Errore simulato');\n  chiudi();\n} catch (e) {\n  console.log('Errore!');\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "chiudi deve essere in finally per eseguirsi sempre"
+        },
+        {
+          "id": "b",
+          "text": "chiudi dovrebbe essere nel blocco catch"
+        },
+        {
+          "id": "c",
+          "text": "chiudi va chiamata prima di throw"
+        },
+        {
+          "id": "d",
+          "text": "Il try deve includere solo la connessione"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Solo finally garantisce l’esecuzione della chiusura anche in presenza di errori.",
+        "whyCorrect": "Il blocco finally si esegue sempre, sia in caso di errore che di successo. Solo mettendo chiudi() in finally si garantisce la chiusura della risorsa.",
+        "whyOthersWrong": {
+          "b": "Chiamare chiudi solo nel catch non garantisce nulla se non si verifica l’errore, quindi rischia di mancare la chiusura.",
+          "c": "Se si chiama chiudi prima di throw, la risorsa si chiuderebbe anche se l’operazione non è finita, non risolvendo il problema generale.",
+          "d": "Limitare il try non risolve la necessità di chiudere la connessione in tutti i casi: serve finally."
+        },
+        "concept": "Cleanup con finally",
+        "commonMistake": "Dimenticare finally per cleanup garantito.",
+        "example": "try { ... } finally { chiudi(); }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:44.008Z"
+    },
+    {
+      "id": "errors-fb-0020",
+      "topicId": "errors",
+      "subtopicId": "errors-throw",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": ["sollevare errori con throw", "usare oggetto Error correttamente"],
+      "prompt": "Una funzione dovrebbe sollevare un errore descrittivo quando il parametro passato non è una stringa. Attualmente il codice stampa solo il messaggio dell’errore, ma manca un’informazione utile per chi lo intercetta. Qual è il problema?",
+      "code": "function verificaNome(nome) {\n  if (typeof nome !== 'string') {\n    throw 'Parametro non valido';\n  }\n  // altro codice\n}\n\ntry {\n  verificaNome(42);\n} catch (e) {\n  console.log(e);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "Viene lanciata una stringa invece di un oggetto Error"
+        },
+        {
+          "id": "b",
+          "text": "L’errore non viene mai effettivamente sollevato"
+        },
+        {
+          "id": "c",
+          "text": "La funzione dovrebbe restituire false invece di lanciare errori"
+        },
+        {
+          "id": "d",
+          "text": "Il controllo typeof è scritto in modo errato"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lanciare una stringa fa perdere informazioni importanti come nome dell’errore e stack. Bisognerebbe lanciare sempre un oggetto Error.",
+        "whyCorrect": "L’attuale throw usa una semplice stringa, che non porta con sé il name e lo stack dell’errore, rendendo più difficile il debugging. Lanciare un oggetto Error consente di ottenere un messaggio e uno stack più utili.",
+        "whyOthersWrong": {
+          "b": "Il throw viene eseguito se il parametro non è una stringa, quindi l’errore viene effettivamente sollevato e catturato dal blocco catch.",
+          "c": "Restituire false non segnala chiaramente un errore, soprattutto se chi usa la funzione si aspetta un’eccezione in caso di parametro non valido.",
+          "d": "Il controllo typeof nome !== 'string' è corretto per verificare che nome sia una stringa, quindi qui non c’è nessun errore di sintassi o logica."
+        },
+        "concept": "throw con oggetto Error",
+        "commonMistake": "Lanciare una stringa invece di un oggetto Error, perdendo proprietà utili.",
+        "example": "throw new Error('Parametro non valido');"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:48.296Z"
+    }
+  ]
+}

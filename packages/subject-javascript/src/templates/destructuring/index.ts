@@ -1,5 +1,14 @@
 import type { QuestionTemplate } from '@lg/core';
-import { fmt, makeOptions, pickInt, pickInts, pickOf, PERSON_NAMES, retry, type Rng } from '../helpers.js';
+import {
+  fmt,
+  makeOptions,
+  pickInt,
+  pickInts,
+  pickOf,
+  PERSON_NAMES,
+  retry,
+  type Rng,
+} from '../helpers.js';
 
 const TOPIC = 'destructuring';
 const DD = 'dd-destructuring';
@@ -21,11 +30,23 @@ const objPo: QuestionTemplate = {
       const code = `const utente = { nome: '${nome}', eta: ${eta} };\nconst { ${key} } = utente;\nconsole.log(${key});`;
       const built = makeOptions(
         rng,
-        { text: fmt(correct), why: `Il destructuring estrae utente.${key} in ${key}: ${fmt(correct)}.` },
+        {
+          text: fmt(correct),
+          why: `\`const { ${key} } = utente\` estrae la proprietà ${key} in una variabile omonima: il log stampa ${fmt(correct)}.`,
+        },
         [
-          { text: fmt(key === 'nome' ? eta : nome), why: 'Estrae la proprietà omonima, non l\'altra.' },
-          { text: 'undefined', why: `La proprietà ${key} esiste: viene estratta.` },
-          { text: `{ ${key}: ${fmt(correct, true)} }`, why: 'const { k } = o estrae il valore, non un oggetto.' },
+          {
+            text: fmt(key === 'nome' ? eta : nome),
+            why: `Il destructuring estrae solo la proprietà con il nome indicato (${key}), non l'altra: quel valore resta dentro l'oggetto.`,
+          },
+          {
+            text: 'undefined',
+            why: `La proprietà ${key} esiste in \`utente\` e vale ${fmt(correct)}: undefined comparirebbe solo se la chiave mancasse.`,
+          },
+          {
+            text: `{ ${key}: ${fmt(correct, true)} }`,
+            why: `Le graffe a sinistra estraggono il valore della proprietà, non creano un oggetto: ${key} contiene ${fmt(correct)}.`,
+          },
         ],
       );
       return {
@@ -65,11 +86,23 @@ const skipFg: QuestionTemplate = {
     const code = `const [___] = [${arr.join(', ')}];\nconsole.log(secondo); // ${arr[1]}`;
     const built = makeOptions(
       rng,
-      { text: ', secondo', why: 'La virgola salta il primo elemento: secondo riceve il secondo.' },
+      {
+        text: ', secondo',
+        why: `Nel destructuring di array le posizioni contano: la virgola iniziale salta il primo elemento e \`secondo\` riceve ${arr[1]}.`,
+      },
       [
-        { text: 'secondo', why: `Senza virgola, secondo riceverebbe il primo elemento (${arr[0]}).` },
-        { text: 'secondo,', why: 'La virgola dopo non salta nulla: secondo prenderebbe il primo elemento.' },
-        { text: '_, secondo', why: 'Anche una variabile qualsiasi occupa il primo slot; la posizione conta, non il nome.' },
+        {
+          text: 'secondo',
+          why: `Senza la virgola, \`secondo\` occuperebbe il primo slot e riceverebbe ${arr[0]} invece di ${arr[1]}.`,
+        },
+        {
+          text: 'secondo,',
+          why: `La virgola dopo il nome non salta nulla: \`secondo\` resta in prima posizione e riceverebbe ${arr[0]}.`,
+        },
+        {
+          text: 'secondo, terzo',
+          why: `Le posizioni contano, non i nomi: \`secondo\` occuperebbe il primo slot e riceverebbe ${arr[0]}, non ${arr[1]}.`,
+        },
       ],
     );
     return {
@@ -109,13 +142,22 @@ const renameMc: QuestionTemplate = {
     const built = makeOptions(
       rng,
       {
-        text: `b vale ${v} e la variabile a non esiste`,
-        why: `{ a: b } legge la proprietà a e la assegna alla variabile b.`,
+        text: `b vale ${v}, a non esiste`,
+        why: `\`{ a: b }\` legge la proprietà \`a\` e la assegna a una nuova variabile \`b\`: solo b viene creata e vale ${v}.`,
       },
       [
-        { text: `b vale ${v} e a vale ${v}`, why: 'a non viene creata: la rinomina produce solo b.' },
-        { text: 'b è undefined', why: `La proprietà a esiste e vale ${v}: b la riceve.` },
-        { text: 'È un errore di sintassi', why: '{ a: b } è sintassi valida di rinomina.' },
+        {
+          text: `b e a valgono ${v}`,
+          why: `La rinomina crea una sola variabile: \`a\` è solo il nome della proprietà letta e non diventa una variabile.`,
+        },
+        {
+          text: 'b vale `undefined`',
+          why: `La proprietà \`a\` esiste e vale ${v}: il destructuring la legge e la assegna a \`b\`, che non è undefined.`,
+        },
+        {
+          text: 'Errore di sintassi',
+          why: `\`{ a: b }\` è la sintassi corretta della rinomina nel destructuring: il codice è valido e stampa ${v}.`,
+        },
       ],
     );
     return {
@@ -155,11 +197,23 @@ const defaultPo: QuestionTemplate = {
     const code = `const { ${key} = ${d} } = {};\nconsole.log(${key});`;
     const built = makeOptions(
       rng,
-      { text: fmt(d), why: `La proprietà ${key} manca: vale il default ${d}.` },
+      {
+        text: fmt(d),
+        why: `L'oggetto è vuoto, quindi la proprietà ${key} è undefined e scatta il valore di default: il log stampa ${d}.`,
+      },
       [
-        { text: 'undefined', why: 'Il default si applica proprio quando la proprietà manca (undefined).' },
-        { text: 'null', why: 'Il default è ' + d + ', non null.' },
-        { text: 'TypeError', why: 'Destrutturare {} è lecito: {} è un oggetto vuoto, non null/undefined.' },
+        {
+          text: 'undefined',
+          why: `Il default \`= ${d}\` si applica proprio quando la proprietà è undefined o assente: la variabile riceve ${d}, non undefined.`,
+        },
+        {
+          text: 'null',
+          why: `Il valore assegnato è il default ${d}: null comparirebbe solo se la proprietà esistesse e valesse null.`,
+        },
+        {
+          text: 'TypeError',
+          why: 'Destrutturare un oggetto vuoto è lecito: l’errore ci sarebbe solo destrutturando `null` o `undefined`, non `{}`.',
+        },
       ],
     );
     return {
@@ -185,9 +239,4 @@ const defaultPo: QuestionTemplate = {
   },
 };
 
-export const destructuringTemplates: QuestionTemplate[] = [
-  objPo,
-  skipFg,
-  renameMc,
-  defaultPo,
-];
+export const destructuringTemplates: QuestionTemplate[] = [objPo, skipFg, renameMc, defaultPo];

@@ -1,0 +1,225 @@
+{
+  "topicId": "spread-rest",
+  "questions": [
+    {
+      "id": "spread-rest-po-0001",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["spread su array", "copia superficiale array", "mutazione"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const originale = [1, { x: 2 }];\nconst copia = [...originale];\ncopia[1].x = 99;\nconsole.log(originale[1].x);",
+      "options": [
+        {
+          "id": "a",
+          "text": "99"
+        },
+        {
+          "id": "b",
+          "text": "2"
+        },
+        {
+          "id": "c",
+          "text": "undefined"
+        },
+        {
+          "id": "d",
+          "text": "[object Object]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread su array copia solo i riferimenti degli oggetti interni, quindi modificando `copia[1].x` cambia anche `originale[1].x`.",
+        "whyCorrect": "La copia tramite spread è superficiale: sia `originale[1]` che `copia[1]` puntano allo stesso oggetto. Cambiando la proprietà `x` su uno, si riflette anche sull'altro.",
+        "whyOthersWrong": {
+          "b": "Si otterrebbe 2 solo se lo spread fosse profondo, ma in realtà copia soltanto i riferimenti agli oggetti interni, non li clona.",
+          "c": "La proprietà `x` esiste e viene aggiornata, quindi non ritorna undefined.",
+          "d": "Questa sarebbe la rappresentazione di un oggetto stampato come stringa, ma `console.log` stampa il valore della proprietà, cioè un numero."
+        },
+        "concept": "Copia superficiale con spread",
+        "commonMistake": "Pensare che lo spread faccia una copia profonda anche degli oggetti annidati.",
+        "example": "const copia = [...originale]; // copia superficiale"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:18.429Z"
+    },
+    {
+      "id": "spread-rest-po-0002",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-destructuring",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["rest destructuring array", "spread array", "rimozione primo elemento"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const arr = [10, 20, 30, 40];\nconst [primo, ...resto] = arr;\nconsole.log(resto);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 20, 30, 40 ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 10, 20, 30, 40 ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 30, 40 ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 20, 30 ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il rest nel destructuring prende tutti gli elementi dopo il primo, quindi stampa [20, 30, 40].",
+        "whyCorrect": "Con `[primo, ...resto]`, la variabile `resto` contiene tutti i valori dopo il primo dell'array originale.",
+        "whyOthersWrong": {
+          "b": "Include anche il primo elemento, ma con questa sintassi il primo va in `primo`, non in `resto`.",
+          "c": "Con questa risposta si salta due elementi, mentre solo il primo viene escluso.",
+          "d": "Si ottengono solo due elementi, ma il rest prende tutti tranne il primo, quindi tre."
+        },
+        "concept": "Rest nel destructuring di array",
+        "commonMistake": "Credere che il rest raccolga solo gli ultimi due o che includa il primo elemento.",
+        "example": "const [a, ...b] = [1,2,3]; // b = [2,3]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:18.430Z"
+    },
+    {
+      "id": "spread-rest-po-0003",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["spread oggetti", "merge oggetti", "property overriding"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const base = { a: 1, b: 2 };\nconst extra = { b: 3, c: 4 };\nconst unito = { ...base, ...extra };\nconsole.log(unito);",
+      "options": [
+        {
+          "id": "a",
+          "text": "{ a: 1, b: 3, c: 4 }"
+        },
+        {
+          "id": "b",
+          "text": "{ a: 1, b: 2, c: 4 }"
+        },
+        {
+          "id": "c",
+          "text": "{ b: 3, c: 4 }"
+        },
+        {
+          "id": "d",
+          "text": "{ a: 1, b: 2, b: 3, c: 4 }"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le proprietà duplicate vengono sovrascritte da quelle in `extra`, quindi `b` vale 3.",
+        "whyCorrect": "Quando si usano più spread su oggetti, le proprietà più a destra sovrascrivono quelle precedenti, quindi `b` prende il valore 3.",
+        "whyOthersWrong": {
+          "b": "Qui `b` non viene sovrascritta, ma in realtà la seconda occorrenza di `b` sovrascrive la prima.",
+          "c": "Così si perdono le proprietà di `base`, mentre lo spread le include comunque.",
+          "d": "Gli oggetti non possono avere due proprietà con lo stesso nome, l'ultima sovrascrive la precedente."
+        },
+        "concept": "Spread per unire oggetti",
+        "commonMistake": "Non sapere che le proprietà duplicate vengono sovrascritte dall'ultimo spread.",
+        "example": "const c = { ...a, ...b };"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:18.430Z"
+    },
+    {
+      "id": "spread-rest-po-0004",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["spread array", "costruzione nuovo array", "ordine"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const a = [1, 2];\nconst b = [3, ...a, 4];\nconsole.log(b);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 3, 1, 2, 4 ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 1, 2, 3, 4 ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 3, [1,2], 4 ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 3, 2, 1, 4 ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread espande gli elementi di `a` in posizione, ottenendo [3, 1, 2, 4].",
+        "whyCorrect": "Con lo spread, ciascun elemento di `a` viene inserito separatamente tra 3 e 4, rispettando l'ordine.",
+        "whyOthersWrong": {
+          "b": "Ordine sbagliato: qui 3 viene dopo gli elementi di `a`, ma nel codice viene prima.",
+          "c": "Lo spread non inserisce l'array come nested, ma ne espande i valori.",
+          "d": "L'ordine degli elementi è invertito rispetto a quello originale."
+        },
+        "concept": "Spread array con altri valori",
+        "commonMistake": "Non notare che lo spread espande l'array, non lo inserisce come elemento singolo.",
+        "example": "const b = [1, ...[2,3], 4]; // [1,2,3,4]"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:18.431Z"
+    },
+    {
+      "id": "spread-rest-po-0006",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-params",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": ["parametri rest", "funzioni variadiche", "array di argomenti"],
+      "prompt": "Cosa stampa questo codice che usa i parametri rest in una funzione?",
+      "code": "function somma(primo, ...altri) {\n  return altri.reduce((tot, n) => tot + n, primo);\n}\nconsole.log(somma(4, 2, 3));",
+      "options": [
+        {
+          "id": "a",
+          "text": "9"
+        },
+        {
+          "id": "b",
+          "text": "7"
+        },
+        {
+          "id": "c",
+          "text": "4"
+        },
+        {
+          "id": "d",
+          "text": "5"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il parametro `primo` prende 4, `altri` è [2, 3], che vengono sommati partendo da 4.",
+        "whyCorrect": "La funzione prende il primo argomento come valore iniziale e usa rest per raccogliere gli altri in un array. Viene calcolato 4 + 2 + 3 = 9.",
+        "whyOthersWrong": {
+          "b": "Qui si sommano solo 4 + 3, probabilmente non si è capito che entrambi 2 e 3 vanno sommati al valore iniziale.",
+          "c": "Si ottiene 4 se si pensa che l'array `altri` sia vuoto, ma qui contiene 2 e 3.",
+          "d": "Questo risultato deriva forse da 2 + 3, ignorando il parametro `primo` come valore iniziale."
+        },
+        "concept": "Rest nei parametri di funzione",
+        "commonMistake": "Dimenticare che il primo parametro non è incluso nell'array rest.",
+        "example": "function foo(a, ...rest) { /* rest è array */ }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:25:28.078Z"
+    }
+  ]
+}

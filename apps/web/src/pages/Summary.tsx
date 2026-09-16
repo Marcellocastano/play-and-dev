@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { Icon } from '../components/ui/Icon';
+import { RichText } from '../components/ui/RichText';
 import { StatTile } from '../components/ui/StatTile';
 import { useProgressStore } from '../state/progressStore';
 import { useSessionStore } from '../state/sessionStore';
@@ -185,9 +186,9 @@ export function Summary() {
                     </span>
                     <div>
                       <strong>
-                        {i + 1}. {q?.prompt}
+                        {i + 1}. {q ? <RichText text={q.prompt} /> : null}
                       </strong>
-                      <p>{q?.explanation.short}</p>
+                      <p>{q ? <RichText text={q.explanation.short} /> : null}</p>
                     </div>
                   </li>
                 );

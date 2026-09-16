@@ -1,0 +1,93 @@
+{
+  "topicId": "spread-rest",
+  "questions": [
+    {
+      "id": "spread-rest-po-0032",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["spread array", "shallow copy", "modifica array annidato"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const dati = [{ x: 1 }, { y: 2 }];\nconst copia = [...dati];\ncopia[0].x = 42;\nconsole.log(dati[0].x);\nconsole.log(copia === dati);\nconsole.log(copia[0] === dati[0]);",
+      "options": [
+        {
+          "id": "a",
+          "text": "42\nfalse\ntrue"
+        },
+        {
+          "id": "b",
+          "text": "1\ntrue\ntrue"
+        },
+        {
+          "id": "c",
+          "text": "1\nfalse\nfalse"
+        },
+        {
+          "id": "d",
+          "text": "42\nfalse\nfalse"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread copia l'array ma non gli oggetti interni, quindi modificare `copia[0].x` modifica anche `dati[0].x`. Gli array sono distinti, ma gli oggetti all'interno sono condivisi.",
+        "whyCorrect": "Lo spread crea una copia superficiale dell'array, quindi `copia !== dati`, ma gli oggetti al loro interno sono gli stessi (`copia[0] === dati[0]`). Modificando una proprietà interna si cambia il riferimento condiviso, quindi la modifica appare in entrambi.",
+        "whyOthersWrong": {
+          "b": "`copia` e `dati` sono due array distinti, quindi `copia === dati` è falso. Inoltre, modificare `copia[0].x` imposta anche `dati[0].x` a 42, non 1.",
+          "c": "La copia con spread è superficiale: sia l'array che gli oggetti interni hanno riferimenti diversi solo per l'array, non per gli oggetti. Quindi `copia[0] === dati[0]` è vero.",
+          "d": "Anche se `copia[0].x` viene cambiato, l'oggetto interno è lo stesso di `dati[0]`, quindi `copia[0] === dati[0]` è vero, non falso."
+        },
+        "concept": "Spread su array e oggetti",
+        "commonMistake": "Credere che lo spread effettui una copia profonda sugli array di oggetti.",
+        "example": "const copia = [...originale]; // copia superficiale"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:48:25.040Z"
+    },
+    {
+      "id": "spread-rest-po-0033",
+      "topicId": "spread-rest",
+      "subtopicId": "spread-rest-spread",
+      "type": "predict-output",
+      "difficulty": "hard",
+      "skills": ["spread array", "spread oggetto", "shallow copy"],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const persona = { nome: 'Luca', hobby: ['tennis', 'scacchi'] };\nconst copia = { ...persona };\ncopia.hobby.push('yoga');\nconsole.log(persona.hobby);\nconsole.log(copia === persona);\nconsole.log(copia.hobby === persona.hobby);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 'tennis', 'scacchi', 'yoga' ]\nfalse\ntrue"
+        },
+        {
+          "id": "b",
+          "text": "[ 'tennis', 'scacchi', 'yoga' ]\ntrue\ntrue"
+        },
+        {
+          "id": "c",
+          "text": "[ 'tennis', 'scacchi' ]\nfalse\nfalse"
+        },
+        {
+          "id": "d",
+          "text": "[ 'tennis', 'scacchi', 'yoga' ]\nfalse\nfalse"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Lo spread copia solo il primo livello: `copia` e `persona` sono oggetti diversi, ma l'array `hobby` al loro interno resta condiviso. Quindi aggiungendo 'yoga' la modifica si riflette su entrambi.",
+        "whyCorrect": "Con lo spread l'oggetto esterno viene copiato superficialmente: `copia` e `persona` sono oggetti distinti (`false`), ma la proprietà `hobby` fa riferimento allo stesso array per entrambi (`true`). Per questo la modifica si riflette su entrambi.",
+        "whyOthersWrong": {
+          "b": "Gli oggetti `copia` e `persona` non sono uguali: lo spread crea un nuovo oggetto, quindi il confronto con `===` restituisce `false`. Solo l'array `hobby` rimane condiviso.",
+          "c": "Lo spread non effettua una copia profonda: quando si aggiunge 'yoga' a `copia.hobby`, anche `persona.hobby` viene modificato. L'array mostrato sarà arricchito, non quello originale.",
+          "d": "L'array `hobby` rimane condiviso tra i due oggetti dopo la copia superficiale, ma gli oggetti esterni non sono uguali con `===`, quindi la terza riga stampa `true`, non `false`."
+        },
+        "concept": "Spread copia superficiale",
+        "commonMistake": "Aspettarsi che lo spread copi anche gli oggetti o array annidati, mentre in realtà crea solo una copia del primo livello.",
+        "example": "const nuovo = { ...vecchio }; // copia solo le proprietà, non gli oggetti annidati"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:48:29.523Z"
+    }
+  ]
+}

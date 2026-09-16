@@ -1,0 +1,137 @@
+{
+  "topicId": "string-methods-advanced",
+  "questions": [
+    {
+      "id": "string-methods-advanced-fg-0018",
+      "topicId": "string-methods-advanced",
+      "subtopicId": "string-methods-advanced-split-join",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["split", "array"],
+      "prompt": "Completa il codice per ottenere un array con ogni carattere della stringa 'gatto'.",
+      "code": "const lettere = 'gatto'.___;\nconsole.log(lettere);",
+      "options": [
+        {
+          "id": "a",
+          "text": "split('')"
+        },
+        {
+          "id": "b",
+          "text": "split()"
+        },
+        {
+          "id": "c",
+          "text": "split(' ')"
+        },
+        {
+          "id": "d",
+          "text": "split(',')"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Usando split('') ottieni ogni carattere della stringa come elemento dell'array.",
+        "whyCorrect": "split('') divide la stringa su ogni carattere, quindi 'gatto' diventa ['g','a','t','t','o'].",
+        "whyOthersWrong": {
+          "b": "split() senza argomenti restituisce un array con la stringa intera come unico elemento, quindi ottieni ['gatto'].",
+          "c": "split(' ') cerca uno spazio come separatore, ma 'gatto' non ne contiene: avrai di nuovo ['gatto'].",
+          "d": "split(',') divide solo dove trova una virgola, ma qui non ci sono virgole: il risultato è ancora ['gatto']."
+        },
+        "concept": "split con separatore vuoto",
+        "commonMistake": "Dimenticare che split senza argomenti non divide in caratteri.",
+        "example": "'ciao'.split('') // ['c', 'i', 'a', 'o']"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:48:32.441Z"
+    },
+    {
+      "id": "string-methods-advanced-fg-0020",
+      "topicId": "string-methods-advanced",
+      "subtopicId": "string-methods-advanced-split-join",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["join"],
+      "prompt": "Completa il codice per ottenere la stringa 'a-b-c' da un array di lettere.",
+      "code": "const array = ['a', 'b', 'c'];\nconst risultato = array.___;\nconsole.log(risultato);",
+      "options": [
+        {
+          "id": "a",
+          "text": "join('-')"
+        },
+        {
+          "id": "b",
+          "text": "join()"
+        },
+        {
+          "id": "c",
+          "text": "split('-')"
+        },
+        {
+          "id": "d",
+          "text": "concat('-')"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "join('-') unisce gli elementi mettendo un trattino tra ciascuno.",
+        "whyCorrect": "join('-') concatena gli elementi separandoli con '-', ottenendo 'a-b-c'.",
+        "whyOthersWrong": {
+          "b": "join() senza argomenti usa la virgola come separatore, producendo 'a,b,c', non 'a-b-c'.",
+          "c": "split('-') è un metodo delle stringhe, non degli array: su array lancia TypeError.",
+          "d": "concat('-') aggiunge la stringa '-' come nuovo elemento, risultato: ['a', 'b', 'c', '-']."
+        },
+        "concept": "join con separatore personalizzato",
+        "commonMistake": "Dimenticare di passare il separatore corretto a join.",
+        "example": "['uno', 'due'].join(',') // 'uno,due'"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:48:32.442Z"
+    },
+    {
+      "id": "string-methods-advanced-fg-0021",
+      "topicId": "string-methods-advanced",
+      "subtopicId": "string-methods-advanced-split-join",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["split", "riconoscere uso del separatore"],
+      "prompt": "Completa il codice per ottenere ['gatto', 'cane'] dalla stringa 'gatto-cane'.",
+      "code": "const animali = 'gatto-cane';\nconst arr = animali.split(___);",
+      "options": [
+        {
+          "id": "a",
+          "text": "'-'"
+        },
+        {
+          "id": "b",
+          "text": "''"
+        },
+        {
+          "id": "c",
+          "text": "','"
+        },
+        {
+          "id": "d",
+          "text": "undefined"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il separatore '-' permette di dividere la stringa in due parti dove compare il trattino.",
+        "whyCorrect": "Usando '-' come separatore, il metodo split divide la stringa in corrispondenza del trattino, producendo l'array ['gatto', 'cane'].",
+        "whyOthersWrong": {
+          "b": "Con la stringa vuota come separatore, split divide tra ogni carattere: si ottiene un array con tutte le lettere singole, non le parole.",
+          "c": "Con ',' come separatore, split non trova nessuna virgola, quindi restituisce un array con la stringa intera, senza suddividerla.",
+          "d": "Passando undefined, split non suddivide affatto la stringa e restituisce un array contenente solo il valore originale senza divisioni."
+        },
+        "concept": "split con separatore corretto",
+        "commonMistake": "Dimenticare di specificare il carattere che separa le parti nella stringa.",
+        "example": "'a:b:c'.split(':') // ['a', 'b', 'c']"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:48:38.527Z"
+    }
+  ]
+}

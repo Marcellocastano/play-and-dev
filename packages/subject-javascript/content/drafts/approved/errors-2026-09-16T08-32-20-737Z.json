@@ -1,0 +1,181 @@
+{
+  "topicId": "errors",
+  "questions": [
+    {
+      "id": "errors-fg-0009",
+      "topicId": "errors",
+      "subtopicId": "errors-throw",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["creazione Error", "uso di throw"],
+      "prompt": "Completa la riga per sollevare un errore generico con il messaggio 'Errore di accesso'.",
+      "code": "___ new Error('Errore di accesso');",
+      "options": [
+        {
+          "id": "a",
+          "text": "throw"
+        },
+        {
+          "id": "b",
+          "text": "raise"
+        },
+        {
+          "id": "c",
+          "text": "except"
+        },
+        {
+          "id": "d",
+          "text": "error"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La parola chiave per sollevare errori in JavaScript è `throw`.",
+        "whyCorrect": "In JavaScript si usa `throw` per sollevare (lanciare) un errore e interrompere il flusso normale di esecuzione.",
+        "whyOthersWrong": {
+          "b": "`raise` è usato in altri linguaggi come Python, ma non funziona in JavaScript.",
+          "c": "`except` serve in Python per gestire, non sollevare errori; in JavaScript non è riconosciuto.",
+          "d": "`error` non è una parola chiave: bisogna scrivere `throw` per lanciare l’eccezione."
+        },
+        "concept": "Throw e oggetto Error",
+        "commonMistake": "Confondere la sintassi di altri linguaggi con quella di JavaScript.",
+        "example": "throw new Error('qualcosa è andato storto');"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:13.360Z"
+    },
+    {
+      "id": "errors-fg-0010",
+      "topicId": "errors",
+      "subtopicId": "errors-throw",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["creazione Error", "informazioni su Error"],
+      "prompt": "Completa l’istruzione per mostrare solo il messaggio dell’errore appena catturato.",
+      "code": "try {\n  throw new Error('Messaggio di errore');\n} catch (e) {\n  console.log(e.___);\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "message"
+        },
+        {
+          "id": "b",
+          "text": "msg"
+        },
+        {
+          "id": "c",
+          "text": "text"
+        },
+        {
+          "id": "d",
+          "text": "desc"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La proprietà standard per il testo dell’errore è `message`.",
+        "whyCorrect": "La proprietà `message` dell’oggetto Error contiene il testo fornito in fase di creazione.",
+        "whyOthersWrong": {
+          "b": "`msg` non è una proprietà standard dell’oggetto Error; viene spesso usata in altri contesti ma non qui.",
+          "c": "`text` non è una proprietà di default di Error in JavaScript.",
+          "d": "`desc` non ha alcun ruolo negli oggetti Error standard di JavaScript."
+        },
+        "concept": "Proprietà Error",
+        "commonMistake": "Assumere che la proprietà si chiami come in altri linguaggi o come abbreviazione.",
+        "example": "console.log(e.message);"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:13.360Z"
+    },
+    {
+      "id": "errors-fg-0011",
+      "topicId": "errors",
+      "subtopicId": "errors-native",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["RangeError", "errori nativi"],
+      "prompt": "Completa la riga per generare un errore se l’indice richiesto è fuori dal range consentito.",
+      "code": "if (indice < 0 || indice >= array.length) {\n  throw new ___('Indice fuori range');\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "RangeError"
+        },
+        {
+          "id": "b",
+          "text": "IndexError"
+        },
+        {
+          "id": "c",
+          "text": "LimitError"
+        },
+        {
+          "id": "d",
+          "text": "BoundaryError"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "RangeError segnala valori fuori dagli intervalli leciti.",
+        "whyCorrect": "`RangeError` è l’errore previsto in JavaScript per valori numerici al di fuori dei limiti consentiti.",
+        "whyOthersWrong": {
+          "b": "`IndexError` è tipico di Python, ma non esiste in JavaScript.",
+          "c": "`LimitError` non è una classe standard di errore in JavaScript.",
+          "d": "`BoundaryError` potrebbe sembrare plausibile ma non è presente tra gli errori nativi."
+        },
+        "concept": "Errori standard: RangeError",
+        "commonMistake": "Cercare classi di errore simili a quelle di altri linguaggi.",
+        "example": "throw new RangeError('indice non valido');"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:13.361Z"
+    },
+    {
+      "id": "errors-fg-0013",
+      "topicId": "errors",
+      "subtopicId": "errors-try-catch",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": ["try/catch/finally", "cleanup risorse"],
+      "prompt": "Completa il codice per eseguire sempre la funzione chiudiConnessione, sia che avvenga un errore sia che tutto vada a buon fine.",
+      "code": "try {\n  inviaDati();\n} catch (e) {\n  console.log('Errore: ' + e.message);\n} ___ {\n  chiudiConnessione();\n}",
+      "options": [
+        {
+          "id": "a",
+          "text": "finally"
+        },
+        {
+          "id": "b",
+          "text": "atLast"
+        },
+        {
+          "id": "c",
+          "text": "end"
+        },
+        {
+          "id": "d",
+          "text": "after"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La clausola finally viene sempre eseguita.",
+        "whyCorrect": "La parola chiave finally permette di eseguire codice sia dopo il successo che dopo un errore, garantendo il cleanup delle risorse.",
+        "whyOthersWrong": {
+          "b": "atLast non è una parola chiave riconosciuta da JavaScript, quindi genera un errore di sintassi.",
+          "c": "end non esiste nella sintassi di try/catch/finally: non viene riconosciuta e causa errore.",
+          "d": "after non è una clausola valida in JavaScript in questo contesto, quindi è un errore di sintassi."
+        },
+        "concept": "try/catch/finally",
+        "commonMistake": "Confondere la sintassi delle clausole di gestione errori.",
+        "example": "try { ... } finally { risorsa.chiudi(); }"
+      },
+      "source": "ai",
+      "model": "gpt-4.1",
+      "createdAt": "2026-09-16T08:32:20.736Z"
+    }
+  ]
+}
