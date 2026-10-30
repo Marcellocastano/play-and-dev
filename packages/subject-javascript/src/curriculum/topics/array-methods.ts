@@ -8,15 +8,27 @@ export const arrayMethodsTopic: Topic = {
   overview:
     '`map`, `filter`, `find` e `reduce` trasformano e interrogano gli array senza mutarli. Sono il cuore della programmazione funzionale in JavaScript e sostituiscono la maggior parte dei cicli for.',
   subtopics: [
-    { id: 'array-methods-map', name: 'map', overview: 'Trasforma ogni elemento e ritorna un nuovo array.' },
-    { id: 'array-methods-filter-find', name: 'filter e find', overview: 'Selezionare elementi che soddisfano una condizione.' },
-    { id: 'array-methods-reduce', name: 'reduce', overview: 'Comprimere un array in un singolo valore.' },
+    {
+      id: 'array-methods-map',
+      name: 'map',
+      overview: 'Trasforma ogni elemento e ritorna un nuovo array.',
+    },
+    {
+      id: 'array-methods-filter-find',
+      name: 'filter e find',
+      overview: 'Selezionare elementi che soddisfano una condizione.',
+    },
+    {
+      id: 'array-methods-reduce',
+      name: 'reduce',
+      overview: 'Comprimere un array in un singolo valore.',
+    },
   ],
   learningObjectives: [
     'Usare map per trasformazioni elemento per elemento',
     'Usare filter e find per selezioni',
     'Usare reduce per aggregazioni',
-    'Ricordare che questi metodi non mutano l\'array originale',
+    "Ricordare che questi metodi non mutano l'array originale",
   ],
   commonMistakes: [
     'Dimenticare il return nella callback di map',

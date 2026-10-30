@@ -1,7 +1,10 @@
+import type { QuestionFormat } from '../models/index.js';
+
 export interface QuestionTypeDefinition {
   id: string;
   label: string;
   requiresCode: boolean;
+  format: QuestionFormat;
 }
 
 export class QuestionTypeRegistry {
@@ -30,17 +33,23 @@ export class QuestionTypeRegistry {
 }
 
 export const PHASE1_QUESTION_TYPES: QuestionTypeDefinition[] = [
-  { id: 'multiple-choice', label: 'Scelta multipla', requiresCode: false },
-  { id: 'predict-output', label: "Prevedi l'output", requiresCode: true },
-  { id: 'find-the-bug', label: 'Trova il bug', requiresCode: true },
-  { id: 'fill-the-gap', label: 'Completa il codice', requiresCode: true },
-  { id: 'compare', label: 'Confronta', requiresCode: false },
-  { id: 'best-method', label: 'Metodo migliore', requiresCode: false },
+  { id: 'multiple-choice', label: 'Scelta multipla', requiresCode: false, format: 'choice' },
+  { id: 'predict-output', label: "Prevedi l'output", requiresCode: true, format: 'choice' },
+  { id: 'find-the-bug', label: 'Trova il bug', requiresCode: true, format: 'choice' },
+  { id: 'fill-the-gap', label: 'Completa il codice', requiresCode: true, format: 'choice' },
+  { id: 'compare', label: 'Confronta', requiresCode: false, format: 'choice' },
+  { id: 'best-method', label: 'Metodo migliore', requiresCode: false, format: 'choice' },
+];
+
+export const GAME_QUESTION_TYPES: QuestionTypeDefinition[] = [
+  { id: 'categorize', label: 'Categorizza', requiresCode: false, format: 'categorize' },
+  { id: 'match', label: 'Abbina', requiresCode: false, format: 'match' },
+  { id: 'true-false', label: 'Vero o falso', requiresCode: false, format: 'true-false' },
 ];
 
 export function createDefaultQuestionTypeRegistry(): QuestionTypeRegistry {
   const registry = new QuestionTypeRegistry();
-  for (const def of PHASE1_QUESTION_TYPES) registry.register(def);
+  for (const def of [...PHASE1_QUESTION_TYPES, ...GAME_QUESTION_TYPES]) registry.register(def);
   return registry;
 }
 

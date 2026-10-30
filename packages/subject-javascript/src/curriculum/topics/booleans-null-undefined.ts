@@ -8,9 +8,21 @@ export const booleansNullUndefinedTopic: Topic = {
   overview:
     'I booleani (`true`/`false`) governano le condizioni; `undefined` indica un valore mai assegnato, `null` un\'assenza intenzionale. Ogni valore ha una "verità" implicita: `0`, `""`, `null`, `undefined` e `NaN` sono falsy, tutto il resto è truthy.',
   subtopics: [
-    { id: 'bnu-booleans', name: 'true e false', overview: 'Il tipo boolean e la negazione con `!`.' },
-    { id: 'bnu-truthy-falsy', name: 'Truthy e falsy', overview: 'Quali valori si comportano come falso nelle condizioni.' },
-    { id: 'bnu-null-undefined', name: 'null vs undefined', overview: 'Due modi diversi di dire "nessun valore".' },
+    {
+      id: 'bnu-booleans',
+      name: 'true e false',
+      overview: 'Il tipo boolean e la negazione con `!`.',
+    },
+    {
+      id: 'bnu-truthy-falsy',
+      name: 'Truthy e falsy',
+      overview: 'Quali valori si comportano come falso nelle condizioni.',
+    },
+    {
+      id: 'bnu-null-undefined',
+      name: 'null vs undefined',
+      overview: 'Due modi diversi di dire "nessun valore".',
+    },
   ],
   learningObjectives: [
     'Usare valori booleani e la negazione !',

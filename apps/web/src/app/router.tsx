@@ -11,6 +11,9 @@ const SessionPage = lazy(() =>
   import('../pages/Session').then((m) => ({ default: m.SessionPage })),
 );
 const Summary = lazy(() => import('../pages/Summary').then((m) => ({ default: m.Summary })));
+const Playground = lazy(() =>
+  import('../pages/Playground').then((m) => ({ default: m.Playground })),
+);
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +32,7 @@ export const router = createBrowserRouter([
     ),
     children: [
       { path: '/', element: <Home /> },
+      ...(import.meta.env.DEV ? [{ path: '/playground', element: <Playground /> }] : []),
       { path: '/:subjectId', element: <Dashboard /> },
       { path: '/:subjectId/setup', element: <SessionSetup /> },
       { path: '/:subjectId/session', element: <SessionPage /> },

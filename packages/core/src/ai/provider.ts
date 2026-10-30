@@ -1,4 +1,5 @@
 import type {
+  AnswerResponse,
   GeneratedQuestion,
   LearningRecommendation,
   Question,
@@ -15,7 +16,7 @@ export interface GenerateQuestionRequest {
 
 export interface GenerateExplanationRequest {
   question: Question;
-  selectedOptionId: string;
+  response: AnswerResponse;
 }
 
 export interface AnalyzeSessionRequest {

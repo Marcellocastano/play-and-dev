@@ -11,9 +11,16 @@ import type {
   UserProgress,
 } from '../models/index.js';
 import { generateQuestion } from '../question/generator.js';
+import { toTextFormat } from '../question/grade.js';
 import { recentVariantKeys, type QuestionHistoryEntry } from '../question/antiDup.js';
 import { maxStreak, xpForSession } from '../scoring/index.js';
 import { id, now, seededRandom, shuffle } from '../utils/index.js';
+
+export const TEXT_FORMAT_SHARE: Record<LevelId, number> = {
+  beginner: 0.25,
+  intermediate: 0.4,
+  advanced: 0.5,
+};
 
 export const DIFFICULTY_MIX: Record<LevelId, Record<Difficulty, number>> = {
   beginner: { easy: 0.6, medium: 0.3, hard: 0.1 },
@@ -23,6 +30,9 @@ export const DIFFICULTY_MIX: Record<LevelId, Record<Difficulty, number>> = {
 
 const MAX_VARIANT_ATTEMPTS = 30;
 
+/** Max questions per session sharing the same topic, subtopic and question type. */
+export const MAX_SIMILAR_PER_SESSION = 2;
+
 export interface ComposeSessionInput {
   subject: SubjectDefinition;
   levelId: LevelId;
@@ -31,13 +41,17 @@ export interface ComposeSessionInput {
   history?: readonly QuestionHistoryEntry[];
   seed: number;
   count?: number;
+  textFormatShare?: number;
+  /** Template pool to draw from; defaults to `subject.templates`. */
+  templates?: readonly QuestionTemplate[];
+}
+
+export function similarityKey(q: Pick<Question, 'topicId' | 'subtopicId' | 'type'>): string {
+  return `${q.topicId}:${q.subtopicId}:${q.type}`;
 }
 
 /** Largest-remainder apportionment of `count` over the mix; sums to `count`. */
-export function difficultyCounts(
-  levelId: LevelId,
-  count: number,
-): Record<Difficulty, number> {
+export function difficultyCounts(levelId: LevelId, count: number): Record<Difficulty, number> {
   const mix = DIFFICULTY_MIX[levelId];
   const diffs: Difficulty[] = ['easy', 'medium', 'hard'];
   const raw = diffs.map((d) => ({ d, exact: mix[d] * count }));
@@ -49,7 +63,7 @@ export function difficultyCounts(
   }
   const byRemainder = raw
     .slice()
-    .sort((a, b) => (b.exact - Math.floor(b.exact)) - (a.exact - Math.floor(a.exact)));
+    .sort((a, b) => b.exact - Math.floor(b.exact) - (a.exact - Math.floor(a.exact)));
   for (let i = 0; assigned < count; i = (i + 1) % byRemainder.length) {
     counts[byRemainder[i]!.d]++;
     assigned++;
@@ -83,18 +97,18 @@ function weightedOrder(ids: string[], weight: (id: string) => number, rng: () =>
 }
 
 /**
- * Pick `n` templates for one difficulty, cycling across topics so the
+ * Yields templates for one difficulty, cycling across topics so the
  * distribution is balanced. Each round-robin pass visits the topics in a
  * weighted-shuffle order (probability ∝ topicWeight), so low-mastery topics
  * are drawn earlier more often while the spread stays random.
- * Reuses templates (wrapping) when the pool is smaller than `n`.
+ * Within a topic each template is yielded up to `capacity` times (default 1);
+ * once the whole pool is exhausted it wraps and starts over.
  */
-function pickTemplates(
+function* templateSequence(
   pool: readonly QuestionTemplate[],
-  n: number,
   progress: UserProgress | undefined,
   rng: () => number,
-): QuestionTemplate[] {
+): Generator<QuestionTemplate> {
   const byTopic = new Map<string, QuestionTemplate[]>();
   for (const t of shuffle(pool, rng)) {
     const list = byTopic.get(t.topicId) ?? [];
@@ -102,18 +116,27 @@ function pickTemplates(
     byTopic.set(t.topicId, list);
   }
   const topicIds = [...byTopic.keys()];
-  const out: QuestionTemplate[] = [];
+  if (topicIds.length === 0) return;
   const cursor = new Map<string, number>();
-  while (out.length < n && topicIds.length > 0) {
+  const used = new Map<string, number>();
+  for (;;) {
+    let yielded = false;
     for (const topicId of weightedOrder(topicIds, (t) => topicWeight(t, progress), rng)) {
-      if (out.length >= n) break;
       const list = byTopic.get(topicId)!;
-      const i = cursor.get(topicId) ?? 0;
-      out.push(list[i % list.length]!);
-      cursor.set(topicId, i + 1);
+      const start = cursor.get(topicId) ?? 0;
+      for (let k = 0; k < list.length; k++) {
+        const t = list[(start + k) % list.length]!;
+        const n = used.get(t.id) ?? 0;
+        if (n >= (t.capacity ?? 1)) continue;
+        used.set(t.id, n + 1);
+        cursor.set(topicId, start + k + 1);
+        yielded = true;
+        yield t;
+        break;
+      }
     }
+    if (!yielded) used.clear();
   }
-  return out;
 }
 
 export function composeSession(input: ComposeSessionInput): Session {
@@ -128,7 +151,7 @@ export function composeSession(input: ComposeSessionInput): Session {
   const topicIds = new Set(
     subject.topics.filter((t) => t.levelId === levelId && levelTopicIds.has(t.id)).map((t) => t.id),
   );
-  const templates = subject.templates.filter((t) => topicIds.has(t.topicId));
+  const templates = (input.templates ?? subject.templates).filter((t) => topicIds.has(t.topicId));
   if (templates.length === 0) {
     throw new Error(`No templates for level ${levelId} of subject ${subject.id}`);
   }
@@ -159,26 +182,52 @@ export function composeSession(input: ComposeSessionInput): Session {
   }
 
   const usedVariants = new Set<string>();
+  const similar = new Map<string, number>();
   const questions: Question[] = [];
+  const textShare = input.textFormatShare ?? TEXT_FORMAT_SHARE[levelId];
+  let draws = 0;
+
+  // Strictness levels: 0 = unseen variant + similarity cap, 1 = unseen variant, 2 = anything.
+  const findVariant = (template: QuestionTemplate, level: number): Question | undefined => {
+    const draw = draws++;
+    if (level >= 2) return generateQuestion(template, seed * 31 + draw * 104729 + 99991);
+    for (let attemptIdx = 0; attemptIdx < MAX_VARIANT_ATTEMPTS; attemptIdx++) {
+      const candidate = generateQuestion(template, seed * 31 + attemptIdx * 7919 + draw * 104729);
+      if (recent.has(candidate.variantKey) || usedVariants.has(candidate.variantKey)) continue;
+      if (level === 0 && (similar.get(similarityKey(candidate)) ?? 0) >= MAX_SIMILAR_PER_SESSION) {
+        continue;
+      }
+      return candidate;
+    }
+    return undefined;
+  };
 
   for (const d of diffs) {
     const pool = poolByDifficulty.get(d) ?? [];
     if (pool.length === 0 || counts[d] === 0) continue;
-    const chosen = pickTemplates(pool, counts[d]!, progress, rng);
-    for (const template of chosen) {
-      let question: Question | undefined;
-      for (let attemptIdx = 0; attemptIdx < MAX_VARIANT_ATTEMPTS; attemptIdx++) {
-        const variantSeed = seed * 31 + attemptIdx * 7919 + questions.length * 104729;
-        const candidate = generateQuestion(template, variantSeed);
-        if (recent.has(candidate.variantKey) || usedVariants.has(candidate.variantKey)) continue;
-        question = candidate;
-        break;
+    const poolCapacity = pool.reduce((s, t) => s + (t.capacity ?? 1), 0);
+    const sequence = templateSequence(pool, progress, rng);
+    let level = 0;
+    let misses = 0;
+    for (let picked = 0; picked < counts[d];) {
+      const template = sequence.next().value!;
+      const found = findVariant(template, level);
+      if (!found) {
+        if (++misses >= poolCapacity) {
+          level++;
+          misses = 0;
+        }
+        continue;
       }
-      if (!question) {
-        question = generateQuestion(template, seed * 31 + questions.length * 104729 + 99991);
-      }
+      const question =
+        found.type === 'predict-output' && found.format === 'choice' && rng() < textShare
+          ? toTextFormat(found)
+          : found;
       usedVariants.add(question.variantKey);
+      const key = similarityKey(question);
+      similar.set(key, (similar.get(key) ?? 0) + 1);
       questions.push(question);
+      picked++;
     }
   }
 
@@ -227,6 +276,9 @@ export function summarizeSession(session: Session): SessionSummary {
     maxStreak: maxStreak(attempts),
     avgTimeMs: Math.round(avgTimeMs),
     bestTopics: ranked.slice(0, 3).map((r) => r.topicId),
-    worstTopics: ranked.slice(-3).reverse().map((r) => r.topicId),
+    worstTopics: ranked
+      .slice(-3)
+      .reverse()
+      .map((r) => r.topicId),
   };
 }

@@ -1,0 +1,950 @@
+{
+  "topicId": "variables",
+  "questions": [
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "let",
+        "const",
+        "var",
+        "syntax"
+      ],
+      "prompt": "Valuta la correttezza di queste frasi sull'uso delle parole chiave per dichiarare nuove variabili in JavaScript.",
+      "explanation": {
+        "short": "Ogni parola chiave ha regole sintattiche rigorose sull'inizializzazione e lo stile.",
+        "whyCorrect": "Bisogna conoscere i requisiti obbligatori imposti da `let` e `const` durante la dichiarazione.",
+        "why": {
+          "s0": "Omettere il valore iniziale è perfettamente consentito per le variabili `let`: il motore JavaScript assegna in automatico il valore speciale `undefined`.",
+          "s1": "La parola chiave `const` esige tassativamente un valore immediato durante la dichiarazione: tentare di posticiparlo genera un `SyntaxError` bloccante.",
+          "s2": "L'uso di `var` è oggi fortemente sconsigliato a causa delle sue regole di scope antiquate e imprevedibili, favorendo opzioni più rigorose come `let`.",
+          "s3": "JavaScript è sensibile alle maiuscole ma non impone alcuna costrizione sintattica che obblighi a scrivere i nomi delle variabili in maiuscolo."
+        },
+        "concept": "Regole di dichiarazione variabili"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Si può dichiarare una variabile con let senza assegnarle immediatamente un valore di partenza",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "La parola chiave const permette di posticipare l'assegnazione del valore a un secondo momento",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "In JavaScript moderno si raccomanda di evitare completamente la vecchia parola chiave var",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Le variabili dichiarate con let devono obbligatoriamente essere scritte con lettere maiuscole",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0106",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "identifiers",
+        "syntax"
+      ],
+      "prompt": "Determina la veridicità di questi fatti riguardo le regole per scegliere nomi validi per gli identificatori.",
+      "explanation": {
+        "short": "JavaScript impone regole severe su quali caratteri possono comporre il nome di una variabile.",
+        "whyCorrect": "Conoscere le eccezioni e i divieti evita noiosi errori di sintassi alla prima riga di codice.",
+        "why": {
+          "s0": "I numeri non possono mai apparire come primo carattere di un identificatore: avviare un nome con una cifra causa un `SyntaxError` in qualsiasi caso.",
+          "s1": "Il dollaro `$` e il trattino basso `_` godono di uno status speciale e rappresentano gli unici simboli speciali autorizzati all'inizio di un nome.",
+          "s2": "La specifica permette esplicitamente di impiegare la codifica Unicode completa negli identificatori, includendo le lettere accentate senza alcun errore.",
+          "s3": "Le parole riservate come `function`, `return` o `class` sono bloccate dal motore linguistico e impiegarle come nomi di variabile risulta in un errore."
+        },
+        "concept": "Identificatori validi in JavaScript"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Il nome di una variabile può iniziare con un numero se contiene almeno una lettera al suo interno",
+          "value": false
+        },
+        {
+          "id": "s1",
+          "text": "I simboli del dollaro e del trattino basso sono ammessi come primo carattere nel nome di una variabile",
+          "value": true
+        },
+        {
+          "id": "s2",
+          "text": "Le lettere accentate causano un arresto immediato del codice perché severamente vietate dalla sintassi",
+          "value": false
+        },
+        {
+          "id": "s3",
+          "text": "Le parole chiave riservate del linguaggio non possono essere utilizzate come nomi per le variabili",
+          "value": true
+        }
+      ],
+      "id": "variables-tf-0107",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "best-practices",
+        "let",
+        "const"
+      ],
+      "prompt": "Controlla la veridicità di queste dichiarazioni pratiche relative alle moderne convenzioni di programmazione.",
+      "explanation": {
+        "short": "Le buone pratiche mirano a rendere il codice prevedibile e al sicuro da mutazioni involontarie.",
+        "whyCorrect": "La scelta della parola chiave comunica subito le intenzioni del programmatore a chi legge il file.",
+        "why": {
+          "s0": "Scegliere `const` come regola base trasmette un chiaro segnale di immutabilità del legame, limitando i bug derivanti da sovrascritture impreviste.",
+          "s1": "Le parole chiave servono esclusivamente a comunicare l'intento strutturale allo sviluppatore e al motore, non possiedono effetti sull'ottimizzazione.",
+          "s2": "Assegnare una funzione anonima a una `const` previene che quella specifica etichetta logica venga accidentalmente riutilizzata per altri valori.",
+          "s3": "Omettere la parola chiave crea disastrose variabili globali implicite inquinando l'ambiente: lo strict mode interviene infatti per vietare tale pratica."
+        },
+        "concept": "Convenzioni d'uso let e const"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Gli sviluppatori dovrebbero preferire const per impostazione predefinita finché non serve riassegnare",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Inserire la parola let all'inizio di ogni file JavaScript ne migliora magicamente le prestazioni pure",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Le variabili destinate a memorizzare funzioni anonime dovrebbero solitamente essere dichiarate costanti",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Creare variabili omettendo del tutto le parole chiave è considerata una pratica moderna eccellente",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0108",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "multiple-declarations",
+        "syntax"
+      ],
+      "prompt": "Specifica quali delle seguenti regole sulle dichiarazioni raggruppate e multiple risultano descritte correttamente.",
+      "explanation": {
+        "short": "Le dichiarazioni multiple seguono sintassi compatte ma obbediscono alle solite regole di scope.",
+        "whyCorrect": "Valuta attentamente i conflitti di nome e le comodità offerte dalla sintassi della virgola.",
+        "why": {
+          "s0": "La sintassi ufficiale del linguaggio supporta pienamente l'uso della virgola per concatenare più identificatori sotto un'unica parola dichiarativa.",
+          "s1": "Ridichiarare lo stesso esatto identificatore `const` nel medesimo ambito scatena sempre un `SyntaxError` per violazione del vincolo di unicità.",
+          "s2": "Ambiti distinti formano bolle di isolamento separate: il motore linguistico le considera entità del tutto indipendenti pur avendo nomi identici.",
+          "s3": "Ogni costante concatenata sulla stessa riga necessita di un proprio assegnamento individuale esplicito tramite l'operatore di uguaglianza."
+        },
+        "concept": "Dichiarazioni multiple e conflitti"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Scrivere una sola parola chiave let permette di dichiarare più variabili separandole con delle virgole",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Dichiarare nuovamente una const nello stesso blocco per rinfrescarne il valore è un'operazione permessa",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Due blocchi di codice separati possono dichiarare ciascuno una propria variabile usando lo stesso nome",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Le costanti multiple dichiarate sulla medesima riga condividono obbligatoriamente lo stesso valore iniziale",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0109",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "globals",
+        "naming-conventions"
+      ],
+      "prompt": "Determina se queste affermazioni sulle convenzioni di denominazione e sulla visibilità globale sono veritiere.",
+      "explanation": {
+        "short": "Le regole di buon senso evitano collisioni e agevolano la lettura cooperativa del software.",
+        "whyCorrect": "L'eccesso di variabili esterne inquina l'ambiente condiviso, aumentando in modo esponenziale i difetti.",
+        "why": {
+          "s0": "L'ambito globale è uno spazio pubblico condiviso: riempirlo di etichette aumenta drasticamente la probabilità che due script pestino gli stessi nomi.",
+          "s1": "I dati trattenuti in memoria mediante `let` permangono in modo stabile e affidabile fino a quando la variabile non esce definitivamente dal proprio ciclo di vita.",
+          "s2": "Mentre altri linguaggi preferiscono usare i trattini bassi, la comunità JavaScript ha standardizzato storicamente la notazione che capitalizza le parole interne.",
+          "s3": "La dichiarazione `let` si impegna a limitare fortemente la visibilità restringendola al blocco locale, non certo a propagarla verso altri moduli."
+        },
+        "concept": "Inquinamento globale e stile"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Creare troppe variabili globali è sconsigliato perché aumenta il rischio di conflitti accidentali di nomi",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Le variabili dichiarate con let perdono il proprio valore automaticamente dopo il primo millisecondo",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "La convenzione camelCase rappresenta lo standard più diffuso in JavaScript per comporre i nomi composti",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Aggiungere la parola let permette magicamente di leggere una variabile da tutti i file del progetto",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0110",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "reassignment",
+        "let",
+        "const"
+      ],
+      "prompt": "Identifica quali di queste affermazioni sull'aggiornamento diretto del valore delle variabili sono esatte.",
+      "explanation": {
+        "short": "La differenza principale tra le due moderne parole chiave risiede proprio nella mutabilità del legame.",
+        "whyCorrect": "Capire se l'istruzione impone o meno un blocco sull'operatore di assegnamento è vitale.",
+        "why": {
+          "s0": "La parola chiave `let` nasce appositamente per ospitare dati temporanei che devono evolversi e mutare durante la regolare esecuzione del programma.",
+          "s1": "L'unico e solo scopo di `const` è blindare la riassegnazione: tentare di scavalcare questo muro protettivo sfocia sempre in un fatale `TypeError`.",
+          "s2": "Gli operatori di incremento tentano silenziosamente di scrivere un nuovo numero calcolato all'interno del contenitore, violando la regola ferrea delle costanti.",
+          "s3": "I tipi in JavaScript sono dinamici e fluidi: una variabile nata contenendo un numero può tranquillamente ospitare una stringa al passaggio successivo."
+        },
+        "concept": "Riassegnazione di base"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Una variabile introdotta con let accetta di ricevere un nuovo e diverso valore in qualsiasi istante",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Assegnare un nuovo valore diretto a una costante const genera immediatamente un errore irreversibile",
+          "value": true
+        },
+        {
+          "id": "s2",
+          "text": "Gli operatori matematici di incremento possono essere usati su costanti senza causare ostacoli",
+          "value": false
+        },
+        {
+          "id": "s3",
+          "text": "Il tipo di dato contenuto in una variabile let rimane bloccato e non può cambiare mediante assegnazione",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0111",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "compound-assignment",
+        "mutation"
+      ],
+      "prompt": "Scegli quali delle seguenti regole sull'aggiornamento dei dati tramite operatori composti risultano vere.",
+      "explanation": {
+        "short": "C'è una differenza tecnica tra riassegnare un identificatore e mutarne il contenuto strutturale.",
+        "whyCorrect": "Bisogna distinguere tra l'operatore di uguale che cambia il contenitore e i metodi che ne alterano l'interno.",
+        "why": {
+          "s0": "L'operatore combinato di addizione si limita a calcolare la somma e a riscriverla tranquillamente nella variabile modificabile senza provocare danni.",
+          "s1": "Le costanti bloccano il legame, ma gli array conservano la mutabilità dei loro contenuti interni tramite i normali metodi di manipolazione strutturale.",
+          "s2": "Intervenire su una proprietà interna non rompe il legame principale tra il nome della costante e la posizione in memoria del guscio dell'oggetto.",
+          "s3": "Il contatore di un tipico ciclo incrementa il proprio numero effettivo a ogni giro della ruota: l'uso di `const` farebbe schiantare il motore al primo aggiornamento."
+        },
+        "concept": "Mutazione vs Riassegnazione"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "L'operatore di addizione e assegnazione aggiorna regolarmente il valore di una variabile definita con let",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Un array dichiarato con const rifiuta permanentemente l'aggiunta di nuovi elementi tramite metodi push",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Modificare una singola proprietà di un oggetto assegnato originariamente a const è una mossa consentita",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Un ciclo che necessita di riassegnare il suo contatore ad ogni iterazione può utilizzare const senza ostacoli",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0112",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "const-behavior",
+        "primitive-vs-reference"
+      ],
+      "prompt": "Decidi se questi comportamenti descritti per la protezione garantita dalle costanti corrispondono al vero.",
+      "explanation": {
+        "short": "La parola chiave stabilisce le regole per l'operatore uguale, non la natura filosofica dei dati.",
+        "whyCorrect": "Analizzare i limiti operativi delle costanti chiarisce molti fraintendimenti sui dati complessi.",
+        "why": {
+          "s0": "Il termine costante in JavaScript si riferisce solo e soltanto all'impossibilità di usare l'operatore di assegnamento per sostituire l'intero blocco di dati.",
+          "s1": "Il valore ospitato può tranquillamente essere letto e sfruttato come base per innumerevoli altre espressioni, basta non cercare di sovrascriverlo.",
+          "s2": "Gli oggetti non vengono congelati strutturalmente dalla parola chiave: per raggiungere la reale immutabilità profonda servono specifici metodi dedicati.",
+          "s3": "Il motore linguistico sorveglia rigidamente le costanti e, di fronte al segno di uguale, reagisce istantaneamente scagliando una vistosa eccezione a schermo."
+        },
+        "concept": "Limiti del legame const"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Una dichiarazione costante impedisce unicamente la riassegnazione del legame verso un diverso valore",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Una volta che const riceve un numero non risulta più in alcun modo possibile impiegarlo in calcoli esterni",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Il contenuto di un oggetto dichiarato tramite const risulta intrinsecamente e profondamente intoccabile",
+          "value": false
+        },
+        {
+          "id": "s3",
+          "text": "Un tentativo palese di riassegnazione diretta su const viene bloccato dal motore lanciando un errore",
+          "value": true
+        }
+      ],
+      "id": "variables-tf-0113",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "assignment",
+        "type-coercion"
+      ],
+      "prompt": "Verifica quali di questi scenari descrivono regolarmente la mutazione e lo scambio dei dati in memoria.",
+      "explanation": {
+        "short": "I meccanismi di assegnamento determinano il flusso dei dati durante l'esecuzione.",
+        "whyCorrect": "L'operatore uguale agisce in maniera assoluta sostituendo il vecchio valore con quello appena valutato.",
+        "why": {
+          "s0": "Questa è l'esatta procedura standard per compiere l'aggiornamento: il precedente valore archiviato viene sovrascritto irreparabilmente dal nuovo.",
+          "s1": "La barriera di blocco non fa distinzioni tra i tipi di dati: si infuria persino se tenti ostinatamente di assegnarle lo stesso identico valore iniziale.",
+          "s2": "Ridichiarare scatenerebbe un conflitto di nomi letale: lo scambio avviene agilmente usando normali passaggi logici intermedi senza riutilizzare `let`.",
+          "s3": "Le strutture avanzate di spacchettamento permettono elegantemente di far defluire i dati estratti dentro contenitori malleabili precedentemente allestiti."
+        },
+        "concept": "Meccanismi di aggiornamento"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Scrivere il nome di una variabile let seguito dal segno uguale ne altera permanentemente il contenuto salvato",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Il tentativo di aggiornare una costante viene intercettato dal motore solo se il nuovo valore è di un tipo diverso",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Scambiare reciprocamente i valori tra due variabili let già attive richiede di ridichiararle entrambe da zero",
+          "value": false
+        },
+        {
+          "id": "s3",
+          "text": "La sintassi di destrutturazione può essere utilizzata per riassegnare comodamente le variabili già dichiarate",
+          "value": true
+        }
+      ],
+      "id": "variables-tf-0114",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "const",
+        "reassignment-errors"
+      ],
+      "prompt": "Conferma o smentisci queste proprietà relative alla protezione dei dati dalle sovrascritture accidentali.",
+      "explanation": {
+        "short": "Il motore difende il puntamento della costante rifiutando di scriverci sopra un nuovo riferimento.",
+        "whyCorrect": "La protezione si applica al contenitore principale non alla natura intrinseca di ciò che contiene.",
+        "why": {
+          "s0": "Il vincolo architettonico assicura indissolubilmente che l'etichetta testuale manterrà fedelmente la presa su quello specifico indirizzo di memoria.",
+          "s1": "Non esiste alcun obbligo di questo tipo: gli array vengono frequentemente e raccomandabilmente ospitati dentro etichette costanti per difenderne il puntamento.",
+          "s2": "Assegnare un contenitore strutturale fresco significa creare un puntamento di memoria del tutto inedito, infrangendo prepotentemente le regole del gioco.",
+          "s3": "Non importa cosa sia attualmente memorizzato: se il contenitore è flessibile, accetterà senza remore di sostituire la vecchia logica con qualsiasi nuovo dato."
+        },
+        "concept": "Protezione del riferimento cost"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Utilizzare const davanti a una variabile garantisce che il suo identificatore non venga puntato altrove",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Qualsiasi array JavaScript richiede obbligatoriamente di essere istanziato tramite l'utilizzo della parola let",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Sostituire interamente l'oggetto agganciato a una costante const con un altro nuovo oggetto è un'azione proibita",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Le funzioni freccia memorizzate dentro variabili let si bloccano irreparabilmente se ricevono una riassegnazione",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0115",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var-scope",
+        "hoisting"
+      ],
+      "prompt": "Analizza le seguenti descrizioni sul comportamento storico della dichiarazione mediante la parola chiave var.",
+      "explanation": {
+        "short": "Le regole di gestione legacy sono diametralmente opposte a quelle che disciplinano il codice moderno.",
+        "whyCorrect": "La mancanza di un vero perimetro nei blocchi semplici è la causa scatenante di innumerevoli bug storici.",
+        "why": {
+          "s0": "Questa parola chiave disubbidisce ciecamente alle semplici parentesi di un blocco logico diffondendosi fastidiosamente nello spazio esterno circostante.",
+          "s1": "Al contrario, è proprio l'attore protagonista di questo singolare fenomeno invisibile, venendo issata fisicamente in cima alla funzione dal compilatore.",
+          "s2": "L'interprete antico di JavaScript si mostrava stranamente permissivo inghiottendo docilmente le dichiarazioni ripetute ignorandone candidamente la ridondanza.",
+          "s3": "Il concetto stesso di isolamento tramite blocco logico era del tutto sconosciuto a questa parola chiave, che riconosceva esclusivamente i confini delle funzioni."
+        },
+        "concept": "Scope e comportamenti di var"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Una variabile dichiarata con var all'interno di un blocco condizionale resta visibile anche al di fuori di esso",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Utilizzare la parola var impedisce in maniera assoluta il meccanismo di sollevamento noto nel linguaggio",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Riscrivere la stessa variabile con var più volte all'interno del medesimo ambito non produce alcun arresto",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "La parola var è in grado di generare uno scope isolato per ogni singolo blocco di codice delimitato da graffe",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0116",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "hoisting"
+      ],
+      "prompt": "Giudica la validità di queste conseguenze operative causate dall'utilizzo del vecchio standard globale.",
+      "explanation": {
+        "short": "Le stravaganti regole del passato prevedono assegnazioni implicite e inquinamento dell'ambiente generale.",
+        "whyCorrect": "Doveroso ricordare l'interazione perniciosa con l'oggetto globale tipica dell'uso in browser.",
+        "why": {
+          "s0": "Nel browser, posizionare l'etichetta fuori da tutto provoca l'immediata sporcizia dell'oggetto madre `window`, creando vulnerabili collisioni inaspettate.",
+          "s1": "Le mura di una funzione rappresentano l'unico e invalicabile argine conosciuto dal costrutto storico per fermarne la pervasiva propagazione verso l'alto.",
+          "s2": "Il nome della variabile viene proiettato in cima dallo sviluppatore invisibile del motore ma il suo valore vitale resta drammaticamente staccato e assente.",
+          "s3": "Lungi dal segnalare il pasticcio logico, il permissivo interprete tradizionale procede indisturbato unendo tacitamente le due presenze sotto lo stesso tetto."
+        },
+        "concept": "Var globale e sollevamento"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Dichiarare var nel contesto globale dello script la aggancia automaticamente come proprietà dell'oggetto globale",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Scrivere una variabile var all'interno di una funzione la rende magicamente accessibile anche all'esterno di essa",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Leggere il contenuto di una variabile var prima della sua effettiva riga di dichiarazione restituisce undefined",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Il motore lancia un errore di sintassi se rileva due dichiarazioni var omonime in parti diverse del file",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0117",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var-scope",
+        "block-scope"
+      ],
+      "prompt": "Individua le affermazioni corrette riguardanti l'isolamento delle variabili tradizionali nei costrutti di codice.",
+      "explanation": {
+        "short": "L'introduzione dei costrutti moderni è servita essenzialmente a correggere questa colossale falla di sicurezza.",
+        "whyCorrect": "La fuga sfrenata dell'identificatore fuori dalle parentesi condizionali rovina l'incapsulamento.",
+        "why": {
+          "s0": "Tutti i contatori dichiarati storicamente nei cicli travasavano sgradevolmente il proprio accumulo nell'ambito superiore, causando spiacevoli sovrascritture.",
+          "s1": "L'unica entità architettonica rispettata e temuta da questo anarchico costrutto è la struttura isolante garantita nativamente dall'esecuzione di una funzione.",
+          "s2": "I nuovi standard sono nati con l'esplicito intento chirurgico di chiudere le crepe perimetrali, incatenando indissolubilmente i dati alle parentesi locali.",
+          "s3": "Qualsiasi recinzione formata da un blocco decisionale risulta totalmente invisibile al radar esplorativo di questo obsoleto metodo di memorizzazione dei dati."
+        },
+        "concept": "Isolamento assente dei blocchi"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Le parentesi graffe di un comune ciclo riescono a isolare e nascondere perfettamente una variabile var interna",
+          "value": false
+        },
+        {
+          "id": "s1",
+          "text": "Il corpo di una funzione costituisce un confine invalicabile e sicuro anche per le variabili create tramite var",
+          "value": true
+        },
+        {
+          "id": "s2",
+          "text": "Sostituire var con let all'interno di un ambito locale ne previene efficacemente la fuoriuscita verso l'esterno",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Le dichiarazioni var ignorano sistematicamente il perimetro tracciato dai semplici blocchi condizionali",
+          "value": true
+        }
+      ],
+      "id": "variables-tf-0118",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "hoisting",
+        "strict-mode"
+      ],
+      "prompt": "Valuta le seguenti caratteristiche operative legate all'impiego delle variabili storiche in scenari pratici reali.",
+      "explanation": {
+        "short": "Il sollevamento agisce scindendo e separando prepotentemente la nascita dell'identificatore dalla sua nutrizione.",
+        "whyCorrect": "Distinguere rigorosamente tra la fase di registrazione del nome e quella di popolamento del valore.",
+        "why": {
+          "s0": "La severa modalità moderna deve essere esplicitamente e manualmente attivata dallo sviluppatore tramite una precisa e dedicata etichetta testuale in testa al file.",
+          "s1": "Il fenomeno del sollevamento trascina esclusivamente la nuda etichetta verbale verso le vette, lasciando spietatamente l'effettivo nutrimento sulla riga di partenza.",
+          "s2": "Questa preziosa modalità difensiva sorveglia rigidamente il codice e punisce tempestivamente l'apparizione di variabili magiche nate spontaneamente dal nulla.",
+          "s3": "Lo standard formattativo del linguaggio incoraggia e sostiene un'ampia articolazione su molteplici righe senza impattare in alcun modo l'infrastruttura sottostante."
+        },
+        "concept": "Sollevamento e Strict Mode"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Usare variabili var senza alcuna pregressa dichiarazione attiva in automatico la modalità strict mode",
+          "value": false
+        },
+        {
+          "id": "s1",
+          "text": "Sebbene la dichiarazione var venga sollevata invisibilmente in alto la sua assegnazione rimane dove è scritta",
+          "value": true
+        },
+        {
+          "id": "s2",
+          "text": "La modalità restrittiva lancia un errore di riferimento se si omette di usare costrutti dichiarativi",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Il costrutto var obbliga il programmatore a scrivere tutto il codice su un'unica riga per non rompere lo scope",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0119",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var-legacy",
+        "iife"
+      ],
+      "prompt": "Scegli le affermazioni corrette riguardanti l'adattabilità sintattica del JavaScript classico prima di ES6.",
+      "explanation": {
+        "short": "Prima dell'evoluzione linguistica gli ingegneri ricorrevano a complessi stratagemmi per simulare l'incapsulamento.",
+        "whyCorrect": "Le funzioni auto-invocanti nacquero storicamente come ingegnoso scudo protettivo per nascondere i dati.",
+        "why": {
+          "s0": "L'antico e mansueto interprete fondeva amorevolmente e senza fare troppe domande le etichette omonime, permettendo strafalcioni multipli privi di conseguenza.",
+          "s1": "Questo atteggiamento estremamente sbadato riempiva celermente lo spazio pubblico di inquinanti veleni digitali, sfociando in conflitti catastrofici imperdonabili.",
+          "s2": "Mancando l'isolamento dei semplici blocchi logici, l'unica geniale disperata alternativa consisteva nel rinchiudere i fragili frammenti dentro scudi funzionali usa e getta.",
+          "s3": "Quell'antico contenitore tendeva viziosamente a straripare disperdendo incurantemente il proprio prezioso liquido verso la superficie dello script ospitante."
+        },
+        "concept": "Trucchi legacy e tolleranza"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Ripetere per puro caso la parola var per il medesimo contatore nello stesso ciclo non manda in crash il codice",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Omettere totalmente la parola chiave per istanziare nuove variabili globali è sempre stata un'ottima pratica",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "I programmatori storici usavano funzioni anonime eseguite immediatamente per arginare lo scope di var",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Il costrutto var possiede nativamente una visibilità che resta rigorosamente ristretta all'istruzione ospitante",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0120",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "tdz",
+        "reference-error"
+      ],
+      "prompt": "Conferma o smentisci queste affermazioni sulla barriera temporale e la lettura precoce dei dati.",
+      "explanation": {
+        "short": "La Temporal Dead Zone castiga severamente l'impiego precipitoso dei contenitori non pronti.",
+        "whyCorrect": "Ogni costrutto moderno soffre fieramente dei medesimi stringenti vincoli di protezione sequenziale.",
+        "why": {
+          "s0": "I moderni meccanismi difensivi puniscono impietosamente l'impazienza sollevando fragorosi allarmi nel momento esatto in cui scruti territori non ancora inizializzati.",
+          "s1": "L'innovativo scudo protettivo avvolge rigorosamente e indistintamente ambedue le moderne dichiarazioni linguistiche costringendo all'ordine sequenziale ferreo.",
+          "s2": "Questa invalicabile prigione temporale non risparmia niente e nessuno: persino l'intoccabile operatore di ispezione viene folgorato da una violenta interruzione.",
+          "s3": "Il fatidico sorpasso fisico della riga incriminata sblocca gioiosamente i lucchetti invisibili permettendo all'identificatore di respirare e assorbire finalmente il valore."
+        },
+        "concept": "Cos'è la Temporal Dead Zone"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Leggere una variabile let prima della sua corrispondente riga di dichiarazione produce un errore di riferimento",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "La barriera temporale si applica rigorosamente alle costanti mentre la dichiarazione let ne è completamente immune",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Impiegare l'operatore typeof su una variabile let non ancora dichiarata la ripara dalla zona morta temporale",
+          "value": false
+        },
+        {
+          "id": "s3",
+          "text": "L'effetto della zona morta temporale svanisce esattamente nel momento in cui l'esecuzione oltrepassa la dichiarazione",
+          "value": true
+        }
+      ],
+      "id": "variables-tf-0121",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "tdz",
+        "execution-context"
+      ],
+      "prompt": "Verifica se le seguenti dinamiche legate agli errori di riferimento delle variabili moderne sono esatte.",
+      "explanation": {
+        "short": "La zona d'ombra si estende lungo il tempo di esecuzione, non semplicemente sulla geografia visiva del codice.",
+        "whyCorrect": "L'importante non è l'ordine delle parole scritte sul documento, ma l'ordine cronologico in cui avvengono le azioni.",
+        "why": {
+          "s0": "L'interprete non si scandalizza leggendo il testo finché la fatidica esecuzione pratica del meccanismo avviene comodamente a valle del risveglio della variabile.",
+          "s1": "Il guardiano sintattico sbarra la strada preventivamente rifiutandosi categoricamente di avviare l'interprete per un crimine grammaticale di tale impudenza.",
+          "s2": "Questa punizione agisce minuziosamente e solitariamente sulle tempistiche di ciascun singolo ambito isolato senza intralciare i reami distanti di moduli indipendenti.",
+          "s3": "L'attraversamento dello spazio minato antecedente al via libera formale fa saltare inesorabilmente gli ingranaggi spegnendo il programma in via preventiva."
+        },
+        "concept": "TDZ in tempo di esecuzione"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Una funzione interna può tranquillamente menzionare una let esterna purché venga invocata dopo la dichiarazione",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Omettere il valore inziale in una costante causa un errore di sintassi prima ancora di raggiungere la zona morta",
+          "value": true
+        },
+        {
+          "id": "s2",
+          "text": "La barriera temporale impedisce categoricamente al codice di dichiarare due variabili diverse in file separati",
+          "value": false
+        },
+        {
+          "id": "s3",
+          "text": "Qualsiasi semplice lettura di una costante posizionata fisicamente prima della sua inizializzazione blocca il motore",
+          "value": true
+        }
+      ],
+      "id": "variables-tf-0122",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "tdz-mechanics",
+        "shadowing"
+      ],
+      "prompt": "Esamina queste spiegazioni tecniche sugli ostacoli di inizializzazione nel codice contemporaneo.",
+      "explanation": {
+        "short": "Lo scontro gerarchico tra identificatori omonimi innesca oscure conseguenze nei blocchi segregati.",
+        "whyCorrect": "L'oscuramento (shadowing) genera un proprio distinto scudo temporale disconnettendo la radice originaria.",
+        "why": {
+          "s0": "Il battesimo di fuoco del nuovo contenitore e la conseguente rimozione dei divieti accadono contestualmente al formale e materiale calpestio della riga magica.",
+          "s1": "Dichiarare ostinatamente l'identificatore interno tronca clamorosamente i ponti col parente esterno avviando da capo l'impietosa scure temporale della barriera locale.",
+          "s2": "Ambedue le rigorose dichiarazioni contemporanee giacciono inesorabilmente prigioniere dello stesso claustrofobico purgatorio invisibile della barriera temporale.",
+          "s3": "La prigione invisibile rifiuta rabbiosamente qualsivoglia interazione con l'ospite condannato sbattendo la porta in faccia sia a docili curiosi che a brutali scrittori."
+        },
+        "concept": "TDZ e Shadowing locale"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Il completamento della dichiarazione let avviene nel momento in cui il motore valuta fisicamente quella precisa riga",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "I blocchi di codice creano una nuova barriera temporale se ridichiarano lo stesso esatto nome di una let esterna",
+          "value": true
+        },
+        {
+          "id": "s2",
+          "text": "Sostituire momentaneamente let con const annulla la zona morta ma preserva il comportamento della variabile fissa",
+          "value": false
+        },
+        {
+          "id": "s3",
+          "text": "Tentare una lettura nella zona morta causa un arresto ma tentare una scrittura diretta porta a un sicuro successo",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0123",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "tdz-mechanics",
+        "parameters"
+      ],
+      "prompt": "Analizza le seguenti restrizioni invisibili imposte alle variabili di nuova generazione dai motori moderni.",
+      "explanation": {
+        "short": "I moderni contenitori non ignorano l'antico processo di pre-posizionamento, ma lo blindano con lucchetti inaccessibili.",
+        "whyCorrect": "Comprendere che la barriera è uno stato della variabile, non un incantesimo del testo scritto, è la chiave finale.",
+        "why": {
+          "s0": "Il motore prenota solertemente i posti a sedere setacciando meticolosamente l'intero documento in anticipo e blindando militarmente le neonate e deboli etichette.",
+          "s1": "L'infinita dilatazione spaziale della zona proibita castigherà implacabilmente ogni singola riga precedente costringendole a un inutile ed estenuante pellegrinaggio.",
+          "s2": "Qualsivoglia audace e perentoria manomissione fisica si schianterà mestamente contro la medesima inesorabile roccia d'arresto garantita dalla cupola difensiva.",
+          "s3": "Gli argomenti attesi sulla soglia partecipano a tutti gli effetti dell'intricata danza difensiva, esplodendo in lamentele letali se manipolati contromano."
+        },
+        "concept": "Fisica della Temporal Dead Zone"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Le variabili moderne vengono registrate in memoria all'inizio ma restano inaccessibili per via della zona morta",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Scrivere una dichiarazione let come ultima istruzione di un file disabilita retroattivamente i vincoli della barriera",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "La zona temporale morta impedisce soltanto la lettura del valore ma lascia i programmatori liberi di sovrascriverlo",
+          "value": false
+        },
+        {
+          "id": "s3",
+          "text": "Perfino i parametri in ingresso di una funzione possiedono una propria barriera temporale prima di ricevere i valori",
+          "value": true
+        }
+      ],
+      "id": "variables-tf-0124",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "tdz",
+        "debugging"
+      ],
+      "prompt": "Identifica le frasi corrette circa le anomalie di esecuzione legate alle dichiarazioni collocate in basso.",
+      "explanation": {
+        "short": "I blocchi temporali richiedono interventi diretti e pragmatici sullo spostamento fisico delle righe cruciali.",
+        "whyCorrect": "Correggere la zona d'ombra si riduce classicamente a riorganizzare sapientemente e chirurgicamente il flusso logico.",
+        "why": {
+          "s0": "Lo scudo implacabile non permette deviazioni e disattiva catastroficamente la macchina non appena l'avventuroso esploratore innesca la mina antiuomo invisibile.",
+          "s1": "La terapia standard per sanare questa ferita fatale consiste unicamente nel trascinare saggiamente e pragmaticamente la culla della variabile verso vette più elevate.",
+          "s2": "Sebbene apparentemente monolitico, questo solido e irremovibile argine non si lascia impietosire dispensando flagelli universali per tutte le nuove categorie congiunte.",
+          "s3": "Nemmeno gli incantesimi riparatori dei costrutti di salvataggio preventivo riescono mai a far sfociare la prematura ed errata richiesta nel tranquillo nulla ancestrale."
+        },
+        "concept": "Risolvere ReferenceError da TDZ"
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "L'interprete JavaScript segnala un blocco fatale se l'istruzione tocca let prima del termine della barriera temporale",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Spostare fisicamente in alto la riga di dichiarazione let è la prassi normale per risolvere i crash della zona morta",
+          "value": true
+        },
+        {
+          "id": "s2",
+          "text": "La barriera temporale colpisce i costrutti let ma stranamente ignora la parola chiave const in ogni circostanza",
+          "value": false
+        },
+        {
+          "id": "s3",
+          "text": "Avvolgere il codice in un blocco protettivo riesce a ignorare la barriera permettendo alla variabile di valere undefined",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0125",
+      "source": "ai"
+    }
+  ]
+}

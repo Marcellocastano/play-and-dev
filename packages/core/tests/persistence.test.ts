@@ -36,7 +36,8 @@ describe('InMemoryPersistence', () => {
       type: 'multiple-choice',
       difficulty: 'easy',
       correct: true,
-      selectedOptionId: 'a',
+      response: { format: 'choice', optionId: 'a' },
+      score: 1,
       timeMs: 100,
       attempt: 1,
       answeredAt: 2,
@@ -59,7 +60,11 @@ describe('InMemoryPersistence', () => {
 });
 
 describe('recentVariantKeys', () => {
-  const entry = (sessionId: string, variantKey: string, answeredAt: number): QuestionHistoryEntry => ({
+  const entry = (
+    sessionId: string,
+    variantKey: string,
+    answeredAt: number,
+  ): QuestionHistoryEntry => ({
     templateId: 't',
     variantKey,
     sessionId,

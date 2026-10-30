@@ -1,0 +1,1097 @@
+{
+  "topicId": "variables",
+  "questions": [
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "let",
+        "const",
+        "sintassi"
+      ],
+      "prompt": "Abbina ogni dichiarazione al motivo per cui il codice è valido o al tipo di errore che genera.",
+      "explanation": {
+        "short": "Un identificatore che inizia con una cifra o una const senza valore rompono la sintassi.",
+        "whyCorrect": "Il codice è valido quando il nome è un identificatore ammesso e, nel caso di const, riceve subito un valore; altrimenti il parser lancia un SyntaxError.",
+        "why": {
+          "r0": "punti è un identificatore valido e riceve subito il valore 0, quindi la dichiarazione con let è corretta.",
+          "r1": "const richiede un valore iniziale nella stessa istruzione: senza di esso il parser lancia un SyntaxError prima ancora di eseguire il codice.",
+          "r2": "Un identificatore non può iniziare con una cifra: 1valore viene letto come un numero seguito da testo, producendo un SyntaxError.",
+          "r3": "MAX è un nome valido e riceve un valore numerico nella stessa riga, quindi la dichiarazione con const è corretta."
+        },
+        "concept": "sintassi valida delle dichiarazioni"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "codice valido"
+        },
+        {
+          "id": "c1",
+          "text": "SyntaxError"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let punti = 0;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`const soglia;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`let 1valore = 5;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r3",
+          "text": "`const MAX = 100;`",
+          "choiceId": "c0"
+        }
+      ],
+      "id": "variables-mt-0045",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "let",
+        "const",
+        "identificatori"
+      ],
+      "prompt": "Abbina ogni nome di variabile al motivo per cui è ammesso oppure vietato come identificatore.",
+      "explanation": {
+        "short": "Underscore e dollaro sono ammessi negli identificatori, ma le parole riservate e i trattini no.",
+        "whyCorrect": "Un identificatore valido usa solo lettere, cifre non iniziali, underscore e dollaro, e non può coincidere con una parola riservata del linguaggio.",
+        "why": {
+          "r0": "L'underscore è un carattere ammesso come primo simbolo di un identificatore, quindi _codice è un nome valido.",
+          "r1": "Il simbolo del dollaro è consentito negli identificatori JavaScript, spesso usato in librerie: $prezzo è quindi valido.",
+          "r2": "class è una parola riservata del linguaggio, usata per definire le classi: non può essere usata come nome di variabile.",
+          "r3": "Il trattino non è un carattere ammesso nei nomi: viene interpretato come operatore di sottrazione, rendendo l'espressione non valida come dichiarazione."
+        },
+        "concept": "identificatori ammessi e parole riservate"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "identificatore ammesso"
+        },
+        {
+          "id": "c1",
+          "text": "identificatore vietato"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let _codice = 1;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`let $prezzo = 1;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r2",
+          "text": "`let class = 1;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r3",
+          "text": "`let nome-utente = 1;`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0046",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "let",
+        "const"
+      ],
+      "prompt": "Abbina ogni coppia di istruzioni all'esito della seconda riga.",
+      "explanation": {
+        "short": "let ammette la riassegnazione, const la blocca sempre dopo la prima assegnazione.",
+        "whyCorrect": "La possibilità di riassegnare dipende dalla parola chiave usata in dichiarazione: let non pone vincoli, const impedisce qualsiasi nuova assegnazione.",
+        "why": {
+          "r0": "eta è dichiarata con let, che consente di cambiarne il valore in qualsiasi momento successivo, senza errori.",
+          "r1": "nome è una costante: assegnarle un nuovo valore dopo la dichiarazione viola il vincolo di const e genera un TypeError.",
+          "r2": "attivo è dichiarata con let, quindi il suo valore booleano può essere cambiato liberamente in seguito.",
+          "r3": "max è una costante: qualunque assegnazione successiva alla dichiarazione viene bloccata e produce un TypeError."
+        },
+        "concept": "riassegnazione con let e const"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "riassegnazione riuscita"
+        },
+        {
+          "id": "c1",
+          "text": "TypeError"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let eta = 20; eta = 21;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`const nome = 'Ada'; nome = 'Kim';`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`let attivo = true; attivo = false;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`const max = 10; max = 20;`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0047",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "const",
+        "mutazione vs binding"
+      ],
+      "prompt": "Abbina ogni istruzione su una variabile const all'esito reale, distinguendo la mutazione del contenuto dal cambio del binding.",
+      "explanation": {
+        "short": "const blocca solo il cambio del binding, non la modifica del contenuto dell'oggetto o dell'array a cui punta.",
+        "whyCorrect": "Modificare una proprietà o aggiungere un elemento cambia il contenuto ma non il binding, mentre assegnare un valore completamente nuovo alla variabile tenta di cambiare il binding stesso, cosa che const vieta.",
+        "why": {
+          "r0": "utente continua a puntare allo stesso oggetto: modificarne la proprietà nome cambia il contenuto, non il binding, quindi è permesso.",
+          "r1": "Qui si tenta di far puntare utente a un oggetto diverso: questo cambierebbe il binding, vietato da const, e genera un TypeError.",
+          "r2": "push modifica l'array esistente aggiungendo un elemento, ma lista continua a puntare allo stesso array: il binding non cambia.",
+          "r3": "Assegnare un nuovo array a lista sostituirebbe il binding con un riferimento diverso: const lo impedisce e genera un TypeError."
+        },
+        "concept": "binding immutabile vs contenuto mutabile"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "operazione permessa"
+        },
+        {
+          "id": "c1",
+          "text": "TypeError"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`const utente = { nome: 'Ada' }; utente.nome = 'Kim';`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`const utente = { nome: 'Ada' }; utente = {};`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`const lista = [1, 2]; lista.push(3);`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`const lista = [1, 2]; lista = [];`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0048",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "let",
+        "const",
+        "operatori composti"
+      ],
+      "prompt": "Abbina ogni istruzione con un operatore composto (come += o ++) al suo esito, considerando che questi operatori assegnano comunque un nuovo valore.",
+      "explanation": {
+        "short": "Gli operatori composti come += e ++ assegnano un nuovo valore, quindi valgono le stesse regole della riassegnazione diretta.",
+        "whyCorrect": "Anche senza un segno di uguale esplicito, += e ++ calcolano un nuovo valore e lo assegnano alla variabile: su let questo funziona, su const viola l'immutabilità del binding.",
+        "why": {
+          "r0": "punti è dichiarata con let: l'operatore += calcola la somma e assegna il risultato senza alcun ostacolo.",
+          "r1": "soglia è una costante: += tenta comunque di assegnarle un nuovo valore calcolato, violando l'immutabilità del binding e generando un TypeError.",
+          "r2": "contatore è dichiarata con let, quindi l'operatore ++ può incrementarne il valore ripetutamente senza generare errori.",
+          "r3": "limite è una costante: ++ equivale ad assegnarle un nuovo valore, un'operazione vietata che produce un TypeError."
+        },
+        "concept": "operatori composti come riassegnazione"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "esito valido"
+        },
+        {
+          "id": "c1",
+          "text": "TypeError"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let punti = 0; punti += 5;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`const soglia = 10; soglia += 5;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`let contatore = 0; contatore++;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`const limite = 5; limite++;`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0049",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "let",
+        "const",
+        "destrutturazione"
+      ],
+      "prompt": "Le variabili qui sotto sono estratte tramite destrutturazione. Abbina ogni istruzione successiva alla dichiarazione al suo esito.",
+      "explanation": {
+        "short": "Le variabili estratte con la destrutturazione seguono le stesse regole di let e const viste per qualsiasi altra dichiarazione.",
+        "whyCorrect": "La sintassi di destrutturazione decide solo come vengono estratti i valori iniziali; la possibilità di riassegnare quelle variabili dipende ancora dalla parola chiave usata.",
+        "why": {
+          "r0": "a è stata estratta con let, quindi può essere riassegnata liberamente in seguito, come qualunque altra variabile let.",
+          "r1": "c è stata estratta con const: anche se il valore iniziale proviene da una destrutturazione, resta vietato riassegnarla, e il motore lancia un TypeError.",
+          "r2": "x è dichiarata con let tramite destrutturazione di un oggetto, quindi riassegnarle un nuovo valore è pienamente valido.",
+          "r3": "y è dichiarata con const tramite destrutturazione: la regola dell'immutabilità del binding si applica comunque, e la riassegnazione lancia un TypeError."
+        },
+        "concept": "let e const con la destrutturazione"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "riassegnazione valida"
+        },
+        {
+          "id": "c1",
+          "text": "TypeError"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let [a, b] = [1, 2]; a = 9;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`const [c, d] = [1, 2]; c = 9;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`let {x} = {x: 1}; x = 9;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`const {y} = {y: 1}; y = 9;`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0050",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "let",
+        "const",
+        "funzioni"
+      ],
+      "prompt": "Abbina ogni frammento, in cui una funzione agisce su una variabile esterna, al suo esito.",
+      "explanation": {
+        "short": "Le regole di let e const valgono ovunque la variabile venga usata, anche dentro una funzione esterna.",
+        "whyCorrect": "Riassegnare una const dentro una funzione lancia lo stesso TypeError che avverrebbe fuori da essa, mentre leggere il valore o mutare il contenuto di un array o oggetto restano sempre permessi.",
+        "why": {
+          "r0": "tot è una costante e la funzione tenta di assegnarle un nuovo valore: questo viola il vincolo di const e lancia un TypeError, anche se avviene dentro una funzione.",
+          "r1": "tot2 è dichiarata con let, quindi incrementarla dentro la funzione è perfettamente legale, esattamente come lo sarebbe fuori da essa.",
+          "r2": "push modifica il contenuto dell'array a cui tot3 punta, ma non cambia il binding della variabile stessa, quindi l'operazione è permessa.",
+          "r3": "La funzione si limita a leggere il valore di tot4 e a restituirlo, senza mai tentare di assegnarle qualcosa: nessuna regola viene violata."
+        },
+        "concept": "riassegnazione di const all'interno di funzioni"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "esito valido"
+        },
+        {
+          "id": "c1",
+          "text": "TypeError"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`const tot = 1; function f(){ tot = 2; } f();`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r1",
+          "text": "`let tot2 = 1; function g(){ tot2++; } g();`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r2",
+          "text": "`const tot3 = [1]; function h(){ tot3.push(2); } h();`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`const tot4 = 1; function k(){ return tot4; } k();`",
+          "choiceId": "c0"
+        }
+      ],
+      "id": "variables-mt-0051",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "let",
+        "scope"
+      ],
+      "prompt": "Abbina ogni frammento all'esito della lettura della variabile subito dopo il blocco in cui è dichiarata.",
+      "explanation": {
+        "short": "var ignora i confini dei blocchi tra graffe; let e const restano confinate al blocco in cui sono dichiarate.",
+        "whyCorrect": "var appartiene sempre allo scope della funzione o globale che la contiene, mentre let e const smettono di esistere non appena il blocco tra graffe termina.",
+        "why": {
+          "r0": "x è dichiarata con var dentro un blocco, ma var non ha scope di blocco: la variabile resta leggibile dopo il blocco.",
+          "r1": "y è dichiarata con let, che rispetta i confini del blocco: una volta terminato, y smette di esistere e leggerla genera un ReferenceError.",
+          "r2": "Anche dentro un blocco if, var non crea un nuovo scope: z resta leggibile dopo l'istruzione if.",
+          "r3": "Come per let, anche una costante dichiarata dentro un blocco cessa di esistere alla fine del blocco: leggerla fuori produce un ReferenceError."
+        },
+        "concept": "var non ha scope di blocco"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "valore leggibile"
+        },
+        {
+          "id": "c1",
+          "text": "ReferenceError"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`{ var x = 1; } console.log(x);`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`{ let y = 1; } console.log(y);`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`if (true) { var z = 1; } console.log(z);`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`{ const w = 1; } console.log(w);`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0052",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "let",
+        "const",
+        "dichiarazione duplicata"
+      ],
+      "prompt": "Abbina ogni coppia di dichiarazioni con lo stesso nome, nello stesso ambito, al suo esito.",
+      "explanation": {
+        "short": "var tollera dichiarazioni ripetute dello stesso nome nello stesso ambito; let e const no.",
+        "whyCorrect": "var deriva dalle prime versioni del linguaggio e non genera errore su dichiarazioni ripetute, mentre let e const bloccano qualsiasi duplicato nello stesso ambito.",
+        "why": {
+          "r0": "totale viene dichiarata due volte con var nello stesso scope: la seconda dichiarazione viene trattata come un semplice aggiornamento, senza errori.",
+          "r1": "totale2 viene dichiarata due volte con let nello stesso scope: questo produce un SyntaxError perché let non ammette duplicati.",
+          "r2": "Come per let, dichiarare due volte la stessa const nello stesso scope viola la regola contro i duplicati e produce un SyntaxError.",
+          "r3": "Dichiarare totale4 senza valore e poi assegnargliene uno con un secondo var è ammesso: le due dichiarazioni si fondono senza errori."
+        },
+        "concept": "var permette dichiarazioni duplicate"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "nessun errore"
+        },
+        {
+          "id": "c1",
+          "text": "SyntaxError"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`var totale = 1; var totale = 2;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`let totale2 = 1; let totale2 = 2;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`const totale3 = 1; const totale3 = 2;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r3",
+          "text": "`var totale4; var totale4 = 5;`",
+          "choiceId": "c0"
+        }
+      ],
+      "id": "variables-mt-0053",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "let",
+        "hoisting"
+      ],
+      "prompt": "Abbina ogni frammento a ciò che stampa `console.log` quando la variabile viene letta prima della sua dichiarazione.",
+      "explanation": {
+        "short": "Le dichiarazioni var vengono innalzate e inizializzate a undefined; let e const restano inaccessibili fino alla loro riga.",
+        "whyCorrect": "JavaScript riconosce in anticipo ogni nome dichiarato con var, let o const, ma solo var riceve subito undefined: let e const restano bloccate nella temporal dead zone.",
+        "why": {
+          "r0": "a è dichiarata con var: il nome viene innalzato e inizializzato a undefined fin dall'inizio dello scope, quindi leggerla prima stampa undefined.",
+          "r1": "b è dichiarata con let: il nome esiste concettualmente ma resta inaccessibile finché la riga di dichiarazione non viene eseguita, quindi leggerla prima genera un ReferenceError.",
+          "r2": "c è dichiarata con var senza valore iniziale: come ogni var viene innalzata e vale undefined da subito.",
+          "r3": "d è dichiarata con const, che si comporta come let riguardo all'accesso anticipato: leggerla prima genera un ReferenceError."
+        },
+        "concept": "hoisting di var rispetto a let e const"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "undefined"
+        },
+        {
+          "id": "c1",
+          "text": "ReferenceError"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`console.log(a); var a = 5;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`console.log(b); let b = 5;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`console.log(c); var c;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`console.log(d); const d = 5;`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0054",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "let",
+        "scope di funzione"
+      ],
+      "prompt": "Ogni frammento contiene una variabile dichiarata dentro un blocco `if` interno a una funzione. Abbina ogni frammento all'esito della lettura fatta subito dopo, ancora dentro la stessa funzione.",
+      "explanation": {
+        "short": "Dentro una funzione, var appartiene a tutta la funzione, non al singolo blocco if in cui compare.",
+        "whyCorrect": "Lo scope di var è sempre la funzione più vicina che la racchiude, quindi resta accessibile ovunque nella funzione; let e const restano invece confinate al blocco if.",
+        "why": {
+          "r0": "a è dichiarata con var dentro un blocco if annidato nella funzione: appartiene comunque a tutta la funzione, quindi console.log(a) la trova senza problemi.",
+          "r1": "b è dichiarata con let dentro il blocco if: il suo scope termina con il blocco stesso, quindi leggerla fuori genera un ReferenceError.",
+          "r2": "Come nel primo caso, c dichiarata con var dentro un if appartiene all'intera funzione h, quindi resta leggibile dopo il blocco.",
+          "r3": "d è dichiarata con const dentro il blocco if: il suo scope si esaurisce con quel blocco, quindi leggerla dopo genera un ReferenceError."
+        },
+        "concept": "var è legata alla funzione, non al blocco"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "valore leggibile"
+        },
+        {
+          "id": "c1",
+          "text": "ReferenceError"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`function f(){ if(true){ var a = 1; } console.log(a); } f();`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`function g(){ if(true){ let b = 1; } console.log(b); } g();`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`function h(){ if(true){ var c = 1; } console.log(c); } h();`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`function k(){ if(true){ const d = 1; } console.log(d); } k();`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0055",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "let",
+        "shadowing"
+      ],
+      "prompt": "In ogni frammento esiste una variabile con lo stesso nome sia fuori sia dentro un blocco interno. Abbina ogni frammento al valore finale stampato fuori dal blocco.",
+      "explanation": {
+        "short": "var dichiarata dentro un blocco interno è la stessa variabile esterna; let con lo stesso nome ne crea una nuova, limitata al blocco.",
+        "whyCorrect": "Poiché var ignora i confini dei blocchi, una seconda dichiarazione var con lo stesso nome aggiorna la variabile esterna; let invece crea un binding separato che non tocca quella esterna.",
+        "why": {
+          "r0": "tot è dichiarata con var sia fuori sia dentro il blocco: essendo var priva di scope di blocco, la seconda dichiarazione aggiorna la stessa variabile, quindi il valore stampato è 2.",
+          "r1": "tot2 dichiarata con let dentro il blocco crea un binding nuovo, valido solo lì dentro: la variabile esterna resta invariata a 1.",
+          "r2": "Come nel primo caso, var dentro il blocco if fa riferimento alla stessa variabile tot3 dichiarata fuori: il valore finale stampato è 5.",
+          "r3": "let dentro il blocco if crea un tot4 separato, valido solo all'interno di quel blocco: la variabile esterna resta invariata a 1."
+        },
+        "concept": "shadowing di var contro let"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "la variabile esterna viene modificata"
+        },
+        {
+          "id": "c1",
+          "text": "la variabile esterna resta invariata"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`var tot = 1; { var tot = 2; } console.log(tot);`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`let tot2 = 1; { let tot2 = 2; } console.log(tot2);`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`var tot3 = 1; if(true){ var tot3 = 5; } console.log(tot3);`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`let tot4 = 1; if(true){ let tot4 = 5; } console.log(tot4);`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0056",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "let",
+        "const",
+        "temporal dead zone"
+      ],
+      "prompt": "Abbina ogni frammento all'esito della lettura della variabile nel punto in cui compare `console.log`.",
+      "explanation": {
+        "short": "let e const esistono già dall'inizio dello scope ma restano inaccessibili finché non si arriva alla loro riga di dichiarazione.",
+        "whyCorrect": "Leggere la variabile prima della sua riga di dichiarazione lancia un ReferenceError perché si trova nella temporal dead zone; leggerla dopo funziona normalmente.",
+        "why": {
+          "r0": "x si trova ancora nella temporal dead zone quando console.log tenta di leggerla, dato che la dichiarazione avviene nella riga successiva: il risultato è un ReferenceError.",
+          "r1": "y viene letta dopo la propria dichiarazione, quando la temporal dead zone è già terminata: la lettura restituisce correttamente 1.",
+          "r2": "Come per let, anche const si trova nella temporal dead zone finché non viene raggiunta la sua riga di dichiarazione: leggerla prima genera un ReferenceError.",
+          "r3": "w viene letta dopo essere stata dichiarata e inizializzata, quindi fuori dalla temporal dead zone: la lettura funziona senza problemi."
+        },
+        "concept": "temporal dead zone di let e const"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "funziona normalmente"
+        },
+        {
+          "id": "c1",
+          "text": "ReferenceError"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`console.log(x); let x = 1;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r1",
+          "text": "`let y = 1; console.log(y);`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r2",
+          "text": "`console.log(z); const z = 1;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r3",
+          "text": "`const w = 1; console.log(w);`",
+          "choiceId": "c0"
+        }
+      ],
+      "id": "variables-mt-0057",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "typeof",
+        "temporal dead zone",
+        "var"
+      ],
+      "prompt": "Abbina ogni frammento a ciò che restituisce `typeof` applicato a quella variabile nel punto indicato.",
+      "explanation": {
+        "short": "typeof è sicuro su un nome mai dichiarato, ma non su una let o const ancora nella temporal dead zone.",
+        "whyCorrect": "Su un nome mai dichiarato typeof restituisce undefined senza errori; ma se il nome appartiene a una let o const dichiarata più avanti nello stesso scope, typeof lancia comunque un ReferenceError.",
+        "why": {
+          "r0": "nonDichiarata non è mai stata dichiarata: typeof su un nome del tutto sconosciuto restituisce semplicemente undefined, senza errori.",
+          "r1": "e è dichiarata con let più avanti nello stesso scope: il nome si trova nella temporal dead zone, e typeof su di esso lancia un ReferenceError.",
+          "r2": "f è dichiarata con var e innalzata con valore undefined fin dall'inizio dello scope: typeof la trova già esistente e restituisce undefined.",
+          "r3": "g è dichiarata con const più avanti nello stesso scope: come per let, il nome si trova nella temporal dead zone, quindi typeof lancia un ReferenceError."
+        },
+        "concept": "typeof e temporal dead zone"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "undefined"
+        },
+        {
+          "id": "c1",
+          "text": "ReferenceError"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`console.log(typeof nonDichiarata);`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`console.log(typeof e); let e = 1;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`var f; console.log(typeof f);`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`console.log(typeof g); const g = 1;`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0058",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "let",
+        "temporal dead zone",
+        "funzioni",
+        "cicli"
+      ],
+      "prompt": "Abbina ogni frammento, in contesti diversi come funzioni e cicli, all'esito della lettura della variabile prima della sua dichiarazione con let.",
+      "explanation": {
+        "short": "La temporal dead zone vale ovunque ci sia uno scope: dentro funzioni, cicli o semplici blocchi if.",
+        "whyCorrect": "In ogni scope, dall'apertura del blocco fino alla riga di dichiarazione let, la variabile è nella temporal dead zone e leggerla lancia un errore; dopo quella riga la lettura funziona normalmente.",
+        "why": {
+          "r0": "x si trova nella temporal dead zone all'interno della funzione f fino alla riga in cui viene dichiarata con let: leggerla prima genera un ReferenceError.",
+          "r1": "Qui x viene letta dopo essere stata dichiarata nella stessa funzione g, quindi la temporal dead zone è già terminata e la lettura restituisce 1.",
+          "r2": "j si trova nella temporal dead zone del corpo del ciclo for fino alla sua dichiarazione con let: leggerla prima genera un ReferenceError già alla prima iterazione.",
+          "r3": "k viene dichiarata e poi letta nello stesso blocco if, dopo la sua riga di dichiarazione: la lettura avviene fuori dalla temporal dead zone."
+        },
+        "concept": "temporal dead zone in scope diversi"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "funziona normalmente"
+        },
+        {
+          "id": "c1",
+          "text": "ReferenceError"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`function f(){ console.log(x); let x = 1; } f();`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r1",
+          "text": "`function g(){ let x = 1; console.log(x); } g();`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r2",
+          "text": "`for (let i = 0; i < 1; i++) { console.log(j); let j = 1; }`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r3",
+          "text": "`if (true) { let k = 1; console.log(k); }`",
+          "choiceId": "c0"
+        }
+      ],
+      "id": "variables-mt-0059",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "let",
+        "const",
+        "ordine delle dichiarazioni"
+      ],
+      "prompt": "Abbina ogni frammento all'esito, in base a se la variabile viene usata nell'espressione prima o dopo essere stata dichiarata nello stesso scope.",
+      "explanation": {
+        "short": "Con let e const, l'ordine delle righe conta: una variabile deve essere già dichiarata quando viene usata in un'espressione.",
+        "whyCorrect": "Se una variabile compare in un'espressione prima della propria riga di dichiarazione nello stesso scope, si trova ancora nella temporal dead zone e il suo utilizzo lancia un ReferenceError.",
+        "why": {
+          "r0": "a è già stata dichiarata e inizializzata quando viene usata per calcolare b: l'ordine delle righe rispetta la dipendenza, quindi non ci sono errori.",
+          "r1": "Nel calcolo di c si usa d, dichiarata solo nella riga successiva: d si trova ancora nella temporal dead zone in quel momento, quindi l'espressione lancia un ReferenceError.",
+          "r2": "e è dichiarata e inizializzata prima di essere usata per calcolare f, rispettando l'ordine corretto: l'esecuzione procede senza errori.",
+          "r3": "g viene letta direttamente con console.log prima della propria riga di dichiarazione: si trova nella temporal dead zone e la lettura lancia un ReferenceError."
+        },
+        "concept": "ordine di dichiarazione e uso"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "funziona normalmente"
+        },
+        {
+          "id": "c1",
+          "text": "ReferenceError"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let a = 1; let b = a + 1;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`let c = d + 1; let d = 1;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`const e = 5; const f = e * 2;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`console.log(g); let g = 10;`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0060",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "let",
+        "shadowing",
+        "temporal dead zone"
+      ],
+      "prompt": "In ogni frammento esiste già una variabile let nello scope esterno. Abbina ogni frammento all'esito della lettura fatta dentro il blocco interno, considerando se questo dichiara una nuova variabile con lo stesso nome.",
+      "explanation": {
+        "short": "Se il blocco interno dichiara una variabile con lo stesso nome di quella esterna, quel nome entra nella temporal dead zone per l'intero blocco.",
+        "whyCorrect": "Non appena un blocco contiene una propria dichiarazione let con un certo nome, quel nome appartiene alla temporal dead zone del blocco fin dall'inizio, nascondendo temporaneamente la variabile esterna omonima.",
+        "why": {
+          "r0": "Il blocco interno dichiara una propria variabile p con let: questo rende p nella temporal dead zone per tutto il blocco fin dall'inizio, quindi console.log(p) lancia un ReferenceError anche se esiste una p esterna già inizializzata.",
+          "r1": "Il blocco interno dichiara r, non q: q non viene ridichiarata in quello scope, quindi console.log(q) legge normalmente la variabile esterna già inizializzata a 1.",
+          "r2": "Il blocco interno non dichiara una nuova variabile s, si limita a riassegnare quella esterna: la lettura successiva restituisce correttamente il nuovo valore 2.",
+          "r3": "Il blocco interno non contiene alcuna dichiarazione di t: console.log(t) legge semplicemente la variabile esterna già dichiarata, senza alcuna temporal dead zone in gioco."
+        },
+        "concept": "temporal dead zone e shadowing con lo stesso nome"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "funziona normalmente"
+        },
+        {
+          "id": "c1",
+          "text": "ReferenceError (TDZ della variabile del blocco interno)"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let p = 1; { console.log(p); let p = 2; }`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r1",
+          "text": "`let q = 1; { let r = 2; console.log(q); }`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r2",
+          "text": "`let s = 1; { s = 2; console.log(s); }`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`let t = 1; { console.log(t); }`",
+          "choiceId": "c0"
+        }
+      ],
+      "id": "variables-mt-0061",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "let",
+        "const",
+        "var",
+        "valore iniziale"
+      ],
+      "prompt": "Abbina ogni parola chiave alla possibilità di dichiarare una variabile senza assegnarle subito un valore.",
+      "explanation": {
+        "short": "Solo const obbliga ad assegnare un valore nella stessa istruzione di dichiarazione.",
+        "whyCorrect": "let e var possono essere dichiarate senza valore e ricevono automaticamente undefined, mentre const senza valore non è un'istruzione completa.",
+        "why": {
+          "r0": "let può essere dichiarata senza assegnare subito un valore: la variabile viene creata e contiene undefined finché non le si assegna qualcosa.",
+          "r1": "Come let, anche var accetta una dichiarazione senza valore iniziale: la variabile esiste e vale undefined fino alla prima assegnazione.",
+          "r2": "const deve sempre essere inizializzata nello stesso momento in cui viene dichiarata: senza un valore l'istruzione è incompleta e produce un SyntaxError."
+        },
+        "concept": "obbligo di valore iniziale per const"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "ammesso senza valore iniziale"
+        },
+        {
+          "id": "c1",
+          "text": "richiede sempre un valore iniziale"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let numero;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`var numero2;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r2",
+          "text": "`const numero3;`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0062",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "let",
+        "const",
+        "globale implicita"
+      ],
+      "prompt": "Abbina ogni assegnazione, fatta dentro una funzione senza parola chiave, al suo effetto sullo scope in cui avviene.",
+      "explanation": {
+        "short": "Assegnare un valore a un nome senza let, const o var lo crea come proprietà globale implicita, accessibile anche fuori dalla funzione.",
+        "whyCorrect": "Solo l'assenza totale di una parola chiave di dichiarazione crea una variabile globale implicita; sia let sia var, se usate dentro la funzione, mantengono la variabile locale a essa.",
+        "why": {
+          "r0": "totale non è mai dichiarata con let, const o var: l'assegnazione la crea come proprietà globale implicita, per questo resta leggibile anche fuori dalla funzione f.",
+          "r1": "totale2 è dichiarata con let dentro la funzione g: il suo scope è limitato alla funzione, quindi fuori da essa il nome non esiste e typeof restituisce undefined.",
+          "r2": "totale3 è dichiarata con var dentro la funzione h: anche var, se dichiarata dentro una funzione, resta locale a essa e non è visibile fuori."
+        },
+        "concept": "variabili globali implicite"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "crea una variabile globale implicita"
+        },
+        {
+          "id": "c1",
+          "text": "resta locale alla funzione"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`function f(){ totale = 10; } f(); console.log(totale);`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`function g(){ let totale2 = 10; } g(); console.log(typeof totale2);`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`function h(){ var totale3 = 10; } h(); console.log(typeof totale3);`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0063",
+      "source": "ai"
+    }
+  ]
+}

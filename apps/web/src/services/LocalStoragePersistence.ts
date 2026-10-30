@@ -63,10 +63,7 @@ export class LocalStoragePersistence implements PersistenceService {
     return readJson<QuestionHistoryEntry[]>(`history:${subjectId}`, []);
   }
 
-  async appendQuestionHistory(
-    subjectId: string,
-    entries: QuestionHistoryEntry[],
-  ): Promise<void> {
+  async appendQuestionHistory(subjectId: string, entries: QuestionHistoryEntry[]): Promise<void> {
     const history = await this.getQuestionHistory(subjectId);
     writeJson(`history:${subjectId}`, [...history, ...entries]);
   }

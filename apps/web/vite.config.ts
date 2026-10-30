@@ -19,6 +19,19 @@ export default defineConfig({
       '/api': 'http://localhost:8787',
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('/packages/subject-javascript/src/bank/')) return 'bank-javascript';
+          if (id.includes('/packages/subject-javascript/')) return 'subject-javascript';
+          if (/\/node_modules\/(motion|framer-motion|motion-dom|motion-utils)\//.test(id)) {
+            return 'motion';
+          }
+        },
+      },
+    },
+  },
   test: {
     environment: 'jsdom',
     include: ['src/**/*.test.{ts,tsx}', 'tests/**/*.test.{ts,tsx}'],

@@ -4,11 +4,13 @@ import {
   composeSession,
   difficultyCounts,
   emptyProgress,
+  MAX_SIMILAR_PER_SESSION,
+  similarityKey,
   summarizeSession,
   type Question,
   type QuestionAttempt,
 } from '../src/index.js';
-import { makeSubject } from './fixtures.js';
+import { makeSubject, makeTemplate } from './fixtures.js';
 
 const subject = makeSubject({ topics: 4, easy: 20, medium: 10, hard: 5 });
 
@@ -21,7 +23,11 @@ function attemptFor(q: Question, correct: boolean, timeMs = 5000): QuestionAttem
     type: q.type,
     difficulty: q.difficulty,
     correct,
-    selectedOptionId: correct ? q.correctOptionId : 'wrong',
+    response: {
+      format: 'choice',
+      optionId: correct && q.format === 'choice' ? q.correctOptionId : 'wrong',
+    },
+    score: correct ? 1 : 0,
     timeMs,
     attempt: 1,
     answeredAt: Date.now(),
@@ -51,9 +57,74 @@ describe('composeSession', () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
+  it('draws from an injected template pool instead of subject.templates', () => {
+    const templates = [makeTemplate('only', 't0', 'easy')];
+    const s = composeSession({
+      subject,
+      levelId: 'beginner',
+      mode: 'training',
+      seed: 2,
+      count: 3,
+      templates,
+    });
+    expect(s.questions.every((q) => q.templateId === 'only')).toBe(true);
+  });
+
+  it('lets a template with capacity contribute several distinct questions', () => {
+    const base = makeTemplate('bank', 't0', 'easy');
+    const bank = {
+      ...base,
+      capacity: 10,
+      generate: (rng: () => number) => ({
+        ...base.generate(rng),
+        subtopicId: `t0-sub${Math.floor(rng() * 5)}`,
+      }),
+    };
+    const s = composeSession({
+      subject,
+      levelId: 'beginner',
+      mode: 'training',
+      seed: 2,
+      count: 6,
+      templates: [bank, makeTemplate('single', 't1', 'easy')],
+    });
+    const byTemplate = new Map<string, number>();
+    for (const q of s.questions) {
+      byTemplate.set(q.templateId, (byTemplate.get(q.templateId) ?? 0) + 1);
+    }
+    expect(byTemplate.get('single')).toBe(1);
+    expect(byTemplate.get('bank')).toBe(5);
+    expect(new Set(s.questions.map((q) => q.variantKey)).size).toBe(6);
+  });
+
+  it('caps questions sharing topic, subtopic and type at MAX_SIMILAR_PER_SESSION', () => {
+    // 2 topics × 1 subtopic × 1 type = 2 keys for 20 slots: the cap cannot be met, so it is relaxed.
+    const many = makeSubject({ topics: 2, easy: 10, medium: 0, hard: 0 });
+    const s = composeSession({ subject: many, levelId: 'beginner', mode: 'training', seed: 2 });
+    expect(s.questions).toHaveLength(20);
+    const small = makeSubject({ topics: 4, easy: 10, medium: 0, hard: 0 });
+    const t = composeSession({
+      subject: small,
+      levelId: 'beginner',
+      mode: 'training',
+      seed: 2,
+      count: 8,
+    });
+    const counts = new Map<string, number>();
+    for (const q of t.questions)
+      counts.set(similarityKey(q), (counts.get(similarityKey(q)) ?? 0) + 1);
+    for (const n of counts.values()) expect(n).toBeLessThanOrEqual(MAX_SIMILAR_PER_SESSION);
+  });
+
   it('allows template reuse with distinct variantKeys when templates are scarce', () => {
     const small = makeSubject({ topics: 1, easy: 3, medium: 0, hard: 0 });
-    const s = composeSession({ subject: small, levelId: 'beginner', mode: 'training', seed: 3, count: 6 });
+    const s = composeSession({
+      subject: small,
+      levelId: 'beginner',
+      mode: 'training',
+      seed: 3,
+      count: 6,
+    });
     expect(s.questions).toHaveLength(6);
     expect(new Set(s.questions.map((q) => q.variantKey)).size).toBe(6);
   });
@@ -96,12 +167,24 @@ describe('composeSession', () => {
     // 4 topics, only 2 slots per session → weighted order decides inclusion.
     const fourTopics = makeSubject({ topics: 4, easy: 40, medium: 0, hard: 0 });
     const mastered = (topicId: string) => ({
-      topicId, score: 100, band: 'mastered' as const, attempts: 10, weightedCorrect: 10, weightedTotal: 10,
+      topicId,
+      score: 100,
+      band: 'mastered' as const,
+      attempts: 10,
+      weightedCorrect: 10,
+      weightedTotal: 10,
     });
     const progress = {
       ...emptyProgress(fourTopics.id),
       topicMastery: {
-        t0: { topicId: 't0', score: 0, band: 'unknown' as const, attempts: 0, weightedCorrect: 0, weightedTotal: 0 },
+        t0: {
+          topicId: 't0',
+          score: 0,
+          band: 'unknown' as const,
+          attempts: 0,
+          weightedCorrect: 0,
+          weightedTotal: 0,
+        },
         t1: mastered('t1'),
         t2: mastered('t2'),
         t3: mastered('t3'),
@@ -152,5 +235,50 @@ describe('applyAnswer / summarizeSession', () => {
     expect(summary.avgTimeMs).toBe(3000);
     expect(summary.bestTopics.length).toBeGreaterThan(0);
     expect(summary.worstTopics.length).toBeGreaterThan(0);
+  });
+});
+
+describe('TEXT_FORMAT_SHARE', () => {
+  const poSubject = (() => {
+    const s = makeSubject({ topics: 2, easy: 0, medium: 0, hard: 0 });
+    s.templates = [
+      makeTemplate('po-0', 't0', 'easy', 'predict-output'),
+      makeTemplate('po-1', 't1', 'easy', 'predict-output'),
+      makeTemplate('mc-0', 't0', 'easy'),
+      makeTemplate('mc-1', 't1', 'easy'),
+    ];
+    return s;
+  })();
+
+  it('share 0 keeps every question in choice format', () => {
+    const s = composeSession({
+      subject: poSubject,
+      levelId: 'beginner',
+      mode: 'training',
+      seed: 11,
+      count: 8,
+      textFormatShare: 0,
+    });
+    expect(s.questions.every((q) => q.format === 'choice')).toBe(true);
+  });
+
+  it('share 1 converts every predict-output to text, preserving variantKey', () => {
+    const s = composeSession({
+      subject: poSubject,
+      levelId: 'beginner',
+      mode: 'training',
+      seed: 11,
+      count: 8,
+      textFormatShare: 1,
+    });
+    for (const q of s.questions) {
+      if (q.type === 'predict-output') {
+        expect(q.format).toBe('text');
+        if (q.format === 'text') expect(q.accepted.length).toBeGreaterThan(0);
+        expect(q.variantKey).toBeTruthy();
+      } else {
+        expect(q.format).toBe('choice');
+      }
+    }
   });
 });

@@ -18,6 +18,7 @@ describe('AI proxy', () => {
             subtopicId: 's',
             skills: [],
             prompt: 'p',
+            format: 'choice',
             options: [
               { id: 'a', text: 'x' },
               { id: 'b', text: 'y' },
@@ -25,9 +26,14 @@ describe('AI proxy', () => {
               { id: 'd', text: 'w' },
             ],
             correctOptionId: 'a',
-            explanation: { short: 's', whyCorrect: 'w', whyOthersWrong: { b: 'x', c: 'y', d: 'z' }, concept: 'c' },
+            explanation: {
+              short: 's',
+              whyCorrect: 'w',
+              why: { b: 'x', c: 'y', d: 'z' },
+              concept: 'c',
+            },
           },
-          selectedOptionId: 'a',
+          response: { format: 'choice', optionId: 'a' },
         },
         'analyze-session': { session: {}, summary: {} },
         'study-plan': { subjectId: 'javascript', levelId: 'beginner', weakTopics: [] },
@@ -39,9 +45,7 @@ describe('AI proxy', () => {
   });
 
   it('body invalido → 400', async () => {
-    const res = await request(appNoKey)
-      .post('/api/ai/generate-question')
-      .send({ subjectId: 42 });
+    const res = await request(appNoKey).post('/api/ai/generate-question').send({ subjectId: 42 });
     expect(res.status).toBe(400);
     expect(res.body.error).toBe('invalid_body');
   });

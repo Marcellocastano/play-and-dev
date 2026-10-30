@@ -8,15 +8,27 @@ export const objectsBasicsTopic: Topic = {
   overview:
     'Un oggetto raccoglie coppie chiave-valore. Le proprietà si leggono con `obj.chiave` o `obj["chiave"]` (necessario per chiavi dinamiche o con spazi); si aggiungono assegnando, si rimuovono con `delete`, si verificano con `in`.',
   subtopics: [
-    { id: 'objects-access', name: 'Dot notation e bracket notation', overview: 'obj.prop vs obj["prop"] e quando serve la seconda.' },
-    { id: 'objects-mutation', name: 'Aggiungere e rimuovere proprietà', overview: 'Assegnazione diretta e delete.' },
-    { id: 'objects-methods-in', name: 'Metodi e operatore in', overview: 'Funzioni come proprietà; verifica di esistenza con in.' },
+    {
+      id: 'objects-access',
+      name: 'Dot notation e bracket notation',
+      overview: 'obj.prop vs obj["prop"] e quando serve la seconda.',
+    },
+    {
+      id: 'objects-mutation',
+      name: 'Aggiungere e rimuovere proprietà',
+      overview: 'Assegnazione diretta e delete.',
+    },
+    {
+      id: 'objects-methods-in',
+      name: 'Metodi e operatore in',
+      overview: 'Funzioni come proprietà; verifica di esistenza con in.',
+    },
   ],
   learningObjectives: [
     'Leggere e scrivere proprietà con dot e bracket notation',
     'Aggiungere e cancellare proprietà a runtime',
     'Definire metodi e invocarli con ()',
-    'Verificare l\'esistenza di una chiave con in',
+    "Verificare l'esistenza di una chiave con in",
   ],
   commonMistakes: [
     'Usare obj.key dove key è una variabile: serve obj[key]',

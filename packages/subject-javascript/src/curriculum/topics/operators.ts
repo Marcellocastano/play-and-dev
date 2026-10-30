@@ -6,12 +6,28 @@ export const operatorsTopic: Topic = {
   levelId: 'beginner',
   name: 'Operatori',
   overview:
-    'Gli operatori trasformano e combinano i valori: aritmetici (`+`, `-`, `*`, `/`, `%`, `**`), di assegnazione composta (`+=`, `-=`…), di incremento (`++`, `--`) e logici (`&&`, `||`, `!`). La precedenza decide l\'ordine di valutazione.',
+    "Gli operatori trasformano e combinano i valori: aritmetici (`+`, `-`, `*`, `/`, `%`, `**`), di assegnazione composta (`+=`, `-=`…), di incremento (`++`, `--`) e logici (`&&`, `||`, `!`). La precedenza decide l'ordine di valutazione.",
   subtopics: [
-    { id: 'operators-assignment', name: 'Assegnazione composta', overview: '+=, -=, *= e le sorelle.' },
-    { id: 'operators-increment', name: 'Incremento e decremento', overview: '++ e -- in forma prefissa e postfissa.' },
-    { id: 'operators-logical', name: 'Operatori logici', overview: '&&, || e ! con i valori truthy/falsy.' },
-    { id: 'operators-precedence', name: 'Precedenza', overview: 'Chi viene calcolato prima e perché servono le parentesi.' },
+    {
+      id: 'operators-assignment',
+      name: 'Assegnazione composta',
+      overview: '+=, -=, *= e le sorelle.',
+    },
+    {
+      id: 'operators-increment',
+      name: 'Incremento e decremento',
+      overview: '++ e -- in forma prefissa e postfissa.',
+    },
+    {
+      id: 'operators-logical',
+      name: 'Operatori logici',
+      overview: '&&, || e ! con i valori truthy/falsy.',
+    },
+    {
+      id: 'operators-precedence',
+      name: 'Precedenza',
+      overview: 'Chi viene calcolato prima e perché servono le parentesi.',
+    },
   ],
   learningObjectives: [
     'Usare le assegnazioni composte per aggiornare variabili',

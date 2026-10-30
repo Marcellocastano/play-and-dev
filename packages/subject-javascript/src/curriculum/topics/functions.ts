@@ -8,9 +8,21 @@ export const functionsTopic: Topic = {
   overview:
     'Le funzioni incapsulano logica riusabile: si dichiarano con `function`, ricevono parametri e restituiscono un valore con `return`. Senza `return` esplicito restituiscono `undefined`; gli argomenti mancanti valgono `undefined`.',
   subtopics: [
-    { id: 'functions-declaration', name: 'Dichiarazione e chiamata', overview: 'function nome(parametri) { ... } e invocazione.' },
-    { id: 'functions-return', name: 'return', overview: 'Restituisce un valore e termina la funzione.' },
-    { id: 'functions-params', name: 'Parametri e argomenti', overview: 'Argomenti mancanti → undefined; parametri di default.' },
+    {
+      id: 'functions-declaration',
+      name: 'Dichiarazione e chiamata',
+      overview: 'function nome(parametri) { ... } e invocazione.',
+    },
+    {
+      id: 'functions-return',
+      name: 'return',
+      overview: 'Restituisce un valore e termina la funzione.',
+    },
+    {
+      id: 'functions-params',
+      name: 'Parametri e argomenti',
+      overview: 'Argomenti mancanti → undefined; parametri di default.',
+    },
   ],
   learningObjectives: [
     'Dichiarare e invocare funzioni',

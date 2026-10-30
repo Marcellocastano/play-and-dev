@@ -19,7 +19,10 @@
     "content:dump": "tsx scripts/dump.ts",
     "content:author": "tsx scripts/author.ts",
     "content:approve": "tsx scripts/approve.ts",
-    "content:review": "tsx scripts/review.ts"
+    "content:review": "tsx scripts/review.ts",
+    "content:prompt": "tsx scripts/prompt.ts",
+    "content:import": "tsx scripts/import.ts",
+    "content:add": "tsx scripts/add.ts"
   },
   "dependencies": {
     "@lg/core": "*"

@@ -13,10 +13,7 @@ export const MASTERY_HALF_LIFE_MS = 14 * 24 * 60 * 60 * 1000;
  * exponentially (half-life 14 days) since the last practice.
  * Zero attempts → 0.
  */
-export function computeTopicMastery(
-  attempts: readonly QuestionAttempt[],
-  now: number,
-): number {
+export function computeTopicMastery(attempts: readonly QuestionAttempt[], now: number): number {
   if (attempts.length === 0) return 0;
   let weightedCorrect = 0;
   let weightedTotal = 0;
@@ -24,7 +21,7 @@ export function computeTopicMastery(
   for (const a of attempts) {
     const w = DIFFICULTY_WEIGHT[a.difficulty];
     weightedTotal += w;
-    if (a.correct) weightedCorrect += w;
+    weightedCorrect += w * (a.score ?? (a.correct ? 1 : 0));
     if (a.answeredAt > lastAt) lastAt = a.answeredAt;
   }
   const accuracy = (weightedCorrect / weightedTotal) * 100;

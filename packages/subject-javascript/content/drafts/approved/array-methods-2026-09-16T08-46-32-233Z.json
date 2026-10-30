@@ -32,18 +32,17 @@
       "explanation": {
         "short": "Per trasformare ogni elemento, va restituito `num + 10` nella callback di map.",
         "whyCorrect": "La funzione map applica la callback a ogni elemento dell'array, quindi scrivere `num + 10` restituisce per ogni elemento il valore desiderato incrementato di 10.",
-        "whyOthersWrong": {
+        "concept": "Sintassi di map con callback",
+        "commonMistake": "Usare l'intero array o una funzione invece di restituire il valore trasformato.",
+        "example": "[1, 2].map(x => x + 10) // [11, 12]",
+        "why": {
           "b": "Qui si usa `numeri`, che rappresenta l'intero array, non il singolo elemento. La callback deve usare il parametro ricevuto (`num`).",
           "c": "Qui si tenta di restituire una funzione invece di un valore numerico. Map si aspetta che la callback restituisca un valore, non una funzione.",
           "d": "Questo moltiplica ogni numero per 10, non lo incrementa di 10 come richiesto dal prompt."
-        },
-        "concept": "Sintassi di map con callback",
-        "commonMistake": "Usare l'intero array o una funzione invece di restituire il valore trasformato.",
-        "example": "[1, 2].map(x => x + 10) // [11, 12]"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:46:32.231Z"
+      "format": "choice"
     },
     {
       "id": "array-methods-fg-0020",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "Il filtro per i numeri dispari è `n % 2 === 1`.",
         "whyCorrect": "L'operatore modulo restituisce il resto della divisione, quindi per i numeri dispari il resto di n diviso 2 è 1.",
-        "whyOthersWrong": {
+        "concept": "Uso di filter con condizioni",
+        "commonMistake": "Confondere il resto per i numeri pari e dispari.",
+        "example": "[1,2,3,4].filter(n => n % 2 === 1) // [1,3]",
+        "why": {
           "b": "Questa condizione seleziona i numeri pari, perché il resto della divisione per 2 è zero solo per i numeri pari.",
           "c": "Questo seleziona solo i numeri maggiori di 1, includendo sia pari che dispari, quindi non filtra i dispari.",
           "d": "Questa condizione esclude solo il numero 3, ma non filtra tutti e soli i numeri dispari."
-        },
-        "concept": "Uso di filter con condizioni",
-        "commonMistake": "Confondere il resto per i numeri pari e dispari.",
-        "example": "[1,2,3,4].filter(n => n % 2 === 1) // [1,3]"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:46:32.232Z"
+      "format": "choice"
     },
     {
       "id": "array-methods-fg-0021",
@@ -120,18 +118,17 @@
       "explanation": {
         "short": "Per il prodotto di tutti gli elementi si usa `acc * n`.",
         "whyCorrect": "Con `reduce`, per calcolare il prodotto bisogna moltiplicare l'accumulatore per ogni valore e restituire il risultato a ogni passaggio.",
-        "whyOthersWrong": {
+        "concept": "Uso di reduce per aggregazioni",
+        "commonMistake": "Usare un'operazione diversa (somma/divisione) invece della moltiplicazione.",
+        "example": "[2, 3, 4].reduce((acc, n) => acc * n, 1) // 24",
+        "why": {
           "b": "Questa callback esegue una somma, non un prodotto, quindi restituirebbe la somma totale invece del prodotto.",
           "c": "Qui si divide l'accumulatore per il valore corrente, ottenendo un risultato completamente diverso dal prodotto.",
           "d": "Questa espressione moltiplica ogni valore per se stesso, non accumula il prodotto di tutti gli elementi."
-        },
-        "concept": "Uso di reduce per aggregazioni",
-        "commonMistake": "Usare un'operazione diversa (somma/divisione) invece della moltiplicazione.",
-        "example": "[2, 3, 4].reduce((acc, n) => acc * n, 1) // 24"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:46:32.233Z"
+      "format": "choice"
     }
   ]
 }

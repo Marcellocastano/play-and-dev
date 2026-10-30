@@ -55,10 +55,12 @@ Per un subject "coming soon" basta la `SubjectDefinition` con `status: 'coming-s
 ## Contenuti: template generativi + banca curata
 
 Le domande di `@lg/subject-javascript` arrivano da due fonti: i template generativi in
-`src/templates/` (dati variati via RNG) e la banca curata in `content/<topic>.json`,
+`src/templates/` (dati variati via RNG) e la banca curata in `src/bank/content/<topic>.json`,
 caricata come `QuestionTemplate` da `src/bank/` (un template per gruppo
-`topicId:type:difficulty`, minimo 6 domande — sotto soglia il gruppo non entra nel subject).
-Il runtime non importa JSON: `src/bank/data.generated.ts` è rigenerato ad ogni approvazione.
+`topicId:type:difficulty`, con `capacity` pari al numero di domande: può contribuire con più
+domande alla stessa sessione, entro il cap di similarità del motore).
+I JSON sono importati direttamente; `src/bank/content/index.ts` (un import per file) è
+rigenerato dagli script ad ogni approvazione e un test verifica che sia allineato.
 
 Il flusso di authoring AI è offline e manuale:
 
@@ -73,11 +75,28 @@ npm run content:review -w @lg/subject-javascript
 
 npm run content:approve -w @lg/subject-javascript -- content/drafts/<file>.json [id...]
 # senza id approva tutta la bozza; con --reject <file> id... rimuove gli id dalla bozza.
-# L'approvazione aggiorna content/<topic>.json e rigenera data.generated.ts.
+# L'approvazione aggiorna src/bank/content/<topic>.json e l'indice dei JSON.
 
 npm run content:dump -w @lg/subject-javascript -- <seed> [--why]
 # dump di ogni template (generativi e banca) per ispezione
 ```
+
+Alternativa senza API key (authoring via chat gratuita): `content:prompt` stampa il
+system+user prompt da incollare in una chat; si salva la risposta in `risposta.json`
+nella root del repo e `npm run content:add` fa tutto il resto: valida ogni domanda,
+scarta quelle che non passano il gate, fa merge in `src/bank/content/<topic>.json`,
+esegue i test dei contenuti (se falliscono, ripristina tutto) e
+archivia la bozza in `content/drafts/approved/`:
+
+```bash
+npm run content:prompt -w @lg/subject-javascript -- \
+  --topic json --type true-false --difficulty easy --count 5   # | pbcopy
+# → incolla l'output in una chat, salva la risposta in risposta.json
+npm run content:add                                            # oppure: -- <altro-file.json>
+```
+
+Strumenti avanzati: `content:import` scrive la risposta come bozza in `content/drafts/`
+senza approvarla (poi `content:review` / `content:approve` come sopra).
 
 Regole di qualità e formato delle domande: `packages/subject-javascript/CONTENT_GUIDE.md`
 (il gate `qualityIssues` di `@lg/core` le applica nei test, bozze incluse).

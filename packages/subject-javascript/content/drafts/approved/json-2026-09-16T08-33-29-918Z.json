@@ -32,18 +32,17 @@
       "explanation": {
         "short": "JSON.stringify omette le proprietà con valore undefined.",
         "whyCorrect": "Quando si serializza un oggetto, tutte le proprietà che hanno valore undefined vengono omesse dall'output JSON. Quindi 'b' non compare nella stringa risultante.",
-        "whyOthersWrong": {
+        "concept": "Serializzazione di proprietà undefined",
+        "commonMistake": "Aspettarsi che undefined venga convertito in null o una stringa.",
+        "example": "JSON.stringify({ x: undefined, y: 2 }) // '{\"y\":2}'",
+        "why": {
           "b": "JSON.stringify serializza perfettamente oggetti annidati finché tutte le proprietà sono serializzabili; il problema qui non riguarda l'annidamento.",
           "c": "Un replacer permette di filtrare o modificare le proprietà, ma il comportamento standard senza replacer è già corretto: undefined viene omesso comunque.",
           "d": "Non esiste alcuna opzione che includa le proprietà nulle: null viene serializzato, undefined viene omesso, ed è proprio questo il caso."
-        },
-        "concept": "Serializzazione di proprietà undefined",
-        "commonMistake": "Aspettarsi che undefined venga convertito in null o una stringa.",
-        "example": "JSON.stringify({ x: undefined, y: 2 }) // '{\"y\":2}'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:33:21.246Z"
+      "format": "choice"
     },
     {
       "id": "json-fb-0002",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "Le funzioni non vengono incluse da JSON.stringify.",
         "whyCorrect": "Durante la serializzazione con JSON.stringify, le proprietà il cui valore è una funzione vengono completamente ignorate: non compaiono affatto nel risultato.",
-        "whyOthersWrong": {
+        "concept": "Serializzazione delle funzioni",
+        "commonMistake": "Credere che le funzioni vengano incluse come stringhe o oggetti.",
+        "example": "JSON.stringify({ f: () => 1 }) // '{}'",
+        "why": {
           "b": "Se ci si aspetta che le funzioni vengano convertite automaticamente in stringhe, si sbaglia: vengono semplicemente omesse.",
           "c": "Convertire la funzione in stringa manualmente cambierebbe il tipo, ma di default JSON.stringify non fa questa conversione.",
           "d": "Invocare il metodo prima della serializzazione serve solo a ottenere il risultato della funzione, non a includerla come funzione nell'oggetto."
-        },
-        "concept": "Serializzazione delle funzioni",
-        "commonMistake": "Credere che le funzioni vengano incluse come stringhe o oggetti.",
-        "example": "JSON.stringify({ f: () => 1 }) // '{}'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:33:21.246Z"
+      "format": "choice"
     },
     {
       "id": "json-fb-0003",
@@ -120,18 +118,17 @@
       "explanation": {
         "short": "Le chiavi e le stringhe JSON usano sempre virgolette doppie.",
         "whyCorrect": "Il formato JSON ammette solo virgolette doppie per chiavi e stringhe. Usando virgolette singole, JSON.parse solleva un SyntaxError.",
-        "whyOthersWrong": {
+        "concept": "Regole di sintassi del JSON",
+        "commonMistake": "Usare virgolette singole pensando siano valide in JSON.",
+        "example": "JSON.parse('{\"a\": 1}') // { a: 1 }",
+        "why": {
           "b": "JSON.parse gestisce perfettamente i numeri nel formato JSON corretto; l'errore qui è dovuto alla sintassi, non ai numeri.",
           "c": "Le parentesi graffe sono richieste per gli oggetti JSON; il problema non è questo.",
           "d": "parseInt serve per convertire stringhe numeriche in numeri, ma qui si sta cercando di parsare un oggetto."
-        },
-        "concept": "Regole di sintassi del JSON",
-        "commonMistake": "Usare virgolette singole pensando siano valide in JSON.",
-        "example": "JSON.parse('{\"a\": 1}') // { a: 1 }"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:33:21.247Z"
+      "format": "choice"
     },
     {
       "id": "json-fb-0004",
@@ -164,18 +161,17 @@
       "explanation": {
         "short": "Le date diventano stringhe con JSON, non oggetti Date.",
         "whyCorrect": "JSON.stringify serializza le Date come stringhe ISO, e JSON.parse ricostruisce una stringa, non una vera istanza di Date.",
-        "whyOthersWrong": {
+        "concept": "Limitazioni della copia profonda via JSON",
+        "commonMistake": "Aspettarsi che Date rimanga di tipo Date dopo la copia.",
+        "example": "JSON.parse(JSON.stringify({ d: new Date() })).d // stringa",
+        "why": {
           "b": "Non sono i metodi a mancare, ma proprio la natura di Date: quell'attributo è ora una stringa.",
           "c": "Serializzare manualmente la data non risolve perché la questione è la ricostruzione dell'oggetto Date, che richiede una conversione esplicita dopo il parse.",
           "d": "JSON.parse non blocca le Date: non ha semplicemente modo di distinguere una stringa che rappresenta una data da una qualsiasi altra stringa."
-        },
-        "concept": "Limitazioni della copia profonda via JSON",
-        "commonMistake": "Aspettarsi che Date rimanga di tipo Date dopo la copia.",
-        "example": "JSON.parse(JSON.stringify({ d: new Date() })).d // stringa"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:33:21.247Z"
+      "format": "choice"
     },
     {
       "id": "json-fb-0005",
@@ -208,18 +204,17 @@
       "explanation": {
         "short": "JSON.stringify non può serializzare riferimenti ciclici: lancia TypeError.",
         "whyCorrect": "Se si prova a serializzare un oggetto con riferimenti ciclici, JSON.stringify solleva un TypeError e l'operazione si interrompe.",
-        "whyOthersWrong": {
+        "concept": "Riferimenti ciclici e serializzazione JSON",
+        "commonMistake": "Tentare di clonare strutture cicliche con JSON.stringify.",
+        "example": "const a = {}; a.me = a; JSON.stringify(a) // TypeError",
+        "why": {
           "b": "Un replacer personalizzato potrebbe aiutare a filtrare i riferimenti ciclici, ma non risolve automaticamente il problema: di default l'errore si verifica comunque.",
           "c": "L'errore si verifica già durante la serializzazione e JSON.parse non entra proprio in gioco.",
           "d": "Non esiste alcuna opzione 'deepClone' integrata in JSON.stringify; la funzione serve solo a serializzare."
-        },
-        "concept": "Riferimenti ciclici e serializzazione JSON",
-        "commonMistake": "Tentare di clonare strutture cicliche con JSON.stringify.",
-        "example": "const a = {}; a.me = a; JSON.stringify(a) // TypeError"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:33:21.247Z"
+      "format": "choice"
     },
     {
       "id": "json-fb-0006",
@@ -252,18 +247,17 @@
       "explanation": {
         "short": "Le funzioni e le proprietà `undefined` vengono ignorate da `JSON.stringify`, quindi non compaiono nel testo prodotto.",
         "whyCorrect": "Nel processo di serializzazione con `JSON.stringify`, sia le proprietà che contengono funzioni sia quelle con valore `undefined` vengono completamente omesse dal risultato. Nel JSON finale resta solo la proprietà `nome`.",
-        "whyOthersWrong": {
+        "concept": "Omissione di tipi non supportati da JSON",
+        "commonMistake": "Credere che funzioni o `undefined` vengano serializzati come stringa o `null`.",
+        "example": "JSON.stringify({ ok: undefined, foo: function() {}, x: 1 }) // '{\"x\":1}'",
+        "why": {
           "b": "Le funzioni non vengono mai convertite in stringa da `JSON.stringify`; vengono semplicemente scartate senza apparire nel testo serializzato.",
           "c": "Le proprietà `undefined` non vengono trasformate in `null`, ma omesse del tutto dal JSON risultante. Solo se il valore fosse esplicitamente `null` verrebbe incluso.",
           "d": "Non si verifica alcun errore: `JSON.stringify` gestisce normalmente funzioni e `undefined` omettendole, senza interrompere il programma."
-        },
-        "concept": "Omissione di tipi non supportati da JSON",
-        "commonMistake": "Credere che funzioni o `undefined` vengano serializzati come stringa o `null`.",
-        "example": "JSON.stringify({ ok: undefined, foo: function() {}, x: 1 }) // '{\"x\":1}'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:33:29.916Z"
+      "format": "choice"
     },
     {
       "id": "json-fb-0007",
@@ -296,18 +290,17 @@
       "explanation": {
         "short": "Il formato JSON richiede virgolette doppie per le chiavi e le stringhe, altrimenti `JSON.parse` lancia un errore di sintassi.",
         "whyCorrect": "In JSON valido, tutte le chiavi e le stringhe vanno racchiuse tra virgolette doppie. Usando virgolette singole, `JSON.parse` lancia un `SyntaxError` senza nemmeno iniziare il parsing.",
-        "whyOthersWrong": {
+        "concept": "Sintassi corretta del formato JSON",
+        "commonMistake": "Usare virgolette singole nelle chiavi o nei valori JSON.",
+        "example": "JSON.parse('{\"id\": 123}') // corretto; JSON.parse('{id: 123}') // errore",
+        "why": {
           "b": "Il valore booleano `true` è corretto in minuscolo in JSON; il problema non è la capitalizzazione, ma l'uso delle virgolette.",
           "c": "Nel testo fornito la virgola tra le proprietà è presente; l'errore non dipende dalla punteggiatura, ma dalla sintassi delle stringhe.",
           "d": "In JSON le chiavi devono sempre essere tra doppie virgolette, non senza. Senza virgolette sarebbe sintassi JavaScript valida (oggetto letterale), non JSON."
-        },
-        "concept": "Sintassi corretta del formato JSON",
-        "commonMistake": "Usare virgolette singole nelle chiavi o nei valori JSON.",
-        "example": "JSON.parse('{\"id\": 123}') // corretto; JSON.parse('{id: 123}') // errore"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:33:29.916Z"
+      "format": "choice"
     }
   ]
 }

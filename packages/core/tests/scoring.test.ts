@@ -13,7 +13,11 @@ import {
 } from '../src/index.js';
 import { emptyProgress } from '../src/index.js';
 
-function att(correct: boolean, difficulty: 'easy' | 'medium' | 'hard' = 'easy', timeMs = 20000): QuestionAttempt {
+function att(
+  correct: boolean,
+  difficulty: 'easy' | 'medium' | 'hard' = 'easy',
+  timeMs = 20000,
+): QuestionAttempt {
   return {
     questionId: 'q',
     templateId: 't',
@@ -22,7 +26,8 @@ function att(correct: boolean, difficulty: 'easy' | 'medium' | 'hard' = 'easy', 
     type: 'multiple-choice',
     difficulty,
     correct,
-    selectedOptionId: 'a',
+    response: { format: 'choice', optionId: 'a' },
+    score: correct ? 1 : 0,
     timeMs,
     attempt: 1,
     answeredAt: 0,
@@ -103,9 +108,9 @@ describe('evaluateAchievements', () => {
 
   it('unlocks perfect-session only when all answers are correct', () => {
     const p = { ...emptyProgress('sub'), totalSessions: 1 };
-    expect(
-      evaluateAchievements(p, session([att(true), att(true)])).map((a) => a.id),
-    ).toContain('perfect-session');
+    expect(evaluateAchievements(p, session([att(true), att(true)])).map((a) => a.id)).toContain(
+      'perfect-session',
+    );
     expect(
       evaluateAchievements(p, session([att(true), att(false)])).map((a) => a.id),
     ).not.toContain('perfect-session');
@@ -113,10 +118,7 @@ describe('evaluateAchievements', () => {
 
   it('unlocks streak-10 on a 10-correct run', () => {
     const p = { ...emptyProgress('sub'), totalSessions: 1 };
-    const unlocked = evaluateAchievements(
-      p,
-      session(Array.from({ length: 10 }, () => att(true))),
-    );
+    const unlocked = evaluateAchievements(p, session(Array.from({ length: 10 }, () => att(true))));
     expect(unlocked.map((a) => a.id)).toContain('streak-10');
   });
 
@@ -128,5 +130,20 @@ describe('evaluateAchievements', () => {
     };
     const unlocked = evaluateAchievements(p, session([att(true)]));
     expect(unlocked.map((a) => a.id)).not.toContain('first-session');
+  });
+});
+
+describe('partial score XP', () => {
+  it('scales xp with score and gives 0 for score 0', () => {
+    const half = { ...att(false), score: 0.5 };
+    expect(xpForAttempt(half, 0)).toBe(5); // round(10 * 0.5)
+    expect(xpForAttempt({ ...att(false), score: 0 }, 5)).toBe(0);
+  });
+
+  it('streak only counts fully correct answers', () => {
+    const attempts = [att(true), { ...att(false), score: 0.75 }, att(true)];
+    expect(maxStreak(attempts)).toBe(1);
+    const xp = xpForSession(attempts);
+    expect(xp).toBe(10 + Math.round(10 * 0.75) + 10);
   });
 });

@@ -32,18 +32,17 @@
       "explanation": {
         "short": "Se la callback di map non restituisce nulla, nell'array risultante ci saranno undefined.",
         "whyCorrect": "L'assenza di return nella funzione di callback fa sì che ogni chiamata restituisca undefined; map raccoglie questi undefined e li mette nel nuovo array.",
-        "whyOthersWrong": {
+        "concept": "Return nella callback di map",
+        "commonMistake": "Dimenticare il return nella funzione passata a map.",
+        "example": "[2, 4, 6].map(n => n * 2)",
+        "why": {
           "b": "map non muta l'array originale ma ne crea sempre uno nuovo; la modifica dell'array di partenza non c'entra con l'output undefined.",
           "c": "La callback di map può accettare uno, due o tre argomenti, ma ne basta uno solo; il problema è la mancanza di return, non il numero di parametri.",
           "d": "forEach serve a iterare, ma non restituisce un array; il problema non è la scelta del metodo, ma come viene scritta la callback di map."
-        },
-        "concept": "Return nella callback di map",
-        "commonMistake": "Dimenticare il return nella funzione passata a map.",
-        "example": "[2, 4, 6].map(n => n * 2)"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:23.573Z"
+      "format": "choice"
     },
     {
       "id": "array-methods-fb-0002",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "map restituisce un nuovo array, non muta quello originale.",
         "whyCorrect": "map non muta l'array su cui viene chiamato: produce un nuovo array con i risultati, ma qui non viene usato e quindi nomi rimane uguale.",
-        "whyOthersWrong": {
+        "concept": "Immutabilità di map",
+        "commonMistake": "Aspettarsi che map modifichi l'array originale.",
+        "example": "const maiuscoli = nomi.map(n => n.toUpperCase());",
+        "why": {
           "b": "toUpperCase restituisce la stringa in maiuscolo e non undefined; il problema è che il risultato di map viene ignorato.",
           "c": "La callback di map è corretta: nome => nome.toUpperCase() restituisce la stringa in maiuscolo. Il problema è l'uso del risultato.",
           "d": "map si usa con array di qualsiasi tipo di elemento, non solo numeri; non è questo il limite rilevante qui."
-        },
-        "concept": "Immutabilità di map",
-        "commonMistake": "Aspettarsi che map modifichi l'array originale.",
-        "example": "const maiuscoli = nomi.map(n => n.toUpperCase());"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:23.574Z"
+      "format": "choice"
     },
     {
       "id": "array-methods-fb-0003",
@@ -120,18 +118,17 @@
       "explanation": {
         "short": "Se la callback di filter non restituisce nulla, nessun elemento viene tenuto.",
         "whyCorrect": "La funzione di callback non restituisce espressamente il valore booleano della condizione, quindi filter riceve undefined e nessun elemento passa il filtro.",
-        "whyOthersWrong": {
+        "concept": "Return nella callback di filter",
+        "commonMistake": "Dimenticare il return nella funzione passata a filter.",
+        "example": "numeri.filter(n => n > 5)",
+        "why": {
           "b": "filter accetta sia funzioni tradizionali che frecce; non è obbligatorio usare una funzione freccia.",
           "c": "filter si usa perfettamente anche con array di numeri; il tipo degli elementi non è rilevante.",
           "d": "La condizione va espressa come espressione booleana, non tra parentesi quadre; non è un array di condizioni."
-        },
-        "concept": "Return nella callback di filter",
-        "commonMistake": "Dimenticare il return nella funzione passata a filter.",
-        "example": "numeri.filter(n => n > 5)"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:23.574Z"
+      "format": "choice"
     },
     {
       "id": "array-methods-fb-0004",
@@ -164,18 +161,17 @@
       "explanation": {
         "short": "find restituisce solo il primo elemento che passa la condizione.",
         "whyCorrect": "find restituisce il primo elemento che soddisfa la condizione, mentre per restituire tutti serve filter.",
-        "whyOthersWrong": {
+        "concept": "Differenza tra find e filter",
+        "commonMistake": "Usare find al posto di filter per ottenere più risultati.",
+        "example": "prodotti.filter(p => p.prezzo > 20)",
+        "why": {
           "b": "La condizione è corretta e filtra per prezzo maggiore di 20; il comportamento dipende dal metodo usato.",
           "c": "find si usa anche su array di oggetti, purché la callback ritorni un valore booleano.",
           "d": "La callback di find può prendere anche un solo parametro; non è richiesto il secondo parametro."
-        },
-        "concept": "Differenza tra find e filter",
-        "commonMistake": "Usare find al posto di filter per ottenere più risultati.",
-        "example": "prodotti.filter(p => p.prezzo > 20)"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:23.574Z"
+      "format": "choice"
     },
     {
       "id": "array-methods-fb-0005",
@@ -208,18 +204,17 @@
       "explanation": {
         "short": "reduce senza valore iniziale su array vuoto lancia TypeError.",
         "whyCorrect": "reduce senza secondo argomento come valore iniziale non sa cosa usare per l'accumulatore se l'array è vuoto, perciò lancia un TypeError.",
-        "whyOthersWrong": {
+        "concept": "reduce e valore iniziale",
+        "commonMistake": "Omettere il valore iniziale di reduce su un array che può essere vuoto.",
+        "example": "numeri.reduce((acc, n) => acc + n, 0)",
+        "why": {
           "b": "La callback è corretta: acc + n somma i numeri; il problema è l'assenza del valore iniziale.",
           "c": "reduce è stato progettato per funzionare proprio con array di numeri (o di altro tipo).",
           "d": "Non serve nessuna variabile globale: reduce gestisce internamente l'accumulatore."
-        },
-        "concept": "reduce e valore iniziale",
-        "commonMistake": "Omettere il valore iniziale di reduce su un array che può essere vuoto.",
-        "example": "numeri.reduce((acc, n) => acc + n, 0)"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:23.575Z"
+      "format": "choice"
     },
     {
       "id": "array-methods-fb-0006",
@@ -252,18 +247,17 @@
       "explanation": {
         "short": "filter restituisce un nuovo array e non muta quello originale.",
         "whyCorrect": "filter restituisce un nuovo array con gli elementi filtrati; se non si assegna il risultato a una variabile, l'array di partenza resta invariato.",
-        "whyOthersWrong": {
+        "concept": "Immutabilità di filter",
+        "commonMistake": "Aspettarsi che filter modifichi l'array originale.",
+        "example": "const soloLunghe = parole.filter(p => p.length >= 5);",
+        "why": {
           "b": "La condizione nella callback funziona correttamente: p.length >= 5 filtra bene le parole con almeno 5 lettere.",
           "c": "filter funziona su qualsiasi array, incluse stringhe come elementi.",
           "d": "La callback è una funzione freccia che restituisce implicitamente il risultato della condizione, quindi il return non manca."
-        },
-        "concept": "Immutabilità di filter",
-        "commonMistake": "Aspettarsi che filter modifichi l'array originale.",
-        "example": "const soloLunghe = parole.filter(p => p.length >= 5);"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:23.575Z"
+      "format": "choice"
     },
     {
       "id": "array-methods-fb-0007",
@@ -296,18 +290,17 @@
       "explanation": {
         "short": "Nel corpo della callback manca il return: senza di esso, ogni iterazione restituisce undefined invece della lunghezza della parola.",
         "whyCorrect": "Nella callback passata a map, senza un return esplicito, la funzione restituisce undefined per ogni elemento. Per ottenere le lunghezze bisogna scrivere `return parola.length;` oppure usare la sintassi compatta senza parentesi graffe.",
-        "whyOthersWrong": {
+        "concept": "return nella callback di map",
+        "commonMistake": "Scrivere una callback con le graffe ma senza return, pensando che l’ultima espressione venga restituita automaticamente.",
+        "example": "[\"ciao\"].map(parola => parola.length) // [4]",
+        "why": {
           "b": "forEach non restituisce alcun array, quindi anche sostituendo map con forEach non si otterrebbe il risultato voluto, ma semplicemente undefined.",
           "c": "Non esiste la proprietà lunghezza su parole; bisogna accedere a length su ciascuna parola, come già avviene. La proprietà corretta è parola.length.",
           "d": "map non muta mai l’array originale, ma restituisce un nuovo array. Il problema non è la mutazione, ma il valore restituito dalla callback."
-        },
-        "concept": "return nella callback di map",
-        "commonMistake": "Scrivere una callback con le graffe ma senza return, pensando che l’ultima espressione venga restituita automaticamente.",
-        "example": "[\"ciao\"].map(parola => parola.length) // [4]"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:27.717Z"
+      "format": "choice"
     }
   ]
 }

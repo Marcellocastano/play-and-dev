@@ -8,9 +8,21 @@ export const scopeBasicsTopic: Topic = {
   overview:
     'Lo scope determina dove una variabile è visibile. `let` e `const` hanno scope di blocco (`{ ... }`), `var` ha scope di funzione. Una variabile interna può "fare ombra" (shadowing) a una esterna con lo stesso nome.',
   subtopics: [
-    { id: 'scope-block', name: 'Scope di blocco', overview: 'let/const esistono solo dentro le graffe che le contengono.' },
-    { id: 'scope-function', name: 'Scope di funzione (var)', overview: 'var ignora i blocchi e vale in tutta la funzione.' },
-    { id: 'scope-shadowing', name: 'Shadowing', overview: 'La variabile più interna vince nel suo blocco.' },
+    {
+      id: 'scope-block',
+      name: 'Scope di blocco',
+      overview: 'let/const esistono solo dentro le graffe che le contengono.',
+    },
+    {
+      id: 'scope-function',
+      name: 'Scope di funzione (var)',
+      overview: 'var ignora i blocchi e vale in tutta la funzione.',
+    },
+    {
+      id: 'scope-shadowing',
+      name: 'Shadowing',
+      overview: 'La variabile più interna vince nel suo blocco.',
+    },
   ],
   learningObjectives: [
     'Sapere che let/const non esistono fuori dal loro blocco',

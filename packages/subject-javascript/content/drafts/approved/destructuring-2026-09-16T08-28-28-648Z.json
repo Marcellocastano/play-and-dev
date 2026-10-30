@@ -32,18 +32,17 @@
       "explanation": {
         "short": "Destrutturare undefined causa TypeError: serve un default.",
         "whyCorrect": "Quando si destruttura direttamente un parametro, bisogna dargli un default come `{ livello = 1 } = {}` per gestire il caso senza argomenti.",
-        "whyOthersWrong": {
+        "concept": "Default nel destructuring parametri funzione",
+        "commonMistake": "Dimenticare di fornire un oggetto vuoto come default per destrutturare parametri opzionali.",
+        "example": "function f({ x = 1 } = {}) { ... }",
+        "why": {
           "b": "Non è obbligatorio passare sempre livello: un valore di default nel destructuring permette di non specificarlo.",
           "c": "La destructuring nei parametri funzione è corretta ed è una pratica comune.",
           "d": "Restituire livello non risolve il problema del TypeError, che nasce dalla destrutturazione di undefined."
-        },
-        "concept": "Default nel destructuring parametri funzione",
-        "commonMistake": "Dimenticare di fornire un oggetto vuoto come default per destrutturare parametri opzionali.",
-        "example": "function f({ x = 1 } = {}) { ... }"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:28:19.779Z"
+      "format": "choice"
     },
     {
       "id": "destructuring-fb-0007",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "La sintassi di rinomina va da proprietà originale a nuovo nome: andava scritto { età: anni = 18 }.",
         "whyCorrect": "La sintassi di destructuring per rinominare è { proprietà: variabile }, quindi per assegnare il valore di età a anni scriveremmo { età: anni = 18 }. Nel codice, 'anni: età' cerca una proprietà 'anni' che non esiste.",
-        "whyOthersWrong": {
+        "concept": "Rinominare proprietà in destructuring oggetti",
+        "commonMistake": "Invertire l'ordine proprietà:variabile nella rinomina.",
+        "example": "const { età: anni = 18 } = {};\nconsole.log(anni); // 18",
+        "why": {
           "b": "Il default viene applicato quando la proprietà manca o vale undefined, non quando manca la variabile creata.",
           "c": "I nomi tra parentesi quadre servono per gli array, non per gli oggetti: qui va usata la sintassi con parentesi graffe.",
           "d": "Il destructuring è valido sia nelle dichiarazioni che nei parametri di funzione; non c'è questa limitazione."
-        },
-        "concept": "Rinominare proprietà in destructuring oggetti",
-        "commonMistake": "Invertire l'ordine proprietà:variabile nella rinomina.",
-        "example": "const { età: anni = 18 } = {};\nconsole.log(anni); // 18"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:28:28.646Z"
+      "format": "choice"
     }
   ]
 }

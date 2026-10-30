@@ -12,7 +12,12 @@ import { makeSubject } from './fixtures.js';
 
 const DAY = 24 * 60 * 60 * 1000;
 
-function att(topicId: string, correct: boolean, difficulty: 'easy' | 'medium' | 'hard' = 'easy', answeredAt = 0): QuestionAttempt {
+function att(
+  topicId: string,
+  correct: boolean,
+  difficulty: 'easy' | 'medium' | 'hard' = 'easy',
+  answeredAt = 0,
+): QuestionAttempt {
   return {
     questionId: 'q',
     templateId: 't',
@@ -21,7 +26,8 @@ function att(topicId: string, correct: boolean, difficulty: 'easy' | 'medium' | 
     type: 'multiple-choice',
     difficulty,
     correct,
-    selectedOptionId: 'a',
+    response: { format: 'choice', optionId: 'a' },
+    score: correct ? 1 : 0,
     timeMs: 5000,
     attempt: 1,
     answeredAt,
@@ -36,7 +42,10 @@ describe('computeTopicMastery', () => {
   it('weights accuracy by difficulty', () => {
     const now = Date.now();
     // hard correct (w2) + easy wrong (w1) → 2/3 → 66.7
-    const score = computeTopicMastery([att('t', true, 'hard', now), att('t', false, 'easy', now)], now);
+    const score = computeTopicMastery(
+      [att('t', true, 'hard', now), att('t', false, 'easy', now)],
+      now,
+    );
     expect(score).toBeCloseTo(66.7, 1);
   });
 
@@ -119,8 +128,22 @@ describe('buildRecommendations', () => {
     const p = emptyProgress(subject.id);
     // t0 weak (practiced, low score), t1 good, others unexplored
     p.topicMastery = {
-      t0: { topicId: 't0', score: 30, band: 'weak', attempts: 3, weightedCorrect: 1, weightedTotal: 3 },
-      t1: { topicId: 't1', score: 70, band: 'good', attempts: 5, weightedCorrect: 4, weightedTotal: 5 },
+      t0: {
+        topicId: 't0',
+        score: 30,
+        band: 'weak',
+        attempts: 3,
+        weightedCorrect: 1,
+        weightedTotal: 3,
+      },
+      t1: {
+        topicId: 't1',
+        score: 70,
+        band: 'good',
+        attempts: 5,
+        weightedCorrect: 4,
+        weightedTotal: 5,
+      },
     };
     const recs = buildRecommendations(p, subject);
     expect(recs.length).toBeGreaterThanOrEqual(2);
@@ -129,5 +152,15 @@ describe('buildRecommendations', () => {
     expect(recs[0]!.topicId).toBe('t0');
     expect(recs.some((r) => r.kind === 'unexplored')).toBe(true);
     for (const r of recs) expect(r.reason.length).toBeGreaterThan(0);
+  });
+});
+
+describe('partial score credit', () => {
+  it('mastery counts score fractionally', () => {
+    const now = Date.now();
+    const a = att('t', true, 'easy', now);
+    const partial = { ...att('t', false, 'easy', now), score: 0.5 };
+    // (1 + 0.5) / 2 = 75
+    expect(computeTopicMastery([a, partial], now)).toBeCloseTo(75, 1);
   });
 });

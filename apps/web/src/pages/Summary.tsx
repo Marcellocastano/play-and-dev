@@ -182,7 +182,27 @@ export function Summary() {
                 return (
                   <li key={attempt.questionId}>
                     <span className={`review-dot ${attempt.correct ? 'review-dot--correct' : ''}`}>
-                      <Icon name={attempt.correct ? 'check' : 'close'} size={14} />
+                      {(() => {
+                        const score = attempt.score ?? (attempt.correct ? 1 : 0);
+                        const total = q
+                          ? q.format === 'categorize'
+                            ? q.items.length
+                            : q.format === 'match'
+                              ? q.rows.length
+                              : q.format === 'true-false'
+                                ? q.statements.length
+                                : 1
+                          : 1;
+                        return score === 1 ? (
+                          <Icon name="check" size={14} />
+                        ) : score === 0 ? (
+                          <Icon name="close" size={14} />
+                        ) : (
+                          <span className="review-partial">
+                            {Math.round(score * total)}/{total}
+                          </span>
+                        );
+                      })()}
                     </span>
                     <div>
                       <strong>

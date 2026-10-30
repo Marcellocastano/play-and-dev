@@ -8,9 +8,21 @@ export const primitiveTypesTopic: Topic = {
   overview:
     'JavaScript ha sette tipi primitivi: string, number, bigint, boolean, undefined, symbol e null. L\'operatore `typeof` rivela il tipo di un valore, con qualche sorpresa storica come `typeof null === "object"`.',
   subtopics: [
-    { id: 'primitive-types-typeof', name: 'L\'operatore typeof', overview: 'Restituisce una stringa con il nome del tipo.' },
-    { id: 'primitive-types-list', name: 'I sette primitivi', overview: 'string, number, bigint, boolean, undefined, symbol, null.' },
-    { id: 'primitive-types-quirks', name: 'Casi particolari', overview: 'typeof NaN, typeof null, typeof di array e funzioni.' },
+    {
+      id: 'primitive-types-typeof',
+      name: "L'operatore typeof",
+      overview: 'Restituisce una stringa con il nome del tipo.',
+    },
+    {
+      id: 'primitive-types-list',
+      name: 'I sette primitivi',
+      overview: 'string, number, bigint, boolean, undefined, symbol, null.',
+    },
+    {
+      id: 'primitive-types-quirks',
+      name: 'Casi particolari',
+      overview: 'typeof NaN, typeof null, typeof di array e funzioni.',
+    },
   ],
   learningObjectives: [
     'Elencare i tipi primitivi di JavaScript',

@@ -52,16 +52,30 @@ export interface Option {
   text: string;
 }
 
+export type QuestionFormat = 'choice' | 'categorize' | 'match' | 'true-false' | 'text';
+
+export type QuestionBody =
+  | { format: 'choice'; options: Option[]; correctOptionId: string }
+  | {
+      format: 'categorize';
+      categories: Option[];
+      items: { id: string; text: string; categoryId: string }[];
+    }
+  | { format: 'match'; choices: Option[]; rows: { id: string; text: string; choiceId: string }[] }
+  | { format: 'true-false'; statements: { id: string; text: string; value: boolean }[] }
+  | { format: 'text'; accepted: string[] };
+
 export interface QuestionExplanation {
   short: string;
   whyCorrect: string;
-  whyOthersWrong: Record<string, string>;
-  concept: string;
+  /** key = option id (choice: distractors only) / item / row / statement. */
+  why: Record<string, string>;
+  concept?: string;
   commonMistake?: string;
   example?: string;
 }
 
-export interface Question {
+interface QuestionBase {
   id: string;
   templateId: string;
   variantKey: string;
@@ -72,14 +86,23 @@ export interface Question {
   skills: string[];
   prompt: string;
   code?: string;
-  options: Option[];
-  correctOptionId: string;
   explanation: QuestionExplanation;
   deepDiveRef?: string;
 }
 
+export type Question = QuestionBase & QuestionBody;
+
+export type DistributiveOmit<T, K extends keyof T> = T extends unknown ? Omit<T, K> : never;
+
 /** A Question before engine-level fields (id, variantKey) are assigned. */
-export type GeneratedQuestion = Omit<Question, 'id' | 'variantKey'>;
+export type GeneratedQuestion = DistributiveOmit<Question, 'id' | 'variantKey'>;
+
+export type AnswerResponse =
+  | { format: 'choice'; optionId: string }
+  | { format: 'categorize'; placement: Record<string, string> }
+  | { format: 'match'; selection: Record<string, string> }
+  | { format: 'true-false'; values: Record<string, boolean> }
+  | { format: 'text'; text: string };
 
 export interface QuestionTemplate {
   id: string;
@@ -89,6 +112,8 @@ export interface QuestionTemplate {
   difficulty: Difficulty;
   skills: string[];
   tags: string[];
+  /** Max distinct questions this template may contribute to one session (default 1). */
+  capacity?: number;
   generate(rng: () => number): GeneratedQuestion;
 }
 
@@ -100,7 +125,10 @@ export interface QuestionAttempt {
   type: string;
   difficulty: Difficulty;
   correct: boolean;
-  selectedOptionId: string;
+  response: AnswerResponse;
+  score: number;
+  /** Legacy field of pre-format attempts; kept so old persisted data stays readable. */
+  selectedOptionId?: string;
   timeMs: number;
   attempt: number;
   answeredAt: number;

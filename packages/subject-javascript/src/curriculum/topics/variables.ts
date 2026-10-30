@@ -8,10 +8,26 @@ export const variablesTopic: Topic = {
   overview:
     'Le variabili sono contenitori per i dati. In JavaScript moderno si usano `let` per i valori che cambiano e `const` per quelli che restano fissi; `var` è la forma storica con regole di scope diverse.',
   subtopics: [
-    { id: 'variables-declaration', name: 'Dichiarazione con let e const', overview: 'Come creare una variabile e assegnarle un valore.' },
-    { id: 'variables-reassignment', name: 'Riassegnazione', overview: 'Cambiare il valore di una variabile `let`; `const` non lo consente.' },
-    { id: 'variables-var', name: 'var e hoisting', overview: 'Il comportamento legacy di `var` e perché si evita.' },
-    { id: 'variables-tdz', name: 'Temporal Dead Zone', overview: 'Usare `let`/`const` prima della dichiarazione genera un errore.' },
+    {
+      id: 'variables-declaration',
+      name: 'Dichiarazione con let e const',
+      overview: 'Come creare una variabile e assegnarle un valore.',
+    },
+    {
+      id: 'variables-reassignment',
+      name: 'Riassegnazione',
+      overview: 'Cambiare il valore di una variabile `let`; `const` non lo consente.',
+    },
+    {
+      id: 'variables-var',
+      name: 'var e hoisting',
+      overview: 'Il comportamento legacy di `var` e perché si evita.',
+    },
+    {
+      id: 'variables-tdz',
+      name: 'Temporal Dead Zone',
+      overview: 'Usare `let`/`const` prima della dichiarazione genera un errore.',
+    },
   ],
   learningObjectives: [
     'Dichiarare variabili con let e const',

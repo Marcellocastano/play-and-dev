@@ -32,18 +32,17 @@
       "explanation": {
         "short": "Il metodo `split` divide la stringa in un array, che viene poi ricombinato con `join` usando `--` come separatore.",
         "whyCorrect": "La stringa viene divisa in tre parti su ogni `;`, ottenendo l'array `[ 'albero', 'foglia', 'rame' ]`, che viene poi unito con `join('--')`, producendo `albero--foglia--rame`.",
-        "whyOthersWrong": {
+        "concept": "split e join",
+        "commonMistake": "Dimenticare che `join` sostituisce ogni virgola tra elementi con il nuovo separatore.",
+        "example": "'a,b,c'.split(',').join('-') // 'a-b-c'",
+        "why": {
           "b": "`alberofoglia--rame` è il risultato se la prima virgola fosse unita senza separatore, ma qui tutti gli elementi sono separati da `--`.",
           "c": "La stringa originale non viene alterata se non si applicano i metodi, ma qui `split` e `join` modificano la forma della stringa.",
           "d": "`albero--foglia;rame` si ottiene se si uniscono solo i primi due elementi con `--` e si lascia il resto invariato, ma `join` applica il separatore a tutto l'array."
-        },
-        "concept": "split e join",
-        "commonMistake": "Dimenticare che `join` sostituisce ogni virgola tra elementi con il nuovo separatore.",
-        "example": "'a,b,c'.split(',').join('-') // 'a-b-c'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:44.814Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-po-0002",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "`replace` sostituisce solo la prima occorrenza trovata.",
         "whyCorrect": "Il metodo `replace` con una stringa cambia solo la prima occorrenza di 'verde' in 'rosso', lasciando la seconda invariata.",
-        "whyOthersWrong": {
+        "concept": "replace: solo prima occorrenza",
+        "commonMistake": "Aspettarsi che `replace` cambi tutte le occorrenze invece di una sola.",
+        "example": "'a a a'.replace('a', '-') // '- a a'",
+        "why": {
           "b": "Per sostituire tutte le occorrenze sarebbe necessario `replaceAll` o una regex globale; qui solo la prima è cambiata.",
           "c": "La seconda occorrenza non viene sostituita, ma la prima sì; questa opzione inverte l'ordine dei colori.",
           "d": "L'ordine dei colori non viene modificato: `replace` non scambia la posizione degli elementi."
-        },
-        "concept": "replace: solo prima occorrenza",
-        "commonMistake": "Aspettarsi che `replace` cambi tutte le occorrenze invece di una sola.",
-        "example": "'a a a'.replace('a', '-') // '- a a'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:44.815Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-po-0003",
@@ -120,18 +118,17 @@
       "explanation": {
         "short": "`split()` senza argomenti restituisce un array con l'intera stringa come unico elemento.",
         "whyCorrect": "`split()` senza separatore non spezza la stringa, quindi si ottiene un array che contiene la stringa originale come unico elemento.",
-        "whyOthersWrong": {
+        "concept": "split senza separatore",
+        "commonMistake": "Aspettarsi che `split()` divida la stringa su ogni carattere o spazio.",
+        "example": "'abc'.split() // [ 'abc' ]",
+        "why": {
           "b": "Per ottenere tre elementi occorreva usare `split(' ')`, che separa su ogni spazio.",
           "c": "`split()` non restituisce mai un array vuoto se la stringa non è vuota.",
           "d": "Non ci sono due elementi perché non viene fornito nessun separatore, quindi la stringa resta intera."
-        },
-        "concept": "split senza separatore",
-        "commonMistake": "Aspettarsi che `split()` divida la stringa su ogni carattere o spazio.",
-        "example": "'abc'.split() // [ 'abc' ]"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:44.815Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-po-0004",
@@ -164,18 +161,17 @@
       "explanation": {
         "short": "`replaceAll` sostituisce tutte le occorrenze della stringa cercata.",
         "whyCorrect": "Entrambi i 'pippo' vengono sostituiti da 'pluto', lasciando 'palla' invariato.",
-        "whyOthersWrong": {
+        "concept": "replaceAll",
+        "commonMistake": "Usare `replace` e aspettarsi il comportamento di `replaceAll`.",
+        "example": "'a a'.replaceAll('a', '-') // '- -'",
+        "why": {
           "b": "Solo `replace` (non `replaceAll`) limita la sostituzione alla prima occorrenza.",
           "c": "Il testo originale non viene modificato senza assegnare il risultato, ma qui il nuovo valore è usato.",
           "d": "'palla' non viene sostituito perché non corrisponde all'argomento passato."
-        },
-        "concept": "replaceAll",
-        "commonMistake": "Usare `replace` e aspettarsi il comportamento di `replaceAll`.",
-        "example": "'a a'.replaceAll('a', '-') // '- -'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:44.816Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-po-0005",
@@ -208,18 +204,17 @@
       "explanation": {
         "short": "Dopo lo split e la modifica, la join ricompone la stringa usando il carattere ';' e la seconda parola è maiuscola.",
         "whyCorrect": "Il metodo split crea l’array [ 'mele', 'pere', 'uva' ], poi lista[1] viene trasformato in 'PERE'. Il join usa ';' e ricompone la stringa come 'mele;PERE;uva'.",
-        "whyOthersWrong": {
+        "concept": "split e join su stringhe",
+        "commonMistake": "Pensare che join aggiunga il delimitatore anche dopo l’ultimo elemento.",
+        "example": "['a', 'b'].join('-') // 'a-b'",
+        "why": {
           "b": "La stringa originale non viene ripristinata perché join usa ';', non '-', e la seconda parola è maiuscola, non minuscola.",
           "c": "L’array non contiene un elemento finale vuoto, quindi join non aggiunge un punto e virgola extra alla fine.",
           "d": "Come sopra, join non aggiunge un delimitatore extra alla fine, quindi la stringa finisce esattamente dopo 'uva'."
-        },
-        "concept": "split e join su stringhe",
-        "commonMistake": "Pensare che join aggiunga il delimitatore anche dopo l’ultimo elemento.",
-        "example": "['a', 'b'].join('-') // 'a-b'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:55.281Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-po-0006",
@@ -252,18 +247,17 @@
       "explanation": {
         "short": "Il metodo replace non modifica la stringa originale, serve assegnare il risultato.",
         "whyCorrect": "Senza riassegnare il risultato di replace, la variabile frase resta invariata: 'pizza e pizza'.",
-        "whyOthersWrong": {
+        "concept": "replace non muta la stringa",
+        "commonMistake": "Aspettarsi che replace modifichi la variabile direttamente.",
+        "example": "'a b a'.replace('a', 'z') // 'z b a'",
+        "why": {
           "b": "Così sarebbe se avessimo assegnato: frase = frase.replace(...), ma manca l’assegnazione.",
           "c": "Replace sostituisce solo la prima occorrenza e comunque qui manca la riassegnazione.",
           "d": "Replace non sostituisce tutte le occorrenze senza usare replaceAll o un'espressione regolare globale e qui manca l’assegnazione."
-        },
-        "concept": "replace non muta la stringa",
-        "commonMistake": "Aspettarsi che replace modifichi la variabile direttamente.",
-        "example": "'a b a'.replace('a', 'z') // 'z b a'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:55.281Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-po-0007",
@@ -296,18 +290,17 @@
       "explanation": {
         "short": "Il secondo elemento diventa maiuscolo, poi gli elementi sono uniti con '-'.",
         "whyCorrect": "La stringa viene divisa in tre parti, si trasforma solo il secondo elemento in maiuscolo, poi si ricompone con il trattino come separatore. Solo 'gatto' diventa 'GATTO'.",
-        "whyOthersWrong": {
+        "concept": "split e join su array di stringhe",
+        "commonMistake": "Dimenticare di modificare solo l'elemento voluto o di usare il separatore giusto in join.",
+        "example": "'a,b'.split(',')[1].toUpperCase() // 'B'",
+        "why": {
           "b": "Senza chiamare join il risultato sarebbe ancora un array, ma qui join usa il trattino come separatore, non la virgola, quindi il risultato è diverso.",
           "c": "Questa opzione ignora che il secondo elemento viene trasformato in maiuscolo: 'gatto' diventa 'GATTO', non resta minuscolo.",
           "d": "Solo il secondo elemento viene messo in maiuscolo, non tutti: 'cane' e 'topo' restano invariati."
-        },
-        "concept": "split e join su array di stringhe",
-        "commonMistake": "Dimenticare di modificare solo l'elemento voluto o di usare il separatore giusto in join.",
-        "example": "'a,b'.split(',')[1].toUpperCase() // 'B'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:59.351Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fb-0002",
@@ -340,18 +333,17 @@
       "explanation": {
         "short": "Se split è chiamato senza separatore, restituisce l'intera stringa in un solo elemento.",
         "whyCorrect": "Quando split è chiamato senza argomento, non divide la stringa: restituisce un array con la stringa intera come unico elemento.",
-        "whyOthersWrong": {
+        "concept": "split senza parametro",
+        "commonMistake": "Omettere il separatore in split e aspettarsi la divisione.",
+        "example": "'a b'.split(' ')",
+        "why": {
           "b": "split può dividere anche in parole se si passa uno spazio come separatore, non solo singoli caratteri.",
           "c": "Per ottenere le lettere serve split(''), non split() senza argomenti.",
           "d": "trim elimina spazi agli estremi, ma qui il problema è proprio nel separatore mancante, non negli spazi."
-        },
-        "concept": "split senza parametro",
-        "commonMistake": "Omettere il separatore in split e aspettarsi la divisione.",
-        "example": "'a b'.split(' ')"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:55.734Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fb-0003",
@@ -384,18 +376,17 @@
       "explanation": {
         "short": "replace con stringa sostituisce solo la prima occorrenza.",
         "whyCorrect": "Il metodo replace, se usato con una stringa come primo argomento, sostituisce solo la prima occorrenza trovata. Per tutte le occorrenze serve replaceAll o una RegExp globale.",
-        "whyOthersWrong": {
+        "concept": "replace vs replaceAll",
+        "commonMistake": "Credere che replace sostituisca tutte le occorrenze.",
+        "example": "'a a a'.replaceAll('a', 'b')",
+        "why": {
           "b": "replace opera sulle stringhe, non sugli array: qui non c'è nessun array coinvolto.",
           "c": "replace accetta anche una semplice stringa come pattern, non obbligatoriamente una RegExp.",
           "d": "replaceAll esiste nelle versioni moderne di JavaScript e sarebbe la soluzione giusta per sostituire tutte le occorrenze."
-        },
-        "concept": "replace vs replaceAll",
-        "commonMistake": "Credere che replace sostituisca tutte le occorrenze.",
-        "example": "'a a a'.replaceAll('a', 'b')"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:55.734Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fb-0004",
@@ -428,18 +419,17 @@
       "explanation": {
         "short": "Bisogna assegnare il risultato di replace alla variabile.",
         "whyCorrect": "replace non modifica la stringa originale, restituisce una nuova stringa. Se il risultato non viene assegnato a saluto, la stampa mostrerà ancora il valore vecchio.",
-        "whyOthersWrong": {
+        "concept": "Immutabilità dei metodi stringa",
+        "commonMistake": "Dimenticare di assegnare il risultato di replace.",
+        "example": "str = str.replace('vecchio', 'nuovo');",
+        "why": {
           "b": "La parola 'terra' è presente nella stringa di partenza, il problema non è la mancata corrispondenza.",
           "c": "replace non muta la stringa su cui è chiamato, restituisce una nuova stringa con le sostituzioni.",
           "d": "replace può anche essere usato con due semplici stringhe, la callback è opzionale per sostituzioni dinamiche."
-        },
-        "concept": "Immutabilità dei metodi stringa",
-        "commonMistake": "Dimenticare di assegnare il risultato di replace.",
-        "example": "str = str.replace('vecchio', 'nuovo');"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:55.734Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fb-0005",
@@ -472,18 +462,17 @@
       "explanation": {
         "short": "join senza argomento usa la virgola come separatore predefinito.",
         "whyCorrect": "Se join viene usato senza argomenti, unisce gli elementi usando la virgola. Per ottenere un trattino come separatore bisogna specificarlo esplicitamente.",
-        "whyOthersWrong": {
+        "concept": "join e separatore predefinito",
+        "commonMistake": "Dimenticare di specificare il separatore in join.",
+        "example": "arr.join('-')",
+        "why": {
           "b": "join senza argomenti produce una stringa con le virgole, quindi 'a,b,c' e non 'abc'.",
           "c": "join crea una nuova stringa, non modifica l'array originale.",
           "d": "join accetta qualsiasi stringa come separatore, anche simboli come il trattino."
-        },
-        "concept": "join e separatore predefinito",
-        "commonMistake": "Dimenticare di specificare il separatore in join.",
-        "example": "arr.join('-')"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:55.734Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fb-0006",
@@ -516,18 +505,17 @@
       "explanation": {
         "short": "Il metodo `replace` con una stringa sostituisce solo la prima occorrenza trovata: per cambiare tutte servirebbe `replaceAll` o una regex globale.",
         "whyCorrect": "Quando si usa `replace` con una stringa, solo la prima corrispondenza viene modificata. Le altre rimangono inalterate.",
-        "whyOthersWrong": {
+        "concept": "replace e sostituzione di occorrenze",
+        "commonMistake": "Aspettarsi che `replace` agisca su tutte le corrispondenze invece che solo sulla prima.",
+        "example": "'a a a'.replaceAll('a', 'b') // 'b b b'",
+        "why": {
           "b": "`split` serve per dividere la stringa in segmenti, non per effettuare sostituzioni di testo.",
           "c": "Il pattern passato a `replace` è valido anche se ci sono spazi: vengono trovate corrispondenze letterali.",
           "d": "`replace` restituisce una nuova stringa, non modifica l’originale: per questo il risultato viene assegnato a una nuova variabile."
-        },
-        "concept": "replace e sostituzione di occorrenze",
-        "commonMistake": "Aspettarsi che `replace` agisca su tutte le corrispondenze invece che solo sulla prima.",
-        "example": "'a a a'.replaceAll('a', 'b') // 'b b b'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:26:02.807Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fb-0007",
@@ -560,18 +548,17 @@
       "explanation": {
         "short": "I metodi delle stringhe non modificano il valore originale, quindi bisogna assegnare il risultato di split a una variabile prima di usare join.",
         "whyCorrect": "Il metodo split restituisce un nuovo array ma non cambia la stringa originale. Usare join subito dopo su una stringa causa errore. Serve assegnare il risultato di split e poi usare join sull'array risultante.",
-        "whyOthersWrong": {
+        "concept": "split e join: immutabilità e chaining",
+        "commonMistake": "Pensare che split modifichi la stringa originale, dimenticando che restituisce un nuovo array.",
+        "example": "let parole = testo.split(' ');\nlet nuovo = parole.join('-');",
+        "why": {
           "b": "Sebbene join funzioni solo su array, il vero problema qui è che split non è stato assegnato a una variabile: testo resta una stringa. join su una stringa causa un errore.",
           "c": "È vero che split senza assegnare non cambia testo, ma il vero bug è che il risultato di split non è mai usato e si tenta join su una stringa. Serve assegnare split a una variabile.",
           "d": "Il separatore '-' in join è corretto. Il problema è che join viene chiamato su una stringa, non su un array, perché split non è stato salvato."
-        },
-        "concept": "split e join: immutabilità e chaining",
-        "commonMistake": "Pensare che split modifichi la stringa originale, dimenticando che restituisce un nuovo array.",
-        "example": "let parole = testo.split(' ');\nlet nuovo = parole.join('-');"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:26:06.977Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fg-0001",
@@ -604,18 +591,17 @@
       "explanation": {
         "short": "Il separatore deve essere la virgola per produrre 'uno,due,tre'.",
         "whyCorrect": "join con la virgola unisce gli elementi dell'array inserendo una virgola tra ciascuno, ottenendo la stringa desiderata.",
-        "whyOthersWrong": {
+        "concept": "join con separatore",
+        "commonMistake": "Usare un separatore diverso da quello richiesto.",
+        "example": "[ 'a', 'b' ].join(',') // 'a,b'",
+        "why": {
           "b": "Uno spazio tra gli elementi darebbe 'uno due tre', non con le virgole.",
           "c": "Il punto tra gli elementi produrrebbe 'uno.due.tre', non la versione richiesta.",
           "d": "Il trattino darebbe come risultato 'uno-due-tre', diverso dalla richiesta."
-        },
-        "concept": "join con separatore",
-        "commonMistake": "Usare un separatore diverso da quello richiesto.",
-        "example": "[ 'a', 'b' ].join(',') // 'a,b'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:26:03.612Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fg-0002",
@@ -648,18 +634,17 @@
       "explanation": {
         "short": "padStart(3, '0') rende '007' aggiungendo zeri a sinistra.",
         "whyCorrect": "padStart con lunghezza 3 e carattere '0' aggiunge zeri finché la lunghezza raggiunge 3, ottenendo '007'.",
-        "whyOthersWrong": {
+        "concept": "padStart parametri",
+        "commonMistake": "Invertire posizione e carattere o usare lunghezza sbagliata.",
+        "example": "'5'.padStart(3, '0') // '005'",
+        "why": {
           "b": "padStart(2, '7') produce '77', non aggiunge zeri e la lunghezza è diversa.",
           "c": "padStart(3, '7') crea '777', non aggiunge zeri ma il carattere dato.",
           "d": "padStart(2, '0') produce '07', quindi la stringa non raggiunge 3 cifre."
-        },
-        "concept": "padStart parametri",
-        "commonMistake": "Invertire posizione e carattere o usare lunghezza sbagliata.",
-        "example": "'5'.padStart(3, '0') // '005'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:26:03.613Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fg-0003",
@@ -692,18 +677,17 @@
       "explanation": {
         "short": "replace('a', 'o') cambia solo la prima 'a' trovata.",
         "whyCorrect": "Con due stringhe, replace sostituisce solo la prima corrispondenza della 'a' con 'o', lasciando invariate le altre.",
-        "whyOthersWrong": {
+        "concept": "replace prima occorrenza",
+        "commonMistake": "Supporre che replace sostituisca tutte le occorrenze.",
+        "example": "'testa'.replace('t', 'b') // 'besta'",
+        "why": {
           "b": "L'opzione usa una regex globale, che sostituirebbe tutte le 'a', non solo la prima.",
           "c": "Sostituirebbe la sequenza 'an' con 'on', non la singola 'a'.",
           "d": "Sostituisce 'an' con 'on' solo alla prima occorrenza, non la singola 'a'."
-        },
-        "concept": "replace prima occorrenza",
-        "commonMistake": "Supporre che replace sostituisca tutte le occorrenze.",
-        "example": "'testa'.replace('t', 'b') // 'besta'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:26:03.613Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fg-0005",
@@ -736,18 +720,17 @@
       "explanation": {
         "short": "Il metodo trim elimina gli spazi da inizio e fine stringa.",
         "whyCorrect": "trim rimuove i caratteri di spazio solo all’inizio e alla fine della stringa, lasciando invariato il resto.",
-        "whyOthersWrong": {
+        "concept": "Metodo trim sulle stringhe",
+        "commonMistake": "Cercare di usare slice o replace per rimuovere spazi ai bordi.",
+        "example": "'  ok  '.trim() // 'ok'",
+        "why": {
           "b": "slice crea una sottostringa scegliendo un intervallo, non rimuove gli spazi automaticamente.",
           "c": "split converte la stringa in array secondo un separatore, ma non elimina spazi.",
           "d": "replaceAll sostituisce tutte le occorrenze di un pattern, ma senza pattern specifico non pulisce gli spazi."
-        },
-        "concept": "Metodo trim sulle stringhe",
-        "commonMistake": "Cercare di usare slice o replace per rimuovere spazi ai bordi.",
-        "example": "'  ok  '.trim() // 'ok'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:26:10.200Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fg-0018",
@@ -780,18 +763,17 @@
       "explanation": {
         "short": "Usando split('') ottieni ogni carattere della stringa come elemento dell'array.",
         "whyCorrect": "split('') divide la stringa su ogni carattere, quindi 'gatto' diventa ['g','a','t','t','o'].",
-        "whyOthersWrong": {
+        "concept": "split con separatore vuoto",
+        "commonMistake": "Dimenticare che split senza argomenti non divide in caratteri.",
+        "example": "'ciao'.split('') // ['c', 'i', 'a', 'o']",
+        "why": {
           "b": "split() senza argomenti restituisce un array con la stringa intera come unico elemento, quindi ottieni ['gatto'].",
           "c": "split(' ') cerca uno spazio come separatore, ma 'gatto' non ne contiene: avrai di nuovo ['gatto'].",
           "d": "split(',') divide solo dove trova una virgola, ma qui non ci sono virgole: il risultato è ancora ['gatto']."
-        },
-        "concept": "split con separatore vuoto",
-        "commonMistake": "Dimenticare che split senza argomenti non divide in caratteri.",
-        "example": "'ciao'.split('') // ['c', 'i', 'a', 'o']"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:48:32.441Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fg-0020",
@@ -824,18 +806,17 @@
       "explanation": {
         "short": "join('-') unisce gli elementi mettendo un trattino tra ciascuno.",
         "whyCorrect": "join('-') concatena gli elementi separandoli con '-', ottenendo 'a-b-c'.",
-        "whyOthersWrong": {
+        "concept": "join con separatore personalizzato",
+        "commonMistake": "Dimenticare di passare il separatore corretto a join.",
+        "example": "['uno', 'due'].join(',') // 'uno,due'",
+        "why": {
           "b": "join() senza argomenti usa la virgola come separatore, producendo 'a,b,c', non 'a-b-c'.",
           "c": "split('-') è un metodo delle stringhe, non degli array: su array lancia TypeError.",
           "d": "concat('-') aggiunge la stringa '-' come nuovo elemento, risultato: ['a', 'b', 'c', '-']."
-        },
-        "concept": "join con separatore personalizzato",
-        "commonMistake": "Dimenticare di passare il separatore corretto a join.",
-        "example": "['uno', 'due'].join(',') // 'uno,due'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:48:32.442Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fg-0021",
@@ -868,18 +849,17 @@
       "explanation": {
         "short": "Il separatore '-' permette di dividere la stringa in due parti dove compare il trattino.",
         "whyCorrect": "Usando '-' come separatore, il metodo split divide la stringa in corrispondenza del trattino, producendo l'array ['gatto', 'cane'].",
-        "whyOthersWrong": {
+        "concept": "split con separatore corretto",
+        "commonMistake": "Dimenticare di specificare il carattere che separa le parti nella stringa.",
+        "example": "'a:b:c'.split(':') // ['a', 'b', 'c']",
+        "why": {
           "b": "Con la stringa vuota come separatore, split divide tra ogni carattere: si ottiene un array con tutte le lettere singole, non le parole.",
           "c": "Con ',' come separatore, split non trova nessuna virgola, quindi restituisce un array con la stringa intera, senza suddividerla.",
           "d": "Passando undefined, split non suddivide affatto la stringa e restituisce un array contenente solo il valore originale senza divisioni."
-        },
-        "concept": "split con separatore corretto",
-        "commonMistake": "Dimenticare di specificare il carattere che separa le parti nella stringa.",
-        "example": "'a:b:c'.split(':') // ['a', 'b', 'c']"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:48:38.527Z"
+      "format": "choice"
     }
   ]
 }

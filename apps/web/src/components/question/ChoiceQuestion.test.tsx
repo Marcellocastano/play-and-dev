@@ -8,7 +8,7 @@ import { RichText } from '../ui/RichText';
 
 afterEach(cleanup);
 
-const question: Question = {
+const question: Extract<Question, { format: 'choice' }> = {
   id: 'q1',
   templateId: 't1',
   variantKey: 'v1',
@@ -24,11 +24,12 @@ const question: Question = {
     { id: 'c', text: 'tipo' },
     { id: 'd', text: 'var2' },
   ],
+  format: 'choice',
   correctOptionId: 'a',
   explanation: {
     short: 'let è riassegnabile.',
     whyCorrect: 'let consente la riassegnazione.',
-    whyOthersWrong: { b: 'const è fissa.', c: 'non esiste.', d: 'non esiste.' },
+    why: { b: 'const è fissa.', c: 'non esiste.', d: 'non esiste.' },
     concept: 'Dichiarazioni',
   },
 };
@@ -47,7 +48,7 @@ describe('ChoiceQuestion', () => {
     const buttons = screen.getAllByRole('button');
     expect(buttons).toHaveLength(4);
     fireEvent.click(buttons[1]!);
-    expect(onAnswer).toHaveBeenCalledWith('b');
+    expect(onAnswer).toHaveBeenCalledWith({ format: 'choice', optionId: 'b' });
   });
 
   it('gestisce i tasti numerici ma ignora input e pressioni ripetute', () => {
@@ -64,7 +65,7 @@ describe('ChoiceQuestion', () => {
       </>,
     );
     fireEvent.keyDown(window, { key: '2' });
-    expect(onAnswer).toHaveBeenCalledWith('b');
+    expect(onAnswer).toHaveBeenCalledWith({ format: 'choice', optionId: 'b' });
     fireEvent.keyDown(screen.getByRole('textbox'), { key: '1' });
     fireEvent.keyDown(window, { key: '1', repeat: true });
     expect(onAnswer).toHaveBeenCalledTimes(1);
@@ -90,7 +91,8 @@ describe('FeedbackPanel', () => {
     type: 'multiple-choice',
     difficulty: 'easy' as const,
     correct: false,
-    selectedOptionId: 'b',
+    response: { format: 'choice' as const, optionId: 'b' },
+    score: 0,
     timeMs: 1000,
     attempt: 1,
     answeredAt: 1,
@@ -118,5 +120,67 @@ describe('FeedbackPanel', () => {
     fireEvent.keyDown(window, { key: 'Enter' });
     fireEvent.click(next);
     expect(onNext).not.toHaveBeenCalled();
+  });
+});
+
+describe('FeedbackPanel parziale (formati di gioco)', () => {
+  const catQuestion: Extract<Question, { format: 'categorize' }> = {
+    id: 'q2',
+    templateId: 't2',
+    variantKey: 'v2',
+    type: 'categorize',
+    difficulty: 'easy',
+    topicId: 'arrays-basics',
+    subtopicId: 'arrays-mutators',
+    skills: [],
+    prompt: 'Classifica',
+    format: 'categorize',
+    categories: [
+      { id: 'c1', text: 'Muta' },
+      { id: 'c2', text: 'Puro' },
+    ],
+    items: [
+      { id: 'i0', text: '`push()`', categoryId: 'c1' },
+      { id: 'i1', text: '`pop()`', categoryId: 'c1' },
+      { id: 'i2', text: '`map()`', categoryId: 'c2' },
+      { id: 'i3', text: '`filter()`', categoryId: 'c2' },
+    ],
+    explanation: {
+      short: 's',
+      whyCorrect: 'w',
+      why: {
+        i0: "push muta perché scrive in coda sul posto e non crea copie dell'array.",
+        i1: "pop muta perché rimuove l'ultimo elemento direttamente dall'array originale.",
+        i2: 'map è puro perché costruisce un array nuovo con i risultati trasformati.',
+        i3: 'filter è puro perché produce un nuovo array con i soli elementi filtrati.',
+      },
+    },
+  };
+
+  const partialAttempt = {
+    questionId: 'q2',
+    templateId: 't2',
+    topicId: 'arrays-basics',
+    subtopicId: 'arrays-mutators',
+    type: 'categorize',
+    difficulty: 'easy' as const,
+    correct: false,
+    response: {
+      format: 'categorize' as const,
+      placement: { i0: 'c1', i1: 'c2', i2: 'c2', i3: 'c2' },
+    },
+    score: 0.75,
+    timeMs: 1000,
+    attempt: 1,
+    answeredAt: 1,
+  };
+
+  it('mostra "N su M corretti" e "Da rivedere" con solo gli sbagli', () => {
+    render(<FeedbackPanel question={catQuestion} attempt={partialAttempt} onNext={vi.fn()} />);
+    expect(screen.getByText('Quasi. 3 su 4 corretti.')).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: /Capisci il perché/ }));
+    expect(screen.getByText('Da rivedere')).toBeTruthy();
+    expect(screen.getByText('pop()')).toBeTruthy();
+    expect(screen.queryByText('map()')).toBeNull();
   });
 });

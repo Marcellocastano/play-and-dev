@@ -1,0 +1,1341 @@
+{
+  "topicId": "variables",
+  "questions": [
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "let",
+        "const"
+      ],
+      "prompt": "Per ogni istruzione, indica se la dichiarazione permette una successiva riassegnazione della variabile.",
+      "explanation": {
+        "short": "La parola usata per dichiarare la variabile determina se il legame può essere riassegnato.",
+        "whyCorrect": "`let` consente di assegnare un nuovo valore, mentre `const` mantiene fisso il legame con il valore iniziale.",
+        "why": {
+          "i0": "La dichiarazione usa `let`, quindi la variabile può ricevere in seguito un altro valore senza generare un errore.",
+          "i1": "La dichiarazione usa `const`, quindi il legame non può essere riassegnato dopo l'assegnazione iniziale.",
+          "i2": "Con `let` il valore iniziale può essere sostituito successivamente da un'altra assegnazione alla stessa variabile.",
+          "i3": "Con `const` il riferimento della variabile resta vincolato al valore iniziale e una riassegnazione non è consentita."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "si",
+          "text": "Riassegnazione consentita"
+        },
+        {
+          "id": "no",
+          "text": "Riassegnazione vietata"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`let punti = 10;`",
+          "categoryId": "si"
+        },
+        {
+          "id": "i1",
+          "text": "`const nome = 'Ada';`",
+          "categoryId": "no"
+        },
+        {
+          "id": "i2",
+          "text": "`let totale = 50;`",
+          "categoryId": "si"
+        },
+        {
+          "id": "i3",
+          "text": "`const attivo = true;`",
+          "categoryId": "no"
+        }
+      ],
+      "id": "variables-cg-0001",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "let",
+        "const"
+      ],
+      "prompt": "Per ogni dichiarazione, indica se la sintassi è completa oppure manca un elemento obbligatorio.",
+      "explanation": {
+        "short": "Una dichiarazione con `const` deve ricevere subito un valore iniziale, mentre `let` può essere dichiarato senza assegnazione.",
+        "whyCorrect": "`const` richiede un'inizializzazione immediata, mentre `let` può esistere anche prima che le venga assegnato un valore.",
+        "why": {
+          "i0": "La variabile viene dichiarata con `let` e riceve immediatamente il valore `3`, quindi l'istruzione è completa.",
+          "i1": "La dichiarazione usa `const` e fornisce subito un valore, rispettando il requisito necessario per questo tipo di variabile.",
+          "i2": "Una dichiarazione `const` senza valore iniziale non è valida: la costante deve essere inizializzata nello stesso momento.",
+          "i3": "`let` può essere dichiarato senza assegnazione iniziale, quindi l'istruzione è sintatticamente completa anche senza un valore."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "completa",
+          "text": "Dichiarazione completa"
+        },
+        {
+          "id": "incompleta",
+          "text": "Dichiarazione incompleta"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`let quantita = 3;`",
+          "categoryId": "completa"
+        },
+        {
+          "id": "i1",
+          "text": "`const prezzo = 12;`",
+          "categoryId": "completa"
+        },
+        {
+          "id": "i2",
+          "text": "`const nome;`",
+          "categoryId": "incompleta"
+        },
+        {
+          "id": "i3",
+          "text": "`let indirizzo;`",
+          "categoryId": "completa"
+        }
+      ],
+      "id": "variables-cg-0002",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "reassignment"
+      ],
+      "prompt": "Classifica ogni frammento in base a ciò che accade quando viene eseguita la riassegnazione.",
+      "explanation": {
+        "short": "La riassegnazione dipende dal fatto che la variabile sia stata dichiarata con `let` oppure `const`.",
+        "whyCorrect": "Una variabile `let` può cambiare valore, mentre una variabile `const` non può essere riassegnata.",
+        "why": {
+          "i0": "La variabile è dichiarata con `let`, quindi la seconda assegnazione sostituisce legalmente il valore iniziale `1` con `2`.",
+          "i1": "La variabile è una `const`: tentare di assegnarle un nuovo valore dopo la dichiarazione provoca un `TypeError`.",
+          "i2": "La dichiarazione con `let` permette alla variabile di passare da `3` a `4` senza alcun errore.",
+          "i3": "Il legame creato con `const` non può essere riassegnato, quindi la seconda assegnazione provoca un `TypeError`."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "ok",
+          "text": "Esecuzione riuscita"
+        },
+        {
+          "id": "error",
+          "text": "Lancia un errore"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`let livello = 1; livello = 2;`",
+          "categoryId": "ok"
+        },
+        {
+          "id": "i1",
+          "text": "`const lingua = 'it'; lingua = 'en';`",
+          "categoryId": "error"
+        },
+        {
+          "id": "i2",
+          "text": "`let tentativi = 3; tentativi = 4;`",
+          "categoryId": "ok"
+        },
+        {
+          "id": "i3",
+          "text": "`const aperto = true; aperto = false;`",
+          "categoryId": "error"
+        }
+      ],
+      "id": "variables-cg-0003",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "reassignment"
+      ],
+      "prompt": "Per ogni coppia di istruzioni, indica se la seconda istruzione può cambiare il valore della variabile.",
+      "explanation": {
+        "short": "La prima parola chiave stabilisce se la seconda istruzione può assegnare un nuovo valore.",
+        "whyCorrect": "Le dichiarazioni con `let` consentono nuove assegnazioni; quelle con `const` impediscono di sostituire il valore legato alla variabile.",
+        "why": {
+          "i0": "Poiché `colore` nasce con `let`, la seconda istruzione può sostituire legalmente `'blu'` con `'rosso'`.",
+          "i1": "La variabile è stata dichiarata con `const`, quindi il tentativo di sostituire `7` con `5` genera un `TypeError`.",
+          "i2": "Con `let` è possibile modificare il contenuto della variabile, perciò `100` può essere riassegnato a `80`.",
+          "i3": "La dichiarazione con `const` blocca la riassegnazione: il passaggio da `'Italia'` a `'Francia'` causa un `TypeError`."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "permessa",
+          "text": "Modifica permessa"
+        },
+        {
+          "id": "vietata",
+          "text": "Modifica vietata"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`let colore = 'blu'; colore = 'rosso';`",
+          "categoryId": "permessa"
+        },
+        {
+          "id": "i1",
+          "text": "`const giorni = 7; giorni = 5;`",
+          "categoryId": "vietata"
+        },
+        {
+          "id": "i2",
+          "text": "`let saldo = 100; saldo = 80;`",
+          "categoryId": "permessa"
+        },
+        {
+          "id": "i3",
+          "text": "`const paese = 'Italia'; paese = 'Francia';`",
+          "categoryId": "vietata"
+        }
+      ],
+      "id": "variables-cg-0004",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "scope"
+      ],
+      "prompt": "Osserva dove viene dichiarata la variabile e classifica se `var` resta accessibile fuori dal blocco.",
+      "explanation": {
+        "short": "`var` ha scope di funzione e non di blocco, mentre `let` e `const` rispettano lo scope del blocco.",
+        "whyCorrect": "Un blocco racchiuso tra graffe non limita una variabile `var`, mentre limita le variabili dichiarate con `let` e `const`.",
+        "why": {
+          "i0": "La dichiarazione `var` non è confinata alle graffe del blocco, quindi `codice` resta disponibile anche nella `console.log` successiva.",
+          "i1": "Anche dentro un `if`, `var` non crea uno scope di blocco: la variabile resta accessibile dopo la chiusura delle graffe.",
+          "i2": "La dichiarazione usa `let`, che ha scope di blocco; fuori dalle graffe il nome `codice` non è accessibile.",
+          "i3": "La variabile è dichiarata con `const`, quindi il blocco `if` ne limita l'accessibilità e il riferimento esterno non è disponibile."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "accessibile",
+          "text": "Accessibile fuori dal blocco"
+        },
+        {
+          "id": "non-accessibile",
+          "text": "Non accessibile fuori dal blocco"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`{ var codice = 10; } console.log(codice);`",
+          "categoryId": "accessibile"
+        },
+        {
+          "id": "i1",
+          "text": "`if (true) { var pronto = true; } console.log(pronto);`",
+          "categoryId": "accessibile"
+        },
+        {
+          "id": "i2",
+          "text": "`{ let codice = 10; } console.log(codice);`",
+          "categoryId": "non-accessibile"
+        },
+        {
+          "id": "i3",
+          "text": "`if (true) { const pronto = true; } console.log(pronto);`",
+          "categoryId": "non-accessibile"
+        }
+      ],
+      "id": "variables-cg-0005",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "scope"
+      ],
+      "prompt": "Per ogni frammento, indica se la variabile dichiarata dentro il blocco può essere letta subito dopo.",
+      "explanation": {
+        "short": "La capacità di leggere il nome dopo il blocco dipende dallo scope creato dalla parola chiave usata.",
+        "whyCorrect": "`var` supera i confini del blocco, mentre `let` e `const` rendono il nome disponibile soltanto dentro le graffe.",
+        "why": {
+          "i0": "Con `var`, la variabile non è limitata al blocco, quindi la lettura successiva trova correttamente il valore `4`.",
+          "i1": "La dichiarazione `var` ha scope di funzione e non di blocco, perciò `città` resta leggibile dopo la chiusura delle graffe.",
+          "i2": "La variabile `let` appartiene al blocco in cui è stata dichiarata; fuori da esso il nome non esiste e la lettura causa un `ReferenceError`.",
+          "i3": "La variabile `const` è confinata al blocco: la `console.log` esterna non può accedere a `città` e genera un `ReferenceError`."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "si",
+          "text": "La lettura riesce"
+        },
+        {
+          "id": "no",
+          "text": "La lettura fallisce"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`{ var numero = 4; } console.log(numero);`",
+          "categoryId": "si"
+        },
+        {
+          "id": "i1",
+          "text": "`{ var città = 'Torino'; } console.log(città);`",
+          "categoryId": "si"
+        },
+        {
+          "id": "i2",
+          "text": "`{ let numero = 4; } console.log(numero);`",
+          "categoryId": "no"
+        },
+        {
+          "id": "i3",
+          "text": "`{ const città = 'Torino'; } console.log(città);`",
+          "categoryId": "no"
+        }
+      ],
+      "id": "variables-cg-0006",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "hoisting"
+      ],
+      "prompt": "Classifica ciò che accade leggendo la variabile prima della dichiarazione con `var`.",
+      "explanation": {
+        "short": "`var` viene hoistata e inizializzata a `undefined`, mentre `let` e `const` non possono essere lette prima della dichiarazione.",
+        "whyCorrect": "Con `var` il nome esiste già durante l'esecuzione della lettura, ma il valore non è ancora stato assegnato.",
+        "why": {
+          "i0": "La dichiarazione `var` viene hoistata e inizializzata a `undefined`, quindi la prima `console.log` stampa proprio quel valore.",
+          "i1": "Anche in questo caso `var` rende disponibile il nome prima dell'assegnazione, perciò la lettura anticipata produce `undefined`.",
+          "i2": "Con `let` la variabile esiste ma si trova nella Temporal Dead Zone fino alla dichiarazione, quindi la lettura provoca un `ReferenceError`.",
+          "i3": "La `const` non può essere letta prima della propria dichiarazione: l'accesso anticipato attraversa la Temporal Dead Zone e causa un `ReferenceError`."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "undefined",
+          "text": "Legge undefined"
+        },
+        {
+          "id": "errore",
+          "text": "Lancia un errore"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`console.log(numero); var numero = 8;`",
+          "categoryId": "undefined"
+        },
+        {
+          "id": "i1",
+          "text": "`console.log(nome); var nome = 'Luca';`",
+          "categoryId": "undefined"
+        },
+        {
+          "id": "i2",
+          "text": "`console.log(numero); let numero = 8;`",
+          "categoryId": "errore"
+        },
+        {
+          "id": "i3",
+          "text": "`console.log(nome); const nome = 'Luca';`",
+          "categoryId": "errore"
+        }
+      ],
+      "id": "variables-cg-0007",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "hoisting"
+      ],
+      "prompt": "Indica quale valore è disponibile nella prima lettura della variabile.",
+      "explanation": {
+        "short": "La posizione della lettura rispetto alla dichiarazione cambia il risultato in base alla parola chiave usata.",
+        "whyCorrect": "Con `var` una lettura anticipata ottiene `undefined`; con `let` e `const` l'accesso anticipato causa un `ReferenceError`.",
+        "why": {
+          "i0": "Qui la dichiarazione e l'assegnazione precedono la lettura, quindi `totale` contiene già `20` quando viene stampato.",
+          "i1": "La lettura precede l'assegnazione, ma `var` è hoistata e parte da `undefined`, che è quindi il valore osservato.",
+          "i2": "La lettura avviene prima della dichiarazione di `let`, quindi la variabile è nella Temporal Dead Zone e viene lanciato un `ReferenceError`.",
+          "i3": "La lettura anticipata di una `const` attraversa la Temporal Dead Zone, perciò l'esecuzione si interrompe con un `ReferenceError`."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "undefined",
+          "text": "Valore undefined"
+        },
+        {
+          "id": "errore",
+          "text": "Si verifica un errore"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`var totale = 20; console.log(totale);`",
+          "categoryId": "undefined"
+        },
+        {
+          "id": "i1",
+          "text": "`console.log(scorta); var scorta = 6;`",
+          "categoryId": "undefined"
+        },
+        {
+          "id": "i2",
+          "text": "`console.log(totale); let totale = 20;`",
+          "categoryId": "errore"
+        },
+        {
+          "id": "i3",
+          "text": "`console.log(scorta); const scorta = 6;`",
+          "categoryId": "errore"
+        }
+      ],
+      "id": "variables-cg-0008",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "Temporal Dead Zone"
+      ],
+      "prompt": "Classifica ogni frammento in base al fatto che la variabile venga letta prima oppure dopo la sua dichiarazione.",
+      "explanation": {
+        "short": "Per `let` e `const` è importante la posizione della lettura rispetto alla dichiarazione.",
+        "whyCorrect": "Una lettura precedente alla dichiarazione entra nella Temporal Dead Zone, mentre una lettura successiva trova una variabile già inizializzata.",
+        "why": {
+          "i0": "La `console.log` usa `nome` prima della dichiarazione con `let`, quindi l'accesso avviene dentro la Temporal Dead Zone.",
+          "i1": "La dichiarazione di `eta` e la sua inizializzazione avvengono prima della lettura, quindi il valore è già disponibile.",
+          "i2": "La lettura di `citta` precede la dichiarazione `const`, quindi il nome si trova nella Temporal Dead Zone in quel momento.",
+          "i3": "La variabile `punti` è già stata dichiarata e inizializzata quando viene letta, quindi non c'è alcun accesso anticipato."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "prima",
+          "text": "Lettura anticipata"
+        },
+        {
+          "id": "dopo",
+          "text": "Lettura successiva"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`console.log(nome); let nome = 'Ada';`",
+          "categoryId": "prima"
+        },
+        {
+          "id": "i1",
+          "text": "`const eta = 30; console.log(eta);`",
+          "categoryId": "dopo"
+        },
+        {
+          "id": "i2",
+          "text": "`console.log(citta); const citta = 'Roma';`",
+          "categoryId": "prima"
+        },
+        {
+          "id": "i3",
+          "text": "`let punti = 12; console.log(punti);`",
+          "categoryId": "dopo"
+        }
+      ],
+      "id": "variables-cg-0009",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "Temporal Dead Zone"
+      ],
+      "prompt": "Per ogni frammento, indica se l'accesso alla variabile avviene durante la Temporal Dead Zone oppure fuori da essa.",
+      "explanation": {
+        "short": "La Temporal Dead Zone copre il periodo tra l'ingresso nello scope e l'inizializzazione di `let` o `const`.",
+        "whyCorrect": "Una lettura prima dell'inizializzazione avviene nella Temporal Dead Zone; dopo l'inizializzazione l'accesso è normale.",
+        "why": {
+          "i0": "La lettura di `punteggio` precede l'assegnazione iniziale, quindi avviene nella Temporal Dead Zone della variabile `let`.",
+          "i1": "La variabile è stata inizializzata con `2` prima della lettura, quindi l'accesso avviene dopo la Temporal Dead Zone.",
+          "i2": "La lettura di `attivo` arriva prima dell'inizializzazione della `const`, perciò il nome si trova nella Temporal Dead Zone.",
+          "i3": "La `const` è stata inizializzata prima di essere letta, quindi l'accesso avviene fuori dalla Temporal Dead Zone."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "tdz",
+          "text": "Dentro la zona temporale"
+        },
+        {
+          "id": "fuori",
+          "text": "Fuori dalla zona temporale"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`console.log(punteggio); let punteggio = 9;`",
+          "categoryId": "tdz"
+        },
+        {
+          "id": "i1",
+          "text": "`let livello = 2; console.log(livello);`",
+          "categoryId": "fuori"
+        },
+        {
+          "id": "i2",
+          "text": "`console.log(attivo); const attivo = false;`",
+          "categoryId": "tdz"
+        },
+        {
+          "id": "i3",
+          "text": "`const codice = 42; console.log(codice);`",
+          "categoryId": "fuori"
+        }
+      ],
+      "id": "variables-cg-0010",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "declaration"
+      ],
+      "prompt": "Indica quale parola chiave viene usata per dichiarare la variabile in ciascun frammento.",
+      "explanation": {
+        "short": "Le due parole chiave dichiarano variabili entrambe, ma hanno comportamenti diversi rispetto alla riassegnazione.",
+        "whyCorrect": "Il tipo di dichiarazione si riconosce direttamente dalla parola chiave presente all'inizio dell'istruzione.",
+        "why": {
+          "i0": "L'istruzione inizia con `let`, quindi la variabile `nome` appartiene alla forma di dichiarazione identificata da questa parola chiave.",
+          "i1": "L'istruzione inizia con `const`, quindi `citta` viene dichiarata usando la parola chiave destinata ai legami non riassegnabili.",
+          "i2": "La parola chiave all'inizio dell'istruzione è `let`, quindi `numero` è dichiarata con `let`.",
+          "i3": "La dichiarazione comincia con `const`, quindi il nome `attivo` viene creato come costante riassegnabile no."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "let",
+          "text": "Usa let"
+        },
+        {
+          "id": "const",
+          "text": "Usa const"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`let nome = 'Anna';`",
+          "categoryId": "let"
+        },
+        {
+          "id": "i1",
+          "text": "`const citta = 'Milano';`",
+          "categoryId": "const"
+        },
+        {
+          "id": "i2",
+          "text": "`let numero = 15;`",
+          "categoryId": "let"
+        },
+        {
+          "id": "i3",
+          "text": "`const attivo = false;`",
+          "categoryId": "const"
+        }
+      ],
+      "id": "variables-cg-0011",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "initialization"
+      ],
+      "prompt": "Classifica le istruzioni in base al fatto che la variabile riceva un valore durante la dichiarazione.",
+      "explanation": {
+        "short": "Una dichiarazione può contenere anche l'assegnazione iniziale oppure lasciare una `let` senza un valore.",
+        "whyCorrect": "L'operatore `=` assegna subito il valore; senza `=` una dichiarazione `let` crea la variabile senza inizializzarla con un valore esplicito.",
+        "why": {
+          "i0": "La presenza di `= 0` assegna immediatamente il valore `0` alla variabile `contatore` durante la dichiarazione.",
+          "i1": "La dichiarazione termina senza un'assegnazione, quindi `risposta` viene creata senza ricevere un valore esplicito in quella riga.",
+          "i2": "La variabile `lingua` riceve subito la stringa `'it'` grazie all'operatore di assegnazione presente nella dichiarazione.",
+          "i3": "Non c'è alcun valore dopo il nome della variabile, quindi `risultato` viene dichiarata senza una specifica assegnazione iniziale."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "inizializzata",
+          "text": "Valore assegnato subito"
+        },
+        {
+          "id": "non-inizializzata",
+          "text": "Valore non assegnato subito"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`let contatore = 0;`",
+          "categoryId": "inizializzata"
+        },
+        {
+          "id": "i1",
+          "text": "`let risposta;`",
+          "categoryId": "non-inizializzata"
+        },
+        {
+          "id": "i2",
+          "text": "`const lingua = 'it';`",
+          "categoryId": "inizializzata"
+        },
+        {
+          "id": "i3",
+          "text": "`let risultato;`",
+          "categoryId": "non-inizializzata"
+        }
+      ],
+      "id": "variables-cg-0012",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "reassignment"
+      ],
+      "prompt": "Classifica ogni frammento in base al fatto che la seconda assegnazione cambi davvero il valore della variabile.",
+      "explanation": {
+        "short": "Una riassegnazione è consentita con `let`, ma il nuovo valore può essere diverso oppure identico a quello precedente.",
+        "whyCorrect": "Quando il secondo valore è differente il contenuto cambia; quando è uguale, l'assegnazione avviene ma il valore osservato resta lo stesso.",
+        "why": {
+          "i0": "La seconda assegnazione sostituisce `'off'` con `'on'`, quindi il valore contenuto nella variabile cambia effettivamente.",
+          "i1": "La riassegnazione è permessa, ma il nuovo valore è ancora `10`, quindi dopo l'istruzione il contenuto è invariato.",
+          "i2": "La variabile passa da `'blu'` a `'verde'`, perciò la seconda assegnazione produce un cambiamento reale del valore.",
+          "i3": "La seconda istruzione assegna di nuovo `20` alla stessa variabile: l'operazione riesce, ma il valore finale resta `20`."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "cambia",
+          "text": "Il valore cambia"
+        },
+        {
+          "id": "non-cambia",
+          "text": "Il valore resta invariato"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`let stato = 'off'; stato = 'on';`",
+          "categoryId": "cambia"
+        },
+        {
+          "id": "i1",
+          "text": "`let score = 10; score = 10;`",
+          "categoryId": "non-cambia"
+        },
+        {
+          "id": "i2",
+          "text": "`let colore = 'blu'; colore = 'verde';`",
+          "categoryId": "cambia"
+        },
+        {
+          "id": "i3",
+          "text": "`let eta = 20; eta = 20;`",
+          "categoryId": "non-cambia"
+        }
+      ],
+      "id": "variables-cg-0013",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "const",
+        "reassignment"
+      ],
+      "prompt": "Indica se l'istruzione finale è compatibile con il modo in cui la variabile è stata dichiarata.",
+      "explanation": {
+        "short": "La riassegnazione deve rispettare il tipo di dichiarazione usato per creare la variabile.",
+        "whyCorrect": "`let` è progettata per permettere nuove assegnazioni, mentre `const` impedisce di cambiare il valore associato al legame.",
+        "why": {
+          "i0": "La variabile `prezzo` è stata dichiarata con `let`, quindi l'assegnazione successiva a `25` è perfettamente consentita.",
+          "i1": "La variabile `prezzo` è una `const`, perciò provare a sostituire `20` con `25` causa un `TypeError` durante l'esecuzione.",
+          "i2": "La dichiarazione con `let` permette di sostituire il valore iniziale, quindi passare da `'Sara'` a `'Marta'` è consentito.",
+          "i3": "Una `const` non può essere riassegnata: la seconda istruzione tenta di cambiare il valore e provoca un `TypeError`."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "compatibile",
+          "text": "Istruzione compatibile"
+        },
+        {
+          "id": "incompatibile",
+          "text": "Istruzione incompatibile"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`let prezzo = 20; prezzo = 25;`",
+          "categoryId": "compatibile"
+        },
+        {
+          "id": "i1",
+          "text": "`const prezzo = 20; prezzo = 25;`",
+          "categoryId": "incompatibile"
+        },
+        {
+          "id": "i2",
+          "text": "`let nome = 'Sara'; nome = 'Marta';`",
+          "categoryId": "compatibile"
+        },
+        {
+          "id": "i3",
+          "text": "`const nome = 'Sara'; nome = 'Marta';`",
+          "categoryId": "incompatibile"
+        }
+      ],
+      "id": "variables-cg-0014",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var"
+      ],
+      "prompt": "Indica quale parola chiave è presente all'inizio di ciascuna dichiarazione.",
+      "explanation": {
+        "short": "JavaScript offre `var`, `let` e `const`, ma `var` appartiene alla sintassi storica del linguaggio.",
+        "whyCorrect": "La presenza di `var` identifica la forma legacy, mentre `let` e `const` appartengono alla sintassi moderna per le variabili.",
+        "why": {
+          "i0": "La dichiarazione comincia con `var`, quindi usa la forma storica della dichiarazione delle variabili in JavaScript.",
+          "i1": "L'istruzione usa `let`, che appartiene alla sintassi introdotta in JavaScript moderno insieme a `const`.",
+          "i2": "La parola chiave `var` compare direttamente nella dichiarazione, identificando la modalità storica di gestione della variabile.",
+          "i3": "La parola chiave è `const`, quindi si tratta di una dichiarazione della sintassi moderna e non della forma legacy `var`."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "var",
+          "text": "Dichiarazione var"
+        },
+        {
+          "id": "moderna",
+          "text": "Dichiarazione moderna"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`var totale = 100;`",
+          "categoryId": "var"
+        },
+        {
+          "id": "i1",
+          "text": "`let totale = 100;`",
+          "categoryId": "moderna"
+        },
+        {
+          "id": "i2",
+          "text": "`var utente = 'Luca';`",
+          "categoryId": "var"
+        },
+        {
+          "id": "i3",
+          "text": "`const utente = 'Luca';`",
+          "categoryId": "moderna"
+        }
+      ],
+      "id": "variables-cg-0015",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "ReferenceError",
+        "Temporal Dead Zone"
+      ],
+      "prompt": "Classifica ciò che accade eseguendo la prima istruzione di ciascun frammento.",
+      "explanation": {
+        "short": "Con `let` e `const`, leggere una variabile prima dell'inizializzazione provoca un `ReferenceError`.",
+        "whyCorrect": "La lettura anticipata entra nella Temporal Dead Zone; una lettura successiva avviene invece dopo l'inizializzazione.",
+        "why": {
+          "i0": "La prima istruzione legge `x` prima della sua dichiarazione con `let`, quindi l'esecuzione genera un `ReferenceError`.",
+          "i1": "Qui `x` viene dichiarata e inizializzata prima di essere letta, quindi `console.log` può eseguire normalmente.",
+          "i2": "La `const` non è ancora inizializzata quando viene letta, perciò l'accesso anticipato genera un `ReferenceError`.",
+          "i3": "La variabile `y` è già inizializzata con `2` quando viene letta, quindi la prima lettura utile non incontra la Temporal Dead Zone."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "errore",
+          "text": "Lancia ReferenceError"
+        },
+        {
+          "id": "ok",
+          "text": "Esegue senza errore"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`console.log(x); let x = 1;`",
+          "categoryId": "errore"
+        },
+        {
+          "id": "i1",
+          "text": "`let x = 1; console.log(x);`",
+          "categoryId": "ok"
+        },
+        {
+          "id": "i2",
+          "text": "`console.log(y); const y = 2;`",
+          "categoryId": "errore"
+        },
+        {
+          "id": "i3",
+          "text": "`const y = 2; console.log(y);`",
+          "categoryId": "ok"
+        }
+      ],
+      "id": "variables-cg-0016",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "const",
+        "declaration"
+      ],
+      "prompt": "Indica quali dichiarazioni possono essere scritte senza un valore immediatamente dopo il nome.",
+      "explanation": {
+        "short": "Una `let` può essere dichiarata senza assegnazione, mentre una `const` richiede un valore nello stesso momento della dichiarazione.",
+        "whyCorrect": "La sintassi permette di lasciare una `let` non inizializzata, ma obbliga a fornire subito un valore quando si usa `const`.",
+        "why": {
+          "i0": "La dichiarazione `let email;` è valida: una variabile `let` può essere creata senza assegnazione e ricevere un valore in seguito.",
+          "i1": "La sintassi `const email;` non è valida perché una `const` deve essere inizializzata contestualmente alla propria dichiarazione.",
+          "i2": "`let` non richiede un valore immediato, quindi `numero` può essere dichiarata e assegnata in un momento successivo.",
+          "i3": "Una `const` senza inizializzazione non può essere creata, perché manca il valore obbligatorio da associare al momento della dichiarazione."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "possibile",
+          "text": "Scrittura possibile"
+        },
+        {
+          "id": "impossibile",
+          "text": "Scrittura impossibile"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`let email;`",
+          "categoryId": "possibile"
+        },
+        {
+          "id": "i1",
+          "text": "`const email;`",
+          "categoryId": "impossibile"
+        },
+        {
+          "id": "i2",
+          "text": "`let numero;`",
+          "categoryId": "possibile"
+        },
+        {
+          "id": "i3",
+          "text": "`const numero;`",
+          "categoryId": "impossibile"
+        }
+      ],
+      "id": "variables-cg-0017",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "function-scope"
+      ],
+      "prompt": "Classifica il tipo di scope creato dalla parola chiave usata nella dichiarazione.",
+      "explanation": {
+        "short": "`let` e `const` sono legate al blocco, mentre `var` segue lo scope di funzione anziché quello delle graffe.",
+        "whyCorrect": "La parola chiave determina il tipo di scope: `let` e `const` rispettano i blocchi, mentre `var` non lo fa.",
+        "why": {
+          "i0": "Una variabile dichiarata con `let` appartiene al blocco in cui compare, quindi la sua visibilità segue lo scope di blocco.",
+          "i1": "Anche `const` crea una variabile con scope di blocco, perciò il nome resta limitato al blocco che lo contiene.",
+          "i2": "La parola chiave `var` non segue lo scope di blocco: la variabile appartiene alla funzione che contiene la dichiarazione.",
+          "i3": "Con `var` il confine delle graffe non crea un nuovo scope per la variabile, che invece segue lo scope di funzione."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "blocco",
+          "text": "Scope di blocco"
+        },
+        {
+          "id": "funzione",
+          "text": "Scope di funzione"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`let nome = 'Ada';`",
+          "categoryId": "blocco"
+        },
+        {
+          "id": "i1",
+          "text": "`const eta = 30;`",
+          "categoryId": "blocco"
+        },
+        {
+          "id": "i2",
+          "text": "`var nome = 'Ada';`",
+          "categoryId": "funzione"
+        },
+        {
+          "id": "i3",
+          "text": "`var eta = 30;`",
+          "categoryId": "funzione"
+        }
+      ],
+      "id": "variables-cg-0018",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "let",
+        "const"
+      ],
+      "prompt": "Per ogni frammento, indica se la seconda istruzione è una riassegnazione valida della variabile.",
+      "explanation": {
+        "short": "La validità della seconda assegnazione dipende dalla possibilità di riassegnare il nome dichiarato in precedenza.",
+        "whyCorrect": "`let` permette di sostituire il valore; `const` vieta una nuova assegnazione allo stesso identificatore.",
+        "why": {
+          "i0": "La variabile `max` è stata dichiarata con `let`, quindi può ricevere il nuovo valore `12` senza generare un errore.",
+          "i1": "La variabile `max` è una `const`, quindi la seconda assegnazione tenta di modificare un legame non riassegnabile e causa un `TypeError`.",
+          "i2": "Con `let` è possibile cambiare il valore della variabile, quindi sostituire `'chiaro'` con `'scuro'` è consentito.",
+          "i3": "La dichiarazione con `const` impedisce la riassegnazione, quindi la seconda istruzione provoca un `TypeError`."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "valida",
+          "text": "Riassegnazione valida"
+        },
+        {
+          "id": "non-valida",
+          "text": "Riassegnazione non valida"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`let max = 9; max = 12;`",
+          "categoryId": "valida"
+        },
+        {
+          "id": "i1",
+          "text": "`const max = 9; max = 12;`",
+          "categoryId": "non-valida"
+        },
+        {
+          "id": "i2",
+          "text": "`let tema = 'chiaro'; tema = 'scuro';`",
+          "categoryId": "valida"
+        },
+        {
+          "id": "i3",
+          "text": "`const tema = 'chiaro'; tema = 'scuro';`",
+          "categoryId": "non-valida"
+        }
+      ],
+      "id": "variables-cg-0019",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "Temporal Dead Zone"
+      ],
+      "prompt": "Classifica l'accesso alla variabile in base alla sua posizione rispetto all'inizializzazione.",
+      "explanation": {
+        "short": "Con le dichiarazioni moderne la variabile può essere letta normalmente solo dopo la propria inizializzazione.",
+        "whyCorrect": "La lettura prima dell'inizializzazione è anticipata e incontra la Temporal Dead Zone; dopo l'inizializzazione l'accesso è regolare.",
+        "why": {
+          "i0": "La `console.log` usa `a` prima che `let a = 5` venga inizializzata, quindi l'accesso è anticipato e genera un `ReferenceError`.",
+          "i1": "La variabile `a` è già inizializzata con `5` quando viene letta, quindi l'accesso avviene nella normale fase successiva alla dichiarazione.",
+          "i2": "La lettura di `b` avviene prima dell'inizializzazione della `const`, quindi entra nella Temporal Dead Zone e provoca un `ReferenceError`.",
+          "i3": "La `const` viene inizializzata prima della lettura, quindi `console.log` accede a una variabile già disponibile e non entra nella Temporal Dead Zone."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "anticipato",
+          "text": "Accesso anticipato"
+        },
+        {
+          "id": "regolare",
+          "text": "Accesso regolare"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`console.log(a); let a = 5;`",
+          "categoryId": "anticipato"
+        },
+        {
+          "id": "i1",
+          "text": "`let a = 5; console.log(a);`",
+          "categoryId": "regolare"
+        },
+        {
+          "id": "i2",
+          "text": "`console.log(b); const b = 7;`",
+          "categoryId": "anticipato"
+        },
+        {
+          "id": "i3",
+          "text": "`const b = 7; console.log(b);`",
+          "categoryId": "regolare"
+        }
+      ],
+      "id": "variables-cg-0020",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "scope"
+      ],
+      "prompt": "Classifica quale nome resta raggiungibile dopo la chiusura del blocco.",
+      "explanation": {
+        "short": "Il comportamento oltre le graffe cambia in base alla parola chiave usata per dichiarare la variabile.",
+        "whyCorrect": "`var` non crea scope di blocco, mentre `let` e `const` confinano il nome al blocco delle graffe.",
+        "why": {
+          "i0": "La variabile `codice` usa `var`, quindi il blocco non ne limita l'accessibilità e il nome resta raggiungibile dopo le graffe.",
+          "i1": "Anche `pagina` è dichiarata con `var`, perciò il nome non viene confinato al blocco e può essere usato nella `console.log` esterna.",
+          "i2": "Con `let`, il nome `codice` appartiene al blocco e non può essere raggiunto dalla riga che si trova dopo la chiusura delle graffe.",
+          "i3": "La dichiarazione con `const` crea scope di blocco, quindi il nome `pagina` non è accessibile dalla `console.log` esterna."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "raggiungibile",
+          "text": "Nome raggiungibile"
+        },
+        {
+          "id": "non-raggiungibile",
+          "text": "Nome non raggiungibile"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`{ var codice = 1; } console.log(codice);`",
+          "categoryId": "raggiungibile"
+        },
+        {
+          "id": "i1",
+          "text": "`{ var pagina = 2; } console.log(pagina);`",
+          "categoryId": "raggiungibile"
+        },
+        {
+          "id": "i2",
+          "text": "`{ let codice = 1; } console.log(codice);`",
+          "categoryId": "non-raggiungibile"
+        },
+        {
+          "id": "i3",
+          "text": "`{ const pagina = 2; } console.log(pagina);`",
+          "categoryId": "non-raggiungibile"
+        }
+      ],
+      "id": "variables-cg-0021",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "let",
+        "const"
+      ],
+      "prompt": "Indica quale dichiarazione rappresenta una variabile che può ricevere un nuovo valore in seguito.",
+      "explanation": {
+        "short": "La differenza fondamentale tra `let` e `const` riguarda la possibilità di riassegnare il nome dopo la dichiarazione.",
+        "whyCorrect": "Una variabile dichiarata con `let` può essere riassegnata, mentre una dichiarata con `const` non può ricevere un nuovo valore.",
+        "why": {
+          "i0": "La parola chiave `let` permette future assegnazioni, quindi `larghezza` può in seguito passare a un valore diverso da `100`.",
+          "i1": "La parola chiave `const` impedisce una nuova assegnazione, quindi il legame di `larghezza` non può essere sostituito.",
+          "i2": "Con `let`, `altezza` può essere aggiornata successivamente tramite una nuova istruzione di assegnazione.",
+          "i3": "Con `const`, il nome `altezza` resta legato al valore iniziale e una nuova assegnazione causerebbe un `TypeError`."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "cambiabile",
+          "text": "Valore successivo possibile"
+        },
+        {
+          "id": "fisso",
+          "text": "Valore successivo vietato"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`let larghezza = 100;`",
+          "categoryId": "cambiabile"
+        },
+        {
+          "id": "i1",
+          "text": "`const larghezza = 100;`",
+          "categoryId": "fisso"
+        },
+        {
+          "id": "i2",
+          "text": "`let altezza = 200;`",
+          "categoryId": "cambiabile"
+        },
+        {
+          "id": "i3",
+          "text": "`const altezza = 200;`",
+          "categoryId": "fisso"
+        }
+      ],
+      "id": "variables-cg-0022",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "ReferenceError",
+        "let",
+        "const"
+      ],
+      "prompt": "Per ogni frammento, indica se la lettura della variabile avviene prima o dopo la dichiarazione.",
+      "explanation": {
+        "short": "La posizione della lettura è fondamentale per capire se `let` e `const` possono essere usate in quel punto.",
+        "whyCorrect": "Prima della dichiarazione l'accesso è anticipato e incontra la Temporal Dead Zone; dopo la dichiarazione l'accesso è consentito.",
+        "why": {
+          "i0": "La variabile `nome` viene letta prima della dichiarazione `const`, quindi l'accesso avviene nella Temporal Dead Zone.",
+          "i1": "La variabile `nome` è già stata dichiarata e inizializzata quando viene letta, quindi l'accesso è successivo e valido.",
+          "i2": "La `console.log` precede la dichiarazione di `numero` con `let`, quindi la lettura è anticipata e provoca un `ReferenceError`.",
+          "i3": "La dichiarazione `const` precede la lettura di `numero`, quindi il valore è già inizializzato quando viene usato."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "prima",
+          "text": "Prima della dichiarazione"
+        },
+        {
+          "id": "dopo",
+          "text": "Dopo la dichiarazione"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`console.log(nome); const nome = 'Ada';`",
+          "categoryId": "prima"
+        },
+        {
+          "id": "i1",
+          "text": "`let nome = 'Ada'; console.log(nome);`",
+          "categoryId": "dopo"
+        },
+        {
+          "id": "i2",
+          "text": "`console.log(numero); let numero = 4;`",
+          "categoryId": "prima"
+        },
+        {
+          "id": "i3",
+          "text": "`const numero = 4; console.log(numero);`",
+          "categoryId": "dopo"
+        }
+      ],
+      "id": "variables-cg-0023",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "hoisting"
+      ],
+      "prompt": "Classifica il comportamento della lettura posta prima della dichiarazione.",
+      "explanation": {
+        "short": "`var` viene hoistata con valore iniziale `undefined`, mentre `let` e `const` generano un `ReferenceError` se lette troppo presto.",
+        "whyCorrect": "La dichiarazione di `var` è resa disponibile prima dell'assegnazione; `let` e `const` restano nella Temporal Dead Zone fino all'inizializzazione.",
+        "why": {
+          "i0": "La dichiarazione `var a` viene hoistata e la variabile parte da `undefined`, quindi la lettura anticipata non genera un `ReferenceError`.",
+          "i1": "Anche `b` è una `var`, quindi il nome è disponibile prima dell'assegnazione e la lettura restituisce `undefined`.",
+          "i2": "Con `let`, il nome `a` è nella Temporal Dead Zone fino all'inizializzazione, quindi la lettura anticipata causa un `ReferenceError`.",
+          "i3": "La `const b` non è ancora inizializzata al momento della lettura, quindi l'accesso anticipato produce un `ReferenceError`."
+        }
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "undefined",
+          "text": "Produce undefined"
+        },
+        {
+          "id": "reference",
+          "text": "Produce ReferenceError"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`console.log(a); var a = 3;`",
+          "categoryId": "undefined"
+        },
+        {
+          "id": "i1",
+          "text": "`console.log(b); var b = 6;`",
+          "categoryId": "undefined"
+        },
+        {
+          "id": "i2",
+          "text": "`console.log(a); let a = 3;`",
+          "categoryId": "reference"
+        },
+        {
+          "id": "i3",
+          "text": "`console.log(b); const b = 6;`",
+          "categoryId": "reference"
+        }
+      ],
+      "id": "variables-cg-0024",
+      "source": "ai"
+    }
+  ]
+}

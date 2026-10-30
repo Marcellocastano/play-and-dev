@@ -32,18 +32,17 @@
       "explanation": {
         "short": "Se split è chiamato senza separatore, restituisce l'intera stringa in un solo elemento.",
         "whyCorrect": "Quando split è chiamato senza argomento, non divide la stringa: restituisce un array con la stringa intera come unico elemento.",
-        "whyOthersWrong": {
+        "concept": "split senza parametro",
+        "commonMistake": "Omettere il separatore in split e aspettarsi la divisione.",
+        "example": "'a b'.split(' ')",
+        "why": {
           "b": "split può dividere anche in parole se si passa uno spazio come separatore, non solo singoli caratteri.",
           "c": "Per ottenere le lettere serve split(''), non split() senza argomenti.",
           "d": "trim elimina spazi agli estremi, ma qui il problema è proprio nel separatore mancante, non negli spazi."
-        },
-        "concept": "split senza parametro",
-        "commonMistake": "Omettere il separatore in split e aspettarsi la divisione.",
-        "example": "'a b'.split(' ')"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:55.734Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fb-0003",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "replace con stringa sostituisce solo la prima occorrenza.",
         "whyCorrect": "Il metodo replace, se usato con una stringa come primo argomento, sostituisce solo la prima occorrenza trovata. Per tutte le occorrenze serve replaceAll o una RegExp globale.",
-        "whyOthersWrong": {
+        "concept": "replace vs replaceAll",
+        "commonMistake": "Credere che replace sostituisca tutte le occorrenze.",
+        "example": "'a a a'.replaceAll('a', 'b')",
+        "why": {
           "b": "replace opera sulle stringhe, non sugli array: qui non c'è nessun array coinvolto.",
           "c": "replace accetta anche una semplice stringa come pattern, non obbligatoriamente una RegExp.",
           "d": "replaceAll esiste nelle versioni moderne di JavaScript e sarebbe la soluzione giusta per sostituire tutte le occorrenze."
-        },
-        "concept": "replace vs replaceAll",
-        "commonMistake": "Credere che replace sostituisca tutte le occorrenze.",
-        "example": "'a a a'.replaceAll('a', 'b')"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:55.734Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fb-0004",
@@ -120,18 +118,17 @@
       "explanation": {
         "short": "Bisogna assegnare il risultato di replace alla variabile.",
         "whyCorrect": "replace non modifica la stringa originale, restituisce una nuova stringa. Se il risultato non viene assegnato a saluto, la stampa mostrerà ancora il valore vecchio.",
-        "whyOthersWrong": {
+        "concept": "Immutabilità dei metodi stringa",
+        "commonMistake": "Dimenticare di assegnare il risultato di replace.",
+        "example": "str = str.replace('vecchio', 'nuovo');",
+        "why": {
           "b": "La parola 'terra' è presente nella stringa di partenza, il problema non è la mancata corrispondenza.",
           "c": "replace non muta la stringa su cui è chiamato, restituisce una nuova stringa con le sostituzioni.",
           "d": "replace può anche essere usato con due semplici stringhe, la callback è opzionale per sostituzioni dinamiche."
-        },
-        "concept": "Immutabilità dei metodi stringa",
-        "commonMistake": "Dimenticare di assegnare il risultato di replace.",
-        "example": "str = str.replace('vecchio', 'nuovo');"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:55.734Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fb-0005",
@@ -164,18 +161,17 @@
       "explanation": {
         "short": "join senza argomento usa la virgola come separatore predefinito.",
         "whyCorrect": "Se join viene usato senza argomenti, unisce gli elementi usando la virgola. Per ottenere un trattino come separatore bisogna specificarlo esplicitamente.",
-        "whyOthersWrong": {
+        "concept": "join e separatore predefinito",
+        "commonMistake": "Dimenticare di specificare il separatore in join.",
+        "example": "arr.join('-')",
+        "why": {
           "b": "join senza argomenti produce una stringa con le virgole, quindi 'a,b,c' e non 'abc'.",
           "c": "join crea una nuova stringa, non modifica l'array originale.",
           "d": "join accetta qualsiasi stringa come separatore, anche simboli come il trattino."
-        },
-        "concept": "join e separatore predefinito",
-        "commonMistake": "Dimenticare di specificare il separatore in join.",
-        "example": "arr.join('-')"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:55.734Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fb-0006",
@@ -208,18 +204,17 @@
       "explanation": {
         "short": "Il metodo `replace` con una stringa sostituisce solo la prima occorrenza trovata: per cambiare tutte servirebbe `replaceAll` o una regex globale.",
         "whyCorrect": "Quando si usa `replace` con una stringa, solo la prima corrispondenza viene modificata. Le altre rimangono inalterate.",
-        "whyOthersWrong": {
+        "concept": "replace e sostituzione di occorrenze",
+        "commonMistake": "Aspettarsi che `replace` agisca su tutte le corrispondenze invece che solo sulla prima.",
+        "example": "'a a a'.replaceAll('a', 'b') // 'b b b'",
+        "why": {
           "b": "`split` serve per dividere la stringa in segmenti, non per effettuare sostituzioni di testo.",
           "c": "Il pattern passato a `replace` è valido anche se ci sono spazi: vengono trovate corrispondenze letterali.",
           "d": "`replace` restituisce una nuova stringa, non modifica l’originale: per questo il risultato viene assegnato a una nuova variabile."
-        },
-        "concept": "replace e sostituzione di occorrenze",
-        "commonMistake": "Aspettarsi che `replace` agisca su tutte le corrispondenze invece che solo sulla prima.",
-        "example": "'a a a'.replaceAll('a', 'b') // 'b b b'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:26:02.807Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fb-0007",
@@ -252,18 +247,17 @@
       "explanation": {
         "short": "I metodi delle stringhe non modificano il valore originale, quindi bisogna assegnare il risultato di split a una variabile prima di usare join.",
         "whyCorrect": "Il metodo split restituisce un nuovo array ma non cambia la stringa originale. Usare join subito dopo su una stringa causa errore. Serve assegnare il risultato di split e poi usare join sull'array risultante.",
-        "whyOthersWrong": {
+        "concept": "split e join: immutabilità e chaining",
+        "commonMistake": "Pensare che split modifichi la stringa originale, dimenticando che restituisce un nuovo array.",
+        "example": "let parole = testo.split(' ');\nlet nuovo = parole.join('-');",
+        "why": {
           "b": "Sebbene join funzioni solo su array, il vero problema qui è che split non è stato assegnato a una variabile: testo resta una stringa. join su una stringa causa un errore.",
           "c": "È vero che split senza assegnare non cambia testo, ma il vero bug è che il risultato di split non è mai usato e si tenta join su una stringa. Serve assegnare split a una variabile.",
           "d": "Il separatore '-' in join è corretto. Il problema è che join viene chiamato su una stringa, non su un array, perché split non è stato salvato."
-        },
-        "concept": "split e join: immutabilità e chaining",
-        "commonMistake": "Pensare che split modifichi la stringa originale, dimenticando che restituisce un nuovo array.",
-        "example": "let parole = testo.split(' ');\nlet nuovo = parole.join('-');"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:26:06.977Z"
+      "format": "choice"
     }
   ]
 }

@@ -1,15 +1,37 @@
 import { describe, expect, it } from 'vitest';
 import {
   composeSession,
+  GAME_QUESTION_TYPES,
   generateQuestion,
+  MAX_SIMILAR_PER_SESSION,
+  normalizeOutput,
+  similarityKey,
+  PHASE1_QUESTION_TYPES,
   qualityIssues,
   questionTypeRegistry,
   validateQuestion,
   type Question,
 } from '@lg/core';
 import { deepDives, getDeepDive, javascriptSubject } from '../src/index.js';
-import { bankQuestions, bankTemplates, MIN_BANK_SIZE } from '../src/bank/index.js';
+import {
+  bankQuestions,
+  bankTemplates,
+  buildBankTemplates,
+  MIN_BANK_SIZE,
+} from '../src/bank/index.js';
+import { COMPARISON_FACTS } from '../src/templates/comparisons/index.js';
+import { TYPEOF_ROWS } from '../src/templates/primitive-types/index.js';
+import { STRING_CALLS } from '../src/templates/strings/index.js';
 import { runCode } from '../scripts/runCode.js';
+import {
+  contentDir,
+  contentIndexPath,
+  listContentFiles,
+  readBankFile,
+  renderContentIndex,
+} from '../scripts/bankIO.js';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
 const SEEDS = Array.from({ length: 25 }, (_, i) => i * 97 + 13);
 
@@ -17,6 +39,8 @@ const topicIds = new Set(javascriptSubject.topics.map((t) => t.id));
 const subtopicIds = new Set(javascriptSubject.topics.flatMap((t) => t.subtopics.map((s) => s.id)));
 
 function correctText(q: Question): string {
+  if (q.format === 'text') return q.accepted[0]!;
+  if (q.format !== 'choice') throw new Error(`unexpected format ${q.format} in ${q.id}`);
   const opt = q.options.find((o) => o.id === q.correctOptionId);
   if (!opt) throw new Error(`no correct option in ${q.id}`);
   return opt.text;
@@ -42,6 +66,33 @@ describe('template validity (25 seeds each)', () => {
         variantKeys.add(q.variantKey);
       }
       expect(variantKeys.size, `${template.id}: varietà insufficiente`).toBeGreaterThanOrEqual(5);
+    });
+  }
+});
+
+describe('every bank question (also inactive groups)', () => {
+  const smallSeeds = SEEDS.slice(0, 5);
+  for (const bq of bankQuestions) {
+    it(`${bq.id} produces valid questions`, () => {
+      const [template] = buildBankTemplates([bq], 1);
+      expect(template, `no template for ${bq.id}`).toBeDefined();
+      for (const seed of smallSeeds) {
+        const q = generateQuestion(template!, seed);
+        const result = validateQuestion(q);
+        expect(result.errors, `${bq.id} seed ${seed}: ${result.errors.join('; ')}`).toEqual([]);
+        const quality = qualityIssues(q);
+        expect(quality, `${bq.id} seed ${seed}: ${quality.join('; ')}`).toEqual([]);
+        expect(questionTypeRegistry.has(q.type)).toBe(true);
+        expect(topicIds.has(q.topicId)).toBe(true);
+        expect(subtopicIds.has(q.subtopicId)).toBe(true);
+        if (q.type === 'predict-output' && q.format === 'choice') {
+          const actual = runCode(q.code!);
+          expect(
+            actual,
+            `${bq.id} seed ${seed}: codice stampa "${actual.replace(/\n/g, '|')}", risposta dichiarata "${correctText(q).replace(/\n/g, '|')}"`,
+          ).toBe(correctText(q));
+        }
+      }
     });
   }
 });
@@ -79,7 +130,7 @@ describe('counts', () => {
     for (const t of javascriptSubject.templates) {
       counts.set(t.type, (counts.get(t.type) ?? 0) + 1);
     }
-    for (const def of questionTypeRegistry.list()) {
+    for (const def of PHASE1_QUESTION_TYPES) {
       expect(counts.get(def.id) ?? 0, `type ${def.id}`).toBeGreaterThanOrEqual(8);
     }
   });
@@ -93,6 +144,17 @@ describe('counts', () => {
 });
 
 describe('curated bank', () => {
+  it('content/index.ts imports every JSON file in the bank folder', () => {
+    const files = listContentFiles();
+    expect(readFileSync(contentIndexPath, 'utf8')).toBe(renderContentIndex(files));
+    const ids = new Set(bankQuestions.map((q) => q.id));
+    for (const f of files) {
+      for (const q of readBankFile(join(contentDir, f)).questions) {
+        expect(ids.has(q.id), `${f}: ${q.id} not loaded at runtime`).toBe(true);
+      }
+    }
+  });
+
   it('every bank template is backed by at least MIN_BANK_SIZE questions', () => {
     const groups = new Map<string, number>();
     for (const q of bankQuestions) {
@@ -126,7 +188,7 @@ describe('composeSession with real content', () => {
     });
   }
 
-  it('beginner session has the 12/6/2 mix and no repeated template', () => {
+  it('beginner session has the 12/6/2 mix and no repeated generative template', () => {
     const s = composeSession({
       subject: javascriptSubject,
       levelId: 'beginner',
@@ -136,7 +198,53 @@ describe('composeSession with real content', () => {
     const by = { easy: 0, medium: 0, hard: 0 };
     for (const q of s.questions) by[q.difficulty]++;
     expect(by).toEqual({ easy: 12, medium: 6, hard: 2 });
-    const templateIds = s.questions.map((q) => q.templateId);
+    const generative = s.questions.filter((q) => !q.templateId.startsWith('bank-'));
+    const templateIds = generative.map((q) => q.templateId);
     expect(new Set(templateIds).size).toBe(templateIds.length);
+  });
+
+  for (const levelId of ['beginner', 'intermediate'] as const) {
+    it(`${levelId} sessions respect the similarity cap across seeds`, () => {
+      for (const seed of SEEDS) {
+        const s = composeSession({ subject: javascriptSubject, levelId, mode: 'training', seed });
+        const counts = new Map<string, number>();
+        for (const q of s.questions) {
+          counts.set(similarityKey(q), (counts.get(similarityKey(q)) ?? 0) + 1);
+        }
+        for (const [key, n] of counts) {
+          expect(n, `${levelId} seed ${seed}: ${key}`).toBeLessThanOrEqual(MAX_SIMILAR_PER_SESSION);
+        }
+      }
+    });
+  }
+});
+
+describe('game formats', () => {
+  it('every game question type has at least one template', () => {
+    for (const def of GAME_QUESTION_TYPES) {
+      expect(
+        javascriptSubject.templates.some((t) => t.type === def.id),
+        `missing template for ${def.id}`,
+      ).toBe(true);
+    }
+  });
+
+  it('comparison facts evaluate to the declared value', () => {
+    for (const f of COMPARISON_FACTS) {
+      expect(runCode(`console.log(${f.expr})`), f.expr).toBe(String(f.value));
+    }
+  });
+
+  it('typeof rows evaluate to the declared result', () => {
+    for (const r of TYPEOF_ROWS) {
+      expect(runCode(`console.log(${r.expr})`), r.expr).toBe(r.result);
+    }
+  });
+
+  it('string calls evaluate to the declared result', () => {
+    for (const r of STRING_CALLS) {
+      const actual = runCode(`console.log(JSON.stringify(${r.expr}))`);
+      expect(normalizeOutput(actual), r.expr).toBe(normalizeOutput(r.result));
+    }
   });
 });

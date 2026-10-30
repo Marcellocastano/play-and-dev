@@ -1,21 +1,11 @@
-import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { config as loadEnv } from 'dotenv';
 import OpenAI from 'openai';
-import { qualityIssues, validateAIQuestion, type Question } from '@lg/core';
 import { javascriptSubject } from '../src/index.js';
 import type { BankQuestion } from '../src/bank/types.js';
-import { runCode } from './runCode.js';
-import { draftsDir, loadApproved, loadDrafts, pkgRoot, repoRoot, writeDraft } from './bankIO.js';
-
-const TYPE_ABBREV: Record<string, string> = {
-  'predict-output': 'po',
-  'find-the-bug': 'fb',
-  'fill-the-gap': 'fg',
-  'multiple-choice': 'mc',
-  compare: 'cmp',
-  'best-method': 'bm',
-};
+import { buildPrompts } from './buildPrompt.js';
+import { allocateIds, checkCandidate, dedupKey, toBankQuestion } from './checkCandidate.js';
+import { draftsDir, loadApproved, loadDrafts, repoRoot, writeDraft } from './bankIO.js';
 
 function arg(name: string): string | undefined {
   const i = process.argv.indexOf(`--${name}`);
@@ -50,45 +40,14 @@ if (!topic) {
   process.exit(1);
 }
 
-const systemPrompt = readFileSync(join(pkgRoot, 'scripts', 'author.prompt.md'), 'utf8');
-const templateId = `bank-${topicId}-${type}-${difficulty}`;
+const existing = [
+  ...loadApproved(topicId),
+  ...loadDrafts(topicId).flatMap((d) => d.file.questions),
+];
+const seenKeys = new Set(existing.map((q) => dedupKey(q as unknown as Record<string, unknown>)));
 
-const approved = loadApproved(topicId);
-const drafts = loadDrafts(topicId).flatMap((d) => d.file.questions);
-const existing = [...approved, ...drafts];
-const seenKeys = new Set(existing.map((q) => `${q.prompt}|||${q.code ?? ''}`));
-
-const existingPrompts = existing.map((q) => `- ${q.prompt}`).join('\n');
-
-function buildUserPrompt(missing: number): string {
-  const lines = [
-    `Topic: ${topic!.name} (${topic!.id})`,
-    `Overview: ${topic!.overview}`,
-    '',
-    'Subtopic:',
-    ...topic!.subtopics.map((s) => `- ${s.id}: ${s.name}${s.overview ? ` — ${s.overview}` : ''}`),
-    '',
-    'Obiettivi di apprendimento:',
-    ...topic!.learningObjectives.map((o) => `- ${o}`),
-    '',
-    'Errori comuni degli studenti:',
-    ...topic!.commonMistakes.map((m) => `- ${m}`),
-    '',
-    'Esempi:',
-    ...topic!.examples.map((e) => `- ${e}`),
-    '',
-    `Genera ${missing} domande di tipo "${type}" e difficoltà "${difficulty}", distribuite sui subtopic.`,
-  ];
-  if (existingPrompts) {
-    lines.push(
-      '',
-      'Prompt già presenti in banca o in bozza — NON ripeterli né riproporre varianti banali:',
-      existingPrompts,
-    );
-  }
-  return lines.join('\n');
-}
-
+const { system } = buildPrompts({ topicId, type, difficulty, count });
+const nextId = allocateIds(topicId, type);
 const openai = new OpenAI({ apiKey });
 
 interface Rejection {
@@ -98,54 +57,6 @@ interface Rejection {
 
 const accepted: BankQuestion[] = [];
 const rejected: Rejection[] = [];
-
-function check(candidate: Record<string, unknown>): { q?: Question; reasons: string[] } {
-  const reasons: string[] = [];
-  const ex = candidate.explanation as { whyOthersWrong?: Record<string, unknown> } | undefined;
-  if (ex?.whyOthersWrong) {
-    for (const [k, v] of Object.entries(ex.whyOthersWrong)) {
-      if (typeof v !== 'string' || v.trim() === '') delete ex.whyOthersWrong[k];
-    }
-  }
-  const key = `${candidate.prompt}|||${candidate.code ?? ''}`;
-  if (seenKeys.has(key)) reasons.push('duplicato di una domanda esistente');
-  const result = validateAIQuestion({
-    ...candidate,
-    templateId,
-    topicId,
-    type,
-    difficulty,
-    deepDiveRef: `dd-${topicId}`,
-  });
-  if (!result.ok || !result.question) {
-    reasons.push(...result.errors);
-    return { reasons };
-  }
-  const q = result.question;
-  reasons.push(...qualityIssues(q));
-  if (q.type === 'predict-output' && q.code) {
-    let actual: string;
-    try {
-      actual = runCode(q.code);
-    } catch (err) {
-      reasons.push(`codice non valido: ${(err as Error).message.split('\n')[0]}`);
-      return { q, reasons };
-    }
-    const correct = q.options.find((o) => o.id === q.correctOptionId)?.text;
-    if (actual !== correct) {
-      reasons.push(
-        `predict-output: eseguito "${actual.replace(/\n/g, '|')}", dichiarato "${correct}"`,
-      );
-    }
-  }
-  return { q, reasons };
-}
-
-const abbrev = TYPE_ABBREV[type] ?? type;
-const idPattern = new RegExp(`^${topicId}-[a-z]+-(\\d+)$`);
-const allKnown = [...existing, ...loadDrafts(topicId, true).flatMap((d) => d.file.questions)];
-let nextSeq = Math.max(0, ...allKnown.map((q) => Number(idPattern.exec(q.id)?.[1] ?? 0))) + 1;
-const assignId = () => `${topicId}-${abbrev}-${String(nextSeq++).padStart(4, '0')}`;
 
 for (let round = 1; round <= 3 && accepted.length < count; round++) {
   const missing = count - accepted.length;
@@ -157,8 +68,11 @@ for (let round = 1; round <= 3 && accepted.length < count; round++) {
         temperature: 0.8,
         response_format: { type: 'json_object' },
         messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: buildUserPrompt(missing) },
+          { role: 'system', content: system },
+          {
+            role: 'user',
+            content: buildPrompts({ topicId, type, difficulty, count: missing }).user,
+          },
         ],
       });
       break;
@@ -187,25 +101,10 @@ for (let round = 1; round <= 3 && accepted.length < count; round++) {
     continue;
   }
   for (const c of questions) {
-    const { q, reasons } = check(c);
+    const { q, reasons } = checkCandidate(c, { topicId, type, difficulty, seenKeys });
     if (q && reasons.length === 0) {
-      seenKeys.add(`${q.prompt}|||${q.code ?? ''}`);
-      accepted.push({
-        id: assignId(),
-        topicId,
-        subtopicId: q.subtopicId,
-        type: q.type,
-        difficulty: q.difficulty,
-        skills: q.skills,
-        prompt: q.prompt,
-        code: q.code,
-        options: q.options,
-        correctOptionId: q.correctOptionId,
-        explanation: q.explanation,
-        source: 'ai',
-        model,
-        createdAt: new Date().toISOString(),
-      });
+      seenKeys.add(dedupKey(c));
+      accepted.push(toBankQuestion(q, nextId(), 'ai'));
     } else {
       rejected.push({ prompt: String(c.prompt ?? '(senza prompt)').slice(0, 80), reasons });
     }

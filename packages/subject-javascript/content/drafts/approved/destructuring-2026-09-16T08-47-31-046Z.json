@@ -32,18 +32,17 @@
       "explanation": {
         "short": "Il default va messo nel destructuring, come `{ nome = 'Anonimo' }`.",
         "whyCorrect": "L'oggetto passato non è undefined o null, quindi l'operatore || non scatta: solo il default nel destructuring copre il caso di proprietà mancante.",
-        "whyOthersWrong": {
+        "concept": "Valore di default nelle proprietà oggetto",
+        "commonMistake": "Mettere il default fuori dal destructuring invece che nella variabile.",
+        "example": "const { nome = 'Anonimo' } = persona;",
+        "why": {
           "a": "Il default si applica solo se la proprietà manca o è undefined: in questo caso manca, ma non è stato specificato un valore di default nel destructuring.",
           "c": "L'operatore && non aiuterebbe: non serve una condizione logica, ma specificare un valore di default per la proprietà assente.",
           "d": "Qui serve destrutturare un oggetto, non un array. La struttura dati non è il problema."
-        },
-        "concept": "Valore di default nelle proprietà oggetto",
-        "commonMistake": "Mettere il default fuori dal destructuring invece che nella variabile.",
-        "example": "const { nome = 'Anonimo' } = persona;"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:47:20.747Z"
+      "format": "choice"
     },
     {
       "id": "destructuring-fb-0016",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "I default vanno messi direttamente nei parametri destrutturati: `{ a = 0, b = 0 }`.",
         "whyCorrect": "Se una proprietà manca, il valore sarà undefined, e `5 + undefined` dà NaN. Serve assegnare 0 come default nel destructuring.",
-        "whyOthersWrong": {
+        "concept": "Default nei parametri destrutturati",
+        "commonMistake": "Dimenticare il default nei parametri: proprietà undefined causano NaN.",
+        "example": "function sommaProprieta({ a = 0, b = 0 }) { ... }",
+        "why": {
           "b": "Non è necessario spostare il destructuring dentro il corpo: si può (anzi, spesso si deve) usare nel parametro.",
           "c": "Il rest operator serve solo per raccogliere il resto delle proprietà, non per default.",
           "d": "Si possono sommare proprietà mancanti se si fornisce un valore di default nel destructuring."
-        },
-        "concept": "Default nei parametri destrutturati",
-        "commonMistake": "Dimenticare il default nei parametri: proprietà undefined causano NaN.",
-        "example": "function sommaProprieta({ a = 0, b = 0 }) { ... }"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:47:20.748Z"
+      "format": "choice"
     },
     {
       "id": "destructuring-fb-0018",
@@ -120,18 +118,17 @@
       "explanation": {
         "short": "Senza l'operatore ... la variabile `resto` prende solo il secondo elemento, non tutti gli altri.",
         "whyCorrect": "Per ottenere tutti gli elementi rimanenti nel destructuring di array bisogna usare l'operatore rest (`...resto`). Senza di esso, la seconda variabile riceve solo il secondo elemento.",
-        "whyOthersWrong": {
+        "concept": "Rest operator nel destructuring di array",
+        "commonMistake": "Dimenticare l'operatore ... davanti alla variabile rest e aspettarsi comunque un array con tutti gli elementi restanti.",
+        "example": "const [primo, ...resto] = numeri;",
+        "why": {
           "b": "Usare le parentesi graffe ({}) serve per il destructuring di oggetti, non di array: con gli array si devono usare sempre le parentesi quadre ([]) e l'operatore ... per rest.",
           "c": "Invertire l'ordine delle variabili non cambia il fatto che senza ..., la seconda prende solo il secondo elemento, non tutti gli altri. L'ordine nel destructuring corrisponde alla posizione degli elementi.",
           "d": "Il destructuring di array funziona perfettamente anche con array di numeri; il tipo degli elementi non influisce sulla sintassi di destructuring."
-        },
-        "concept": "Rest operator nel destructuring di array",
-        "commonMistake": "Dimenticare l'operatore ... davanti alla variabile rest e aspettarsi comunque un array con tutti gli elementi restanti.",
-        "example": "const [primo, ...resto] = numeri;"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:47:31.044Z"
+      "format": "choice"
     }
   ]
 }

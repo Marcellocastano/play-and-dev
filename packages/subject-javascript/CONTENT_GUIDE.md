@@ -20,9 +20,9 @@ risposta dai soli indizi di forma (lunghezza, dettaglio, tono).
   "Chi…"/"Quando…" o classificare lo studente; niente stile telegrafico con i due punti.
   - No: `Chi confonde metodo e proprietà: senza () si ottiene la funzione.`
   - Sì: `Senza le parentesi non si chiama il metodo: l'espressione restituisce la funzione
-    stessa, ed è quella che console.log stampa. Per ottenere 'ciao' bisogna invocarla con
-    presentati().`
-  Gate automatico: ogni `why` ha almeno 60 caratteri e non inizia con "Chi"/"Quando".
+stessa, ed è quella che console.log stampa. Per ottenere 'ciao' bisogna invocarla con
+presentati().`
+    Gate automatico: ogni `why` ha almeno 60 caratteri e non inizia con "Chi"/"Quando".
 - **Codice inline tra backtick.** Nelle opzioni e nelle spiegazioni, identificatori,
   espressioni e valori vanno tra backtick (`` `switch` ``, `` `x === 1` ``): l'interfaccia
   li rende come codice.
@@ -53,11 +53,11 @@ plausibili.
 Il tag deve corrispondere alla **operazione mentale richiesta**, non alla lunghezza del
 codice.
 
-| Tag      | Lo studente deve…                                                                 | Esempio                                                            |
-| -------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| `easy`   | Riconoscere un fatto o un'API; un solo concetto, nessuna interazione.             | `'abc'.toUpperCase()`; `typeof 'x'`                                |
+| Tag      | Lo studente deve…                                                                    | Esempio                                                            |
+| -------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| `easy`   | Riconoscere un fatto o un'API; un solo concetto, nessuna interazione.                | `'abc'.toUpperCase()`; `typeof 'x'`                                |
 | `medium` | Applicare 2 concetti che interagiscono, o predire codice con un passaggio non ovvio. | precedenza `+` e `*`; `else if` con soglie; `var` fuori dal blocco |
-| `hard`   | Conoscere un caso limite o un comportamento controintuitivo del linguaggio.         | fallthrough di `switch`; `NaN === NaN`; closure in un ciclo `var`   |
+| `hard`   | Conoscere un caso limite o un comportamento controintuitivo del linguaggio.          | fallthrough di `switch`; `NaN === NaN`; closure in un ciclo `var`  |
 
 Regola pratica: se la risposta si trova "leggendo la riga", è `easy`; se bisogna
 simulare mentalmente più di un passo, `medium`; se serve sapere una regola del
@@ -74,3 +74,52 @@ opzioni non basta: il gate lo verifica sulla `variantKey`).
 `npm test -w @lg/subject-javascript` esegue: validità strutturale, esecuzione dei
 `predict-output`, **gate di qualità** (`qualityIssues` del core) e conteggi. Un
 template che non passa il gate non entra nel contenuto.
+
+## 6. Formati di gioco
+
+Oltre a `choice` (4 opzioni, una corretta) ci sono tre formati a classificazione, più il
+formato `text` prodotto automaticamente da `toTextFormat` sulle `predict-output`.
+
+- **categorize**: `categories` 2–3 `{id, text}`, `items` 4–8 `{id, text, categoryId}`.
+  Il DSL è `defineCategorize` (gli item si danno come `{text, categoryId, why}`; gli id
+  `i0..` e la `why` per item sono assegnati dal builder).
+- **match**: `choices` 2–4 `{id, text}`, `rows` 3–6 `{id, text, choiceId}`.
+  DSL `defineMatch` (`rows: {text, choice, why}`; choices come array di stringhe).
+- **true-false**: `statements` 4–6 `{id, text, value}`, almeno una vera e una falsa.
+  DSL `defineTrueFalse` (`{text, value, why}`).
+
+Regole:
+
+- `explanation.why` ha una voce per **ogni** elemento (non solo gli errori possibili):
+  ≥ 60 caratteri, spiega cosa succede davvero, mai "Chi…"/"Quando…".
+- Nessun item, riga o affermazione ambiguo o dipendente da contesto non dichiarato.
+- Il testo di un item/riga non contiene il nome della categoria o scelta di destinazione
+  (il gate lo verifica su categorize e match).
+- Le affermazioni true-false sono atomiche (una sola affermazione verificabile, mai
+  "X, altrimenti Y") e i valori vero/falso vanno bilanciati; il gate segnala più di 4
+  valori uguali consecutivi.
+- Tutti gli elementi dello stesso gruppo devono essere identici visivamente prima della
+  conferma: nessun indizio di forma.
+
+## 7. Authoring via chat (senza API key)
+
+```bash
+# 1. stampa system prompt + user prompt pronti da incollare in una chat
+npm run content:prompt -w @lg/subject-javascript -- \
+  --topic json --type true-false --difficulty easy --count 5   # | pbcopy
+# 2. incolla l'output nella chat e salva la risposta in risposta.json (root del repo)
+# 3. un solo comando fa tutto: valida, approva, rigenera la banca, esegue i test
+#    (se i test falliscono ripristina i file e non applica nulla)
+npm run content:add                                            # oppure: -- <altro-file.json>
+# 4. rilettura umana del gruppo: chiedi la revisione delle domande approvate
+```
+
+`content:add` accetta `{ "topicId": ..., "questions": [...] }` (o un array, con
+`--topic`), JSON puro o blocco ` ```json `. Oltre al gate di `author` esegue i
+controlli automatici su match e true-false (esegue le espressioni e confronta il
+risultato con la risposta dichiarata). Strumenti avanzati: `content:import` scrive la
+risposta come bozza in `content/drafts/` senza approvarla; `content:review` e
+`content:approve` gestiscono le bozze a mano.
+
+Il campo `format` è obbligatorio nel JSON generato; per i tipi didattici classici è
+`choice`. La revisione umana resta obbligatoria.

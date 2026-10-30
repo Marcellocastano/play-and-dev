@@ -67,15 +67,15 @@ describe('validateQuestion', () => {
     expect(r2.ok).toBe(false);
   });
 
-  it('rejects missing whyOthersWrong entries', () => {
+  it('rejects missing why entries', () => {
     const base = generateQuestion(template, 7);
     const q = {
       ...base,
-      explanation: { ...base.explanation, whyOthersWrong: {} },
+      explanation: { ...base.explanation, why: {} },
     };
     const r = validateQuestion(q);
     expect(r.ok).toBe(false);
-    expect(r.errors.join()).toContain('whyOthersWrong');
+    expect(r.errors.join()).toContain('why');
   });
 
   it('rejects missing code for types that require it', () => {
@@ -95,14 +95,22 @@ describe('validateQuestion', () => {
 });
 
 describe('questionTypeRegistry', () => {
-  it('has the 6 phase-1 types', () => {
-    expect(questionTypeRegistry.list().map((t) => t.id).sort()).toEqual([
+  it('registers the 6 phase-1 types plus the 3 game formats', () => {
+    expect(
+      questionTypeRegistry
+        .list()
+        .map((t) => t.id)
+        .sort(),
+    ).toEqual([
       'best-method',
+      'categorize',
       'compare',
       'fill-the-gap',
       'find-the-bug',
+      'match',
       'multiple-choice',
       'predict-output',
+      'true-false',
     ]);
   });
 });
@@ -116,5 +124,106 @@ describe('uniqueDistractors', () => {
 
   it('throws when not enough distinct candidates', () => {
     expect(() => uniqueDistractors('a', ['a', 'b'], 3)).toThrow();
+  });
+});
+
+describe('validateQuestion per format', () => {
+  const shared = {
+    id: 'q',
+    templateId: 't',
+    variantKey: 'v',
+    type: 'categorize',
+    difficulty: 'easy' as const,
+    topicId: 't0',
+    subtopicId: 's0',
+    skills: [],
+    prompt: 'D?',
+    explanation: {
+      short: 's',
+      whyCorrect: 'w',
+      why: { i1: 'x'.repeat(61), i2: 'x'.repeat(61), i3: 'x'.repeat(61), i4: 'x'.repeat(61) },
+    },
+  };
+
+  it('accepts a valid categorize question', () => {
+    const q = {
+      ...shared,
+      format: 'categorize' as const,
+      categories: [
+        { id: 'c1', text: 'Muta' },
+        { id: 'c2', text: 'Non muta' },
+      ],
+      items: [
+        { id: 'i1', text: 'push', categoryId: 'c1' },
+        { id: 'i2', text: 'pop', categoryId: 'c1' },
+        { id: 'i3', text: 'map', categoryId: 'c2' },
+        { id: 'i4', text: 'filter', categoryId: 'c2' },
+      ],
+    };
+    expect(validateQuestion(q).ok).toBe(true);
+  });
+
+  it('rejects categorize with empty category or missing why', () => {
+    const q = {
+      ...shared,
+      format: 'categorize' as const,
+      categories: [
+        { id: 'c1', text: 'Muta' },
+        { id: 'c2', text: 'Vuota' },
+      ],
+      items: [
+        { id: 'i1', text: 'push', categoryId: 'c1' },
+        { id: 'i2', text: 'pop', categoryId: 'c1' },
+        { id: 'i3', text: 'splice', categoryId: 'c1' },
+        { id: 'i4', text: 'sort', categoryId: 'c1' },
+      ],
+      explanation: { ...shared.explanation, why: {} },
+    };
+    const r = validateQuestion(q);
+    expect(r.ok).toBe(false);
+    expect(r.errors.join()).toContain('category c2 has no items');
+    expect(r.errors.join()).toContain('why');
+  });
+
+  it('rejects match rows pointing at unknown choices', () => {
+    const q = {
+      ...shared,
+      type: 'match',
+      format: 'match' as const,
+      choices: [
+        { id: 'c1', text: 'numero' },
+        { id: 'c2', text: 'stringa' },
+      ],
+      rows: [
+        { id: 'r1', text: '42', choiceId: 'c1' },
+        { id: 'r2', text: "'x'", choiceId: 'c2' },
+        { id: 'r3', text: 'NaN', choiceId: 'zz' },
+      ],
+      explanation: {
+        ...shared.explanation,
+        why: { r1: 'w'.repeat(61), r2: 'w'.repeat(61), r3: 'w'.repeat(61) },
+      },
+    };
+    const r = validateQuestion(q);
+    expect(r.ok).toBe(false);
+    expect(r.errors.join()).toContain('unknown choice');
+  });
+
+  it('rejects true-false without both values and text with empty accepted', () => {
+    const tf = {
+      ...shared,
+      type: 'true-false',
+      format: 'true-false' as const,
+      statements: [1, 2, 3, 4].map((i) => ({ id: `s${i}`, text: `aff ${i}`, value: true })),
+      explanation: {
+        ...shared.explanation,
+        why: { s1: 'w'.repeat(61), s2: 'w'.repeat(61), s3: 'w'.repeat(61), s4: 'w'.repeat(61) },
+      },
+    };
+    const r = validateQuestion(tf);
+    expect(r.ok).toBe(false);
+    expect(r.errors.join()).toContain('no false statement');
+    const text = { ...shared, format: 'text' as const, accepted: [] };
+    expect(validateQuestion(text).ok).toBe(false);
   });
 });

@@ -32,18 +32,17 @@
       "explanation": {
         "short": "Il finally interno si esegue sempre, poi l'errore rilanciato viene catturato fuori e si esegue anche il finally esterno.",
         "whyCorrect": "Il finally interno stampa 'Cleanup interno', poi l'errore rilanciato viene catturato dal catch esterno che stampa 'Errore esterno', e infine il finally esterno stampa 'Cleanup esterno'.",
-        "whyOthersWrong": {
+        "concept": "try/catch/finally annidati",
+        "commonMistake": "Pensare che il catch interno gestisca tutto e che finally influenzi il flusso d'errore.",
+        "example": "try { ... } catch (e) { throw new Error('nuovo'); } finally { ... }",
+        "why": {
           "b": "Il messaggio 'Errore interno' non viene mai stampato perché il catch interno rilancia direttamente un nuovo errore con messaggio diverso.",
           "c": "Manca la stampa del messaggio d'errore perché il catch esterno stampa sempre il messaggio di errore rilanciato.",
           "d": "La sequenza non è corretta: il catch esterno stampa l'errore prima del finally esterno, quindi 'Errore esterno' si trova in seconda posizione."
-        },
-        "concept": "try/catch/finally annidati",
-        "commonMistake": "Pensare che il catch interno gestisca tutto e che finally influenzi il flusso d'errore.",
-        "example": "try { ... } catch (e) { throw new Error('nuovo'); } finally { ... }"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:36:40.551Z"
+      "format": "choice"
     },
     {
       "id": "errors-po-0022",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "Il return nel finally sovrascrive quello del try: si ottiene 'B'.",
         "whyCorrect": "In JavaScript, un return nel blocco finally sovrascrive qualsiasi return precedente nel try o catch. Quindi, il risultato finale di prova() è 'B' e quello viene stampato.",
-        "whyOthersWrong": {
+        "concept": "finally e precedenza return",
+        "commonMistake": "Pensare che il return nel try abbia priorità sul finally.",
+        "example": "try { return 1; } finally { return 2; }",
+        "why": {
           "b": "Il return nel try viene ignorato perché il finally ha il suo return, che lo sovrascrive.",
           "c": "La funzione restituisce sempre una stringa, mai undefined, perché ogni percorso termina con return.",
           "d": "Non c'è alcun errore di tipo: il codice è valido e produce un risultato ben definito."
-        },
-        "concept": "finally e precedenza return",
-        "commonMistake": "Pensare che il return nel try abbia priorità sul finally.",
-        "example": "try { return 1; } finally { return 2; }"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:36:40.552Z"
+      "format": "choice"
     },
     {
       "id": "errors-po-0023",
@@ -120,18 +118,17 @@
       "explanation": {
         "short": "Lanciando una stringa, il tipo è 'string' e non c'è proprietà 'name'.",
         "whyCorrect": "Se si lancia una stringa, il valore catturato è letteralmente la stringa stessa, quindi typeof e è 'string' e e.name è undefined.",
-        "whyOthersWrong": {
+        "concept": "throw e oggetto Error",
+        "commonMistake": "Lanciare una stringa e aspettarsi un oggetto Error con proprietà name.",
+        "example": "throw new Error('errore'); // e.name === 'Error'",
+        "why": {
           "b": "Qui non viene lanciato un oggetto Error, quindi typeof restituisce 'string' e non 'object'; inoltre, la proprietà name non esiste.",
           "c": "typeof di una stringa è 'string', ma e.name non restituisce 'string', perché la stringa non ha tale proprietà.",
           "d": "typeof sarebbe 'string', non 'object', dato che si lancia una stringa."
-        },
-        "concept": "throw e oggetto Error",
-        "commonMistake": "Lanciare una stringa e aspettarsi un oggetto Error con proprietà name.",
-        "example": "throw new Error('errore'); // e.name === 'Error'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:36:40.552Z"
+      "format": "choice"
     },
     {
       "id": "errors-po-0024",
@@ -164,18 +161,17 @@
       "explanation": {
         "short": "L'eccesso di ricorsione porta a un RangeError.",
         "whyCorrect": "In caso di stack overflow per ricorsione senza termine, JavaScript solleva un RangeError.",
-        "whyOthersWrong": {
+        "concept": "Errori nativi: RangeError",
+        "commonMistake": "Confondere RangeError con TypeError per errori di chiamata funzione.",
+        "example": "function f() { f(); } // RangeError per stack overflow",
+        "why": {
           "b": "TypeError riguarda operazioni su tipi sbagliati, non stack overflow.",
           "c": "ReferenceError si verifica se si usa una variabile non definita, non per ricorsione.",
           "d": "SyntaxError si verifica in fase di parsing, non durante l'esecuzione ricorsiva."
-        },
-        "concept": "Errori nativi: RangeError",
-        "commonMistake": "Confondere RangeError con TypeError per errori di chiamata funzione.",
-        "example": "function f() { f(); } // RangeError per stack overflow"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:36:40.553Z"
+      "format": "choice"
     },
     {
       "id": "errors-po-0025",
@@ -208,18 +204,17 @@
       "explanation": {
         "short": "Il finally viene eseguito comunque, poi l'errore lanciato dal catch viene intercettato e se ne stampa il messaggio.",
         "whyCorrect": "La funzione solleva prima un errore ('primo'), ma il catch subito lo cattura e ne rilancia uno nuovo ('secondo'). Il blocco finally viene sempre eseguito, quindi 'chiusura' viene stampato per primo. Il nuovo errore viene poi intercettato dal catch esterno, che stampa il messaggio 'secondo'.",
-        "whyOthersWrong": {
+        "concept": "try/catch/finally e rilancio errori",
+        "commonMistake": "Pensare che finally esegua dopo il catch esterno oppure che il primo errore sia visibile fuori.",
+        "example": "try { throw new Error('a') } catch { throw new Error('b') } finally { console.log('c') }",
+        "why": {
           "b": "Il catch interno lancia 'secondo', quindi il catch esterno non può ricevere il messaggio 'primo'. 'chiusura' resta corretta, ma il messaggio stampato non corrisponde.",
           "c": "L'ordine di stampa è sbagliato: il finally si esegue prima che il catch esterno stampi il nuovo messaggio d'errore, quindi 'chiusura' viene sempre prima.",
           "d": "Il messaggio 'primo' non può raggiungere il catch esterno perché viene sovrascritto dal nuovo errore lanciato nel catch interno. L'ordine sarebbe comunque sbagliato."
-        },
-        "concept": "try/catch/finally e rilancio errori",
-        "commonMistake": "Pensare che finally esegua dopo il catch esterno oppure che il primo errore sia visibile fuori.",
-        "example": "try { throw new Error('a') } catch { throw new Error('b') } finally { console.log('c') }"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:36:51.628Z"
+      "format": "choice"
     }
   ]
 }

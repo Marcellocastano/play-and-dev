@@ -32,18 +32,17 @@
       "explanation": {
         "short": "Il separatore deve essere la virgola per produrre 'uno,due,tre'.",
         "whyCorrect": "join con la virgola unisce gli elementi dell'array inserendo una virgola tra ciascuno, ottenendo la stringa desiderata.",
-        "whyOthersWrong": {
+        "concept": "join con separatore",
+        "commonMistake": "Usare un separatore diverso da quello richiesto.",
+        "example": "[ 'a', 'b' ].join(',') // 'a,b'",
+        "why": {
           "b": "Uno spazio tra gli elementi darebbe 'uno due tre', non con le virgole.",
           "c": "Il punto tra gli elementi produrrebbe 'uno.due.tre', non la versione richiesta.",
           "d": "Il trattino darebbe come risultato 'uno-due-tre', diverso dalla richiesta."
-        },
-        "concept": "join con separatore",
-        "commonMistake": "Usare un separatore diverso da quello richiesto.",
-        "example": "[ 'a', 'b' ].join(',') // 'a,b'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:26:03.612Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fg-0002",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "padStart(3, '0') rende '007' aggiungendo zeri a sinistra.",
         "whyCorrect": "padStart con lunghezza 3 e carattere '0' aggiunge zeri finché la lunghezza raggiunge 3, ottenendo '007'.",
-        "whyOthersWrong": {
+        "concept": "padStart parametri",
+        "commonMistake": "Invertire posizione e carattere o usare lunghezza sbagliata.",
+        "example": "'5'.padStart(3, '0') // '005'",
+        "why": {
           "b": "padStart(2, '7') produce '77', non aggiunge zeri e la lunghezza è diversa.",
           "c": "padStart(3, '7') crea '777', non aggiunge zeri ma il carattere dato.",
           "d": "padStart(2, '0') produce '07', quindi la stringa non raggiunge 3 cifre."
-        },
-        "concept": "padStart parametri",
-        "commonMistake": "Invertire posizione e carattere o usare lunghezza sbagliata.",
-        "example": "'5'.padStart(3, '0') // '005'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:26:03.613Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fg-0003",
@@ -120,18 +118,17 @@
       "explanation": {
         "short": "replace('a', 'o') cambia solo la prima 'a' trovata.",
         "whyCorrect": "Con due stringhe, replace sostituisce solo la prima corrispondenza della 'a' con 'o', lasciando invariate le altre.",
-        "whyOthersWrong": {
+        "concept": "replace prima occorrenza",
+        "commonMistake": "Supporre che replace sostituisca tutte le occorrenze.",
+        "example": "'testa'.replace('t', 'b') // 'besta'",
+        "why": {
           "b": "L'opzione usa una regex globale, che sostituirebbe tutte le 'a', non solo la prima.",
           "c": "Sostituirebbe la sequenza 'an' con 'on', non la singola 'a'.",
           "d": "Sostituisce 'an' con 'on' solo alla prima occorrenza, non la singola 'a'."
-        },
-        "concept": "replace prima occorrenza",
-        "commonMistake": "Supporre che replace sostituisca tutte le occorrenze.",
-        "example": "'testa'.replace('t', 'b') // 'besta'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:26:03.613Z"
+      "format": "choice"
     },
     {
       "id": "string-methods-advanced-fg-0005",
@@ -164,18 +161,17 @@
       "explanation": {
         "short": "Il metodo trim elimina gli spazi da inizio e fine stringa.",
         "whyCorrect": "trim rimuove i caratteri di spazio solo all’inizio e alla fine della stringa, lasciando invariato il resto.",
-        "whyOthersWrong": {
+        "concept": "Metodo trim sulle stringhe",
+        "commonMistake": "Cercare di usare slice o replace per rimuovere spazi ai bordi.",
+        "example": "'  ok  '.trim() // 'ok'",
+        "why": {
           "b": "slice crea una sottostringa scegliendo un intervallo, non rimuove gli spazi automaticamente.",
           "c": "split converte la stringa in array secondo un separatore, ma non elimina spazi.",
           "d": "replaceAll sostituisce tutte le occorrenze di un pattern, ma senza pattern specifico non pulisce gli spazi."
-        },
-        "concept": "Metodo trim sulle stringhe",
-        "commonMistake": "Cercare di usare slice o replace per rimuovere spazi ai bordi.",
-        "example": "'  ok  '.trim() // 'ok'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:26:10.200Z"
+      "format": "choice"
     }
   ]
 }

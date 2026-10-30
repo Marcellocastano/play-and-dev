@@ -1,4 +1,4 @@
-import { AIQuestionSchema, validateAIQuestion } from '@lg/core';
+import { validateAIQuestion } from '@lg/core';
 import express, { type Express, type Request, type Response } from 'express';
 import OpenAI from 'openai';
 import { z } from 'zod';
@@ -10,12 +10,17 @@ const GenerateQuestionBody = z.object({
   type: z.string().optional(),
 });
 
+const ResponseSchema = z.discriminatedUnion('format', [
+  z.object({ format: z.literal('choice'), optionId: z.string() }),
+  z.object({ format: z.literal('categorize'), placement: z.record(z.string(), z.string()) }),
+  z.object({ format: z.literal('match'), selection: z.record(z.string(), z.string()) }),
+  z.object({ format: z.literal('true-false'), values: z.record(z.string(), z.boolean()) }),
+  z.object({ format: z.literal('text'), text: z.string() }),
+]);
+
 const ExplanationBody = z.object({
-  question: AIQuestionSchema.extend({
-    id: z.string().optional(),
-    variantKey: z.string().optional(),
-  }),
-  selectedOptionId: z.string().min(1),
+  question: z.record(z.string(), z.unknown()),
+  response: ResponseSchema,
 });
 
 const AnalyzeSessionBody = z.object({
@@ -33,10 +38,10 @@ const QUESTION_JSON_SPEC = `Rispondi SOLO con un oggetto JSON conforme a questo 
 {
   "templateId": string, "type": string (uno tra multiple-choice|predict-output|find-the-bug|fill-the-gap|compare|best-method),
   "difficulty": "easy"|"medium"|"hard", "topicId": string, "subtopicId": string,
-  "skills": string[], "prompt": string (italiano), "code"?: string,
+  "skills": string[], "prompt": string (italiano), "format": "choice", "code"?: string,
   "options": [{ "id": string, "text": string }] (esattamente 4, distinte),
   "correctOptionId": string (id di una delle opzioni),
-  "explanation": { "short": string, "whyCorrect": string, "whyOthersWrong": { "<optionId>": string per OGNI distrattore }, "concept": string, "commonMistake"?: string, "example"?: string },
+  "explanation": { "short": string, "whyCorrect": string, "why": { "<optionId>": string per OGNI distrattore }, "concept": string, "commonMistake"?: string, "example"?: string },
   "deepDiveRef"?: string
 }`;
 
@@ -69,7 +74,8 @@ export function createApp(options: AppOptions = {}): Express {
 
   const apiKey = options.apiKey ?? process.env.OPENAI_API_KEY;
   const model = options.model ?? process.env.OPENAI_MODEL ?? 'gpt-4o-mini';
-  const chat: ChatFn | undefined = options.chat ?? (apiKey ? makeChat(new OpenAI({ apiKey }), model) : undefined);
+  const chat: ChatFn | undefined =
+    options.chat ?? (apiKey ? makeChat(new OpenAI({ apiKey }), model) : undefined);
 
   // CORS: solo l'origin Vite di sviluppo.
   app.use((req, res, next) => {
@@ -111,7 +117,23 @@ export function createApp(options: AppOptions = {}): Express {
     const body = ExplanationBody.safeParse(req.body);
     if (!body.success) return badRequest(res, body.error.issues);
     if (!chat) return aiUnavailable(res);
-    const user = `Spiega in italiano perché la risposta selezionata (${body.data.selectedOptionId}) è ${body.data.selectedOptionId === body.data.question.correctOptionId ? 'corretta' : 'sbagliata'} per questa domanda:\n${JSON.stringify(body.data.question)}`;
+    const parsed = validateAIQuestion(body.data.question);
+    if (!parsed.ok || !parsed.question) {
+      return badRequest(res, parsed.errors);
+    }
+    const q = parsed.question;
+    const r = body.data.response;
+    const submitted =
+      r.format === 'choice' && q.format === 'choice'
+        ? (q.options.find((o) => o.id === r.optionId)?.text ?? r.optionId)
+        : JSON.stringify(r);
+    const correctness =
+      r.format === 'choice' && q.format === 'choice'
+        ? r.optionId === q.correctOptionId
+          ? 'corretta'
+          : 'sbagliata'
+        : 'da valutare';
+    const user = `Spiega in italiano perché la risposta data (${submitted}) è ${correctness} per questa domanda:\n${JSON.stringify(q)}`;
     const content = await chat(
       'Rispondi SOLO con JSON { "explanation": string } in italiano.',
       user,

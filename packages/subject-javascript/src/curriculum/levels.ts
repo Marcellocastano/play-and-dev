@@ -39,13 +39,15 @@ export const levels: LevelDefinition[] = [
   {
     id: 'beginner',
     name: 'Beginner',
-    description: 'Le basi del linguaggio: variabili, tipi, operatori, controlli di flusso, funzioni, array e oggetti.',
+    description:
+      'Le basi del linguaggio: variabili, tipi, operatori, controlli di flusso, funzioni, array e oggetti.',
     topicIds: [...BEGINNER_TOPIC_IDS],
   },
   {
     id: 'intermediate',
     name: 'Intermediate',
-    description: 'Metodi degli array, destructuring, spread/rest, errori e strutture dati più ricche.',
+    description:
+      'Metodi degli array, destructuring, spread/rest, errori e strutture dati più ricche.',
     topicIds: [...INTERMEDIATE_TOPIC_IDS],
   },
   {

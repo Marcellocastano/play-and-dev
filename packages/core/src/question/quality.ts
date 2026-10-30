@@ -26,31 +26,71 @@ function median(values: number[]): number {
 
 export function qualityIssues(q: Question): string[] {
   const issues: string[] = [];
-  const correct = q.options.find((o) => o.id === q.correctOptionId);
-  if (!correct) return ['correct option not found'];
-  const distractors = q.options.filter((o) => o.id !== q.correctOptionId);
 
-  const med = median(distractors.map((o) => o.text.length));
-  const tolerance = Math.max(LENGTH_ABS_TOLERANCE, med * LENGTH_REL_TOLERANCE);
-  if (Math.abs(correct.text.length - med) > tolerance) {
-    issues.push(
-      `length bias: correct option is ${correct.text.length} chars, distractors median ${med} (tolerance ${tolerance.toFixed(0)})`,
-    );
-  }
-
-  for (const o of q.options) {
-    if (ABSOLUTE_OPENERS.test(o.text.trim())) issues.push(`absolute opener in option: "${o.text}"`);
-    if (o.text.includes('//')) issues.push(`comment in option leaks a hint: "${o.text}"`);
-  }
-
-  for (const [id, why] of Object.entries(q.explanation.whyOthersWrong)) {
+  for (const [id, why] of Object.entries(q.explanation?.why ?? {})) {
     if (why.trim().length < WHY_MIN_LENGTH) issues.push(`why for ${id} is too short: "${why}"`);
-    if (LABELLING_OPENERS.test(why.trim())) issues.push(`why for ${id} labels the learner instead of explaining: "${why}"`);
+    if (LABELLING_OPENERS.test(why.trim()))
+      issues.push(`why for ${id} labels the learner instead of explaining: "${why}"`);
   }
 
-  const answer = correct.text.trim();
-  if (answer.length >= 4 && q.prompt.includes(answer)) {
-    issues.push(`prompt contains the correct answer verbatim: "${answer}"`);
+  switch (q.format) {
+    case 'choice': {
+      const correct = q.options.find((o) => o.id === q.correctOptionId);
+      if (!correct) return [...issues, 'correct option not found'];
+      const distractors = q.options.filter((o) => o.id !== q.correctOptionId);
+      const med = median(distractors.map((o) => o.text.length));
+      const tolerance = Math.max(LENGTH_ABS_TOLERANCE, med * LENGTH_REL_TOLERANCE);
+      if (Math.abs(correct.text.length - med) > tolerance) {
+        issues.push(
+          `length bias: correct option is ${correct.text.length} chars, distractors median ${med} (tolerance ${tolerance.toFixed(0)})`,
+        );
+      }
+      for (const o of q.options) {
+        if (ABSOLUTE_OPENERS.test(o.text.trim()))
+          issues.push(`absolute opener in option: "${o.text}"`);
+        if (o.text.includes('//')) issues.push(`comment in option leaks a hint: "${o.text}"`);
+      }
+      const answer = correct.text.trim();
+      if (answer.length >= 4 && q.prompt.includes(answer)) {
+        issues.push(`prompt contains the correct answer verbatim: "${answer}"`);
+      }
+      break;
+    }
+    case 'true-false': {
+      let run = 0;
+      let prev: boolean | undefined;
+      for (const s of q.statements) {
+        run = s.value === prev ? run + 1 : 1;
+        prev = s.value;
+        if (run > 4) {
+          issues.push(`more than 4 consecutive statements with the same value (at ${s.id})`);
+          break;
+        }
+      }
+      break;
+    }
+    case 'categorize': {
+      for (const item of q.items) {
+        const target = q.categories.find((c) => c.id === item.categoryId);
+        if (target && item.text.includes(target.text)) {
+          issues.push(
+            `item "${item.text}" contains the name of its target category "${target.text}"`,
+          );
+        }
+      }
+      break;
+    }
+    case 'match': {
+      for (const row of q.rows) {
+        const target = q.choices.find((c) => c.id === row.choiceId);
+        if (target && row.text.includes(target.text)) {
+          issues.push(`row "${row.text}" contains the name of its target choice "${target.text}"`);
+        }
+      }
+      break;
+    }
+    case 'text':
+      break;
   }
 
   return issues;

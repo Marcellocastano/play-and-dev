@@ -32,18 +32,17 @@
       "explanation": {
         "short": "Math.max calcola il massimo tra i numeri dati.",
         "whyCorrect": "Math.max è il metodo corretto per ottenere il massimo tra i valori forniti come argomenti separati.",
-        "whyOthersWrong": {
+        "concept": "Math.max",
+        "commonMistake": "Confondere Math.max con una funzione chiamata maximum o usare sintassi errata.",
+        "example": "Math.max(4, 8, 1) // 8",
+        "why": {
           "b": "Math.maximum non esiste: la funzione giusta per il massimo è Math.max.",
           "c": "max non è definita come funzione globale in JavaScript, serve Math.max.",
           "d": "Math.max si usa con le parentesi tonde e argomenti separati, non con le quadre e array."
-        },
-        "concept": "Math.max",
-        "commonMistake": "Confondere Math.max con una funzione chiamata maximum o usare sintassi errata.",
-        "example": "Math.max(4, 8, 1) // 8"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:27:33.887Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fg-0002",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "Math.random() restituisce un float casuale tra 0 e 1.",
         "whyCorrect": "Math.random() va chiamato con le parentesi per ottenere il numero casuale; non è necessario passare argomenti.",
-        "whyOthersWrong": {
+        "concept": "Math.random",
+        "commonMistake": "Dimenticare le parentesi o confondere il nome della funzione.",
+        "example": "let x = Math.random();",
+        "why": {
           "b": "random() non è definita come funzione globale: serve sempre Math.random().",
           "c": "Math.rand non esiste in JavaScript, la funzione si chiama Math.random.",
           "d": "Math.random senza parentesi è la funzione stessa, non il suo risultato."
-        },
-        "concept": "Math.random",
-        "commonMistake": "Dimenticare le parentesi o confondere il nome della funzione.",
-        "example": "let x = Math.random();"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:27:33.888Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fg-0003",
@@ -120,18 +118,17 @@
       "explanation": {
         "short": "Number.isInteger verifica se il valore è un intero.",
         "whyCorrect": "Number.isInteger(7) restituisce true perché 7 è effettivamente un numero intero.",
-        "whyOthersWrong": {
+        "concept": "Number.isInteger",
+        "commonMistake": "Confondere il nome della funzione o passare una stringa invece di un numero.",
+        "example": "Number.isInteger(3.5) // false",
+        "why": {
           "b": "Number.isInt non esiste: la funzione corretta è Number.isInteger.",
           "c": "isInteger non è definita globalmente senza il prefisso Number.",
           "d": "Number.isInteger('7') restituisce false perché '7' è una stringa."
-        },
-        "concept": "Number.isInteger",
-        "commonMistake": "Confondere il nome della funzione o passare una stringa invece di un numero.",
-        "example": "Number.isInteger(3.5) // false"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:27:33.889Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fg-0006",
@@ -164,18 +161,17 @@
       "explanation": {
         "short": "Il mese di maggio corrisponde a 4 perché i mesi partono da 0.",
         "whyCorrect": "In JavaScript il mese 4 corrisponde a maggio, perché gennaio è 0 e aprile è 3.",
-        "whyOthersWrong": {
+        "concept": "Mesi 0-based in Date",
+        "commonMistake": "Dimenticare che i mesi vanno da 0 a 11.",
+        "example": "new Date(2022, 11, 25) // 25 dicembre 2022",
+        "why": {
           "b": "Il valore 5 produce giugno, perché i mesi partono da 0 e 5 è il sesto mese.",
           "c": "3 indica aprile, non maggio, a causa dell'indicizzazione da zero.",
           "d": "1 indica febbraio, poiché 0 è gennaio e 1 è il secondo mese."
-        },
-        "concept": "Mesi 0-based in Date",
-        "commonMistake": "Dimenticare che i mesi vanno da 0 a 11.",
-        "example": "new Date(2022, 11, 25) // 25 dicembre 2022"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:27:44.377Z"
+      "format": "choice"
     }
   ]
 }

@@ -29,7 +29,7 @@ export function SessionPage() {
   if (!session || session.subjectId !== subjectId) return <p>Reindirizzamento al setup…</p>;
   const q = session.questions[index];
   if (!q) return null;
-  const Renderer = questionRenderers[q.type];
+  const Renderer = questionRenderers[q.format];
   const streak = [...session.attempts].reverse().findIndex((a) => !a.correct);
   const currentStreak = streak === -1 ? session.attempts.length : streak;
 
@@ -79,14 +79,16 @@ export function SessionPage() {
           <motion.div
             className="question-surface"
             animate={
-              answered && !answered.correct && !reducedMotion ? { x: [0, -4, 4, 0] } : { x: 0 }
+              answered && (answered.score ?? 0) === 0 && !reducedMotion
+                ? { x: [0, -4, 4, 0] }
+                : { x: 0 }
             }
             transition={{ duration: 0.3 }}
           >
             {Renderer ? (
               <Renderer question={q} answered={answered} onAnswer={answer} />
             ) : (
-              <p>Tipo di domanda non supportato: {q.type}</p>
+              <p>Tipo di domanda non supportato: {q.format}</p>
             )}
           </motion.div>
           <FeedbackPanel

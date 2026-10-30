@@ -32,18 +32,17 @@
       "explanation": {
         "short": "Il blocco 'finally' garantisce che il cleanup venga eseguito sempre, anche dopo un 'return' nel catch.",
         "whyCorrect": "Se il cleanup non è messo in un blocco 'finally', non viene eseguito se c'è un 'return' dentro il catch. Solo 'finally' garantisce l'esecuzione in ogni caso.",
-        "whyOthersWrong": {
+        "concept": "Blocco finally in try/catch",
+        "commonMistake": "Ignorare che 'finally' si esegue anche in presenza di return.",
+        "example": "try { ... } finally { cleanup(); }",
+        "why": {
           "b": "Controllare il tipo dell’errore non influisce sulla stampa del cleanup: il problema è che la pulizia non viene mai eseguita se il flusso esce dal catch con return.",
           "c": "Il catch cattura e gestisce l’errore correttamente, stampando il messaggio; il vero problema è che la pulizia non è garantita dopo il return.",
           "d": "Il try include tutto il codice che può generare un errore; spostare più codice nel try non risolve la mancata esecuzione del cleanup."
-        },
-        "concept": "Blocco finally in try/catch",
-        "commonMistake": "Ignorare che 'finally' si esegue anche in presenza di return.",
-        "example": "try { ... } finally { cleanup(); }"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:32:44.005Z"
+      "format": "choice"
     },
     {
       "id": "errors-fb-0015",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "Lanciare una stringa fa perdere le proprietà name e stack dell’oggetto Error.",
         "whyCorrect": "Lanciando una stringa si perde il nome e lo stack dell'errore; solo un oggetto Error fornisce queste informazioni standard.",
-        "whyOthersWrong": {
+        "concept": "throw con oggetto Error",
+        "commonMistake": "Lanciare stringhe invece di oggetti Error.",
+        "example": "throw new Error('Parametro non valido');",
+        "why": {
           "b": "Il testo del messaggio può essere migliorato, ma non è questo il problema che fa perdere nome e stack.",
           "c": "La funzione non arriva mai a restituire un valore perché viene lanciato un errore prima di ogni return in caso di parametro non valido.",
           "d": "Il catch non può precedere la chiamata: la struttura try/catch è già corretta nel codice dato."
-        },
-        "concept": "throw con oggetto Error",
-        "commonMistake": "Lanciare stringhe invece di oggetti Error.",
-        "example": "throw new Error('Parametro non valido');"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:32:44.007Z"
+      "format": "choice"
     },
     {
       "id": "errors-fb-0016",
@@ -120,18 +118,17 @@
       "explanation": {
         "short": "Accedere a una proprietà di null genera TypeError, non ReferenceError.",
         "whyCorrect": "Cercare di accedere a una proprietà su null produce sempre un TypeError, perché null non è un oggetto.",
-        "whyOthersWrong": {
+        "concept": "TypeError vs ReferenceError",
+        "commonMistake": "Credere che accedere a proprietà di null produca ReferenceError.",
+        "example": "console.log(null.foo); // TypeError",
+        "why": {
           "b": "Il blocco try/catch cattura l’errore, ma il nome dell’errore è diverso da quello atteso.",
           "c": "La variabile persona è dichiarata ed è null; l’errore non riguarda la dichiarazione.",
           "d": "Il problema non è solo l’inesistenza della proprietà, ma che il valore sia null: è qui che si genera un TypeError."
-        },
-        "concept": "TypeError vs ReferenceError",
-        "commonMistake": "Credere che accedere a proprietà di null produca ReferenceError.",
-        "example": "console.log(null.foo); // TypeError"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:32:44.007Z"
+      "format": "choice"
     },
     {
       "id": "errors-fb-0017",
@@ -164,18 +161,17 @@
       "explanation": {
         "short": "Il catch non gestisce l’errore: viene ignorato, quindi non si ha notifica.",
         "whyCorrect": "L’errore viene effettivamente catturato, ma il blocco catch è vuoto: per notificare l’errore, bisognerebbe almeno stampare un messaggio all’interno.",
-        "whyOthersWrong": {
+        "concept": "Importanza della gestione nel blocco catch",
+        "commonMistake": "Lasciare il blocco catch vuoto rende invisibili gli errori.",
+        "example": "catch (e) { console.log(e.message); }",
+        "why": {
           "b": "I parametri sono controllati correttamente e, se non numerici, viene lanciato un errore.",
           "c": "Il try include la chiamata a sommaNumeri, quindi copre la funzione coinvolta nell’errore.",
           "d": "Il throw si trova correttamente all’interno della funzione e viene eseguito quando serve."
-        },
-        "concept": "Importanza della gestione nel blocco catch",
-        "commonMistake": "Lasciare il blocco catch vuoto rende invisibili gli errori.",
-        "example": "catch (e) { console.log(e.message); }"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:32:44.008Z"
+      "format": "choice"
     },
     {
       "id": "errors-fb-0018",
@@ -208,18 +204,17 @@
       "explanation": {
         "short": "Accedere a una proprietà su undefined genera TypeError, non RangeError.",
         "whyCorrect": "Quando si accede a arr[5], si ottiene undefined: chiamare un metodo su undefined produce un TypeError, non RangeError.",
-        "whyOthersWrong": {
+        "concept": "TypeError vs RangeError su array",
+        "commonMistake": "Confondere errori generati da accessi invalidi sugli array.",
+        "example": "([1][5]).toString() // TypeError",
+        "why": {
           "b": "Il problema non è solo l’inesistenza dell’indice, ma il fatto che si chiama un metodo su un valore undefined.",
           "c": "La verifica dell’indice sarebbe utile ma non è la causa dell’errore nativo diverso.",
           "d": "Il tipo di arr è corretto; il problema nasce quando si tenta di usare toString su undefined."
-        },
-        "concept": "TypeError vs RangeError su array",
-        "commonMistake": "Confondere errori generati da accessi invalidi sugli array.",
-        "example": "([1][5]).toString() // TypeError"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:32:44.008Z"
+      "format": "choice"
     },
     {
       "id": "errors-fb-0019",
@@ -252,18 +247,17 @@
       "explanation": {
         "short": "Solo finally garantisce l’esecuzione della chiusura anche in presenza di errori.",
         "whyCorrect": "Il blocco finally si esegue sempre, sia in caso di errore che di successo. Solo mettendo chiudi() in finally si garantisce la chiusura della risorsa.",
-        "whyOthersWrong": {
+        "concept": "Cleanup con finally",
+        "commonMistake": "Dimenticare finally per cleanup garantito.",
+        "example": "try { ... } finally { chiudi(); }",
+        "why": {
           "b": "Chiamare chiudi solo nel catch non garantisce nulla se non si verifica l’errore, quindi rischia di mancare la chiusura.",
           "c": "Se si chiama chiudi prima di throw, la risorsa si chiuderebbe anche se l’operazione non è finita, non risolvendo il problema generale.",
           "d": "Limitare il try non risolve la necessità di chiudere la connessione in tutti i casi: serve finally."
-        },
-        "concept": "Cleanup con finally",
-        "commonMistake": "Dimenticare finally per cleanup garantito.",
-        "example": "try { ... } finally { chiudi(); }"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:32:44.008Z"
+      "format": "choice"
     },
     {
       "id": "errors-fb-0020",
@@ -296,18 +290,17 @@
       "explanation": {
         "short": "Lanciare una stringa fa perdere informazioni importanti come nome dell’errore e stack. Bisognerebbe lanciare sempre un oggetto Error.",
         "whyCorrect": "L’attuale throw usa una semplice stringa, che non porta con sé il name e lo stack dell’errore, rendendo più difficile il debugging. Lanciare un oggetto Error consente di ottenere un messaggio e uno stack più utili.",
-        "whyOthersWrong": {
+        "concept": "throw con oggetto Error",
+        "commonMistake": "Lanciare una stringa invece di un oggetto Error, perdendo proprietà utili.",
+        "example": "throw new Error('Parametro non valido');",
+        "why": {
           "b": "Il throw viene eseguito se il parametro non è una stringa, quindi l’errore viene effettivamente sollevato e catturato dal blocco catch.",
           "c": "Restituire false non segnala chiaramente un errore, soprattutto se chi usa la funzione si aspetta un’eccezione in caso di parametro non valido.",
           "d": "Il controllo typeof nome !== 'string' è corretto per verificare che nome sia una stringa, quindi qui non c’è nessun errore di sintassi o logica."
-        },
-        "concept": "throw con oggetto Error",
-        "commonMistake": "Lanciare una stringa invece di un oggetto Error, perdendo proprietà utili.",
-        "example": "throw new Error('Parametro non valido');"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:32:48.296Z"
+      "format": "choice"
     }
   ]
 }

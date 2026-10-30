@@ -1,12 +1,5 @@
 import { writeFileSync } from 'node:fs';
-import {
-  loadAllApproved,
-  loadApproved,
-  readBankFile,
-  regenerateData,
-  resolveDraftPath,
-  saveApproved,
-} from './bankIO.js';
+import { loadApproved, readBankFile, resolveDraftPath, saveApproved } from './bankIO.js';
 
 const [flagOrDraft, ...rest] = process.argv.slice(2);
 const isReject = flagOrDraft === '--reject';
@@ -50,8 +43,5 @@ for (const q of selected) byId.set(q.id, q);
 const merged = [...byId.values()];
 saveApproved(draft.topicId, merged);
 
-regenerateData(loadAllApproved());
-
 console.log(`Approvate ${selected.length} domande da ${draftPath} → ${draft.topicId}.json`);
 console.log(`Banca totale: ${merged.length} domande per ${draft.topicId}`);
-console.log('Rigenerato src/bank/data.generated.ts');

@@ -14,6 +14,7 @@ const validAIJson: AIQuestionInput = {
   subtopicId: 'sub',
   skills: [],
   prompt: 'Domanda?',
+  format: 'choice',
   options: [
     { id: 'a', text: 'giusta' },
     { id: 'b', text: 'sbagliata 1' },
@@ -24,7 +25,7 @@ const validAIJson: AIQuestionInput = {
   explanation: {
     short: 'breve',
     whyCorrect: 'perché giusta',
-    whyOthersWrong: { b: 'no', c: 'no', d: 'no' },
+    why: { b: 'no', c: 'no', d: 'no' },
     concept: 'concetto',
   },
 };
@@ -51,7 +52,9 @@ describe('validateAIQuestion', () => {
   });
 
   it('rejects non-4 options and malformed payloads', () => {
-    expect(validateAIQuestion({ ...validAIJson, options: validAIJson.options.slice(0, 3) }).ok).toBe(false);
+    expect(
+      validateAIQuestion({ ...validAIJson, options: validAIJson.options.slice(0, 3) }).ok,
+    ).toBe(false);
     expect(validateAIQuestion(null).ok).toBe(false);
     expect(validateAIQuestion('nope').ok).toBe(false);
   });
@@ -71,9 +74,18 @@ describe('MockAIProvider', () => {
     expect(validateAIQuestion(q).ok).toBe(true);
     const q2 = await mock.generateQuestion({ subjectId: 'js', topicId: 't', difficulty: 'easy' });
     expect(q).toEqual(q2);
-    expect(await mock.generateExplanation({ question: {} as never, selectedOptionId: 'a' })).toBeTruthy();
+    expect(
+      await mock.generateExplanation({
+        question: {} as never,
+        response: { format: 'choice', optionId: 'a' },
+      }),
+    ).toBeTruthy();
     expect(await mock.analyzeSession({ session: {} as never, summary: {} as never })).toBeTruthy();
-    const plan = await mock.generateStudyPlan({ subjectId: 'js', levelId: 'beginner', weakTopics: ['a', 'b'] });
+    const plan = await mock.generateStudyPlan({
+      subjectId: 'js',
+      levelId: 'beginner',
+      weakTopics: ['a', 'b'],
+    });
     expect(plan).toHaveLength(2);
   });
 });
@@ -92,10 +104,17 @@ describe('HttpAIProvider', () => {
       return new Response('not found', { status: 404 });
     };
     const provider = new HttpAIProvider('http://localhost:3001', fetchImpl);
-    const q = await provider.generateQuestion({ subjectId: 'js', topicId: 't', difficulty: 'easy' });
+    const q = await provider.generateQuestion({
+      subjectId: 'js',
+      topicId: 't',
+      difficulty: 'easy',
+    });
     expect(calls[0]!.url).toBe('http://localhost:3001/api/ai/generate-question');
     expect(q.prompt).toBe('Domanda?');
-    const exp = await provider.generateExplanation({ question: {} as never, selectedOptionId: 'a' });
+    const exp = await provider.generateExplanation({
+      question: {} as never,
+      response: { format: 'choice', optionId: 'a' },
+    });
     expect(exp).toBe('spiegazione');
     await expect(
       provider.analyzeSession({ session: {} as never, summary: {} as never }),

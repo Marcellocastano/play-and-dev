@@ -1,14 +1,16 @@
-import type { Question, QuestionAttempt } from '@lg/core';
+import type { AnswerResponse, Question, QuestionAttempt } from '@lg/core';
 import { useEffect } from 'react';
-import { CodeBlock } from '../ui/CodeBlock';
 import { Icon } from '../ui/Icon';
+import { QuestionHeader } from './QuestionHeader';
 import { RichText } from '../ui/RichText';
 
+type ChoiceQ = Extract<Question, { format: 'choice' }>;
+
 interface ChoiceQuestionProps {
-  question: Question;
+  question: ChoiceQ;
   typeLabel: string;
   answered: QuestionAttempt | null;
-  onAnswer(optionId: string): void;
+  onAnswer(response: AnswerResponse): void;
 }
 
 export function ChoiceQuestion({ question, typeLabel, answered, onAnswer }: ChoiceQuestionProps) {
@@ -29,7 +31,7 @@ export function ChoiceQuestion({ question, typeLabel, answered, onAnswer }: Choi
         const opt = question.options[n - 1];
         if (opt) {
           e.preventDefault();
-          onAnswer(opt.id);
+          onAnswer({ format: 'choice', optionId: opt.id });
         }
       }
     };
@@ -39,19 +41,7 @@ export function ChoiceQuestion({ question, typeLabel, answered, onAnswer }: Choi
 
   return (
     <div className="choice-question">
-      <div className="question-meta">
-        <span className="question-type">
-          <Icon name="code" size={16} />
-          {typeLabel}
-        </span>
-        <span className="difficulty-label">
-          {{ easy: 'Fondamenti', medium: 'Un passo in più', hard: 'Sfida' }[question.difficulty]}
-        </span>
-      </div>
-      <h2>
-        <RichText text={question.prompt} />
-      </h2>
-      {question.code && <CodeBlock code={question.code} lineNumbers />}
+      <QuestionHeader question={question} typeLabel={typeLabel} />
       <div className="answer-instruction">
         <span>Scegli la tua risposta</span>
         <span className="keyboard-hint">
@@ -61,7 +51,8 @@ export function ChoiceQuestion({ question, typeLabel, answered, onAnswer }: Choi
       <div className="answer-grid" role="group" aria-label="Opzioni di risposta">
         {question.options.map((opt, i) => {
           const isCorrect = opt.id === question.correctOptionId;
-          const isSelected = answered?.selectedOptionId === opt.id;
+          const isSelected =
+            answered?.response.format === 'choice' && answered.response.optionId === opt.id;
           const state = !answered
             ? 'idle'
             : isCorrect
@@ -75,7 +66,7 @@ export function ChoiceQuestion({ question, typeLabel, answered, onAnswer }: Choi
               type="button"
               aria-pressed={isSelected}
               disabled={answered !== null}
-              onClick={() => onAnswer(opt.id)}
+              onClick={() => onAnswer({ format: 'choice', optionId: opt.id })}
               className={`answer-option answer-option--${state}`}
             >
               <span className="answer-number">

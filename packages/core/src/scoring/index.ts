@@ -1,4 +1,10 @@
-import type { Achievement, Difficulty, QuestionAttempt, Session, UserProgress } from '../models/index.js';
+import type {
+  Achievement,
+  Difficulty,
+  QuestionAttempt,
+  Session,
+  UserProgress,
+} from '../models/index.js';
 
 export const XP_BY_DIFFICULTY: Record<Difficulty, number> = {
   easy: 10,
@@ -23,10 +29,15 @@ export function streakMultiplier(streak: number): number {
  * XP for a single correct answer; `streak` is the number of consecutive
  * correct answers *before* this one. Wrong answers earn 0.
  */
-export function xpForAttempt(attempt: Pick<QuestionAttempt, 'correct' | 'difficulty' | 'timeMs'>, streak: number): number {
-  if (!attempt.correct) return 0;
+export function xpForAttempt(
+  attempt: Pick<QuestionAttempt, 'correct' | 'difficulty' | 'timeMs'> &
+    Partial<Pick<QuestionAttempt, 'score'>>,
+  streak: number,
+): number {
+  const score = attempt.score ?? (attempt.correct ? 1 : 0);
+  if (score === 0) return 0;
   const base = XP_BY_DIFFICULTY[attempt.difficulty] + speedBonus(attempt.timeMs);
-  return Math.round(base * streakMultiplier(streak));
+  return Math.round(base * score * streakMultiplier(streak));
 }
 
 /** Total XP for a session's attempts, tracking the running streak. */

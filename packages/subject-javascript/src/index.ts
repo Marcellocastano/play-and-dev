@@ -18,7 +18,7 @@ export const javascriptSubject: SubjectDefinition = {
   templates,
   learningObjectives: [
     'Leggere e scrivere JavaScript moderno (let/const, funzioni, template literal)',
-    'Prevedere l\'output di frammenti di codice',
+    "Prevedere l'output di frammenti di codice",
     'Riconoscere e correggere i bug più comuni',
     'Usare array e oggetti con i metodi essenziali',
     'Comprendere scope, closure e trasformazioni funzionali',
@@ -30,4 +30,6 @@ export { levels } from './curriculum/levels.js';
 export { topics } from './curriculum/topics/index.js';
 export { templates } from './templates/index.js';
 export { deepDives, getDeepDive } from './deepDive/index.js';
+export { bankQuestions, bankTemplates, buildBankTemplates, MIN_BANK_SIZE } from './bank/index.js';
+export type { BankFile, BankQuestion } from './bank/types.js';
 export type { DeepDive, DeepDiveSection } from './deepDive/index.js';

@@ -8,9 +8,21 @@ export const stringsTopic: Topic = {
   overview:
     'Le stringhe sono sequenze immutabili di caratteri. Si concatenano con `+` o con i template literal (backtick), e offrono metodi come `length`, `slice`, `toUpperCase`, `includes`, `trim` e `split`.',
   subtopics: [
-    { id: 'strings-length-concat', name: 'Lunghezza e concatenazione', overview: '`.length`, `+` e template literal con `${}`.' },
-    { id: 'strings-methods', name: 'Metodi di base', overview: 'toUpperCase, toLowerCase, trim, includes, indexOf.' },
-    { id: 'strings-slice', name: 'Estrarre parti', overview: 'slice con indici positivi e negativi; split per dividere.' },
+    {
+      id: 'strings-length-concat',
+      name: 'Lunghezza e concatenazione',
+      overview: '`.length`, `+` e template literal con `${}`.',
+    },
+    {
+      id: 'strings-methods',
+      name: 'Metodi di base',
+      overview: 'toUpperCase, toLowerCase, trim, includes, indexOf.',
+    },
+    {
+      id: 'strings-slice',
+      name: 'Estrarre parti',
+      overview: 'slice con indici positivi e negativi; split per dividere.',
+    },
   ],
   learningObjectives: [
     'Concatenare stringhe con + e template literal',
@@ -26,7 +38,7 @@ export const stringsTopic: Topic = {
   ],
   examples: [
     "'ciao'.length // 4",
-    "`Ciao ${nome}!` // template literal",
+    '`Ciao ${nome}!` // template literal',
     "'javascript'.slice(0, 4) // 'java'",
     "'  testo  '.trim() // 'testo'",
   ],

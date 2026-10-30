@@ -32,18 +32,17 @@
       "explanation": {
         "short": "La parola chiave catch serve per intercettare errori nei blocchi try.",
         "whyCorrect": "catch è la parola chiave giusta per intercettare un’eccezione in JavaScript. Il parametro tra parentesi sarà l’oggetto errore generato dall’istruzione nel blocco try.",
-        "whyOthersWrong": {
+        "concept": "try/catch per intercettare errori",
+        "commonMistake": "Confondere catch con except o altri nomi usati in altri linguaggi.",
+        "example": "try { ... } catch (e) { ... }",
+        "why": {
           "b": "error non è una parola chiave JavaScript: non introduce un blocco di gestione delle eccezioni.",
           "c": "except è usato in Python, non in JavaScript: qui bisogna usare catch.",
           "d": "handle non è una parola riservata per la gestione degli errori in JavaScript."
-        },
-        "concept": "try/catch per intercettare errori",
-        "commonMistake": "Confondere catch con except o altri nomi usati in altri linguaggi.",
-        "example": "try { ... } catch (e) { ... }"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:47:25.826Z"
+      "format": "choice"
     },
     {
       "id": "errors-fg-0025",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "instanceof ReferenceError controlla il tipo nativo dell’errore.",
         "whyCorrect": "Con instanceof ReferenceError verifichiamo che l'errore sia effettivamente di quel tipo: è il modo più affidabile e idiomatico per distinguere i diversi errori nativi.",
-        "whyOthersWrong": {
+        "concept": "Errori nativi: ReferenceError",
+        "commonMistake": "Confondere TypeError con ReferenceError o usare typeof sugli errori.",
+        "example": "if (e instanceof TypeError) { ... }",
+        "why": {
           "b": "Questo controllo verifica se il nome dell’errore è TypeError, quindi non corrisponde al ReferenceError richiesto.",
           "c": "instanceof TypeError controlla un altro tipo di errore, non ReferenceError: non rileva il caso voluto.",
           "d": "typeof su un oggetto restituisce 'object', non il nome della classe: questa condizione è sempre falsa."
-        },
-        "concept": "Errori nativi: ReferenceError",
-        "commonMistake": "Confondere TypeError con ReferenceError o usare typeof sugli errori.",
-        "example": "if (e instanceof TypeError) { ... }"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:47:25.826Z"
+      "format": "choice"
     }
   ]
 }

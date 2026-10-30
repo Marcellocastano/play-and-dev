@@ -5,9 +5,8 @@ import type { BankFile, BankQuestion } from '../src/bank/types.js';
 
 export const pkgRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 export const repoRoot = join(pkgRoot, '..', '..');
-export const contentDir = join(pkgRoot, 'content');
-export const draftsDir = join(contentDir, 'drafts');
-export const generatedPath = join(pkgRoot, 'src', 'bank', 'data.generated.ts');
+export const contentDir = join(pkgRoot, 'src', 'bank', 'content');
+export const draftsDir = join(pkgRoot, 'content', 'drafts');
 
 export function approvedFilePath(topicId: string): string {
   return join(contentDir, `${topicId}.json`);
@@ -26,6 +25,37 @@ export function saveApproved(topicId: string, questions: BankQuestion[]): void {
   mkdirSync(contentDir, { recursive: true });
   const file: BankFile = { topicId, questions };
   writeFileSync(approvedFilePath(topicId), JSON.stringify(file, null, 2) + '\n');
+  writeFileSync(contentIndexPath, renderContentIndex(listContentFiles()));
+}
+
+export const contentIndexPath = join(contentDir, 'index.ts');
+
+export function listContentFiles(): string[] {
+  if (!existsSync(contentDir)) return [];
+  return readdirSync(contentDir)
+    .filter((f) => f.endsWith('.json'))
+    .sort();
+}
+
+/** `src/bank/content/index.ts`: un import per ogni JSON della banca, rigenerato da saveApproved. */
+export function renderContentIndex(files: string[]): string {
+  const ident = (f: string) =>
+    f
+      .replace(/\.json$/, '')
+      .replace(/-([a-z0-9])/g, (_, c: string) => c.toUpperCase())
+      .replace(/^([0-9])/, '_$1');
+  const imports = files.map((f) => `import ${ident(f)} from './${f}';`).join('\n');
+  const list = files.map((f) => `  ${ident(f)},`).join('\n');
+  return `// GENERATO da scripts/bankIO.ts (saveApproved): un import per ogni JSON in questa cartella.
+import type { BankFile, BankQuestion } from '../types.js';
+${imports}
+
+const files = [
+${list}
+] as unknown as BankFile[];
+
+export const bankQuestions: BankQuestion[] = files.flatMap((f) => f.questions);
+`;
 }
 
 export function loadDrafts(
@@ -59,11 +89,6 @@ export function loadAllApproved(): BankQuestion[] {
   return readdirSync(contentDir)
     .filter((f) => f.endsWith('.json'))
     .flatMap((f) => readBankFile(join(contentDir, f)).questions);
-}
-
-export function regenerateData(questions: BankQuestion[]): void {
-  const body = `// GENERATED FILE — non modificare a mano: rigenerato da \`npm run content:approve\`.\nimport type { BankQuestion } from './types.js';\n\nexport const bankQuestions: BankQuestion[] = ${JSON.stringify(questions, null, 2)};\n`;
-  writeFileSync(generatedPath, body);
 }
 
 export function resolveDraftPath(arg: string): string {

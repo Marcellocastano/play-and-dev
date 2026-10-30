@@ -32,18 +32,17 @@
       "explanation": {
         "short": "Il metodo map applica `.toUpperCase()` a ogni parola e restituisce un nuovo array con tutte le parole in maiuscolo.",
         "whyCorrect": "Il metodo `map` chiama la funzione passata su ogni elemento, restituendo un array dove ogni parola è stata convertita in maiuscolo tramite `toUpperCase()`.",
-        "whyOthersWrong": {
+        "concept": "map e trasformazione degli elementi",
+        "commonMistake": "Dimenticare che la funzione di map deve ritornare il valore trasformato.",
+        "example": "[1,2,3].map(n => n * 2) // [2,4,6]",
+        "why": {
           "b": "Senza una trasformazione, `map` restituirebbe l'array originale, ma qui ogni elemento viene realmente trasformato in maiuscolo.",
           "c": "La funzione `toUpperCase()` restituisce tutte le lettere maiuscole, non solo l'iniziale.",
           "d": "Questo succede solo se la funzione non restituisce nulla (dimenticando il return), ma qui il valore è ritornato correttamente."
-        },
-        "concept": "map e trasformazione degli elementi",
-        "commonMistake": "Dimenticare che la funzione di map deve ritornare il valore trasformato.",
-        "example": "[1,2,3].map(n => n * 2) // [2,4,6]"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:47.978Z"
+      "format": "choice"
     },
     {
       "id": "array-methods-po-0009",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "Filter restituisce un array con solo gli elementi che soddisfano la condizione `n > 5`, cioè 7 e 9.",
         "whyCorrect": "La funzione di callback di `filter` tiene solo i numeri maggiori di 5. Nell'array, questi sono 7 e 9.",
-        "whyOthersWrong": {
+        "concept": "filter per selezionare elementi",
+        "commonMistake": "Confondere filter con find e aspettarsi solo il primo elemento.",
+        "example": "[1,2,3,4].filter(x => x % 2 === 0) // [2, 4]",
+        "why": {
           "b": "Questa opzione include numeri che non sono maggiori di 5, come 2 e 5.",
           "c": "`filter` seleziona tutti gli elementi che soddisfano la condizione, non solo il primo.",
           "d": "Qui si mostra l'array originale, ma filter restituisce solo gli elementi che rispettano la condizione."
-        },
-        "concept": "filter per selezionare elementi",
-        "commonMistake": "Confondere filter con find e aspettarsi solo il primo elemento.",
-        "example": "[1,2,3,4].filter(x => x % 2 === 0) // [2, 4]"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:47.978Z"
+      "format": "choice"
     },
     {
       "id": "array-methods-po-0010",
@@ -120,18 +118,17 @@
       "explanation": {
         "short": "Map passa anche l'indice all'interno della funzione, quindi ogni lettera viene concatenata al suo indice.",
         "whyCorrect": "La funzione di `map` aggiunge all'elemento corrente il suo indice, quindi si ottiene 'a0', 'b1' e 'c2'.",
-        "whyOthersWrong": {
+        "concept": "map e parametri callback",
+        "commonMistake": "Dimenticare che il secondo argomento della funzione di map è l'indice, che parte da 0.",
+        "example": "[ 'x', 'y' ].map((v,i) => v+i) // [ 'x0', 'y1' ]",
+        "why": {
           "b": "Gli indici in JavaScript partono da 0, quindi 'a1' sarebbe solo se l'indice partisse da 1.",
           "c": "Qui viene restituito solo l'indice, ma la funzione concatena lettera e indice.",
           "d": "Questo sarebbe il risultato se la funzione non facesse alcuna trasformazione."
-        },
-        "concept": "map e parametri callback",
-        "commonMistake": "Dimenticare che il secondo argomento della funzione di map è l'indice, che parte da 0.",
-        "example": "[ 'x', 'y' ].map((v,i) => v+i) // [ 'x0', 'y1' ]"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:47.979Z"
+      "format": "choice"
     },
     {
       "id": "array-methods-po-0011",
@@ -164,18 +161,17 @@
       "explanation": {
         "short": "Reduce concatena i nomi separandoli con un trattino, iniziando dal primo elemento (se non viene fornito valore iniziale).",
         "whyCorrect": "Senza valore iniziale, acc prende il primo elemento, poi concatena gli altri con il trattino, risultando in 'Anna-Luca-Rita'.",
-        "whyOthersWrong": {
+        "concept": "reduce senza valore iniziale",
+        "commonMistake": "Pensare che reduce inizi con undefined o salti elementi.",
+        "example": "[\"a\",\"b\",\"c\"].reduce((a,b) => a + \",\" + b) // 'a,b,c'",
+        "why": {
           "b": "Il valore iniziale non è undefined: reduce usa il primo elemento come base se non specificato.",
           "c": "Riduce concatena tutti i nomi, non solo il primo e l'ultimo. Il trattino viene sempre aggiunto.",
           "d": "Questa sarebbe la concatenazione solo degli ultimi due nomi, non di tutti."
-        },
-        "concept": "reduce senza valore iniziale",
-        "commonMistake": "Pensare che reduce inizi con undefined o salti elementi.",
-        "example": "[\"a\",\"b\",\"c\"].reduce((a,b) => a + \",\" + b) // 'a,b,c'"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:47.979Z"
+      "format": "choice"
     },
     {
       "id": "array-methods-po-0012",
@@ -208,18 +204,17 @@
       "explanation": {
         "short": "Filter seleziona i libri con più di 150 pagine, quindi solo 'JS Avanzato' e 'CSS' vengono inclusi nell'output.",
         "whyCorrect": "Vengono selezionati i libri con più di 150 pagine: 'JS Avanzato' (320) e 'CSS' (200). 'JS Facile' ha solo 120 pagine.",
-        "whyOthersWrong": {
+        "concept": "filter su array di oggetti",
+        "commonMistake": "Dimenticare di applicare la condizione corretta su una proprietà dell'oggetto.",
+        "example": "[{a:1},{a:2}].filter(o => o.a>1) // [{a:2}]",
+        "why": {
           "b": "Questa opzione include anche 'JS Facile', che non supera le 150 pagine.",
           "c": "Questa opzione considera solo 'JS Avanzato', ma anche 'CSS' ha più di 150 pagine.",
           "d": "'CSS' è incluso, ma manca anche 'JS Avanzato', che rispetta la condizione."
-        },
-        "concept": "filter su array di oggetti",
-        "commonMistake": "Dimenticare di applicare la condizione corretta su una proprietà dell'oggetto.",
-        "example": "[{a:1},{a:2}].filter(o => o.a>1) // [{a:2}]"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:47.979Z"
+      "format": "choice"
     },
     {
       "id": "array-methods-po-0014",
@@ -252,18 +247,17 @@
       "explanation": {
         "short": "La funzione filter seleziona gli oggetti con voto almeno 28, quindi due studenti risultano promossi.",
         "whyCorrect": "Sia 'Anna' (28) che 'Sara' (30) hanno voto >= 28, quindi filter restituisce due elementi: promossi.length vale 2.",
-        "whyOthersWrong": {
+        "concept": "filter su array di oggetti",
+        "commonMistake": "Credere che filter cerchi solo valori strettamente maggiori, o solo il massimo.",
+        "example": "[{v:2},{v:5}].filter(x => x.v > 2) // [{v:5}]",
+        "why": {
           "a": "Filter restituisce solo gli elementi che soddisfano la condizione, non tutti. Tre sarebbe la lunghezza senza alcun filtro.",
           "b": "Solo uno studente ha 30, ma la condizione include anche chi ha 28, quindi sono due.",
           "d": "Ci sono due studenti con voto almeno 28: il risultato non può essere zero."
-        },
-        "concept": "filter su array di oggetti",
-        "commonMistake": "Credere che filter cerchi solo valori strettamente maggiori, o solo il massimo.",
-        "example": "[{v:2},{v:5}].filter(x => x.v > 2) // [{v:5}]"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:54.723Z"
+      "format": "choice"
     }
   ]
 }

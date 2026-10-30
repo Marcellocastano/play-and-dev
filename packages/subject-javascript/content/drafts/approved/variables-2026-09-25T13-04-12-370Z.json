@@ -1,0 +1,1427 @@
+{
+  "topicId": "variables",
+  "questions": [
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "let",
+        "const",
+        "var"
+      ],
+      "prompt": "Abbina ogni frammento alla natura dell'istruzione eseguita.",
+      "explanation": {
+        "short": "Le dichiarazioni e le assegnazioni sono operazioni diverse e seguono regole precise per `let` e `const`.",
+        "whyCorrect": "Una dichiarazione con `let` è valida, una riassegnazione di `let` è valida, `const` senza inizializzazione è sintatticamente errata e riassegnare una `const` causa `TypeError`.",
+        "why": {
+          "r0": "La riga crea correttamente una variabile `let` e le assegna subito il valore `10`, quindi non c'è alcun errore.",
+          "r1": "La seconda istruzione assegna un nuovo valore alla stessa `let`, operazione prevista per una variabile riassegnabile.",
+          "r2": "Una `const` deve ricevere il proprio valore nello stesso momento della dichiarazione, quindi questa forma produce `SyntaxError`.",
+          "r3": "La seconda istruzione tenta di cambiare il binding di una `const`, operazione vietata che durante l'esecuzione produce `TypeError`."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Riassegnazione valida"
+        },
+        {
+          "id": "c1",
+          "text": "Errore di tipo"
+        },
+        {
+          "id": "c2",
+          "text": "Dichiarazione valida"
+        },
+        {
+          "id": "c3",
+          "text": "Errore di sintassi"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let punti = 10;`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r1",
+          "text": "`let punti = 10; punti = 20;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r2",
+          "text": "`const punti;`",
+          "choiceId": "c3"
+        },
+        {
+          "id": "r3",
+          "text": "`const punti = 10; punti = 20;`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0084",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "reassignment"
+      ],
+      "prompt": "Abbina ogni frammento al risultato della modifica del valore.",
+      "explanation": {
+        "short": "La riassegnazione può cambiare il valore oppure lasciarlo uguale, mentre `const` non può essere riassegnata.",
+        "whyCorrect": "Con `let` una nuova assegnazione è possibile e il valore finale dipende dall'espressione usata; con `const` una nuova assegnazione non è permessa.",
+        "why": {
+          "r0": "La seconda istruzione sostituisce `5` con `8`, quindi il valore finale osservato nella variabile è `8`.",
+          "r1": "L'operatore `+= 7` parte da `5`, calcola `12` e assegna quel nuovo valore alla variabile `let`.",
+          "r2": "La seconda assegnazione è consentita, ma assegna di nuovo `20`, quindi il valore finale resta `20`.",
+          "r3": "La variabile è stata dichiarata con `const`, quindi l'assegnazione successiva tenta una riassegnazione vietata."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Valore finale 12"
+        },
+        {
+          "id": "c1",
+          "text": "Valore finale 8"
+        },
+        {
+          "id": "c2",
+          "text": "Valore finale 20"
+        },
+        {
+          "id": "c3",
+          "text": "Riassegnazione vietata"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let numero = 5; numero = 8;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r1",
+          "text": "`let numero = 5; numero += 7;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r2",
+          "text": "`let numero = 20; numero = 20;`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r3",
+          "text": "`const numero = 5; numero = 8;`",
+          "choiceId": "c3"
+        }
+      ],
+      "id": "variables-mt-0085",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "let",
+        "const",
+        "scope"
+      ],
+      "prompt": "Abbina ogni frammento al comportamento della variabile oltre le graffe.",
+      "explanation": {
+        "short": "Le graffe creano uno scope di blocco per `let`, mentre `var` non viene confinata al blocco.",
+        "whyCorrect": "`var` attraversa i confini del blocco, `let` resta nel blocco e una `let` interna con lo stesso nome crea un binding distinto.",
+        "why": {
+          "r0": "La variabile usa `var`, quindi le graffe non ne limitano l'ambito e il nome resta disponibile dopo il blocco.",
+          "r1": "La variabile usa `let`, quindi il nome è confinato alle graffe e la `console.log` esterna non può raggiungerlo.",
+          "r2": "La seconda riga non dichiara una nuova variabile: assegna un valore alla `let` esterna, modificandola da `1` a `2`.",
+          "r3": "La nuova `let` è confinata al blocco interno e può usare lo stesso nome creando un binding distinto da quello esterno."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Valore esterno modificato"
+        },
+        {
+          "id": "c1",
+          "text": "Nome ancora visibile"
+        },
+        {
+          "id": "c2",
+          "text": "Nome non più visibile"
+        },
+        {
+          "id": "c3",
+          "text": "Nuovo binding interno"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`{ var codice = 1; } console.log(codice);`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r1",
+          "text": "`{ let codice = 1; } console.log(codice);`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r2",
+          "text": "`let codice = 1; { codice = 2; }`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`let codice = 1; { let codice = 2; }`",
+          "choiceId": "c3"
+        }
+      ],
+      "id": "variables-mt-0086",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "scope"
+      ],
+      "prompt": "Abbina ogni frammento alla portata effettiva della dichiarazione.",
+      "explanation": {
+        "short": "`let` crea scope di blocco, mentre `var` segue lo scope della funzione che contiene la dichiarazione.",
+        "whyCorrect": "Le graffe limitano `let`; `var` invece non crea uno scope di blocco. Una nuova `let` dentro il blocco può inoltre avere lo stesso nome dell'esterna.",
+        "why": {
+          "r0": "La dichiarazione con `let` appartiene al blocco racchiuso tra graffe, quindi il suo ambito coincide con quel blocco.",
+          "r1": "La dichiarazione con `var` appartiene alla funzione `f`, perché `var` usa lo scope di funzione e non quello delle graffe interne.",
+          "r2": "Qui non viene dichiarato un nuovo nome: l'assegnazione dentro il blocco raggiunge la `let` esterna e ne cambia il valore.",
+          "r3": "La seconda `let` appartiene al blocco interno e può usare lo stesso nome creando un binding distinto da quello esterno."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Portata del blocco"
+        },
+        {
+          "id": "c1",
+          "text": "Portata della funzione"
+        },
+        {
+          "id": "c2",
+          "text": "Riassegnazione del blocco"
+        },
+        {
+          "id": "c3",
+          "text": "Nuovo nome nel blocco"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`{ let x = 1; }`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`function f() { var x = 1; }`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`let x = 1; { x = 2; }`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r3",
+          "text": "`let x = 1; { let x = 2; }`",
+          "choiceId": "c3"
+        }
+      ],
+      "id": "variables-mt-0087",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "reassignment"
+      ],
+      "prompt": "Abbina ogni riga alla conseguenza della seconda dichiarazione nello stesso ambito.",
+      "explanation": {
+        "short": "Una seconda dichiarazione nello stesso ambito è diversa da una riassegnazione e le regole cambiano tra `var` e `let`.",
+        "whyCorrect": "`var` può essere ridichiarata nello stesso ambito, `let` no; una nuova `let` in un blocco interno può però usare lo stesso nome.",
+        "why": {
+          "r0": "Con `var`, la seconda dichiarazione dello stesso nome nello stesso ambito è consentita e il nome resta utilizzabile.",
+          "r1": "Con `let`, dichiarare di nuovo lo stesso identificatore nello stesso ambito è vietato e produce `SyntaxError`.",
+          "r2": "La seconda istruzione non dichiara una variabile: assegna un nuovo valore alla `let` già esistente, quindi la riassegnazione è valida.",
+          "r3": "La `let` interna appartiene a un nuovo blocco, quindi non ridichiara nello stesso ambito e crea un binding separato."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Ridefinizione consentita"
+        },
+        {
+          "id": "c1",
+          "text": "Nuova dichiarazione vietata"
+        },
+        {
+          "id": "c2",
+          "text": "Valore riassegnato"
+        },
+        {
+          "id": "c3",
+          "text": "Nuova variabile interna"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`var x = 1; var x = 2;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`let x = 1; let x = 2;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`let x = 1; x = 2;`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r3",
+          "text": "`let x = 1; { let x = 2; }`",
+          "choiceId": "c3"
+        }
+      ],
+      "id": "variables-mt-0088",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "let",
+        "const",
+        "+="
+      ],
+      "prompt": "Abbina ogni operatore alla possibilità di usarlo sulla variabile mostrata.",
+      "explanation": {
+        "short": "Operatori come `+=` comportano una nuova assegnazione, quindi una `const` non può usarli per cambiare il proprio valore.",
+        "whyCorrect": "`let` permette l'assegnazione prodotta da `+=`, mentre su `const` la stessa operazione tenta di riassegnare il binding.",
+        "why": {
+          "r0": "`+=` calcola il nuovo valore e lo assegna a `n`; essendo una `let`, la variabile può ricevere il risultato.",
+          "r1": "Per eseguire `+=`, JavaScript deve assegnare un nuovo valore a `n`; con `const` questa riassegnazione provoca un `TypeError`.",
+          "r2": "La seconda istruzione tenta di dichiarare di nuovo lo stesso nome con `let` nello stesso ambito, quindi l'esito è un `SyntaxError`.",
+          "r3": "La lettura arriva prima della dichiarazione di `n` con `let`, quindi l'accesso anticipato provoca un `ReferenceError`."
+        },
+        "concept": "Operatori di assegnazione"
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Nuova dichiarazione"
+        },
+        {
+          "id": "c1",
+          "text": "Accesso anticipato"
+        },
+        {
+          "id": "c2",
+          "text": "Operazione con TypeError"
+        },
+        {
+          "id": "c3",
+          "text": "Operazione valida"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let n = 2; n += 3;`",
+          "choiceId": "c3"
+        },
+        {
+          "id": "r1",
+          "text": "`const n = 2; n += 3;`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r2",
+          "text": "`let n = 2; let n = 3;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`console.log(n); let n = 2;`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0089",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "let",
+        "const",
+        "++"
+      ],
+      "prompt": "Abbina ogni frammento alla conseguenza dell'operatore `++`.",
+      "explanation": {
+        "short": "L'operatore `++` modifica il valore della variabile e quindi richiede un binding che possa essere riassegnato.",
+        "whyCorrect": "Su una `let` l'incremento è consentito; su una `const` è vietato perché comporta una nuova assegnazione.",
+        "why": {
+          "r0": "L'operatore incrementa il valore della `let` da `4` a `5`, quindi l'istruzione può essere eseguita senza errore.",
+          "r1": "L'incremento deve assegnare il nuovo valore alla variabile, ma un binding `const` non può essere riassegnato e causa `TypeError`.",
+          "r2": "La seconda `let` prova a creare di nuovo lo stesso nome nello stesso ambito, quindi JavaScript segnala un `SyntaxError`.",
+          "r3": "La `console.log` legge la variabile prima della sua dichiarazione, quindi l'accesso avviene nella Temporal Dead Zone."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Dichiarazione duplicata"
+        },
+        {
+          "id": "c1",
+          "text": "Incremento riuscito"
+        },
+        {
+          "id": "c2",
+          "text": "Lettura nella TDZ"
+        },
+        {
+          "id": "c3",
+          "text": "Incremento vietato"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let contatore = 4; contatore++;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r1",
+          "text": "`const contatore = 4; contatore++;`",
+          "choiceId": "c3"
+        },
+        {
+          "id": "r2",
+          "text": "`let contatore = 4; let contatore = 5;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`console.log(contatore); let contatore = 4;`",
+          "choiceId": "c2"
+        }
+      ],
+      "id": "variables-mt-0090",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "scope"
+      ],
+      "prompt": "Abbina ogni frammento al rapporto tra la variabile esterna e quella interna.",
+      "explanation": {
+        "short": "`var` non crea un nuovo scope di blocco, mentre una `let` interna può creare un binding separato con lo stesso nome.",
+        "whyCorrect": "`var` dentro un blocco usa lo stesso binding dell'ambito circostante; `let` dentro il blocco può invece creare un nuovo binding.",
+        "why": {
+          "r0": "La variabile `x` esiste soltanto nel blocco interno, quindi la `console.log` esterna non può accedere a quel nome.",
+          "r1": "La `let` interna è limitata al blocco e può avere lo stesso nome senza sostituire la `let` esterna, creando un binding distinto.",
+          "r2": "La seconda istruzione prova a sostituire il valore di una `const`, quindi non si tratta di scope ma di una riassegnazione vietata.",
+          "r3": "Le due dichiarazioni usano `var`, quindi il blocco non crea un nuovo binding e il nome `x` resta associato allo stesso riferimento."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Variabile non accessibile"
+        },
+        {
+          "id": "c1",
+          "text": "Binding distinto"
+        },
+        {
+          "id": "c2",
+          "text": "Riassegnazione vietata"
+        },
+        {
+          "id": "c3",
+          "text": "Stesso binding"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`{ let x = 2; } console.log(x);`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`let x = 1; { let x = 2; }`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`const x = 1; x = 2;`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r3",
+          "text": "`var x = 1; { var x = 2; }`",
+          "choiceId": "c3"
+        }
+      ],
+      "id": "variables-mt-0091",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "let",
+        "const",
+        "SyntaxError"
+      ],
+      "prompt": "Abbina ogni dichiarazione all'esito sintattico che produce.",
+      "explanation": {
+        "short": "Una dichiarazione deve rispettare sia le regole della sintassi sia quelle specifiche di `let` e `const`.",
+        "whyCorrect": "Una `let` con inizializzazione è valida; `const` senza valore, identificatori non validi e doppie dichiarazioni di `let` nello stesso ambito producono errori.",
+        "why": {
+          "r0": "La dichiarazione contiene un identificatore valido e un valore iniziale, quindi la sintassi è corretta.",
+          "r1": "La `const` richiede un valore iniziale nella stessa dichiarazione; senza assegnazione la sintassi non è valida.",
+          "r2": "Il trattino `-` non fa parte di un singolo identificatore JavaScript in questo contesto, quindi la sintassi produce `SyntaxError`.",
+          "r3": "Lo stesso nome viene dichiarato due volte con `let` nello stesso ambito, quindi la sintassi è invalida e produce `SyntaxError`."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "SyntaxError per nome"
+        },
+        {
+          "id": "c1",
+          "text": "Sintassi valida"
+        },
+        {
+          "id": "c2",
+          "text": "SyntaxError per const"
+        },
+        {
+          "id": "c3",
+          "text": "SyntaxError per duplicazione"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let nome_cognome = 'Ada';`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r1",
+          "text": "`const nome_cognome;`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r2",
+          "text": "`let nome-cognome = 'Ada';`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`let nome = 'Ada'; let nome = 'Eva';`",
+          "choiceId": "c3"
+        }
+      ],
+      "id": "variables-mt-0092",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "let",
+        "const",
+        "var"
+      ],
+      "prompt": "Abbina ogni riga alla forma di dichiarazione usata.",
+      "explanation": {
+        "short": "Riconoscere la forma dell'istruzione permette di distinguere dichiarazione e semplice assegnazione.",
+        "whyCorrect": "Le parole chiave `let`, `const` e `var` dichiarano variabili; una riga che usa soltanto il nome e `=` effettua invece un'assegnazione.",
+        "why": {
+          "r0": "La presenza di `let` all'inizio identifica chiaramente una nuova dichiarazione della variabile `titolo`.",
+          "r1": "La presenza di `const` all'inizio indica che `pagine` viene dichiarata come costante.",
+          "r2": "La parola chiave `var` identifica la forma storica della dichiarazione delle variabili.",
+          "r3": "Qui non compare alcuna parola chiave di dichiarazione: l'istruzione sta assegnando un nuovo valore al nome usato."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Dichiarazione con var"
+        },
+        {
+          "id": "c1",
+          "text": "Assegnazione semplice"
+        },
+        {
+          "id": "c2",
+          "text": "Dichiarazione con let"
+        },
+        {
+          "id": "c3",
+          "text": "Dichiarazione con const"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let titolo = 'Guida';`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r1",
+          "text": "`const pagine = 100;`",
+          "choiceId": "c3"
+        },
+        {
+          "id": "r2",
+          "text": "`var autore = 'Ada';`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`pagine = 120;`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0093",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "reassignment"
+      ],
+      "prompt": "Abbina ogni frammento al comportamento consentito nello stesso ambito.",
+      "explanation": {
+        "short": "`var` può essere ridichiarata nello stesso ambito, mentre `let` e `const` non possono essere dichiarate due volte nello stesso ambito.",
+        "whyCorrect": "Una nuova dichiarazione, una riassegnazione e una dichiarazione in un blocco interno sono operazioni distinte.",
+        "why": {
+          "r0": "Con `var` la seconda dichiarazione dello stesso nome nello stesso ambito è consentita, quindi non è un errore di sintassi.",
+          "r1": "La seconda riga non ridichiara `colore`: assegna un nuovo valore alla `let` già esistente, operazione consentita.",
+          "r2": "Una seconda dichiarazione dello stesso nome con `const` nello stesso ambito non è consentita e produce `SyntaxError`.",
+          "r3": "La `let` interna appartiene a uno scope diverso e può quindi usare lo stesso nome creando un binding separato."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Ridichiarazione vietata"
+        },
+        {
+          "id": "c1",
+          "text": "Ridichiarazione valida"
+        },
+        {
+          "id": "c2",
+          "text": "Riassegnazione valida"
+        },
+        {
+          "id": "c3",
+          "text": "Binding interno separato"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`var colore = 'blu'; var colore = 'rosso';`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r1",
+          "text": "`let colore = 'blu'; colore = 'rosso';`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r2",
+          "text": "`const colore = 'blu'; const colore = 'rosso';`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`let colore = 'blu'; { let colore = 'rosso'; }`",
+          "choiceId": "c3"
+        }
+      ],
+      "id": "variables-mt-0094",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "let",
+        "const"
+      ],
+      "prompt": "Abbina ogni assegnazione al comportamento che segue dalla dichiarazione precedente.",
+      "explanation": {
+        "short": "La riassegnazione non richiede una nuova dichiarazione e può anche assegnare lo stesso valore già presente.",
+        "whyCorrect": "`let` permette nuove assegnazioni, `const` le vieta, mentre una `let` interna con lo stesso nome crea un binding separato.",
+        "why": {
+          "r0": "La seconda istruzione assegna un valore diverso alla variabile `let`, quindi la modifica è consentita.",
+          "r1": "La seconda istruzione tenta di cambiare il valore di una `const`, operazione che non è consentita e genera `TypeError`.",
+          "r2": "La riassegnazione è permessa, ma il nuovo valore coincide con quello precedente, quindi il valore osservato resta invariato.",
+          "r3": "La `let` dentro le graffe è un binding nuovo e distinto; non riassegna la variabile esterna `stato`."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Valore invariato"
+        },
+        {
+          "id": "c1",
+          "text": "Nuovo valore vietato"
+        },
+        {
+          "id": "c2",
+          "text": "Nuovo binding interno"
+        },
+        {
+          "id": "c3",
+          "text": "Nuovo valore consentito"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let stato = 'off'; stato = 'on';`",
+          "choiceId": "c3"
+        },
+        {
+          "id": "r1",
+          "text": "`const stato = 'off'; stato = 'on';`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`let stato = 'on'; stato = 'on';`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`let stato = 'off'; { let stato = 'on'; }`",
+          "choiceId": "c2"
+        }
+      ],
+      "id": "variables-mt-0095",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "let",
+        "const",
+        "SyntaxError"
+      ],
+      "prompt": "Abbina ogni frammento alla regola sintattica che viene rispettata o violata.",
+      "explanation": {
+        "short": "Una dichiarazione valida deve usare un nome ammesso e rispettare le regole specifiche della parola chiave scelta.",
+        "whyCorrect": "`const` richiede inizializzazione, gli identificatori devono avere una sintassi valida e `let` non può essere ridichiarata nello stesso ambito.",
+        "why": {
+          "r0": "Underscore e lettere formano un identificatore valido e la `let` riceve anche un valore iniziale, quindi la riga è corretta.",
+          "r1": "La dichiarazione `const` termina senza assegnazione, ma una costante deve essere inizializzata nella stessa istruzione.",
+          "r2": "Il trattino `-` non fa parte di un singolo identificatore JavaScript in questo contesto, quindi la sintassi produce `SyntaxError`.",
+          "r3": "Il nome `eta` viene dichiarato due volte con `let` nello stesso ambito, situazione vietata dalla sintassi del linguaggio."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Nome non valido"
+        },
+        {
+          "id": "c1",
+          "text": "Const non inizializzata"
+        },
+        {
+          "id": "c2",
+          "text": "Nome valido"
+        },
+        {
+          "id": "c3",
+          "text": "Doppia dichiarazione let"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let nome_cognome = 'Ada';`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r1",
+          "text": "`const nome_cognome;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`let nome-cognome = 'Ada';`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`let eta = 30; let eta = 31;`",
+          "choiceId": "c3"
+        }
+      ],
+      "id": "variables-mt-0096",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "let",
+        "const",
+        "scope"
+      ],
+      "prompt": "Abbina ogni coppia alla variabile che rimane disponibile dopo l'esecuzione del blocco.",
+      "explanation": {
+        "short": "Il blocco può creare un nuovo binding oppure raggiungere quello esterno, a seconda che dentro ci sia una dichiarazione o una semplice assegnazione.",
+        "whyCorrect": "`let` e `const` confinano le nuove dichiarazioni al blocco; una semplice assegnazione invece può modificare la variabile esterna.",
+        "why": {
+          "r0": "La `let` interna è distinta da quella esterna, quindi dopo il blocco la `console.log` legge ancora il valore esterno `1`.",
+          "r1": "La `var` interna non crea un nuovo scope di blocco, quindi la seconda dichiarazione usa lo stesso binding e il valore finale è `2`.",
+          "r2": "La `const` appartiene al blocco interno e fuori dalle graffe il suo nome non è accessibile, quindi la lettura non può riuscire.",
+          "r3": "La riga interna non dichiara una nuova variabile: assegna `2` alla `let` esterna, che viene quindi aggiornata."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Rimane la variabile esterna"
+        },
+        {
+          "id": "c1",
+          "text": "Valore esterno aggiornato"
+        },
+        {
+          "id": "c2",
+          "text": "Nome non disponibile"
+        },
+        {
+          "id": "c3",
+          "text": "Rimane la variabile var"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let x = 1; { let x = 2; } console.log(x);`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`var x = 1; { var x = 2; } console.log(x);`",
+          "choiceId": "c3"
+        },
+        {
+          "id": "r2",
+          "text": "`{ const x = 2; } console.log(x);`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r3",
+          "text": "`let x = 1; { x = 2; } console.log(x);`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0097",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "let",
+        "const"
+      ],
+      "prompt": "Abbina ogni frammento alla possibilità di eseguire l'ultima istruzione.",
+      "explanation": {
+        "short": "L'ultima riga viene raggiunta soltanto se le istruzioni precedenti rispettano le regole di dichiarazione e riassegnazione.",
+        "whyCorrect": "`let` può essere riassegnata, `const` no, una seconda `let` nello stesso ambito produce `SyntaxError`, mentre un blocco interno può avere una propria `let`.",
+        "why": {
+          "r0": "La riassegnazione da `1` a `3` è valida per `let`, quindi la `console.log` finale viene eseguita normalmente.",
+          "r1": "La seconda istruzione tenta una riassegnazione di `const`, quindi l'esecuzione si interrompe con `TypeError` prima della `console.log`.",
+          "r2": "La doppia dichiarazione con `let` nello stesso ambito causa `SyntaxError`, quindi la riga finale non viene raggiunta.",
+          "r3": "La `let` interna appartiene a un blocco diverso ed è quindi una nuova variabile valida, che può essere letta all'interno del blocco."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Errore di sintassi precedente"
+        },
+        {
+          "id": "c1",
+          "text": "Ultima istruzione eseguita"
+        },
+        {
+          "id": "c2",
+          "text": "Ultima istruzione vietata"
+        },
+        {
+          "id": "c3",
+          "text": "Nuovo binding eseguito"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let a = 1; a = 3; console.log(a);`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r1",
+          "text": "`const a = 1; a = 3; console.log(a);`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r2",
+          "text": "`let a = 1; let a = 3; console.log(a);`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r3",
+          "text": "`let a = 1; { let a = 3; console.log(a); }`",
+          "choiceId": "c3"
+        }
+      ],
+      "id": "variables-mt-0098",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "identifiers"
+      ],
+      "prompt": "Abbina ogni nome alla regola sintattica che determina il suo uso.",
+      "explanation": {
+        "short": "JavaScript ammette alcuni caratteri speciali negli identificatori, ma una cifra non può occupare la posizione iniziale del nome.",
+        "whyCorrect": "Underscore e dollaro sono caratteri ammessi negli identificatori; iniziare con una cifra invece rende invalida la dichiarazione.",
+        "why": {
+          "r0": "`utente` è un identificatore semplice e valido, quindi può essere usato come nome della variabile senza errori di sintassi.",
+          "r1": "`nome_utente` usa underscore, che può comparire negli identificatori JavaScript, quindi il nome è valido.",
+          "r2": "`$utente` usa il simbolo `$`, ammesso negli identificatori JavaScript, quindi la dichiarazione è sintatticamente corretta.",
+          "r3": "`7utente` inizia con una cifra, quindi non costituisce un identificatore valido e la dichiarazione produce `SyntaxError`."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Nome ammesso"
+        },
+        {
+          "id": "c1",
+          "text": "Nome con underscore"
+        },
+        {
+          "id": "c2",
+          "text": "Nome con dollaro"
+        },
+        {
+          "id": "c3",
+          "text": "Nome con cifra iniziale"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let utente = 'Ada';`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`let nome_utente = 'Ada';`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`let $utente = 'Ada';`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r3",
+          "text": "`let 7utente = 'Ada';`",
+          "choiceId": "c3"
+        }
+      ],
+      "id": "variables-mt-0099",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "scope",
+        "let"
+      ],
+      "prompt": "Abbina ogni frammento alla relazione tra il nome interno e quello esterno.",
+      "explanation": {
+        "short": "Una semplice assegnazione raggiunge il binding esistente, mentre una nuova dichiarazione con `let` crea uno scope distinto.",
+        "whyCorrect": "`var` resta legata alla funzione; `let` è legata al blocco. Per questo la stessa parola può riferirsi a variabili diverse in scope diversi.",
+        "why": {
+          "r0": "Nel blocco non viene dichiarata una nuova `x`, quindi l'assegnazione raggiunge quella esterna e la modifica a `4`.",
+          "r1": "La nuova `let` è confinata alle graffe e ha un binding distinto, quindi la variabile esterna rimane invariata.",
+          "r2": "La `var` interna è comunque nello scope della funzione `f`, quindi `console.log` può leggerla dopo il blocco interno.",
+          "r3": "La `let` è confinata al blocco interno; dopo la funzione e fuori da quel blocco, quel nome non è accessibile."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Non è accessibile fuori"
+        },
+        {
+          "id": "c1",
+          "text": "Aggiorna il nome esterno"
+        },
+        {
+          "id": "c2",
+          "text": "Crea un nome interno"
+        },
+        {
+          "id": "c3",
+          "text": "Resta nello scope della funzione"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let x = 1; { x = 4; }`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r1",
+          "text": "`let x = 1; { let x = 4; }`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r2",
+          "text": "`function f() { { var x = 4; } console.log(x); }`",
+          "choiceId": "c3"
+        },
+        {
+          "id": "r3",
+          "text": "`function f() { { let x = 4; } } console.log(x);`",
+          "choiceId": "c0"
+        }
+      ],
+      "id": "variables-mt-0100",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "let",
+        "const",
+        "++",
+        "+="
+      ],
+      "prompt": "Abbina ogni operazione alla regola di assegnazione che viene applicata.",
+      "explanation": {
+        "short": "`+=` e `++` modificano il valore della variabile, mentre una semplice lettura non effettua alcuna assegnazione.",
+        "whyCorrect": "Le operazioni che scrivono un nuovo valore sono ammesse su `let` ma non su `const`; dichiarare di nuovo lo stesso nome con `let` è un altro caso.",
+        "why": {
+          "r0": "`+= 2` calcola un nuovo valore e lo assegna a `punti`; essendo una `let`, l'operazione è valida.",
+          "r1": "`++` richiede di aggiornare il valore di `punti`, ma una `const` non può essere riassegnata e quindi causa `TypeError`.",
+          "r2": "La seconda istruzione è una nuova dichiarazione con `let` nello stesso ambito, quindi produce `SyntaxError` invece di riassegnare.",
+          "r3": "`console.log` legge il valore senza modificarlo, quindi non tenta alcuna riassegnazione del binding."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Riassegnazione vietata"
+        },
+        {
+          "id": "c1",
+          "text": "Lettura senza modifica"
+        },
+        {
+          "id": "c2",
+          "text": "Dichiarazione dello stesso nome"
+        },
+        {
+          "id": "c3",
+          "text": "Assegna un nuovo valore"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let punti = 5; punti += 2;`",
+          "choiceId": "c3"
+        },
+        {
+          "id": "r1",
+          "text": "`const punti = 5; punti++;`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r2",
+          "text": "`let punti = 5; let punti = 6;`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r3",
+          "text": "`const punti = 5; console.log(punti);`",
+          "choiceId": "c1"
+        }
+      ],
+      "id": "variables-mt-0101",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "let",
+        "const",
+        "var"
+      ],
+      "prompt": "Abbina ogni dichiarazione senza valore iniziale all'esito che produce.",
+      "explanation": {
+        "short": "Una variabile può essere dichiarata senza assegnazione con `let` o `var`, mentre `const` richiede un valore iniziale.",
+        "whyCorrect": "`let` e `var` possono essere dichiarate senza un valore esplicito e in quel caso il valore è `undefined`; `const` no.",
+        "why": {
+          "r0": "`let pronto;` è una dichiarazione valida anche senza assegnazione iniziale; la variabile potrà ricevere un valore in seguito.",
+          "r1": "`var pronto;` è valida e, non essendoci un'assegnazione, la variabile viene inizializzata con `undefined`.",
+          "r2": "`const pronto;` non è valida perché una costante deve essere inizializzata nello stesso momento in cui viene dichiarata.",
+          "r3": "La dichiarazione iniziale è corretta, ma la seconda istruzione prova a riassegnare una `const` e causa `TypeError`."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Riassegnazione vietata"
+        },
+        {
+          "id": "c1",
+          "text": "SyntaxError"
+        },
+        {
+          "id": "c2",
+          "text": "Dichiarazione valida"
+        },
+        {
+          "id": "c3",
+          "text": "Valore iniziale undefined"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let pronto;`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r1",
+          "text": "`var pronto;`",
+          "choiceId": "c3"
+        },
+        {
+          "id": "r2",
+          "text": "`const pronto;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r3",
+          "text": "`const pronto = true; pronto = false;`",
+          "choiceId": "c0"
+        }
+      ],
+      "id": "variables-mt-0102",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var",
+        "scope"
+      ],
+      "prompt": "Abbina ogni frammento al punto in cui il nome può essere letto.",
+      "explanation": {
+        "short": "Il punto di lettura deve rientrare nello scope creato dalla dichiarazione per poter raggiungere il nome.",
+        "whyCorrect": "`let` è visibile nel blocco, `var` in tutta la funzione; fuori dalla funzione una variabile locale non è disponibile.",
+        "why": {
+          "r0": "La `let` è dichiarata e letta nello stesso blocco, quindi il nome è raggiungibile lì.",
+          "r1": "La `var` non è confinata alle graffe, quindi il nome può essere letto anche dopo il blocco nello stesso ambito.",
+          "r2": "La `var` è dichiarata nella funzione e può essere letta dalle istruzioni della stessa funzione, compresa la `console.log`.",
+          "r3": "Il nome appartiene alla funzione `f`, quindi la riga esterna alla funzione non può accedere a quella variabile locale."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Nel blocco interno"
+        },
+        {
+          "id": "c1",
+          "text": "Dopo il blocco"
+        },
+        {
+          "id": "c2",
+          "text": "Nella funzione"
+        },
+        {
+          "id": "c3",
+          "text": "Fuori dalla funzione"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`{ let a = 1; console.log(a); }`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`{ var a = 1; } console.log(a);`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`function f() { var a = 1; console.log(a); }`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r3",
+          "text": "`function f() { var a = 1; } console.log(a);`",
+          "choiceId": "c3"
+        }
+      ],
+      "id": "variables-mt-0103",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "implicit-global",
+        "var"
+      ],
+      "prompt": "Abbina ogni riga al tipo di operazione che rappresenta quando manca o compare una parola chiave.",
+      "explanation": {
+        "short": "Una riga che usa soltanto un nome e un'assegnazione non contiene una parola chiave di dichiarazione.",
+        "whyCorrect": "Le parole chiave `let`, `const` e `var` dichiarano variabili; senza una di esse resta una semplice assegnazione al nome usato.",
+        "why": {
+          "r0": "La riga contiene soltanto il nome e l'assegnazione, quindi non dichiara esplicitamente una variabile con `let`, `const` o `var`.",
+          "r1": "La presenza di `let` identifica una dichiarazione di variabile con la sintassi moderna prevista per valori riassegnabili.",
+          "r2": "La presenza di `const` identifica una dichiarazione di variabile che richiede un valore iniziale e non può essere riassegnata.",
+          "r3": "La presenza di `var` identifica una dichiarazione della forma storica del linguaggio, distinta da `let` e `const`."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Dichiarazione con var"
+        },
+        {
+          "id": "c1",
+          "text": "Assegnazione semplice"
+        },
+        {
+          "id": "c2",
+          "text": "Dichiarazione con let"
+        },
+        {
+          "id": "c3",
+          "text": "Dichiarazione con const"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`punteggio = 10;`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r1",
+          "text": "`let punteggio = 10;`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r2",
+          "text": "`const punteggio = 10;`",
+          "choiceId": "c3"
+        },
+        {
+          "id": "r3",
+          "text": "`var punteggio = 10;`",
+          "choiceId": "c0"
+        }
+      ],
+      "id": "variables-mt-0104",
+      "source": "ai"
+    },
+    {
+      "type": "match",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "let",
+        "const",
+        "function"
+      ],
+      "prompt": "Abbina ogni funzione alla conseguenza dell'operazione sulla variabile definita all'esterno.",
+      "explanation": {
+        "short": "Una funzione può leggere o modificare una variabile esterna, ma una nuova dichiarazione interna crea invece una variabile diversa.",
+        "whyCorrect": "Una funzione può operare sul binding esterno se non ne dichiara uno nuovo; con `const`, invece, tentare di riassegnare il binding esterno causa `TypeError`.",
+        "why": {
+          "r0": "La funzione non dichiara un nuovo `totale`, quindi l'assegnazione raggiunge quello esterno e ne cambia il valore da `10` a `20`.",
+          "r1": "La funzione tenta di cambiare il valore di una `const` esterna; la riassegnazione non è permessa e l'esecuzione produce `TypeError`.",
+          "r2": "La funzione non dichiara un nuovo nome, quindi `console.log` legge il `totale` definito nello scope esterno e ne visualizza il valore.",
+          "r3": "La dichiarazione `let` dentro la funzione crea un binding locale separato, quindi il `totale` esterno resta invariato."
+        }
+      },
+      "format": "match",
+      "choices": [
+        {
+          "id": "c0",
+          "text": "Variabile esterna aggiornata"
+        },
+        {
+          "id": "c1",
+          "text": "Riassegnazione con TypeError"
+        },
+        {
+          "id": "c2",
+          "text": "Lettura del valore esterno"
+        },
+        {
+          "id": "c3",
+          "text": "Variabile locale distinta"
+        }
+      ],
+      "rows": [
+        {
+          "id": "r0",
+          "text": "`let totale = 10; function aggiorna() { totale = 20; } aggiorna();`",
+          "choiceId": "c0"
+        },
+        {
+          "id": "r1",
+          "text": "`const totale = 10; function aggiorna() { totale = 20; } aggiorna();`",
+          "choiceId": "c1"
+        },
+        {
+          "id": "r2",
+          "text": "`let totale = 10; function mostra() { console.log(totale); } mostra();`",
+          "choiceId": "c2"
+        },
+        {
+          "id": "r3",
+          "text": "`let totale = 10; function aggiorna() { let totale = 20; } aggiorna();`",
+          "choiceId": "c3"
+        }
+      ],
+      "id": "variables-mt-0105",
+      "source": "ai"
+    }
+  ]
+}

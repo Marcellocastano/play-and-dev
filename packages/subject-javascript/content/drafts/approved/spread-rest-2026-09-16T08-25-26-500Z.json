@@ -32,18 +32,17 @@
       "explanation": {
         "short": "Lo spread `[...lista]` crea una copia superficiale dell'array.",
         "whyCorrect": "Usare lo spread tra le parentesi quadre espande gli elementi di `lista` in un nuovo array, ottenendo così una copia indipendente degli stessi valori.",
-        "whyOthersWrong": {
+        "concept": "Spread su array",
+        "commonMistake": "Confondere la sintassi di spread tra oggetti e array.",
+        "example": "const nuovo = [...vecchio];",
+        "why": {
           "b": "Il metodo `slice()` funziona, ma non usa lo spread come richiesto nel prompt: la domanda chiede esplicitamente l'uso dei tre puntini.",
           "c": "Lo spread tra parentesi graffe crea un oggetto, non un array: il risultato sarebbe un oggetto con chiavi numeriche, non una copia dell'array.",
           "d": "Racchiudere `lista` tra parentesi quadre produce un array annidato, non una copia piatta: il risultato è `[ [1, 2, 3] ]`."
-        },
-        "concept": "Spread su array",
-        "commonMistake": "Confondere la sintassi di spread tra oggetti e array.",
-        "example": "const nuovo = [...vecchio];"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:17.566Z"
+      "format": "choice"
     },
     {
       "id": "spread-rest-fg-0002",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "Lo spread `...base` espande tutte le proprietà dentro il nuovo oggetto.",
         "whyCorrect": "Ponendo `...base` tra le parentesi graffe del nuovo oggetto, tutte le proprietà di `base` vengono copiate nel nuovo oggetto insieme a quelle specificate dopo.",
-        "whyOthersWrong": {
+        "concept": "Spread su oggetti",
+        "commonMistake": "Dimenticare i tre puntini per espandere le proprietà.",
+        "example": "const out = { ...oggetto, extra: 1 };",
+        "why": {
           "b": "Scrivere solo `base` inserisce l'intero oggetto come valore di una proprietà, non espande le chiavi: avresti `{ base: { a: 1, b: 2 }, visibile: true }`.",
           "c": "La sintassi `[...base]` funziona solo con array e oggetti iterabili, non con oggetti semplici.",
           "d": "`base...` non è una sintassi valida in JavaScript e genera errore."
-        },
-        "concept": "Spread su oggetti",
-        "commonMistake": "Dimenticare i tre puntini per espandere le proprietà.",
-        "example": "const out = { ...oggetto, extra: 1 };"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:17.567Z"
+      "format": "choice"
     },
     {
       "id": "spread-rest-fg-0003",
@@ -120,18 +118,17 @@
       "explanation": {
         "short": "Il parametro rest si scrive `...parole` per raccogliere gli argomenti.",
         "whyCorrect": "Usando `...parole` come ultimo parametro, tutti gli argomenti extra sono raccolti in un array chiamato `parole` all'interno della funzione.",
-        "whyOthersWrong": {
+        "concept": "Rest nei parametri",
+        "commonMistake": "Dimenticare i tre puntini o usare la sintassi di altri linguaggi.",
+        "example": "function somma(...numeri) { }",
+        "why": {
           "b": "`parole...` non è una sintassi prevista in JavaScript e produce errore.",
           "c": "Senza i tre puntini, `parole` sarebbe solo il primo argomento, non un array di tutti.",
           "d": "`*parole` ricorda la sintassi Python, ma in JavaScript si usano i tre puntini."
-        },
-        "concept": "Rest nei parametri",
-        "commonMistake": "Dimenticare i tre puntini o usare la sintassi di altri linguaggi.",
-        "example": "function somma(...numeri) { }"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:17.567Z"
+      "format": "choice"
     },
     {
       "id": "spread-rest-fg-0004",
@@ -164,18 +161,17 @@
       "explanation": {
         "short": "Lo spread `...arr1, ...arr2` espande gli elementi di entrambi gli array.",
         "whyCorrect": "Mettendo `...arr1, ...arr2` tra parentesi quadre, si espandono entrambi gli array dentro un nuovo array, unendo i loro elementi.",
-        "whyOthersWrong": {
+        "concept": "Spread per unire array",
+        "commonMistake": "Usare la sintassi di altri linguaggi o confondere metodi con spread.",
+        "example": "const all = [ ...a, ...b ];",
+        "why": {
           "b": "Un array dentro un array porta a una struttura annidata; qui la domanda vuole una sola coppia di parentesi quadre.",
           "c": "L'operatore `+` concatena stringhe, e sugli array produce una stringa come '1,23,4'.",
           "d": "Il metodo `concat` funziona, ma la domanda chiede lo spread, non i metodi legacy."
-        },
-        "concept": "Spread per unire array",
-        "commonMistake": "Usare la sintassi di altri linguaggi o confondere metodi con spread.",
-        "example": "const all = [ ...a, ...b ];"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:17.568Z"
+      "format": "choice"
     },
     {
       "id": "spread-rest-fg-0005",
@@ -208,18 +204,17 @@
       "explanation": {
         "short": "Lo spread array espande gli elementi dell'originale, a cui si aggiunge il 5.",
         "whyCorrect": "Con `[...originale, 5]` si crea una copia del contenuto di `originale`, aggiungendo 5 in coda, senza mutare l'array originale.",
-        "whyOthersWrong": {
+        "concept": "Spread per copiare array",
+        "commonMistake": "Dimenticare lo spread e ottenere un array annidato.",
+        "example": "const nuovo = [...vecchio, 10];",
+        "why": {
           "b": "Senza lo spread, si ottiene un array annidato: `[originale, 5]` produce un array con due elementi, il primo è l'intero array originale.",
           "c": "Il metodo `push` modifica l'array originale invece di crearne una copia; inoltre restituisce la nuova lunghezza, non l'array.",
           "d": "`originale.push(5)` restituisce il numero 5 (nuova lunghezza), e quindi lo spread di un numero genera un errore."
-        },
-        "concept": "Spread per copiare array",
-        "commonMistake": "Dimenticare lo spread e ottenere un array annidato.",
-        "example": "const nuovo = [...vecchio, 10];"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:26.498Z"
+      "format": "choice"
     },
     {
       "id": "spread-rest-fg-0006",
@@ -252,18 +247,17 @@
       "explanation": {
         "short": "Il parametro rest raccoglie tutti gli argomenti in un array.",
         "whyCorrect": "Scrivendo `...valori` si usa il parametro rest, che raccoglie tutti gli argomenti della funzione in un array chiamato `valori`.",
-        "whyOthersWrong": {
+        "concept": "Rest nei parametri funzione",
+        "commonMistake": "Dimenticare i puntini davanti o aggiungere altri parametri dopo il rest.",
+        "example": "function somma(...numeri) { return numeri.length; }",
+        "why": {
           "b": "La sintassi `valori...` non è valida in JavaScript: i tre puntini devono precedere il nome.",
           "c": "Senza i tre puntini, `valori` riceverebbe solo il primo argomento, non tutti.",
           "d": "Il parametro rest deve stare da solo come ultimo parametro: aggiungere altri parametri dopo causa errore di sintassi."
-        },
-        "concept": "Rest nei parametri funzione",
-        "commonMistake": "Dimenticare i puntini davanti o aggiungere altri parametri dopo il rest.",
-        "example": "function somma(...numeri) { return numeri.length; }"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:26.498Z"
+      "format": "choice"
     },
     {
       "id": "spread-rest-fg-0007",
@@ -296,18 +290,17 @@
       "explanation": {
         "short": "Il rest in destrutturazione raccoglie gli elementi rimanenti.",
         "whyCorrect": "Con `...coda` dopo la virgola si raccolgono tutti gli elementi che seguono il primo in un array chiamato `coda`.",
-        "whyOthersWrong": {
+        "concept": "Rest in destrutturazione array",
+        "commonMistake": "Mettere i puntini nel posto sbagliato o non usarli.",
+        "example": "const [primo, ...resto] = numeri;",
+        "why": {
           "b": "Posizionare i tre puntini dopo il nome non ha senso in questa sintassi, e genera errore.",
           "c": "Senza i tre puntini, si assegna il secondo elemento a `coda`, non il resto.",
           "d": "Usare le parentesi quadre come `[...coda]` qui non è sintassi valida nel pattern della destrutturazione."
-        },
-        "concept": "Rest in destrutturazione array",
-        "commonMistake": "Mettere i puntini nel posto sbagliato o non usarli.",
-        "example": "const [primo, ...resto] = numeri;"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:25:26.498Z"
+      "format": "choice"
     }
   ]
 }

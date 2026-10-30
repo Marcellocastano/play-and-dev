@@ -8,11 +8,14 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "npm run dev --workspaces --if-present",
+    "dev": "concurrently -k -n web,server -c cyan,magenta \"npm run dev -w @lg/web\" \"npm run dev -w @lg/server\"",
+    "dev:web": "npm run dev -w @lg/web",
+    "dev:server": "npm run dev -w @lg/server",
     "build": "tsc -b",
     "test": "vitest run",
     "lint": "eslint .",
-    "typecheck": "tsc -b"
+    "typecheck": "tsc -b",
+    "content:add": "npm run content:add -w @lg/subject-javascript --"
   },
   "engines": {
     "node": ">=22"
@@ -22,6 +25,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.5.4",
+    "concurrently": "^10.0.6",
     "eslint": "^9.10.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react-hooks": "^5.2.0",

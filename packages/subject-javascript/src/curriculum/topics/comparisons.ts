@@ -8,14 +8,26 @@ export const comparisonsTopic: Topic = {
   overview:
     'Per confrontare i valori si usano `===` (uguaglianza stretta, senza conversioni) e `==` (uguaglianza debole, con coercion). Le regole moderne consigliano quasi sempre `===`. `<`, `>`, `<=`, `>=` confrontano numeri o stringhe lessicograficamente.',
   subtopics: [
-    { id: 'comparisons-strict', name: '=== e !==', overview: 'Confronto senza conversione di tipo: la scelta sicura.' },
-    { id: 'comparisons-loose', name: '== e coercion', overview: 'Perché == può sorprendere e quando == null è ammesso.' },
-    { id: 'comparisons-order', name: '<, >, <=, >=', overview: 'Confronti numerici e confronti tra stringhe.' },
+    {
+      id: 'comparisons-strict',
+      name: '=== e !==',
+      overview: 'Confronto senza conversione di tipo: la scelta sicura.',
+    },
+    {
+      id: 'comparisons-loose',
+      name: '== e coercion',
+      overview: 'Perché == può sorprendere e quando == null è ammesso.',
+    },
+    {
+      id: 'comparisons-order',
+      name: '<, >, <=, >=',
+      overview: 'Confronti numerici e confronti tra stringhe.',
+    },
   ],
   learningObjectives: [
     'Usare === e !== come confronto predefinito',
     'Prevedere i risultati di == con la coercion',
-    'Confrontare numeri e stringhe con gli operatori d\'ordine',
+    "Confrontare numeri e stringhe con gli operatori d'ordine",
     'Evitare il bug classico = al posto di ===',
   ],
   commonMistakes: [

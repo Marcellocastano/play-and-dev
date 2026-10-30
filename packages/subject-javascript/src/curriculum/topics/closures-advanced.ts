@@ -8,9 +8,21 @@ export const closuresAdvancedTopic: Topic = {
   overview:
     'Una closure è una funzione che ricorda le variabili dello scope in cui è stata creata, anche dopo che quello scope è terminato. È il meccanismo dietro contatori privati, factory di funzioni e molti pattern asincroni.',
   subtopics: [
-    { id: 'closures-capture', name: 'Cattura delle variabili', overview: 'La funzione interna vede e trattiene lo scope esterno.' },
-    { id: 'closures-state', name: 'Stato privato', overview: 'Contatori e incapsulamento senza classi.' },
-    { id: 'closures-loops', name: 'Closure nei cicli', overview: 'Il classico problema di var in un ciclo e come let lo risolve.' },
+    {
+      id: 'closures-capture',
+      name: 'Cattura delle variabili',
+      overview: 'La funzione interna vede e trattiene lo scope esterno.',
+    },
+    {
+      id: 'closures-state',
+      name: 'Stato privato',
+      overview: 'Contatori e incapsulamento senza classi.',
+    },
+    {
+      id: 'closures-loops',
+      name: 'Closure nei cicli',
+      overview: 'Il classico problema di var in un ciclo e come let lo risolve.',
+    },
   ],
   learningObjectives: [
     'Riconoscere quando una funzione "cattura" variabili esterne',

@@ -7,6 +7,7 @@ export * from './question/validate.js';
 export * from './question/quality.js';
 export * from './question/distractors.js';
 export * from './question/antiDup.js';
+export * from './question/grade.js';
 export * from './session/engine.js';
 export * from './scoring/index.js';
 export * from './learning/mastery.js';

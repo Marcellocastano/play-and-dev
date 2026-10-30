@@ -32,18 +32,17 @@
       "explanation": {
         "short": "Il blocco finally viene eseguito sempre, prima che la funzione restituisca, sia in caso di errore che di successo.",
         "whyCorrect": "Quando `calcola(-1)` lancia, si entra nel catch che ritorna 'Errore', ma il finally stampa prima 'Cleanup'. Su `calcola(2)`, non c'è errore: il finally stampa 'Cleanup' e poi si ritorna 4. Quindi l'output è 'Cleanup\\nErrore\\nCleanup\\n4'.",
-        "whyOthersWrong": {
+        "concept": "Ordine esecuzione try/catch/finally",
+        "commonMistake": "Pensare che il finally venga eseguito solo dopo tutto il codice, non ad ogni chiamata prima del return.",
+        "example": "try { ... } finally { console.log('cleanup'); }",
+        "why": {
           "b": "Qui l'ordine tra 'Cleanup' e i valori restituiti è sbagliato: il finally esegue sempre prima del return, quindi 'Cleanup' precede sia 'Errore' sia '4' sulle rispettive chiamate.",
           "c": "In questo caso, 'Cleanup' appare solo dopo entrambe le chiamate. Invece il finally viene eseguito ogni volta, subito prima della restituzione, e quindi deve comparire due volte alternato alle altre stampe.",
           "d": "L'ordine suggerisce che 'Cleanup' venga stampato prima sia di 'Errore' che di '4', come se fosse fuori dalla funzione, invece il finally è all'interno e si esegue ogni volta prima del return del singolo calcolo."
-        },
-        "concept": "Ordine esecuzione try/catch/finally",
-        "commonMistake": "Pensare che il finally venga eseguito solo dopo tutto il codice, non ad ogni chiamata prima del return.",
-        "example": "try { ... } finally { console.log('cleanup'); }"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:47:37.214Z"
+      "format": "choice"
     },
     {
       "id": "errors-po-0027",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "Accedere a una variabile non dichiarata genera un ReferenceError.",
         "whyCorrect": "La variabile 'valoreNonDefinito' non esiste, quindi JavaScript lancia subito un ReferenceError, che viene catturato dal catch. Nel blocco catch stampiamo il suo name, cioè 'ReferenceError'.",
-        "whyOthersWrong": {
+        "concept": "Errori nativi: ReferenceError vs TypeError",
+        "commonMistake": "Aspettarsi un TypeError o NaN perché l'operazione è aritmetica, senza considerare che la variabile non è proprio dichiarata.",
+        "example": "console.log(nomeNonDefinito) // ReferenceError",
+        "why": {
           "b": "TypeError si verifica su operazioni invalidi di tipo, ma qui l'errore è che la variabile non è definita: viene prima ReferenceError.",
           "c": "L'operazione non arriva mai a produrre NaN perché il codice fallisce già alla lettura della variabile, quindi non si stampa 'Risultato: NaN'.",
           "d": "Il catch stampa il nome della classe d’errore, non il valore undefined. Nessuna variabile in gioco vale undefined in questa stampa."
-        },
-        "concept": "Errori nativi: ReferenceError vs TypeError",
-        "commonMistake": "Aspettarsi un TypeError o NaN perché l'operazione è aritmetica, senza considerare che la variabile non è proprio dichiarata.",
-        "example": "console.log(nomeNonDefinito) // ReferenceError"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:47:37.217Z"
+      "format": "choice"
     },
     {
       "id": "errors-po-0028",
@@ -120,18 +118,17 @@
       "explanation": {
         "short": "Lanciando un oggetto letterale, il tipo non è Error e non eredita proprietà/metodi di Error.",
         "whyCorrect": "L'oggetto lanciato non è un'istanza di Error ma solo un oggetto con le proprietà name e message. Quindi instanceof Error dà false, e.name e e.message sono presenti e stampano i valori dati.",
-        "whyOthersWrong": {
+        "concept": "Lanciare oggetti Error vs oggetti generici",
+        "commonMistake": "Pensare che qualsiasi oggetto con name e message sia automaticamente un Error vero e proprio.",
+        "example": "throw new Error('messaggio'); // instanceof Error === true",
+        "why": {
           "b": "L'oggetto non è costruito con new Error, quindi instanceof Error restituisce false, non true.",
           "c": "L'oggetto lanciato non ha name = 'Error', ma 'MioErrore' e ha message valorizzato.",
           "d": "Come prima, instanceof Error restituisce false, mai true, se si lancia un oggetto generico."
-        },
-        "concept": "Lanciare oggetti Error vs oggetti generici",
-        "commonMistake": "Pensare che qualsiasi oggetto con name e message sia automaticamente un Error vero e proprio.",
-        "example": "throw new Error('messaggio'); // instanceof Error === true"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:47:37.217Z"
+      "format": "choice"
     }
   ]
 }

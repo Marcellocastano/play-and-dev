@@ -1,18 +1,19 @@
 import type { QuestionTemplate } from '@lg/core';
-import { makeOptions, pickOf, shuffle, type Rng } from '../helpers.js';
+import { defineCategorize, defineTemplate, pickOf, shuffle } from '../helpers.js';
 
 const TOPIC = 'booleans-null-undefined';
-const DD = 'dd-booleans-null-undefined';
 
-const falsyMc: QuestionTemplate = {
-  id: 'bnu-falsy-mc',
-  topicId: TOPIC,
-  subtopicId: 'bnu-truthy-falsy',
-  type: 'multiple-choice',
-  difficulty: 'easy',
-  skills: ['truthy/falsy'],
-  tags: ['booleani'],
-  generate(rng: Rng) {
+const falsyMc = defineTemplate(
+  {
+    id: 'bnu-falsy-mc',
+    topicId: TOPIC,
+    subtopicId: 'bnu-truthy-falsy',
+    type: 'multiple-choice',
+    difficulty: 'easy',
+    skills: ['truthy/falsy'],
+    tags: ['booleani'],
+  },
+  (rng) => {
     const falsyPool = [
       {
         text: '0',
@@ -55,38 +56,30 @@ const falsyMc: QuestionTemplate = {
     ];
     const correct = pickOf(rng, falsyPool);
     const distractors = shuffle(truthyPool, rng).slice(0, 3);
-    const built = makeOptions(rng, correct, distractors);
     return {
-      templateId: 'bnu-falsy-mc',
-      type: 'multiple-choice',
-      difficulty: 'easy' as const,
-      topicId: TOPIC,
-      subtopicId: 'bnu-truthy-falsy',
-      skills: ['truthy/falsy'],
       prompt: 'Quale di questi valori è falsy?',
-      ...built,
-      explanation: {
-        short: 'I falsy sono: false, 0, "", null, undefined, NaN. Tutto il resto è truthy.',
-        whyCorrect: '0 è uno dei sei valori falsy.',
-        whyOthersWrong: built.whyOthersWrong,
-        concept: 'Valori truthy e falsy',
-        commonMistake: "Pensare che '0', 'false' o [] siano falsy.",
-        example: 'if ([]) { /* viene eseguito: [] è truthy */ }',
-      },
-      deepDiveRef: DD,
+      correct: correct,
+      distractors: distractors,
+      short: 'I falsy sono: false, 0, "", null, undefined, NaN. Tutto il resto è truthy.',
+      whyCorrect: '0 è uno dei sei valori falsy.',
+      concept: 'Valori truthy e falsy',
+      commonMistake: "Pensare che '0', 'false' o [] siano falsy.",
+      example: 'if ([]) { /* viene eseguito: [] è truthy */ }',
     };
   },
-};
+);
 
-const typeofUndefinedPo: QuestionTemplate = {
-  id: 'bnu-typeof-po',
-  topicId: TOPIC,
-  subtopicId: 'bnu-null-undefined',
-  type: 'predict-output',
-  difficulty: 'medium',
-  skills: ['undefined', 'typeof'],
-  tags: ['tipi'],
-  generate(rng: Rng) {
+const typeofUndefinedPo = defineTemplate(
+  {
+    id: 'bnu-typeof-po',
+    topicId: TOPIC,
+    subtopicId: 'bnu-null-undefined',
+    type: 'predict-output',
+    difficulty: 'medium',
+    skills: ['undefined', 'typeof'],
+    tags: ['tipi'],
+  },
+  (rng) => {
     const name = pickOf(rng, ['x', 'valore', 'dato', 'input']);
     const useNull = rng() < 0.4;
     const code = useNull
@@ -96,10 +89,11 @@ const typeofUndefinedPo: QuestionTemplate = {
     const correctWhy = useNull
       ? 'La variabile vale null e typeof null restituisce "object" (bug storico).'
       : 'Una variabile dichiarata e non inizializzata vale undefined, e il suo tipo è "undefined".';
-    const built = makeOptions(
-      rng,
-      { text: correct, why: correctWhy },
-      [
+    return {
+      prompt: 'Cosa stampa questo codice?',
+      code: code,
+      correct: { text: correct, why: correctWhy },
+      distractors: [
         {
           text: 'undefined\nundefined',
           why: `La variabile è inizializzata a null: la prima riga stampa null e \`typeof null\` restituisce 'object'.`,
@@ -117,41 +111,28 @@ const typeofUndefinedPo: QuestionTemplate = {
           why: `La seconda riga stampa il risultato di typeof, che non è mai la stringa 'null': \`typeof null\` restituisce 'object' per un bug storico.`,
         },
       ].filter((d) => d.text !== correct),
-    );
-    return {
-      templateId: 'bnu-typeof-po',
-      type: 'predict-output',
-      difficulty: 'medium' as const,
-      topicId: TOPIC,
-      subtopicId: 'bnu-null-undefined',
-      skills: ['undefined', 'typeof'],
-      prompt: 'Cosa stampa questo codice?',
-      code,
-      ...built,
-      explanation: {
-        short: useNull
-          ? 'null è un valore assegnato; typeof null è "object".'
-          : 'Una let senza valore vale undefined; typeof undefined è "undefined".',
-        whyCorrect: correctWhy,
-        whyOthersWrong: built.whyOthersWrong,
-        concept: 'undefined, null e typeof',
-        commonMistake: 'Confondere undefined (non assegnato) con null (assegnato).',
-        example: 'let a; console.log(a); // undefined',
-      },
-      deepDiveRef: DD,
+      short: useNull
+        ? 'null è un valore assegnato; typeof null è "object".'
+        : 'Una let senza valore vale undefined; typeof undefined è "undefined".',
+      whyCorrect: correctWhy,
+      concept: 'undefined, null e typeof',
+      commonMistake: 'Confondere undefined (non assegnato) con null (assegnato).',
+      example: 'let a; console.log(a); // undefined',
     };
   },
-};
+);
 
-const nullUndefCmp: QuestionTemplate = {
-  id: 'bnu-null-undef-cmp',
-  topicId: TOPIC,
-  subtopicId: 'bnu-null-undefined',
-  type: 'compare',
-  difficulty: 'medium',
-  skills: ['null', 'undefined', '==', '==='],
-  tags: ['confronti'],
-  generate(rng: Rng) {
+const nullUndefCmp = defineTemplate(
+  {
+    id: 'bnu-null-undef-cmp',
+    topicId: TOPIC,
+    subtopicId: 'bnu-null-undefined',
+    type: 'compare',
+    difficulty: 'medium',
+    skills: ['null', 'undefined', '==', '==='],
+    tags: ['confronti'],
+  },
+  (rng) => {
     const variants = [
       {
         prompt: 'Quale di queste espressioni restituisce `true`?',
@@ -260,38 +241,30 @@ const nullUndefCmp: QuestionTemplate = {
       },
     ];
     const v = pickOf(rng, variants);
-    const built = makeOptions(rng, v.correct, shuffle(v.wrong, rng));
     return {
-      templateId: 'bnu-null-undef-cmp',
-      type: 'compare',
-      difficulty: 'medium' as const,
-      topicId: TOPIC,
-      subtopicId: 'bnu-null-undefined',
-      skills: ['null', 'undefined'],
       prompt: v.prompt,
-      ...built,
-      explanation: {
-        short: '== li considera equivalenti, === no.',
-        whyCorrect: "È l'unica coppia di valori diversi considerata uguale da ==.",
-        whyOthersWrong: built.whyOthersWrong,
-        concept: 'null vs undefined',
-        commonMistake: 'Usare === dove si vuole coprire entrambi i casi (serve x == null).',
-        example: 'x == null // vero sia per null che per undefined',
-      },
-      deepDiveRef: DD,
+      correct: v.correct,
+      distractors: shuffle(v.wrong, rng),
+      short: '== li considera equivalenti, === no.',
+      whyCorrect: "È l'unica coppia di valori diversi considerata uguale da ==.",
+      concept: 'null vs undefined',
+      commonMistake: 'Usare === dove si vuole coprire entrambi i casi (serve x == null).',
+      example: 'x == null // vero sia per null che per undefined',
     };
   },
-};
+);
 
-const undefFg: QuestionTemplate = {
-  id: 'bnu-undef-fg',
-  topicId: TOPIC,
-  subtopicId: 'bnu-null-undefined',
-  type: 'fill-the-gap',
-  difficulty: 'easy',
-  skills: ['undefined', '==='],
-  tags: ['tipi'],
-  generate(rng: Rng) {
+const undefFg = defineTemplate(
+  {
+    id: 'bnu-undef-fg',
+    topicId: TOPIC,
+    subtopicId: 'bnu-null-undefined',
+    type: 'fill-the-gap',
+    difficulty: 'easy',
+    skills: ['undefined', '==='],
+    tags: ['tipi'],
+  },
+  (rng) => {
     const name = pickOf(rng, ['x', 'dato', 'input', 'valore']);
     const code = `let ${name};\nconsole.log(${name} === ___);`;
     const wrongPool = shuffle(
@@ -319,54 +292,42 @@ const undefFg: QuestionTemplate = {
       ],
       rng,
     ).slice(0, 3);
-    const built = makeOptions(
-      rng,
-      {
+    return {
+      prompt: 'Completa affinché il codice stampi true.',
+      code: code,
+      correct: {
         text: 'undefined',
         why: `Una variabile dichiarata senza valore vale undefined: \`${name} === undefined\` restituisce true.`,
       },
-      wrongPool,
-    );
-    return {
-      templateId: 'bnu-undef-fg',
-      type: 'fill-the-gap',
-      difficulty: 'easy' as const,
-      topicId: TOPIC,
-      subtopicId: 'bnu-null-undefined',
-      skills: ['undefined'],
-      prompt: 'Completa affinché il codice stampi true.',
-      code,
-      ...built,
-      explanation: {
-        short: `${name} non è inizializzata: vale undefined.`,
-        whyCorrect: 'undefined === undefined → true.',
-        whyOthersWrong: built.whyOthersWrong,
-        concept: 'Valore di default di una variabile non inizializzata',
-        commonMistake: 'Pensare che valga null: null va assegnato esplicitamente.',
-        example: 'let a; a === undefined // true',
-      },
-      deepDiveRef: DD,
+      distractors: wrongPool,
+      short: `${name} non è inizializzata: vale undefined.`,
+      whyCorrect: 'undefined === undefined → true.',
+      concept: 'Valore di default di una variabile non inizializzata',
+      commonMistake: 'Pensare che valga null: null va assegnato esplicitamente.',
+      example: 'let a; a === undefined // true',
     };
   },
-};
+);
 
-const nullCheckBm: QuestionTemplate = {
-  id: 'bnu-null-check-bm',
-  topicId: TOPIC,
-  subtopicId: 'bnu-null-undefined',
-  type: 'best-method',
-  difficulty: 'medium',
-  skills: ['null', 'undefined', '=='],
-  tags: ['best-practice'],
-  generate(rng: Rng) {
+const nullCheckBm = defineTemplate(
+  {
+    id: 'bnu-null-check-bm',
+    topicId: TOPIC,
+    subtopicId: 'bnu-null-undefined',
+    type: 'best-method',
+    difficulty: 'medium',
+    skills: ['null', 'undefined', '=='],
+    tags: ['best-practice'],
+  },
+  (rng) => {
     const name = pickOf(rng, ['dato', 'valore', 'risultato', 'input', 'config']);
-    const built = makeOptions(
-      rng,
-      {
+    return {
+      prompt: `Vuoi proseguire solo se \`${name}\` non è né null né undefined. Qual è il controllo più pratico?`,
+      correct: {
         text: `${name} != null`,
         why: `Per la regola speciale di \`==\`, \`${name} != null\` risulta falso sia per null sia per undefined: un solo controllo copre entrambi i casi.`,
       },
-      [
+      distractors: [
         {
           text: `${name} !== null`,
           why: `Il confronto stretto esclude solo null: se ${name} fosse undefined la condizione sarebbe comunque vera e il codice proseguirebbe.`,
@@ -384,28 +345,112 @@ const nullCheckBm: QuestionTemplate = {
           why: `Funzionerebbe, perché \`undefined == null\` copre entrambi i casi; la forma idiomatica però è \`!= null\`, più breve e riconoscibile.`,
         },
       ].slice(0, 3),
-    );
-    return {
-      templateId: 'bnu-null-check-bm',
-      type: 'best-method',
-      difficulty: 'medium' as const,
-      topicId: TOPIC,
-      subtopicId: 'bnu-null-undefined',
-      skills: ['null', 'undefined'],
-      prompt: `Vuoi proseguire solo se \`${name}\` non è né null né undefined. Qual è il controllo più pratico?`,
-      ...built,
-      explanation: {
-        short: 'x != null è l\'unico uso "accettato" del confronto debole: copre null e undefined.',
-        whyCorrect: 'Poiché null == undefined, != null esclude entrambi.',
-        whyOthersWrong: built.whyOthersWrong,
-        concept: 'Controllo null/undefined con ==',
-        commonMistake: 'Scrivere due controlli separati quando basta != null.',
-        example: 'if (dato != null) { /* dato ha un valore */ }',
-      },
-      deepDiveRef: DD,
+      short: 'x != null è l\'unico uso "accettato" del confronto debole: copre null e undefined.',
+      whyCorrect: 'Poiché null == undefined, != null esclude entrambi.',
+      concept: 'Controllo null/undefined con ==',
+      commonMistake: 'Scrivere due controlli separati quando basta != null.',
+      example: 'if (dato != null) { /* dato ha un valore */ }',
     };
   },
-};
+);
+
+const TRUTHY_FALSY: { text: string; value: unknown; why: string }[] = [
+  {
+    text: "''",
+    value: '',
+    why: 'La stringa vuota è uno dei valori considerati falsi dal linguaggio: in una condizione il ramo else viene eseguito.',
+  },
+  {
+    text: "' '",
+    value: ' ',
+    why: 'Una stringa con un solo spazio non è vuota: ha lunghezza 1 e in una condizione viene valutata come vera.',
+  },
+  {
+    text: '0',
+    value: 0,
+    why: 'Il numero zero è nella lista dei valori falsi: qualunque condizione su 0 prende il ramo negativo.',
+  },
+  {
+    text: '-1',
+    value: -1,
+    why: 'Ogni numero diverso da zero, compresi quelli negativi, è considerato vero: -1 in un if entra nel ramo then.',
+  },
+  {
+    text: "'0'",
+    value: '0',
+    why: 'La stringa che contiene il carattere 0 non è vuota: è considerata vera anche se il numero 0 sarebbe falso.',
+  },
+  {
+    text: "'false'",
+    value: 'false',
+    why: 'È una stringa non vuota, quindi è considerata vera: il contenuto del testo non viene interpretato come booleano.',
+  },
+  {
+    text: 'NaN',
+    value: NaN,
+    why: 'NaN è il risultato di operazioni numeriche impossibili ed è considerato falso in ogni contesto booleano.',
+  },
+  {
+    text: 'null',
+    value: null,
+    why: "null rappresenta l'assenza intenzionale di un valore ed è considerato falso quando viene valutato in una condizione.",
+  },
+  {
+    text: 'undefined',
+    value: undefined,
+    why: 'undefined indica un valore non ancora assegnato ed è considerato falso in qualunque condizione lo valuti.',
+  },
+  {
+    text: '[]',
+    value: [],
+    why: 'Un array vuoto è comunque un oggetto esistente: tutti gli oggetti e gli array sono considerati veri, anche se vuoti.',
+  },
+  {
+    text: '{}',
+    value: {},
+    why: 'Un oggetto letterale vuoto esiste come riferimento e quindi è considerato vero: non esistono oggetti falsi.',
+  },
+  {
+    text: '0n',
+    value: 0n,
+    why: "Il BigInt zero segue la stessa regola del numero zero: è l'unico valore BigInt considerato falso.",
+  },
+];
+
+const truthyFalsyCg = defineCategorize(
+  {
+    id: 'bnu-truthy-cg',
+    topicId: TOPIC,
+    subtopicId: 'bnu-truthy-falsy',
+    type: 'categorize',
+    difficulty: 'easy',
+    skills: ['truthy', 'falsy', 'conversione'],
+    tags: ['tipi', 'condizioni'],
+  },
+  (rng) => {
+    const picked = shuffle(TRUTHY_FALSY, rng).slice(0, 6);
+    const nTrue = picked.filter((p) => Boolean(p.value)).length;
+    if (nTrue < 2 || nTrue > 4) throw new Error('servono almeno 2 valori per categoria');
+    return {
+      prompt: 'Per ogni valore, decidi come viene valutato in una condizione `if`.',
+      categories: [
+        { id: 'vero', text: 'Considerato vero' },
+        { id: 'falso', text: 'Considerato falso' },
+      ],
+      items: picked.map((p) => ({
+        text: p.text,
+        categoryId: Boolean(p.value) ? 'vero' : 'falso',
+        why: p.why,
+      })),
+      short: 'Solo pochi valori sono considerati falsi; tutto il resto conta come vero.',
+      whyCorrect:
+        'I valori falsi sono false, 0, 0n, NaN, stringa vuota, null e undefined: oggetti, array e stringhe non vuote contano sempre come veri.',
+      concept: 'Valori truthy e falsy',
+      commonMistake: "Pensare che [] o la stringa '0' siano falsi: sono entrambi veri.",
+      example: "if ('0') { /* si esegue: '0' è una stringa non vuota */ }",
+    };
+  },
+);
 
 export const booleansNullUndefinedTemplates: QuestionTemplate[] = [
   falsyMc,
@@ -413,4 +458,5 @@ export const booleansNullUndefinedTemplates: QuestionTemplate[] = [
   nullUndefCmp,
   undefFg,
   nullCheckBm,
+  truthyFalsyCg,
 ];

@@ -32,18 +32,17 @@
       "explanation": {
         "short": "Number restituisce NaN se la stringa contiene caratteri non numerici, mentre parseFloat o parseInt interpretano la parte iniziale numerica.",
         "whyCorrect": "Number tenta di convertire l'intera stringa: non essendo un numero valido a causa del suffisso 'kg', restituisce NaN. parseFloat('25.7kg') invece avrebbe prodotto 25.7.",
-        "whyOthersWrong": {
+        "concept": "parseInt/parseFloat vs Number",
+        "commonMistake": "Usare Number invece di parseInt o parseFloat su stringhe con testo misto.",
+        "example": "parseFloat('25.7kg') // 25.7",
+        "why": {
           "b": "parseInt avrebbe restituito 25, scartando la parte decimale e il testo, ma qui non viene usato parseInt: il problema è proprio l'uso di Number.",
           "c": "Non è necessario convertire la stringa in array per estrarre il numero: la conversione numerica è indipendente dalla rappresentazione interna della stringa.",
           "d": "Math.floor può arrotondare solo un valore già numerico, ma qui Number restituisce NaN, quindi Math.floor(NaN) resterebbe comunque NaN."
-        },
-        "concept": "parseInt/parseFloat vs Number",
-        "commonMistake": "Usare Number invece di parseInt o parseFloat su stringhe con testo misto.",
-        "example": "parseFloat('25.7kg') // 25.7"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:46:49.089Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fb-0016",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "Il parametro mese in Date parte da 0: 11 corrisponde a dicembre, non a novembre.",
         "whyCorrect": "In JavaScript il secondo parametro di Date (mese) è 0-based, quindi 11 indica dicembre. Per novembre bisognava scrivere 10.",
-        "whyOthersWrong": {
+        "concept": "Date: mesi 0-based",
+        "commonMistake": "Dimenticare che il parametro mese parte da 0 e non da 1.",
+        "example": "new Date(2023, 10, 20) // 20 novembre 2023",
+        "why": {
           "b": "I giorni partono da 1, quindi il terzo parametro 20 indica correttamente il ventesimo giorno del mese.",
           "c": "L'anno in Date è sempre il valore numerico completo (es. 2023) e non è 0-based.",
           "d": "L'ordine dei parametri (anno, mese, giorno) è corretto secondo la documentazione Date."
-        },
-        "concept": "Date: mesi 0-based",
-        "commonMistake": "Dimenticare che il parametro mese parte da 0 e non da 1.",
-        "example": "new Date(2023, 10, 20) // 20 novembre 2023"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:46:49.090Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fb-0017",
@@ -120,18 +118,17 @@
       "explanation": {
         "short": "Math.min richiede argomenti separati, non un array; passato un array, restituisce NaN.",
         "whyCorrect": "Math.min(numeri) tenta di convertire l'intero array in numero, ottenendo NaN: bisogna usare lo spread operator (...numeri) per passare i valori separatamente.",
-        "whyOthersWrong": {
+        "concept": "Math.min/max con array",
+        "commonMistake": "Dimenticare che Math.min/max non accettano array come unico argomento.",
+        "example": "Math.min(...[4,2,8,5]) // 2",
+        "why": {
           "b": "Math.min accetta qualsiasi numero di argomenti, non solo due: il problema è che l'array non viene 'spacchettato'.",
           "c": "L'array non contiene valori undefined: tutti gli elementi sono numeri validi.",
           "d": "Math.floor serve ad arrotondare, ma qui l'errore è nel passaggio dell'array al posto degli argomenti."
-        },
-        "concept": "Math.min/max con array",
-        "commonMistake": "Dimenticare che Math.min/max non accettano array come unico argomento.",
-        "example": "Math.min(...[4,2,8,5]) // 2"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:46:49.090Z"
+      "format": "choice"
     }
   ]
 }

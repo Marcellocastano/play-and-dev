@@ -32,18 +32,17 @@
       "explanation": {
         "short": "I mesi in JavaScript partono da zero: 5 indica giugno, non maggio.",
         "whyCorrect": "Il costruttore `Date` usa mesi 0-based, quindi il mese 5 corrisponde a giugno. Per maggio bisogna passare 4 come secondo argomento.",
-        "whyOthersWrong": {
+        "concept": "Date e mesi 0-based",
+        "commonMistake": "Dimenticare che i mesi vanno da 0 (gennaio) a 11 (dicembre).",
+        "example": "new Date(2024, 4, 10) // 10 maggio 2024",
+        "why": {
           "b": "I giorni nei costruttori `Date` partono da 1, non da 0, quindi il giorno 10 rappresenta davvero il 10 del mese.",
           "c": "L'anno è espresso con il valore reale, non parte da zero: 2024 è effettivamente il 2024.",
           "d": "Il costruttore `Date` accetta anche parametri numerici, non obbligatoriamente stringhe."
-        },
-        "concept": "Date e mesi 0-based",
-        "commonMistake": "Dimenticare che i mesi vanno da 0 (gennaio) a 11 (dicembre).",
-        "example": "new Date(2024, 4, 10) // 10 maggio 2024"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:27:40.437Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fb-0002",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "Math.max richiede numeri separati, non un array.",
         "whyCorrect": "Passando l'intero array come singolo argomento a `Math.max`, il valore è trattato come NaN perché non è un numero. Serve lo spread operator per passare i valori singolarmente.",
-        "whyOthersWrong": {
+        "concept": "Math.max e spread operator",
+        "commonMistake": "Dimenticare di usare ... per passare i valori dell'array.",
+        "example": "Math.max(...[9, 2, 13, 7]) // 13",
+        "why": {
           "b": "Tutti gli elementi dell'array sono numeri. Il problema non è dovuto a valori non numerici.",
           "c": "Se l'array fosse vuoto, non si otterrebbe undefined, ma comunque NaN passando un array. Inoltre l'array non è vuoto.",
           "d": "Math.max non estrae il primo elemento se riceve un array, tratta l'intero array come un argomento unico e quindi restituisce NaN."
-        },
-        "concept": "Math.max e spread operator",
-        "commonMistake": "Dimenticare di usare ... per passare i valori dell'array.",
-        "example": "Math.max(...[9, 2, 13, 7]) // 13"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:27:40.438Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fb-0004",
@@ -120,18 +118,17 @@
       "explanation": {
         "short": "Il confronto === controlla il riferimento, non il valore.",
         "whyCorrect": "Due oggetti Date diversi non sono mai strettamente uguali, anche se rappresentano lo stesso momento. Bisogna confrontare i valori restituiti da getTime().",
-        "whyOthersWrong": {
+        "concept": "Confronto tra oggetti Date",
+        "commonMistake": "Usare === tra due oggetti Date invece di confrontare i valori numerici con getTime().",
+        "example": "d1.getTime() === d2.getTime()",
+        "why": {
           "b": "Il confronto non riguarda solo il mese, ma l'intero riferimento dell'oggetto: non c'entra il campo specifico.",
           "c": "Convertire le date in stringa può funzionare, ma il problema è il confronto tra oggetti, non la mancata conversione.",
           "d": "Anche creando due istanze identiche, sono oggetti distinti in memoria, quindi === restituisce sempre false."
-        },
-        "concept": "Confronto tra oggetti Date",
-        "commonMistake": "Usare === tra due oggetti Date invece di confrontare i valori numerici con getTime().",
-        "example": "d1.getTime() === d2.getTime()"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:27:40.438Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fb-0006",
@@ -164,18 +161,17 @@
       "explanation": {
         "short": "Math.random() * 6 genera valori da 0 a 5.999..., arrotondando con floor si ottiene 0–5.",
         "whyCorrect": "Con questa formula si producono numeri interi da 0 a 5. Bisogna sommare 1 per spostare il range da 1 a 6.",
-        "whyOthersWrong": {
+        "concept": "Math.random e generazione interi in range",
+        "commonMistake": "Dimenticare di aggiungere 1 per includere l'estremo superiore.",
+        "example": "Math.floor(Math.random() * 6) + 1",
+        "why": {
           "b": "Math.floor arrotonda per difetto, ma il problema non è il metodo, è la formula che parte da 0.",
           "c": "Math.ceil produrrebbe un range sbilanciato, includendo il 6 solo raramente e mai restituendo 0.",
           "d": "Math.random restituisce valori decimali tra 0 incluso e 1 escluso, non interi."
-        },
-        "concept": "Math.random e generazione interi in range",
-        "commonMistake": "Dimenticare di aggiungere 1 per includere l'estremo superiore.",
-        "example": "Math.floor(Math.random() * 6) + 1"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:27:40.439Z"
+      "format": "choice"
     }
   ]
 }

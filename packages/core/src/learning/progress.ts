@@ -58,7 +58,8 @@ export function updateProgressAfterSession(
     next.currentStreak = 1;
   } else {
     const gap = dayNumber(finishedAt) - dayNumber(progress.lastSessionAt);
-    next.currentStreak = gap === 0 ? progress.currentStreak : gap === 1 ? progress.currentStreak + 1 : 1;
+    next.currentStreak =
+      gap === 0 ? progress.currentStreak : gap === 1 ? progress.currentStreak + 1 : 1;
   }
   next.bestStreak = Math.max(next.bestStreak, next.currentStreak);
 
@@ -72,13 +73,20 @@ export function updateProgressAfterSession(
   for (const [topicId, attempts] of byTopic) {
     const prev =
       next.topicMastery[topicId] ??
-      ({ topicId, score: 0, band: 'unknown', attempts: 0, weightedCorrect: 0, weightedTotal: 0 } as TopicMastery);
+      ({
+        topicId,
+        score: 0,
+        band: 'unknown',
+        attempts: 0,
+        weightedCorrect: 0,
+        weightedTotal: 0,
+      } as TopicMastery);
     let wc = prev.weightedCorrect;
     let wt = prev.weightedTotal;
     for (const a of attempts) {
       const w = DIFFICULTY_WEIGHT[a.difficulty];
       wt += w;
-      if (a.correct) wc += w;
+      wc += w * (a.score ?? (a.correct ? 1 : 0));
     }
     next.topicMastery[topicId] = refreshTopicMastery(
       {

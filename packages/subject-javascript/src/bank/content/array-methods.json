@@ -1,0 +1,2151 @@
+{
+  "topicId": "array-methods",
+  "questions": [
+    {
+      "id": "array-methods-fb-0001",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "map",
+        "trasformazione elemento"
+      ],
+      "prompt": "Il seguente codice dovrebbe restituire un array con i numeri raddoppiati, ma invece stampa [ undefined, undefined, undefined ]. Qual è la causa?",
+      "code": "const numeri = [2, 4, 6];\nconst doppi = numeri.map(function(n) {\n  n * 2;\n});\nconsole.log(doppi);",
+      "options": [
+        {
+          "id": "a",
+          "text": "La callback non restituisce un valore esplicitamente"
+        },
+        {
+          "id": "b",
+          "text": "map modifica l'array originale invece di restituirne uno nuovo"
+        },
+        {
+          "id": "c",
+          "text": "La funzione deve accettare due argomenti invece di uno"
+        },
+        {
+          "id": "d",
+          "text": "Il metodo corretto sarebbe forEach anziché map"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Se la callback di map non restituisce nulla, nell'array risultante ci saranno undefined.",
+        "whyCorrect": "L'assenza di return nella funzione di callback fa sì che ogni chiamata restituisca undefined; map raccoglie questi undefined e li mette nel nuovo array.",
+        "concept": "Return nella callback di map",
+        "commonMistake": "Dimenticare il return nella funzione passata a map.",
+        "example": "[2, 4, 6].map(n => n * 2)",
+        "why": {
+          "b": "map non muta l'array originale ma ne crea sempre uno nuovo; la modifica dell'array di partenza non c'entra con l'output undefined.",
+          "c": "La callback di map può accettare uno, due o tre argomenti, ma ne basta uno solo; il problema è la mancanza di return, non il numero di parametri.",
+          "d": "forEach serve a iterare, ma non restituisce un array; il problema non è la scelta del metodo, ma come viene scritta la callback di map."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-fb-0002",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "map",
+        "immutabilità",
+        "output"
+      ],
+      "prompt": "Il codice dovrebbe stampare un array con i nomi in maiuscolo, ma invece stampa ['mario', 'luigi', 'peach']. Qual è l'errore?",
+      "code": "const nomi = ['mario', 'luigi', 'peach'];\nnomi.map(nome => nome.toUpperCase());\nconsole.log(nomi);",
+      "options": [
+        {
+          "id": "a",
+          "text": "map non modifica l'array originale"
+        },
+        {
+          "id": "b",
+          "text": "toUpperCase restituisce sempre undefined"
+        },
+        {
+          "id": "c",
+          "text": "La callback di map è scritta in modo errato"
+        },
+        {
+          "id": "d",
+          "text": "map va usato solo su array di numeri"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "map restituisce un nuovo array, non muta quello originale.",
+        "whyCorrect": "map non muta l'array su cui viene chiamato: produce un nuovo array con i risultati, ma qui non viene usato e quindi nomi rimane uguale.",
+        "concept": "Immutabilità di map",
+        "commonMistake": "Aspettarsi che map modifichi l'array originale.",
+        "example": "const maiuscoli = nomi.map(n => n.toUpperCase());",
+        "why": {
+          "b": "toUpperCase restituisce la stringa in maiuscolo e non undefined; il problema è che il risultato di map viene ignorato.",
+          "c": "La callback di map è corretta: nome => nome.toUpperCase() restituisce la stringa in maiuscolo. Il problema è l'uso del risultato.",
+          "d": "map si usa con array di qualsiasi tipo di elemento, non solo numeri; non è questo il limite rilevante qui."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-fb-0003",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "filter",
+        "condizione"
+      ],
+      "prompt": "Questo codice dovrebbe restituire tutti i numeri maggiori di 5, ma invece restituisce sempre un array vuoto. Dove sta l'errore?",
+      "code": "const numeri = [3, 8, 1, 6];\nconst grandi = numeri.filter(function(n) {\n  n > 5;\n});\nconsole.log(grandi);",
+      "options": [
+        {
+          "id": "a",
+          "text": "La callback non restituisce il valore di confronto"
+        },
+        {
+          "id": "b",
+          "text": "filter richiede una funzione freccia"
+        },
+        {
+          "id": "c",
+          "text": "filter non si usa su numeri"
+        },
+        {
+          "id": "d",
+          "text": "La condizione va scritta tra parentesi quadre"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Se la callback di filter non restituisce nulla, nessun elemento viene tenuto.",
+        "whyCorrect": "La funzione di callback non restituisce espressamente il valore booleano della condizione, quindi filter riceve undefined e nessun elemento passa il filtro.",
+        "concept": "Return nella callback di filter",
+        "commonMistake": "Dimenticare il return nella funzione passata a filter.",
+        "example": "numeri.filter(n => n > 5)",
+        "why": {
+          "b": "filter accetta sia funzioni tradizionali che frecce; non è obbligatorio usare una funzione freccia.",
+          "c": "filter si usa perfettamente anche con array di numeri; il tipo degli elementi non è rilevante.",
+          "d": "La condizione va espressa come espressione booleana, non tra parentesi quadre; non è un array di condizioni."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-fb-0004",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "find",
+        "differenza tra find e filter"
+      ],
+      "prompt": "Il codice dovrebbe restituire tutti i prodotti con prezzo superiore a 20, ma invece restituisce solo uno di essi (il primo che trova). Perché?",
+      "code": "const prodotti = [\n  { nome: 'penna', prezzo: 10 },\n  { nome: 'libro', prezzo: 25 },\n  { nome: 'zaino', prezzo: 30 }\n];\nconst costosi = prodotti.find(p => p.prezzo > 20);\nconsole.log(costosi);",
+      "options": [
+        {
+          "id": "a",
+          "text": "find restituisce solo il primo elemento trovato"
+        },
+        {
+          "id": "b",
+          "text": "La condizione è scritta in modo sbagliato"
+        },
+        {
+          "id": "c",
+          "text": "find non si usa sugli oggetti"
+        },
+        {
+          "id": "d",
+          "text": "Serve una callback con due parametri"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "find restituisce solo il primo elemento che passa la condizione.",
+        "whyCorrect": "find restituisce il primo elemento che soddisfa la condizione, mentre per restituire tutti serve filter.",
+        "concept": "Differenza tra find e filter",
+        "commonMistake": "Usare find al posto di filter per ottenere più risultati.",
+        "example": "prodotti.filter(p => p.prezzo > 20)",
+        "why": {
+          "b": "La condizione è corretta e filtra per prezzo maggiore di 20; il comportamento dipende dal metodo usato.",
+          "c": "find si usa anche su array di oggetti, purché la callback ritorni un valore booleano.",
+          "d": "La callback di find può prendere anche un solo parametro; non è richiesto il secondo parametro."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-fb-0005",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-reduce",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "reduce",
+        "valore iniziale",
+        "array vuoto"
+      ],
+      "prompt": "Il codice dovrebbe restituire la somma dei numeri, ma lanciando un errore se l'array è vuoto. Perché succede?",
+      "code": "const numeri = [];\nconst somma = numeri.reduce((acc, n) => acc + n);\nconsole.log(somma);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Manca un valore iniziale per reduce"
+        },
+        {
+          "id": "b",
+          "text": "La callback di reduce è scritta male"
+        },
+        {
+          "id": "c",
+          "text": "reduce non funziona con array di numeri"
+        },
+        {
+          "id": "d",
+          "text": "Serve una variabile globale per l'accumulatore"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "reduce senza valore iniziale su array vuoto lancia TypeError.",
+        "whyCorrect": "reduce senza secondo argomento come valore iniziale non sa cosa usare per l'accumulatore se l'array è vuoto, perciò lancia un TypeError.",
+        "concept": "reduce e valore iniziale",
+        "commonMistake": "Omettere il valore iniziale di reduce su un array che può essere vuoto.",
+        "example": "numeri.reduce((acc, n) => acc + n, 0)",
+        "why": {
+          "b": "La callback è corretta: acc + n somma i numeri; il problema è l'assenza del valore iniziale.",
+          "c": "reduce è stato progettato per funzionare proprio con array di numeri (o di altro tipo).",
+          "d": "Non serve nessuna variabile globale: reduce gestisce internamente l'accumulatore."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-fb-0006",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "filter",
+        "immutabilità"
+      ],
+      "prompt": "Il codice dovrebbe rimuovere le parole più corte di 5 lettere dall'array, ma invece l'array originale rimane invariato. Quale spiegazione è corretta?",
+      "code": "const parole = ['casa', 'scuola', 'libro', 'telefono'];\nparole.filter(p => p.length >= 5);\nconsole.log(parole);",
+      "options": [
+        {
+          "id": "a",
+          "text": "filter non modifica l'array originale"
+        },
+        {
+          "id": "b",
+          "text": "La condizione nella callback non funziona"
+        },
+        {
+          "id": "c",
+          "text": "filter non può essere usato su stringhe"
+        },
+        {
+          "id": "d",
+          "text": "Serve il return nella callback"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "filter restituisce un nuovo array e non muta quello originale.",
+        "whyCorrect": "filter restituisce un nuovo array con gli elementi filtrati; se non si assegna il risultato a una variabile, l'array di partenza resta invariato.",
+        "concept": "Immutabilità di filter",
+        "commonMistake": "Aspettarsi che filter modifichi l'array originale.",
+        "example": "const soloLunghe = parole.filter(p => p.length >= 5);",
+        "why": {
+          "b": "La condizione nella callback funziona correttamente: p.length >= 5 filtra bene le parole con almeno 5 lettere.",
+          "c": "filter funziona su qualsiasi array, incluse stringhe come elementi.",
+          "d": "La callback è una funzione freccia che restituisce implicitamente il risultato della condizione, quindi il return non manca."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-fb-0007",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "type": "find-the-bug",
+      "difficulty": "medium",
+      "skills": [
+        "individuare return mancanti",
+        "debuggare trasformazioni con map"
+      ],
+      "prompt": "Questo codice dovrebbe creare un nuovo array con le lunghezze di ciascuna parola, ma stampa [ undefined, undefined, undefined ]. Qual è il problema?",
+      "code": "const parole = [\"cane\", \"gatto\", \"topo\"];\nconst lunghezze = parole.map((parola) => {\n  parola.length;\n});\nconsole.log(lunghezze);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Manca il return nella funzione di map"
+        },
+        {
+          "id": "b",
+          "text": "Serve forEach invece di map"
+        },
+        {
+          "id": "c",
+          "text": "Bisogna usare parole.lunghezza invece di parola.length"
+        },
+        {
+          "id": "d",
+          "text": "Map modifica accidentalmente l’array originale"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Nel corpo della callback manca il return: senza di esso, ogni iterazione restituisce undefined invece della lunghezza della parola.",
+        "whyCorrect": "Nella callback passata a map, senza un return esplicito, la funzione restituisce undefined per ogni elemento. Per ottenere le lunghezze bisogna scrivere `return parola.length;` oppure usare la sintassi compatta senza parentesi graffe.",
+        "concept": "return nella callback di map",
+        "commonMistake": "Scrivere una callback con le graffe ma senza return, pensando che l’ultima espressione venga restituita automaticamente.",
+        "example": "[\"ciao\"].map(parola => parola.length) // [4]",
+        "why": {
+          "b": "forEach non restituisce alcun array, quindi anche sostituendo map con forEach non si otterrebbe il risultato voluto, ma semplicemente undefined.",
+          "c": "Non esiste la proprietà lunghezza su parole; bisogna accedere a length su ciascuna parola, come già avviene. La proprietà corretta è parola.length.",
+          "d": "map non muta mai l’array originale, ma restituisce un nuovo array. Il problema non è la mutazione, ma il valore restituito dalla callback."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-fg-0002",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "usare map"
+      ],
+      "prompt": "Completa la callback per ottenere un array di stringhe 'valore: X'.",
+      "code": "const valori = [5, 6];\nconst stringhe = valori.map(v => ___ );\nconsole.log(stringhe);",
+      "options": [
+        {
+          "id": "a",
+          "text": "`valore: ${v}`"
+        },
+        {
+          "id": "b",
+          "text": "'valore: v'"
+        },
+        {
+          "id": "c",
+          "text": "'valore:' + valori"
+        },
+        {
+          "id": "d",
+          "text": "v + ' : valore'"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Le stringhe dinamiche si creano con il template literal `${v}`.",
+        "whyCorrect": "L'espressione `valore: ${v}` inserisce il valore attuale nella stringa come richiesto.",
+        "concept": "map: template literal",
+        "commonMistake": "Dimenticare l'interpolazione per inserire variabili nelle stringhe.",
+        "example": "[1, 2].map(x => `valore: ${x}`)",
+        "why": {
+          "b": "Le virgolette singole racchiudono solo il testo letterale, quindi v non viene interpolato.",
+          "c": "valori rappresenta l'intero array, non il singolo elemento v, e la sintassi non è richiesta.",
+          "d": "L'ordine è sbagliato: la stringa risultante sarebbe '5 : valore' invece di 'valore: 5'."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-fg-0003",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "usare find"
+      ],
+      "prompt": "Completa la funzione per ottenere il primo nome con più di 4 lettere.",
+      "code": "const nomi = [\"Ana\", \"Marco\", \"Lisa\"];\nconst risultato = nomi.find(nome => ___ );\nconsole.log(risultato);",
+      "options": [
+        {
+          "id": "a",
+          "text": "nome.length > 4"
+        },
+        {
+          "id": "b",
+          "text": "nome.length >= 4"
+        },
+        {
+          "id": "c",
+          "text": "nome.length == 4"
+        },
+        {
+          "id": "d",
+          "text": "nome.length < 4"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "find restituisce il primo elemento che rispetta la condizione.",
+        "whyCorrect": "nome.length > 4 trova il primo nome con più di 4 lettere, ovvero 'Marco'.",
+        "concept": "find: prima corrispondenza",
+        "commonMistake": "Usare >= al posto di > o confondere find con filter.",
+        "example": "[\"Ada\", \"Marco\", \"Lisa\"].find(n => n.length > 4)",
+        "why": {
+          "b": "nome.length >= 4 includerebbe anche 'Lisa', che però non ha più di 4 lettere.",
+          "c": "nome.length == 4 trova solo 'Lisa', non nomi più lunghi di 4 lettere.",
+          "d": "nome.length < 4 trova solo 'Ana', che non soddisfa il criterio richiesto."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-fg-0005",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "filtrare array",
+        "usare filter"
+      ],
+      "prompt": "Completa la callback per ottenere solo i numeri maggiori di 5.",
+      "code": "const numeri = [2, 6, 8, 3];\nconst grandi = numeri.filter(n => ___ );\nconsole.log(grandi);",
+      "options": [
+        {
+          "id": "a",
+          "text": "n > 5"
+        },
+        {
+          "id": "b",
+          "text": "n >= 8"
+        },
+        {
+          "id": "c",
+          "text": "n < 5"
+        },
+        {
+          "id": "d",
+          "text": "n === 5"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "`n > 5` seleziona i numeri desiderati con filter.",
+        "whyCorrect": "`filter` passa solo gli elementi per cui la condizione è vera: qui, i maggiori di 5 sono 6 e 8.",
+        "concept": "filter: selezione tramite condizione",
+        "commonMistake": "Sbagliare la condizione logica nella callback di filter.",
+        "example": "[2, 6, 8, 3].filter(n => n > 5) // [6, 8]",
+        "why": {
+          "b": "`n >= 8` filtra solo gli 8, quindi il risultato sarebbe [8], non tutti i numeri maggiori di 5.",
+          "c": "`n < 5` seleziona quelli minori di 5 (2 e 3), il contrario di quanto richiesto.",
+          "d": "`n === 5` prende solo i 5, che nell'array non ci sono: risultato []."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-fg-0006",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-reduce",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "usare reduce",
+        "aggregare valori"
+      ],
+      "prompt": "Completa la chiamata per calcolare la somma dei numeri con reduce.",
+      "code": "const numeri = [1, 2, 3];\nconst somma = numeri.reduce((totale, n) => totale + n, ___ );\nconsole.log(somma);",
+      "options": [
+        {
+          "id": "a",
+          "text": "0"
+        },
+        {
+          "id": "b",
+          "text": "1"
+        },
+        {
+          "id": "c",
+          "text": "undefined"
+        },
+        {
+          "id": "d",
+          "text": "null"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il valore iniziale corretto per la somma è 0.",
+        "whyCorrect": "Passando 0 come valore iniziale, la somma si calcola partendo da zero e include tutti gli elementi.",
+        "concept": "reduce: valore iniziale dell'accumulatore",
+        "commonMistake": "Omettere o usare il valore iniziale sbagliato in reduce.",
+        "example": "[1, 2, 3].reduce((a, n) => a + n, 0) // 6",
+        "why": {
+          "b": "Con 1 come iniziale il risultato sarebbe maggiore di quanto atteso (aggiunge 1 in più).",
+          "c": "Se passi undefined come iniziale, il primo elemento viene usato come accumulatore ma non va bene per somme generiche, e su array vuoti causa errore.",
+          "d": "Usare null non è corretto: la somma parte da null e i risultati sarebbero errati (null + n = NaN)."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-fg-0007",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "usare find",
+        "ricercare elemento"
+      ],
+      "prompt": "Completa la chiamata per trovare il primo nome di 4 lettere.",
+      "code": "const nomi = ['Luca', 'Anna', 'Paolo'];\nconst trovato = nomi.find(nome => ___ );\nconsole.log(trovato);",
+      "options": [
+        {
+          "id": "a",
+          "text": "nome.length === 4"
+        },
+        {
+          "id": "b",
+          "text": "nome.length > 4"
+        },
+        {
+          "id": "c",
+          "text": "nome.length !== 4"
+        },
+        {
+          "id": "d",
+          "text": "nome.length < 4"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "La condizione corretta è `nome.length === 4`.",
+        "whyCorrect": "Con `find`, serve la condizione esatta che seleziona solo i nomi di 4 lettere, quindi 'Luca'.",
+        "concept": "find: trovare il primo che soddisfa una condizione",
+        "commonMistake": "Confondere la condizione e ottenere l'elemento sbagliato.",
+        "example": "['Luca', 'Anna', 'Paolo'].find(n => n.length === 4) // 'Luca'",
+        "why": {
+          "b": "`nome.length > 4` filtra solo i nomi più lunghi, quindi 'Paolo', che però ha 5 lettere.",
+          "c": "`nome.length !== 4` esclude proprio i nomi di 4 lettere, restituendo invece un nome diverso o undefined.",
+          "d": "`nome.length < 4` selezionerebbe solo nomi più corti, che in questo array non ci sono."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-po-0008",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "map",
+        "trasformazione elemento per elemento"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const parole = [\"gatto\", \"cane\", \"lupo\"];\nconst maiuscole = parole.map((p) => p.toUpperCase());\nconsole.log(maiuscole);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 'GATTO', 'CANE', 'LUPO' ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 'gatto', 'cane', 'lupo' ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 'Gatto', 'Cane', 'Lupo' ]"
+        },
+        {
+          "id": "d",
+          "text": "[ undefined, undefined, undefined ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il metodo map applica `.toUpperCase()` a ogni parola e restituisce un nuovo array con tutte le parole in maiuscolo.",
+        "whyCorrect": "Il metodo `map` chiama la funzione passata su ogni elemento, restituendo un array dove ogni parola è stata convertita in maiuscolo tramite `toUpperCase()`.",
+        "concept": "map e trasformazione degli elementi",
+        "commonMistake": "Dimenticare che la funzione di map deve ritornare il valore trasformato.",
+        "example": "[1,2,3].map(n => n * 2) // [2,4,6]",
+        "why": {
+          "b": "Senza una trasformazione, `map` restituirebbe l'array originale, ma qui ogni elemento viene realmente trasformato in maiuscolo.",
+          "c": "La funzione `toUpperCase()` restituisce tutte le lettere maiuscole, non solo l'iniziale.",
+          "d": "Questo succede solo se la funzione non restituisce nulla (dimenticando il return), ma qui il valore è ritornato correttamente."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-po-0009",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "filter",
+        "selezione condizionale"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const numeri = [3, 7, 2, 9, 5];\nconst maggioriDiCinque = numeri.filter((n) => n > 5);\nconsole.log(maggioriDiCinque);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 7, 9 ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 7, 2, 9, 5 ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 9 ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 3, 7, 2, 9, 5 ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Filter restituisce un array con solo gli elementi che soddisfano la condizione `n > 5`, cioè 7 e 9.",
+        "whyCorrect": "La funzione di callback di `filter` tiene solo i numeri maggiori di 5. Nell'array, questi sono 7 e 9.",
+        "concept": "filter per selezionare elementi",
+        "commonMistake": "Confondere filter con find e aspettarsi solo il primo elemento.",
+        "example": "[1,2,3,4].filter(x => x % 2 === 0) // [2, 4]",
+        "why": {
+          "b": "Questa opzione include numeri che non sono maggiori di 5, come 2 e 5.",
+          "c": "`filter` seleziona tutti gli elementi che soddisfano la condizione, non solo il primo.",
+          "d": "Qui si mostra l'array originale, ma filter restituisce solo gli elementi che rispettano la condizione."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-po-0010",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "map",
+        "uso dell'indice"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const lettere = [\"a\", \"b\", \"c\"];\nconst conIndice = lettere.map((l, i) => l + i);\nconsole.log(conIndice);",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 'a0', 'b1', 'c2' ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 'a1', 'b2', 'c3' ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 0, 1, 2 ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 'a', 'b', 'c' ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Map passa anche l'indice all'interno della funzione, quindi ogni lettera viene concatenata al suo indice.",
+        "whyCorrect": "La funzione di `map` aggiunge all'elemento corrente il suo indice, quindi si ottiene 'a0', 'b1' e 'c2'.",
+        "concept": "map e parametri callback",
+        "commonMistake": "Dimenticare che il secondo argomento della funzione di map è l'indice, che parte da 0.",
+        "example": "[ 'x', 'y' ].map((v,i) => v+i) // [ 'x0', 'y1' ]",
+        "why": {
+          "b": "Gli indici in JavaScript partono da 0, quindi 'a1' sarebbe solo se l'indice partisse da 1.",
+          "c": "Qui viene restituito solo l'indice, ma la funzione concatena lettera e indice.",
+          "d": "Questo sarebbe il risultato se la funzione non facesse alcuna trasformazione."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-po-0011",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-reduce",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "reduce",
+        "valore iniziale",
+        "concatenazione stringhe"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const nomi = [\"Anna\", \"Luca\", \"Rita\"];\nconst frase = nomi.reduce((acc, nome) => acc + \"-\" + nome);\nconsole.log(frase);",
+      "options": [
+        {
+          "id": "a",
+          "text": "Anna-Luca-Rita"
+        },
+        {
+          "id": "b",
+          "text": "undefined-Anna-Luca-Rita"
+        },
+        {
+          "id": "c",
+          "text": "AnnaRita"
+        },
+        {
+          "id": "d",
+          "text": "Luca-Rita"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Reduce concatena i nomi separandoli con un trattino, iniziando dal primo elemento (se non viene fornito valore iniziale).",
+        "whyCorrect": "Senza valore iniziale, acc prende il primo elemento, poi concatena gli altri con il trattino, risultando in 'Anna-Luca-Rita'.",
+        "concept": "reduce senza valore iniziale",
+        "commonMistake": "Pensare che reduce inizi con undefined o salti elementi.",
+        "example": "[\"a\",\"b\",\"c\"].reduce((a,b) => a + \",\" + b) // 'a,b,c'",
+        "why": {
+          "b": "Il valore iniziale non è undefined: reduce usa il primo elemento come base se non specificato.",
+          "c": "Riduce concatena tutti i nomi, non solo il primo e l'ultimo. Il trattino viene sempre aggiunto.",
+          "d": "Questa sarebbe la concatenazione solo degli ultimi due nomi, non di tutti."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-po-0012",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "filter",
+        "condizione su proprietà oggetto"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const libri = [\n  { titolo: \"JS Facile\", pagine: 120 },\n  { titolo: \"JS Avanzato\", pagine: 320 },\n  { titolo: \"CSS\", pagine: 200 }\n];\nconst voluminosi = libri.filter(libro => libro.pagine > 150);\nconsole.log(voluminosi.map(libro => libro.titolo));",
+      "options": [
+        {
+          "id": "a",
+          "text": "[ 'JS Avanzato', 'CSS' ]"
+        },
+        {
+          "id": "b",
+          "text": "[ 'JS Facile', 'JS Avanzato', 'CSS' ]"
+        },
+        {
+          "id": "c",
+          "text": "[ 'JS Avanzato' ]"
+        },
+        {
+          "id": "d",
+          "text": "[ 'CSS' ]"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Filter seleziona i libri con più di 150 pagine, quindi solo 'JS Avanzato' e 'CSS' vengono inclusi nell'output.",
+        "whyCorrect": "Vengono selezionati i libri con più di 150 pagine: 'JS Avanzato' (320) e 'CSS' (200). 'JS Facile' ha solo 120 pagine.",
+        "concept": "filter su array di oggetti",
+        "commonMistake": "Dimenticare di applicare la condizione corretta su una proprietà dell'oggetto.",
+        "example": "[{a:1},{a:2}].filter(o => o.a>1) // [{a:2}]",
+        "why": {
+          "b": "Questa opzione include anche 'JS Facile', che non supera le 150 pagine.",
+          "c": "Questa opzione considera solo 'JS Avanzato', ma anche 'CSS' ha più di 150 pagine.",
+          "d": "'CSS' è incluso, ma manca anche 'JS Avanzato', che rispetta la condizione."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-po-0014",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "predict-output",
+      "difficulty": "medium",
+      "skills": [
+        "filter",
+        "predicate",
+        "array"
+      ],
+      "prompt": "Cosa stampa questo codice?",
+      "code": "const studenti = [\n  { nome: 'Anna', voto: 28 },\n  { nome: 'Luca', voto: 18 },\n  { nome: 'Sara', voto: 30 }\n];\nconst promossi = studenti.filter(studente => studente.voto >= 28);\nconsole.log(promossi.length);",
+      "options": [
+        {
+          "id": "a",
+          "text": "3"
+        },
+        {
+          "id": "b",
+          "text": "1"
+        },
+        {
+          "id": "c",
+          "text": "2"
+        },
+        {
+          "id": "d",
+          "text": "0"
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": {
+        "short": "La funzione filter seleziona gli oggetti con voto almeno 28, quindi due studenti risultano promossi.",
+        "whyCorrect": "Sia 'Anna' (28) che 'Sara' (30) hanno voto >= 28, quindi filter restituisce due elementi: promossi.length vale 2.",
+        "concept": "filter su array di oggetti",
+        "commonMistake": "Credere che filter cerchi solo valori strettamente maggiori, o solo il massimo.",
+        "example": "[{v:2},{v:5}].filter(x => x.v > 2) // [{v:5}]",
+        "why": {
+          "a": "Filter restituisce solo gli elementi che soddisfano la condizione, non tutti. Tre sarebbe la lunghezza senza alcun filtro.",
+          "b": "Solo uno studente ha 30, ma la condizione include anche chi ha 28, quindi sono due.",
+          "d": "Ci sono due studenti con voto almeno 28: il risultato non può essere zero."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-fg-0019",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "array-map",
+        "callback-function"
+      ],
+      "prompt": "Completa la callback per ottenere un nuovo array con ogni numero aumentato di 10.",
+      "code": "const numeri = [2, 4, 6];\nconst risultato = numeri.map(num => ___);\nconsole.log(risultato);",
+      "options": [
+        {
+          "id": "a",
+          "text": "num + 10"
+        },
+        {
+          "id": "b",
+          "text": "numeri + 10"
+        },
+        {
+          "id": "c",
+          "text": "num => num + 10"
+        },
+        {
+          "id": "d",
+          "text": "num * 10"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Per trasformare ogni elemento, va restituito `num + 10` nella callback di map.",
+        "whyCorrect": "La funzione map applica la callback a ogni elemento dell'array, quindi scrivere `num + 10` restituisce per ogni elemento il valore desiderato incrementato di 10.",
+        "concept": "Sintassi di map con callback",
+        "commonMistake": "Usare l'intero array o una funzione invece di restituire il valore trasformato.",
+        "example": "[1, 2].map(x => x + 10) // [11, 12]",
+        "why": {
+          "b": "Qui si usa `numeri`, che rappresenta l'intero array, non il singolo elemento. La callback deve usare il parametro ricevuto (`num`).",
+          "c": "Qui si tenta di restituire una funzione invece di un valore numerico. Map si aspetta che la callback restituisca un valore, non una funzione.",
+          "d": "Questo moltiplica ogni numero per 10, non lo incrementa di 10 come richiesto dal prompt."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-fg-0020",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "array-filter",
+        "callback-function"
+      ],
+      "prompt": "Completa la condizione nella callback per filtrare solo i numeri dispari.",
+      "code": "const numeri = [1, 2, 3, 4];\nconst dispari = numeri.filter(n => ___);\nconsole.log(dispari);",
+      "options": [
+        {
+          "id": "a",
+          "text": "n % 2 === 1"
+        },
+        {
+          "id": "b",
+          "text": "n % 2 == 0"
+        },
+        {
+          "id": "c",
+          "text": "n > 1"
+        },
+        {
+          "id": "d",
+          "text": "n != 3"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Il filtro per i numeri dispari è `n % 2 === 1`.",
+        "whyCorrect": "L'operatore modulo restituisce il resto della divisione, quindi per i numeri dispari il resto di n diviso 2 è 1.",
+        "concept": "Uso di filter con condizioni",
+        "commonMistake": "Confondere il resto per i numeri pari e dispari.",
+        "example": "[1,2,3,4].filter(n => n % 2 === 1) // [1,3]",
+        "why": {
+          "b": "Questa condizione seleziona i numeri pari, perché il resto della divisione per 2 è zero solo per i numeri pari.",
+          "c": "Questo seleziona solo i numeri maggiori di 1, includendo sia pari che dispari, quindi non filtra i dispari.",
+          "d": "Questa condizione esclude solo il numero 3, ma non filtra tutti e soli i numeri dispari."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "id": "array-methods-fg-0021",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-reduce",
+      "type": "fill-the-gap",
+      "difficulty": "easy",
+      "skills": [
+        "array-reduce",
+        "accumulatore"
+      ],
+      "prompt": "Completa la chiamata per calcolare il prodotto di tutti i numeri dell'array.",
+      "code": "const valori = [2, 3, 4];\nconst prodotto = valori.reduce((acc, n) => ___, 1);\nconsole.log(prodotto);",
+      "options": [
+        {
+          "id": "a",
+          "text": "acc * n"
+        },
+        {
+          "id": "b",
+          "text": "acc + n"
+        },
+        {
+          "id": "c",
+          "text": "acc / n"
+        },
+        {
+          "id": "d",
+          "text": "n * n"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": {
+        "short": "Per il prodotto di tutti gli elementi si usa `acc * n`.",
+        "whyCorrect": "Con `reduce`, per calcolare il prodotto bisogna moltiplicare l'accumulatore per ogni valore e restituire il risultato a ogni passaggio.",
+        "concept": "Uso di reduce per aggregazioni",
+        "commonMistake": "Usare un'operazione diversa (somma/divisione) invece della moltiplicazione.",
+        "example": "[2, 3, 4].reduce((acc, n) => acc * n, 1) // 24",
+        "why": {
+          "b": "Questa callback esegue una somma, non un prodotto, quindi restituirebbe la somma totale invece del prodotto.",
+          "c": "Qui si divide l'accumulatore per il valore corrente, ottenendo un risultato completamente diverso dal prodotto.",
+          "d": "Questa espressione moltiplica ogni valore per se stesso, non accumula il prodotto di tutti gli elementi."
+        }
+      },
+      "source": "ai",
+      "format": "choice"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "skills": [
+        "map",
+        "arrow function"
+      ],
+      "prompt": "Per ciascuna chiamata a `map`, stabilisci se restituisce l'array trasformato oppure un array di soli `undefined`.",
+      "explanation": {
+        "short": "Una arrow function con corpo tra graffe richiede `return` esplicito, altrimenti restituisce undefined.",
+        "whyCorrect": "Solo le callback che restituiscono davvero un valore per ogni elemento producono un array trasformato; quelle con corpo a blocco senza return producono undefined.",
+        "why": {
+          "i0": "Il corpo dell'arrow function è una singola espressione senza graffe, quindi il valore di n * 2 viene restituito automaticamente per ogni elemento.",
+          "i1": "Le graffe trasformano il corpo in un blocco di istruzioni: n * 2 viene calcolato ma non restituito, quindi ogni elemento diventa undefined.",
+          "i2": "Il blocco contiene un return esplicito, quindi il valore calcolato viene effettivamente restituito per ogni elemento dell'array.",
+          "i3": "Le parentesi tonde qui racchiudono solo l'espressione, non creano un blocco di istruzioni: il valore continua a essere restituito implicitamente.",
+          "i4": "Anche con una function tradizionale vale la stessa regola: senza return il corpo esegue il calcolo ma non lo restituisce, quindi il risultato è undefined."
+        },
+        "concept": "return implicito vs esplicito in map"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "trasformato",
+          "text": "Restituisce l'array trasformato"
+        },
+        {
+          "id": "undef",
+          "text": "Restituisce un array di undefined"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`numeri.map(n => n * 2)`",
+          "categoryId": "trasformato"
+        },
+        {
+          "id": "i1",
+          "text": "`numeri.map(n => { n * 2 })`",
+          "categoryId": "undef"
+        },
+        {
+          "id": "i2",
+          "text": "`numeri.map(n => { return n * 2 })`",
+          "categoryId": "trasformato"
+        },
+        {
+          "id": "i3",
+          "text": "`numeri.map((n) => (n * 2))`",
+          "categoryId": "trasformato"
+        },
+        {
+          "id": "i4",
+          "text": "`numeri.map(function(n) { n * 2 })`",
+          "categoryId": "undef"
+        }
+      ],
+      "id": "array-methods-cg-0022",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "skills": [
+        "map",
+        "mutazione degli array"
+      ],
+      "prompt": "Per ciascun metodo applicato all'array `numeri`, stabilisci se modifica l'array originale oppure restituisce un nuovo array lasciandolo invariato.",
+      "explanation": {
+        "short": "map, filter e concat costruiscono sempre un nuovo array; sort, reverse e splice agiscono sull'originale.",
+        "whyCorrect": "La distinzione dipende dal metodo, non dal contenuto dell'array: alcuni metodi sono progettati per riorganizzare l'array esistente, altri per produrne uno nuovo.",
+        "why": {
+          "i0": "map costruisce sempre un array nuovo con i risultati della callback, lasciando numeri esattamente com'era prima della chiamata.",
+          "i1": "sort riordina gli elementi direttamente dentro l'array su cui viene chiamato e restituisce lo stesso riferimento già modificato.",
+          "i2": "filter produce un array separato contenente solo gli elementi selezionati, senza toccare la struttura di numeri.",
+          "i3": "reverse inverte l'ordine degli elementi operando sull'array originale stesso, non su una copia.",
+          "i4": "splice rimuove o inserisce elementi direttamente nell'array su cui è invocato, alterandone la lunghezza e il contenuto.",
+          "i5": "concat unisce numeri con un altro array restituendo il risultato in una struttura completamente nuova, senza alterare numeri."
+        },
+        "concept": "metodi mutanti vs non mutanti"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "muta",
+          "text": "Muta l'array originale"
+        },
+        {
+          "id": "copia",
+          "text": "Non lo muta, restituisce un nuovo array"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`numeri.map(n => n * 2)`",
+          "categoryId": "copia"
+        },
+        {
+          "id": "i1",
+          "text": "`numeri.sort((a, b) => a - b)`",
+          "categoryId": "muta"
+        },
+        {
+          "id": "i2",
+          "text": "`numeri.filter(n => n % 2 === 0)`",
+          "categoryId": "copia"
+        },
+        {
+          "id": "i3",
+          "text": "`numeri.reverse()`",
+          "categoryId": "muta"
+        },
+        {
+          "id": "i4",
+          "text": "`numeri.splice(1, 1)`",
+          "categoryId": "muta"
+        },
+        {
+          "id": "i5",
+          "text": "`numeri.concat([4, 5])`",
+          "categoryId": "copia"
+        }
+      ],
+      "id": "array-methods-cg-0023",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "skills": [
+        "map",
+        "forEach"
+      ],
+      "prompt": "Per ciascuna chiamata, stabilisci se restituisce un nuovo array oppure `undefined`.",
+      "explanation": {
+        "short": "forEach ignora sempre ciò che la callback restituisce e produce undefined.",
+        "whyCorrect": "map costruisce un nuovo array a partire dai valori restituiti dalla callback, mentre forEach esiste solo per eseguire un'azione e non raccoglie nulla.",
+        "why": {
+          "i0": "map raccoglie il valore restituito da ogni chiamata della callback e li assembla in un nuovo array della stessa lunghezza.",
+          "i1": "forEach esegue la callback per ogni elemento ma non usa in alcun modo il valore che essa produce: il metodo stesso restituisce sempre undefined.",
+          "i2": "Anche se la callback contiene un return esplicito, forEach non raccoglie quel valore da nessuna parte: il risultato della chiamata resta undefined.",
+          "i3": "Anche restituendo semplicemente n invariato, map crea comunque un array nuovo con gli stessi valori, distinto dall'originale."
+        },
+        "concept": "map vs forEach"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "array",
+          "text": "Restituisce un nuovo array"
+        },
+        {
+          "id": "undef",
+          "text": "Restituisce undefined"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`numeri.map(n => n + 1)`",
+          "categoryId": "array"
+        },
+        {
+          "id": "i1",
+          "text": "`numeri.forEach(n => n + 1)`",
+          "categoryId": "undef"
+        },
+        {
+          "id": "i2",
+          "text": "`numeri.forEach(n => { return n + 1 })`",
+          "categoryId": "undef"
+        },
+        {
+          "id": "i3",
+          "text": "`numeri.map(n => n)`",
+          "categoryId": "array"
+        }
+      ],
+      "id": "array-methods-cg-0024",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "skills": [
+        "filter",
+        "find"
+      ],
+      "prompt": "L'array `utenti` contiene oggetti con le proprietà `attivo` (booleano) ed `eta` (numero). Per ciascuna chiamata, stabilisci se il risultato è sempre un array oppure può essere un singolo elemento o undefined.",
+      "explanation": {
+        "short": "filter restituisce sempre un array, anche vuoto; find restituisce un elemento o undefined.",
+        "whyCorrect": "filter è pensato per raccogliere tutte le corrispondenze in una struttura omogenea, mentre find restituisce il primo elemento trovato o, se nessuno soddisfa la condizione, undefined.",
+        "why": {
+          "i0": "filter scandisce l'intero array e restituisce sempre un array, contenente tutti gli utenti per cui la condizione risulta vera.",
+          "i1": "find restituisce direttamente il primo oggetto utente che soddisfa la condizione, non un array che lo contiene.",
+          "i2": "Anche se nessun utente ha un'età superiore a 200, filter restituisce comunque un array, semplicemente vuoto, non undefined.",
+          "i3": "Se nessun utente supera i 200 anni, find non ha nulla da restituire e il suo risultato diventa undefined."
+        },
+        "concept": "tipo di ritorno di filter e find"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "array",
+          "text": "Sempre un array"
+        },
+        {
+          "id": "singolo",
+          "text": "Un elemento singolo o undefined"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`utenti.filter(u => u.attivo)`",
+          "categoryId": "array"
+        },
+        {
+          "id": "i1",
+          "text": "`utenti.find(u => u.attivo)`",
+          "categoryId": "singolo"
+        },
+        {
+          "id": "i2",
+          "text": "`utenti.filter(u => u.eta > 200)`",
+          "categoryId": "array"
+        },
+        {
+          "id": "i3",
+          "text": "`utenti.find(u => u.eta > 200)`",
+          "categoryId": "singolo"
+        }
+      ],
+      "id": "array-methods-cg-0025",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "skills": [
+        "filter",
+        "find"
+      ],
+      "prompt": "L'array `prodotti` contiene oggetti con una proprietà `prezzo` e una proprietà `disponibile`. Per ciascuna chiamata, stabilisci cosa produce.",
+      "explanation": {
+        "short": "filter raccoglie ogni corrispondenza, find si ferma alla prima e la restituisce direttamente.",
+        "whyCorrect": "La differenza non dipende da quanti prodotti soddisfano la condizione, ma dal comportamento intrinseco dei due metodi: uno accumula, l'altro cerca e si ferma.",
+        "why": {
+          "i0": "filter continua a scandire tutto l'array e restituisce un array con ogni prodotto il cui prezzo supera 50.",
+          "i1": "find interrompe la ricerca non appena trova il primo prodotto con prezzo superiore a 50 e lo restituisce direttamente, senza incapsularlo in un array.",
+          "i2": "Nessun prodotto ha un prezzo negativo, ma filter restituisce comunque un array, in questo caso vuoto, mai undefined.",
+          "i3": "Poiché nessun prodotto ha prezzo negativo, find esaurisce l'array senza trovare corrispondenze e restituisce undefined.",
+          "i4": "filter valuta la proprietà booleana disponibile per ogni prodotto e raccoglie in un array tutti quelli per cui vale true."
+        },
+        "concept": "filter vs find su una condizione"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "tutti",
+          "text": "Un array con tutti gli elementi che rispettano la condizione"
+        },
+        {
+          "id": "primo",
+          "text": "Il primo elemento che rispetta la condizione, o undefined"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`prodotti.filter(p => p.prezzo > 50)`",
+          "categoryId": "tutti"
+        },
+        {
+          "id": "i1",
+          "text": "`prodotti.find(p => p.prezzo > 50)`",
+          "categoryId": "primo"
+        },
+        {
+          "id": "i2",
+          "text": "`prodotti.filter(p => p.prezzo < 0)`",
+          "categoryId": "tutti"
+        },
+        {
+          "id": "i3",
+          "text": "`prodotti.find(p => p.prezzo < 0)`",
+          "categoryId": "primo"
+        },
+        {
+          "id": "i4",
+          "text": "`prodotti.filter(p => p.disponibile)`",
+          "categoryId": "tutti"
+        }
+      ],
+      "id": "array-methods-cg-0026",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "skills": [
+        "filter",
+        "confronti"
+      ],
+      "prompt": "L'array `numeri` contiene solo valori numerici. Per ciascuna callback passata a `filter`, stabilisci se la condizione è scritta correttamente oppure se un errore di battitura ne altera sempre il risultato.",
+      "explanation": {
+        "short": "Un confronto con tipo sbagliato o un'assegnazione al posto di un confronto rendono la condizione sempre falsa.",
+        "whyCorrect": "Le condizioni scritte con gli operatori di confronto corretti selezionano gli elementi in base al loro valore reale; gli altri due casi contengono un errore che azzera il risultato indipendentemente dai dati.",
+        "why": {
+          "i0": "L'operatore di maggioranza confronta correttamente ogni numero con 3 e seleziona quelli superiori, qualunque sia il contenuto dell'array.",
+          "i1": "L'uguaglianza stretta confronta anche il tipo: un numero non è mai strettamente uguale alla stringa '3', quindi la condizione è sempre falsa e l'array risultante è sempre vuoto.",
+          "i2": "L'operatore di disuguaglianza stretta confronta correttamente ogni valore con 3 ed esclude soltanto gli elementi effettivamente uguali a 3.",
+          "i3": "Il singolo simbolo = esegue un'assegnazione anziché un confronto: n diventa 0, un valore falsy, quindi ogni elemento viene scartato e il risultato è sempre un array vuoto."
+        },
+        "concept": "assegnazione vs confronto nelle condizioni"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "corretto",
+          "text": "La condizione è scritta correttamente"
+        },
+        {
+          "id": "vuoto",
+          "text": "Un errore la rende sempre falsa, e il risultato è sempre un array vuoto"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`numeri.filter(n => n > 3)`",
+          "categoryId": "corretto"
+        },
+        {
+          "id": "i1",
+          "text": "`numeri.filter(n => n === '3')`",
+          "categoryId": "vuoto"
+        },
+        {
+          "id": "i2",
+          "text": "`numeri.filter(n => n !== 3)`",
+          "categoryId": "corretto"
+        },
+        {
+          "id": "i3",
+          "text": "`numeri.filter(n => n = 0)`",
+          "categoryId": "vuoto"
+        }
+      ],
+      "id": "array-methods-cg-0027",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-reduce",
+      "skills": [
+        "reduce",
+        "valore iniziale"
+      ],
+      "prompt": "Per ciascuna chiamata a `reduce` sull'array vuoto `[]`, stabilisci se restituisce un valore senza errori oppure lancia un TypeError.",
+      "explanation": {
+        "short": "Senza valore iniziale, reduce su un array vuoto non ha nulla da usare come primo accumulatore e lancia un errore.",
+        "whyCorrect": "Quando è presente un valore iniziale, reduce lo restituisce direttamente se l'array è vuoto, perché la callback non viene mai eseguita; senza valore iniziale non c'è nulla da restituire.",
+        "why": {
+          "i0": "Con il valore iniziale 0, la callback non viene mai invocata su un array vuoto e reduce restituisce semplicemente quel valore iniziale.",
+          "i1": "Senza valore iniziale, reduce tenta di usare il primo elemento dell'array come accumulatore di partenza: su un array vuoto non esiste, quindi viene lanciato un TypeError.",
+          "i2": "Il valore iniziale -Infinity viene restituito così com'è, dato che non ci sono elementi su cui iterare per confrontarlo.",
+          "i3": "Anche in questo caso manca un valore iniziale: reduce non ha un punto di partenza su un array vuoto e interrompe l'esecuzione con un errore."
+        },
+        "concept": "reduce su array vuoto"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "valore",
+          "text": "Restituisce un valore senza errori"
+        },
+        {
+          "id": "errore",
+          "text": "Lancia TypeError"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`[].reduce((s, n) => s + n, 0)`",
+          "categoryId": "valore"
+        },
+        {
+          "id": "i1",
+          "text": "`[].reduce((s, n) => s + n)`",
+          "categoryId": "errore"
+        },
+        {
+          "id": "i2",
+          "text": "`[].reduce((max, n) => Math.max(max, n), -Infinity)`",
+          "categoryId": "valore"
+        },
+        {
+          "id": "i3",
+          "text": "`[].reduce((acc, n) => acc + n)`",
+          "categoryId": "errore"
+        }
+      ],
+      "id": "array-methods-cg-0028",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-reduce",
+      "skills": [
+        "reduce",
+        "aggregazione"
+      ],
+      "prompt": "L'array `ordini` contiene solo numeri. Per ciascuna chiamata a `reduce`, stabilisci cosa calcola complessivamente.",
+      "explanation": {
+        "short": "L'operazione dentro la callback (addizione, moltiplicazione o confronto) determina cosa produce complessivamente reduce.",
+        "whyCorrect": "Il valore iniziale e l'operatore usato nella callback definiscono se il risultato finale è una somma, un prodotto o un massimo, indipendentemente dai numeri specifici presenti nell'array.",
+        "why": {
+          "i0": "L'accumulatore parte da 0 e ogni elemento viene sommato ad esso, quindi il risultato finale è la somma di tutti i numeri.",
+          "i1": "L'accumulatore parte da 1 (elemento neutro della moltiplicazione) e ogni elemento viene moltiplicato ad esso, ottenendo il prodotto complessivo.",
+          "i2": "A ogni passo l'accumulatore diventa il maggiore tra se stesso e l'elemento corrente, quindi al termine contiene il valore più grande dell'array.",
+          "i3": "Anche senza valore iniziale esplicito, il primo elemento diventa l'accumulatore di partenza e ogni elemento successivo viene sommato, producendo comunque la somma totale."
+        },
+        "concept": "pattern di aggregazione con reduce"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "somma",
+          "text": "La somma di tutti gli elementi"
+        },
+        {
+          "id": "prodotto",
+          "text": "Il prodotto di tutti gli elementi"
+        },
+        {
+          "id": "massimo",
+          "text": "Il valore massimo"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`ordini.reduce((acc, n) => acc + n, 0)`",
+          "categoryId": "somma"
+        },
+        {
+          "id": "i1",
+          "text": "`ordini.reduce((acc, n) => acc * n, 1)`",
+          "categoryId": "prodotto"
+        },
+        {
+          "id": "i2",
+          "text": "`ordini.reduce((acc, n) => n > acc ? n : acc, ordini[0])`",
+          "categoryId": "massimo"
+        },
+        {
+          "id": "i3",
+          "text": "`ordini.reduce((acc, n) => acc + n)`",
+          "categoryId": "somma"
+        }
+      ],
+      "id": "array-methods-cg-0029",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-reduce",
+      "skills": [
+        "reduce",
+        "strutture dati"
+      ],
+      "prompt": "L'array `numeri` contiene solo numeri. Per ciascuna chiamata a `reduce`, stabilisci se il valore finale è un array, un oggetto oppure un numero.",
+      "explanation": {
+        "short": "Il tipo del valore iniziale, se mantenuto coerente dalla callback, determina il tipo del risultato finale.",
+        "whyCorrect": "reduce può accumulare in qualsiasi struttura: la forma finale dipende esclusivamente da cosa restituisce la callback a ogni iterazione, a partire dal valore iniziale.",
+        "why": {
+          "i0": "L'accumulatore parte da 0 e viene sempre sommato a un numero, quindi resta un numero fino all'ultima iterazione.",
+          "i1": "A ogni passo viene creato un nuovo array che include tutti gli elementi precedenti più quello nuovo raddoppiato, quindi il risultato finale è un array.",
+          "i2": "L'accumulatore parte da un oggetto vuoto e a ogni iterazione gli viene aggiunta una proprietà, restando un oggetto fino alla fine.",
+          "i3": "concat restituisce sempre un nuovo array che include l'elemento aggiunto, quindi il tipo dell'accumulatore resta un array per tutta l'esecuzione."
+        },
+        "concept": "reduce per costruire strutture diverse"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "array",
+          "text": "Un array"
+        },
+        {
+          "id": "oggetto",
+          "text": "Un oggetto"
+        },
+        {
+          "id": "numero",
+          "text": "Un numero"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`numeri.reduce((acc, n) => acc + n, 0)`",
+          "categoryId": "numero"
+        },
+        {
+          "id": "i1",
+          "text": "`numeri.reduce((acc, n) => [...acc, n * 2], [])`",
+          "categoryId": "array"
+        },
+        {
+          "id": "i2",
+          "text": "`numeri.reduce((acc, n) => { acc[n] = true; return acc; }, {})`",
+          "categoryId": "oggetto"
+        },
+        {
+          "id": "i3",
+          "text": "`numeri.reduce((acc, n) => acc.concat(n), [])`",
+          "categoryId": "array"
+        }
+      ],
+      "id": "array-methods-cg-0030",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "skills": [
+        "map",
+        "mutazione di oggetti"
+      ],
+      "prompt": "L'array `utenti` contiene oggetti. Per ciascuna chiamata a `map`, stabilisci se gli oggetti originali dentro l'array restano invariati oppure vengono modificati, anche se map di per sé non muta l'array che li contiene.",
+      "explanation": {
+        "short": "map non muta mai l'array che lo contiene, ma se la callback modifica direttamente un oggetto passato, quell'oggetto resta modificato ovunque.",
+        "whyCorrect": "Usare lo spread o Object.assign su un oggetto vuoto crea sempre una copia nuova; assegnare una proprietà direttamente sul parametro u modifica invece l'oggetto originale, dato che u è lo stesso riferimento presente nell'array di partenza.",
+        "why": {
+          "i0": "Lo spread operator copia tutte le proprietà di u in un oggetto letterale nuovo, quindi l'oggetto originale nell'array utenti non viene toccato.",
+          "i1": "u è lo stesso riferimento all'oggetto presente in utenti: assegnare u.attivo lo modifica direttamente, anche se poi viene restituito lo stesso oggetto da map.",
+          "i2": "Object.assign con un oggetto vuoto come primo argomento crea una destinazione nuova su cui vengono copiate le proprietà, lasciando u inalterato.",
+          "i3": "Aggiungere una proprietà direttamente su u la scrive sull'oggetto originale condiviso con l'array di partenza, non su una copia."
+        },
+        "concept": "copia superficiale vs mutazione diretta"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "immutati",
+          "text": "Gli oggetti originali restano invariati (vengono creati copie)"
+        },
+        {
+          "id": "mutati",
+          "text": "Gli oggetti originali vengono modificati (stessa referenza)"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`utenti.map(u => ({ ...u, attivo: true }))`",
+          "categoryId": "immutati"
+        },
+        {
+          "id": "i1",
+          "text": "`utenti.map(u => { u.attivo = true; return u; })`",
+          "categoryId": "mutati"
+        },
+        {
+          "id": "i2",
+          "text": "`utenti.map(u => Object.assign({}, u, { attivo: true }))`",
+          "categoryId": "immutati"
+        },
+        {
+          "id": "i3",
+          "text": "`utenti.map(u => { u.punti = 0; return u; })`",
+          "categoryId": "mutati"
+        }
+      ],
+      "id": "array-methods-cg-0031",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "skills": [
+        "filter",
+        "find",
+        "assegnazione vs confronto"
+      ],
+      "prompt": "L'array `numeri` contiene solo numeri. Per ciascuna callback, stabilisci se la condizione è scritta correttamente oppure se un errore di battitura la rende sempre vera o sempre falsa, indipendentemente dai dati.",
+      "explanation": {
+        "short": "Il singolo simbolo = assegna un valore invece di confrontarlo, e il risultato dell'assegnazione diventa sempre vero o sempre falso.",
+        "whyCorrect": "Gli operatori === e % restituiscono un booleano calcolato realmente sul valore di ciascun elemento; un'assegnazione con = produce invece sempre lo stesso esito, qualunque sia il contenuto dell'array.",
+        "why": {
+          "i0": "L'uguaglianza stretta confronta davvero ogni elemento con 10 e find restituisce il primo che corrisponde, se esiste.",
+          "i1": "Il singolo = assegna 10 a n a ogni iterazione: essendo 10 un valore truthy, la condizione è sempre vera e find restituisce sempre il primo elemento dell'array, indipendentemente dal valore cercato.",
+          "i2": "Il resto della divisione per 2 confrontato con 0 individua correttamente i numeri pari, in base al loro valore reale.",
+          "i3": "Il singolo = assegna 0 a n a ogni iterazione: essendo 0 un valore falsy, la condizione è sempre falsa e filter scarta ogni elemento, restituendo sempre un array vuoto."
+        },
+        "concept": "assegnazione accidentale nelle condizioni"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "ok",
+          "text": "La condizione è scritta correttamente"
+        },
+        {
+          "id": "bug",
+          "text": "Un errore rende la condizione sempre vera o sempre falsa"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`numeri.find(n => n === 10)`",
+          "categoryId": "ok"
+        },
+        {
+          "id": "i1",
+          "text": "`numeri.find(n => n = 10)`",
+          "categoryId": "bug"
+        },
+        {
+          "id": "i2",
+          "text": "`numeri.filter(n => n % 2 === 0)`",
+          "categoryId": "ok"
+        },
+        {
+          "id": "i3",
+          "text": "`numeri.filter(n => n = 0)`",
+          "categoryId": "bug"
+        }
+      ],
+      "id": "array-methods-cg-0032",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "skills": [
+        "find",
+        "filter",
+        "riferimenti a oggetti"
+      ],
+      "prompt": "L'array `utenti` contiene oggetti. Per ciascuna espressione, stabilisci se il valore ottenuto è lo stesso oggetto presente nell'array originale oppure un nuovo oggetto indipendente.",
+      "explanation": {
+        "short": "find e filter restituiscono i riferimenti originali agli oggetti; solo copiarli esplicitamente con lo spread crea oggetti nuovi.",
+        "whyCorrect": "Né find né filter clonano gli oggetti che selezionano: restituiscono semplicemente i riferimenti già presenti nell'array. Solo un'operazione di copia esplicita, come lo spread, produce un oggetto realmente separato.",
+        "why": {
+          "i0": "find individua l'oggetto nell'array e lo restituisce direttamente, senza copiarlo: modificarlo modificherebbe anche l'oggetto dentro utenti.",
+          "i1": "filter costruisce un nuovo array, ma i suoi elementi sono gli stessi riferimenti agli oggetti originali: prendere il primo con [0] restituisce comunque l'oggetto originale.",
+          "i2": "Lo spread dentro map crea, per ogni elemento, un oggetto letterale nuovo con le stesse proprietà: modificarlo non tocca l'oggetto originale in utenti.",
+          "i3": "Applicare lo spread al risultato di find copia le proprietà dell'oggetto trovato in un oggetto letterale nuovo, indipendente dall'originale."
+        },
+        "concept": "riferimenti vs copie di oggetti"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "stesso",
+          "text": "Lo stesso oggetto dell'array originale"
+        },
+        {
+          "id": "nuovo",
+          "text": "Un nuovo oggetto indipendente"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`utenti.find(u => u.id === 2)`",
+          "categoryId": "stesso"
+        },
+        {
+          "id": "i1",
+          "text": "`utenti.filter(u => u.attivo)[0]`",
+          "categoryId": "stesso"
+        },
+        {
+          "id": "i2",
+          "text": "`utenti.map(u => ({ ...u }))[0]`",
+          "categoryId": "nuovo"
+        },
+        {
+          "id": "i3",
+          "text": "`{ ...utenti.find(u => u.id === 3) }`",
+          "categoryId": "nuovo"
+        }
+      ],
+      "id": "array-methods-cg-0033",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-reduce",
+      "skills": [
+        "reduce",
+        "concatenazione di stringhe"
+      ],
+      "prompt": "L'array `parole` è ['mela', 'pane', 'sole']. Per ciascuna chiamata a `reduce`, stabilisci se produce la stringa 'mela pane sole' oppure un risultato inatteso.",
+      "explanation": {
+        "short": "Senza valore iniziale il primo elemento diventa l'accumulatore di partenza; con una stringa vuota si introduce uno spazio in più all'inizio.",
+        "whyCorrect": "Ciò che conta è l'ordine posizionale dei parametri (accumulatore, poi elemento corrente), non i loro nomi: usarli nell'ordine giusto produce 'mela pane sole', invertirli o partire da una stringa vuota altera il risultato.",
+        "why": {
+          "i0": "Senza valore iniziale, 'mela' diventa l'accumulatore di partenza e le parole successive vengono concatenate nell'ordine originale, producendo esattamente 'mela pane sole'.",
+          "i1": "Partendo da una stringa vuota, il primo spazio viene comunque aggiunto prima di 'mela', ottenendo ' mela pane sole' con uno spazio iniziale di troppo.",
+          "i2": "Qui i parametri sono stati semplicemente rinominati mantenendo la stessa posizione (accumulatore per primo, elemento per secondo) e lo stesso ordine nell'espressione, quindi il risultato resta identico a 'mela pane sole'.",
+          "i3": "L'elemento corrente viene concatenato prima dell'accumulatore anziché dopo, quindi le parole finiscono per comparire in ordine inverso nel risultato finale."
+        },
+        "concept": "ordine dei parametri in reduce"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "corretto",
+          "text": "Produce 'mela pane sole'"
+        },
+        {
+          "id": "inatteso",
+          "text": "Produce un risultato inatteso"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`parole.reduce((acc, p) => acc + ' ' + p)`",
+          "categoryId": "corretto"
+        },
+        {
+          "id": "i1",
+          "text": "`parole.reduce((acc, p) => acc + ' ' + p, '')`",
+          "categoryId": "inatteso"
+        },
+        {
+          "id": "i2",
+          "text": "`parole.reduce((p, acc) => p + ' ' + acc)`",
+          "categoryId": "corretto"
+        },
+        {
+          "id": "i3",
+          "text": "`parole.reduce((acc, p) => p + ' ' + acc, '')`",
+          "categoryId": "inatteso"
+        }
+      ],
+      "id": "array-methods-cg-0034",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-reduce",
+      "skills": [
+        "reduce",
+        "oggetti come accumulatore"
+      ],
+      "prompt": "L'array `prodotti` è ['elettronica', 'libri', 'elettronica', 'giochi']. Il codice dovrebbe contare quante volte compare ciascuna categoria. Per ciascuna implementazione con `reduce`, stabilisci se il conteggio finale è corretto e cumulativo oppure se ogni iterazione perde il conteggio precedente.",
+      "explanation": {
+        "short": "Restituire un oggetto letterale con una sola chiave, invece di modificare o copiare l'intero accumulatore, cancella le categorie contate in precedenza.",
+        "whyCorrect": "Il conteggio resta corretto solo quando ogni iterazione conserva tutte le chiavi accumulate finora, sia mutando lo stesso oggetto sia copiandone tutte le proprietà con lo spread.",
+        "why": {
+          "i0": "L'accumulatore è lo stesso oggetto a ogni iterazione: la proprietà relativa alla categoria corrente viene aggiornata mentre tutte le altre restano intatte.",
+          "i1": "Ogni iterazione restituisce un oggetto letterale completamente nuovo con la sola chiave della categoria corrente, perdendo tutte le altre categorie contate fino a quel momento.",
+          "i2": "Cambia solo l'ordine dell'addizione rispetto alla prima implementazione, ma l'accumulatore resta lo stesso oggetto mutato progressivamente, quindi il conteggio rimane cumulativo.",
+          "i3": "Lo spread copia tutte le proprietà già presenti nell'accumulatore prima di aggiornare quella della categoria corrente, mantenendo così il conteggio di tutte le categorie precedenti."
+        },
+        "concept": "accumulatore oggetto in reduce"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "cumulativo",
+          "text": "Conteggio corretto e cumulativo"
+        },
+        {
+          "id": "azzera",
+          "text": "Il conteggio si azzera a ogni iterazione"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`prodotti.reduce((acc, cat) => { acc[cat] = (acc[cat] || 0) + 1; return acc; }, {})`",
+          "categoryId": "cumulativo"
+        },
+        {
+          "id": "i1",
+          "text": "`prodotti.reduce((acc, cat) => ({ [cat]: (acc[cat] || 0) + 1 }), {})`",
+          "categoryId": "azzera"
+        },
+        {
+          "id": "i2",
+          "text": "`prodotti.reduce((acc, cat) => { acc[cat] = 1 + (acc[cat] || 0); return acc; }, {})`",
+          "categoryId": "cumulativo"
+        },
+        {
+          "id": "i3",
+          "text": "`prodotti.reduce((acc, cat) => ({ ...acc, [cat]: (acc[cat] || 0) + 1 }), {})`",
+          "categoryId": "cumulativo"
+        }
+      ],
+      "id": "array-methods-cg-0035",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "skills": [
+        "map",
+        "arrow function",
+        "oggetti letterali"
+      ],
+      "prompt": "L'array `numeri` contiene solo numeri. Per ciascuna chiamata a `map`, stabilisci se restituisce un array di oggetti oppure un array di `undefined`, considerando come JavaScript interpreta le graffe in una arrow function.",
+      "explanation": {
+        "short": "Senza parentesi tonde, le graffe dopo la freccia vengono lette come corpo della funzione e non come oggetto letterale.",
+        "whyCorrect": "Racchiudere l'oggetto tra parentesi tonde, oppure usare un return esplicito dentro un blocco, sono gli unici modi per far restituire davvero l'oggetto dalla callback.",
+        "why": {
+          "i0": "Le parentesi tonde intorno alle graffe segnalano a JavaScript che si tratta di un'espressione da valutare e restituire, cioè un oggetto letterale.",
+          "i1": "Senza le parentesi tonde, le graffe vengono interpretate come l'inizio di un blocco di istruzioni: valore diventa un'etichetta seguita da un'espressione, e non c'è alcun return, quindi il risultato è undefined.",
+          "i2": "Qui le graffe formano un blocco vero e proprio, ma contengono un return esplicito che restituisce l'oggetto, quindi map raccoglie correttamente ogni oggetto creato.",
+          "i3": "Una function tradizionale richiede sempre un return esplicito per restituire un valore, e qui è presente, quindi ogni chiamata produce l'oggetto atteso."
+        },
+        "concept": "graffe come blocco vs oggetto letterale"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "oggetti",
+          "text": "Un array di oggetti"
+        },
+        {
+          "id": "undef",
+          "text": "Un array di undefined"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`numeri.map(n => ({ valore: n }))`",
+          "categoryId": "oggetti"
+        },
+        {
+          "id": "i1",
+          "text": "`numeri.map(n => { valore: n })`",
+          "categoryId": "undef"
+        },
+        {
+          "id": "i2",
+          "text": "`numeri.map(n => { return { valore: n } })`",
+          "categoryId": "oggetti"
+        },
+        {
+          "id": "i3",
+          "text": "`numeri.map(function(n) { return { valore: n }; })`",
+          "categoryId": "oggetti"
+        }
+      ],
+      "id": "array-methods-cg-0036",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "skills": [
+        "find",
+        "gestione di undefined"
+      ],
+      "prompt": "Il codice esegue `const risultato = utenti.find(u => u.attivo)`, sapendo che esiste certamente almeno un utente attivo, quindi `risultato` è sempre un oggetto (mai undefined). Per ciascuna riga successiva, stabilisci se l'esecuzione non lancia errore oppure lancia un TypeError.",
+      "explanation": {
+        "short": "Accedere a una proprietà inesistente restituisce semplicemente undefined; chiamare un metodo inesistente lancia invece un errore.",
+        "whyCorrect": "risultato è un oggetto singolo, non un array: leggere una sua proprietà non genera mai un errore, ma provare a invocare un metodo tipico degli array, come map o filter, fallisce perché quel metodo non esiste sull'oggetto.",
+        "why": {
+          "i0": "Accedere alla proprietà nome di un oggetto valido restituisce semplicemente il suo valore, senza generare alcun errore.",
+          "i1": "risultato è un oggetto, non un array, quindi non possiede il metodo map: la chiamata genera un TypeError perché map non è una funzione su quell'oggetto.",
+          "i2": "risultato non ha una proprietà length definita, quindi accedervi restituisce semplicemente undefined, senza che l'esecuzione si interrompa.",
+          "i3": "Come per map, filter è un metodo degli array: chiamarlo su un oggetto singolo genera un TypeError perché quel metodo non esiste su di esso."
+        },
+        "concept": "differenza tra proprietà mancante e metodo mancante"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "noerror",
+          "text": "Non lancia errore (anche se stampa undefined)"
+        },
+        {
+          "id": "error",
+          "text": "Lancia TypeError perché il metodo non esiste su un oggetto singolo"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`console.log(risultato.nome)`",
+          "categoryId": "noerror"
+        },
+        {
+          "id": "i1",
+          "text": "`console.log(risultato.map(u => u.nome))`",
+          "categoryId": "error"
+        },
+        {
+          "id": "i2",
+          "text": "`console.log(risultato.length)`",
+          "categoryId": "noerror"
+        },
+        {
+          "id": "i3",
+          "text": "`console.log(risultato.filter(u => u.eta > 18))`",
+          "categoryId": "error"
+        }
+      ],
+      "id": "array-methods-cg-0037",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-reduce",
+      "skills": [
+        "reduce",
+        "operatori logici"
+      ],
+      "prompt": "L'array `numeri` contiene solo numeri. Per ciascuna chiamata a `reduce`, stabilisci se il risultato finale è un booleano oppure un numero.",
+      "explanation": {
+        "short": "Il tipo del valore iniziale, se preservato dalla callback, determina il tipo del risultato finale.",
+        "whyCorrect": "Partire da true o false e combinare i valori con && oppure || mantiene l'accumulatore booleano; partire da un numero e sommarlo o confrontarlo mantiene invece l'accumulatore numerico.",
+        "why": {
+          "i0": "L'accumulatore parte da true e viene combinato con && a un'espressione booleana n > 0, quindi resta sempre un booleano fino alla fine.",
+          "i1": "L'accumulatore parte da 0 e a ogni passo gli viene sommato 0 oppure 1, quindi resta un contatore numerico per tutta l'esecuzione.",
+          "i2": "L'accumulatore parte da false e viene combinato con || a un'espressione booleana, restando quindi un valore true o false fino al termine.",
+          "i3": "L'accumulatore parte da -Infinity e a ogni passo diventa il massimo tra due numeri, restando quindi sempre un valore numerico."
+        },
+        "concept": "tipo dell'accumulatore in reduce"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "booleano",
+          "text": "Un booleano"
+        },
+        {
+          "id": "numero",
+          "text": "Un numero"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`numeri.reduce((acc, n) => acc && n > 0, true)`",
+          "categoryId": "booleano"
+        },
+        {
+          "id": "i1",
+          "text": "`numeri.reduce((acc, n) => acc + (n > 0 ? 1 : 0), 0)`",
+          "categoryId": "numero"
+        },
+        {
+          "id": "i2",
+          "text": "`numeri.reduce((acc, n) => acc || n > 100, false)`",
+          "categoryId": "booleano"
+        },
+        {
+          "id": "i3",
+          "text": "`numeri.reduce((acc, n) => Math.max(acc, n), -Infinity)`",
+          "categoryId": "numero"
+        }
+      ],
+      "id": "array-methods-cg-0038",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-map",
+      "skills": [
+        "map",
+        "filter",
+        "find",
+        "esecuzione della callback"
+      ],
+      "prompt": "L'array `numeri` contiene 5 elementi. La variabile `contatore` parte da 0 e ogni callback qui sotto lo incrementa di 1 quando viene eseguita. Per ciascuna riga, stabilisci se `contatore` finisce per valere esattamente 5 oppure un valore diverso.",
+      "explanation": {
+        "short": "map e filter eseguono sempre la callback su ogni elemento, mentre find si ferma alla prima corrispondenza.",
+        "whyCorrect": "Il numero di esecuzioni dipende da quanti elementi vengono effettivamente esaminati: ridurre l'array in anticipo o trovare subito una corrispondenza con find riduce il numero di chiamate rispetto ai 5 elementi originali.",
+        "why": {
+          "i0": "map scandisce tutti e 5 gli elementi dell'array originale, quindi la callback viene eseguita esattamente 5 volte e contatore arriva a 5.",
+          "i1": "filter esegue comunque la callback una volta per ciascuno dei 5 elementi, indipendentemente dal fatto che tutti vengano poi selezionati, quindi contatore arriva a 5.",
+          "i2": "slice(0, 3) crea prima un array di soli 3 elementi: map lavora solo su quei 3, quindi la callback viene eseguita 3 volte e contatore non arriva a 5.",
+          "i3": "find si ferma non appena la condizione è soddisfatta: dato che il primo elemento coincide sempre con se stesso, la callback viene eseguita una sola volta e contatore vale 1."
+        },
+        "concept": "numero di esecuzioni della callback"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "cinque",
+          "text": "Il contatore vale 5"
+        },
+        {
+          "id": "diverso",
+          "text": "Il contatore vale un valore diverso da 5"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`numeri.map(n => { contatore++; return n; })`",
+          "categoryId": "cinque"
+        },
+        {
+          "id": "i1",
+          "text": "`numeri.filter(n => { contatore++; return true; })`",
+          "categoryId": "cinque"
+        },
+        {
+          "id": "i2",
+          "text": "`numeri.slice(0, 3).map(n => { contatore++; return n; })`",
+          "categoryId": "diverso"
+        },
+        {
+          "id": "i3",
+          "text": "`numeri.find(n => { contatore++; return n === numeri[0]; })`",
+          "categoryId": "diverso"
+        }
+      ],
+      "id": "array-methods-cg-0039",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-filter-find",
+      "skills": [
+        "filter",
+        "valori truthy e falsy"
+      ],
+      "prompt": "L'array `numeri` contiene solo numeri interi (niente `NaN`). Per ciascuna callback passata a `filter`, stabilisci se seleziona correttamente i valori diversi da zero oppure produce un risultato inatteso.",
+      "explanation": {
+        "short": "filter accetta qualunque valore truthy o falsy restituito dalla callback, non richiede necessariamente true o false espliciti.",
+        "whyCorrect": "filter valuta la verità o falsità del valore restituito, quindi un numero diverso da zero funziona già come condizione valida; confrontare invece un numero con il booleano true non è mai vero, per nessun valore numerico.",
+        "why": {
+          "i0": "filter considera veritiero ogni numero diverso da zero e falso lo zero stesso, quindi restituire direttamente n seleziona già correttamente i valori non nulli.",
+          "i1": "Convertire esplicitamente n in booleano con Boolean produce lo stesso esito della valutazione implicita: i numeri diversi da zero diventano true, lo zero diventa false.",
+          "i2": "Il confronto esplicito con lo zero individua in modo equivalente gli stessi elementi, escludendo solo quelli effettivamente uguali a zero.",
+          "i3": "Nessun numero è mai strettamente uguale al booleano true, dato che l'uguaglianza stretta confronta anche il tipo: la condizione è sempre falsa e il risultato è sempre un array vuoto."
+        },
+        "concept": "verità implicita nei valori restituiti da filter"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "corretto",
+          "text": "Seleziona correttamente i valori diversi da zero"
+        },
+        {
+          "id": "inatteso",
+          "text": "Risultato inatteso: restituisce sempre un array vuoto"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`numeri.filter(n => n)`",
+          "categoryId": "corretto"
+        },
+        {
+          "id": "i1",
+          "text": "`numeri.filter(n => Boolean(n))`",
+          "categoryId": "corretto"
+        },
+        {
+          "id": "i2",
+          "text": "`numeri.filter(n => n !== 0)`",
+          "categoryId": "corretto"
+        },
+        {
+          "id": "i3",
+          "text": "`numeri.filter(n => n === true)`",
+          "categoryId": "inatteso"
+        }
+      ],
+      "id": "array-methods-cg-0040",
+      "source": "ai"
+    },
+    {
+      "type": "categorize",
+      "difficulty": "medium",
+      "topicId": "array-methods",
+      "subtopicId": "array-methods-reduce",
+      "skills": [
+        "reduce",
+        "push",
+        "valore di ritorno"
+      ],
+      "prompt": "Per ciascuna implementazione, stabilisci se restituisce l'array atteso oppure no, sapendo che `push` restituisce la nuova lunghezza dell'array su cui viene chiamato, non l'array stesso.",
+      "explanation": {
+        "short": "push modifica l'array e restituisce la sua nuova lunghezza: usarlo come valore di ritorno della callback rompe l'accumulatore.",
+        "whyCorrect": "Quando la callback restituisce esplicitamente acc dopo aver usato push per effetto collaterale, l'accumulatore resta un array; se invece si restituisce direttamente il risultato di push, l'accumulatore diventa un numero.",
+        "why": {
+          "i0": "push viene usato solo per effetto collaterale dentro il blocco condizionale, ma la funzione restituisce esplicitamente acc alla fine, quindi l'accumulatore resta correttamente un array.",
+          "i1": "acc.push(n * 2) restituisce la nuova lunghezza dell'array, un numero: quel numero diventa il nuovo accumulatore, quindi già dalla seconda iterazione acc non è più un array e la chiamata successiva a push fallisce.",
+          "i2": "Lo spread crea un nuovo array che include tutti gli elementi precedenti più quello nuovo, quindi il risultato finale è sempre un array coerente.",
+          "i3": "Anche con un solo elemento, restituire direttamente il risultato di push produce come valore finale la lunghezza dell'array (un numero), non l'array trasformato che ci si aspetterebbe."
+        },
+        "concept": "valore di ritorno di push in reduce"
+      },
+      "format": "categorize",
+      "categories": [
+        {
+          "id": "ok",
+          "text": "Restituisce l'array atteso"
+        },
+        {
+          "id": "bad",
+          "text": "Non restituisce l'array atteso, a causa del valore restituito da push"
+        }
+      ],
+      "items": [
+        {
+          "id": "i0",
+          "text": "`[1,2,3,4].reduce((acc, n) => { if (n % 2 === 0) acc.push(n * 2); return acc; }, [])`",
+          "categoryId": "ok"
+        },
+        {
+          "id": "i1",
+          "text": "`[2,4].reduce((acc, n) => acc.push(n * 2), [])`",
+          "categoryId": "bad"
+        },
+        {
+          "id": "i2",
+          "text": "`[2,4].reduce((acc, n) => [...acc, n * 2], [])`",
+          "categoryId": "ok"
+        },
+        {
+          "id": "i3",
+          "text": "`[2].reduce((acc, n) => acc.push(n * 2), [])`",
+          "categoryId": "bad"
+        }
+      ],
+      "id": "array-methods-cg-0041",
+      "source": "ai"
+    }
+  ]
+}

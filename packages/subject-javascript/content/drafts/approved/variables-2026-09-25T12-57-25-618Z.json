@@ -1,0 +1,906 @@
+{
+  "topicId": "variables",
+  "questions": [
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "variables-naming"
+      ],
+      "prompt": "Per ogni affermazione sulle regole che definiscono i nomi validi per le variabili in JavaScript, indica se è vera o falsa.",
+      "explanation": {
+        "short": "JavaScript ha regole molto precise su quali caratteri possono comporre il nome di una variabile.",
+        "whyCorrect": "I nomi devono iniziare con una lettera, un dollaro o un trattino basso, sono sensibili alle maiuscole e non possono essere parole riservate.",
+        "why": {
+          "s0": "Il motore del linguaggio è case-sensitive in ogni suo aspetto: un minimo cambio di maiuscola crea un identificatore completamente separato e distinto.",
+          "s1": "I nomi delle variabili non possono mai iniziare con un numero, altrimenti il motore di parsing li confonderebbe facilmente con i valori numerici letterali.",
+          "s2": "Sia il dollaro che il trattino basso sono stati storicamente ammessi dalla sintassi fin dall'inizio e risultano molto comuni in diverse librerie popolari.",
+          "s3": "Le parole chiave riservate appartengono alla sintassi fondamentale del linguaggio e non possono assolutamente essere impiegate dallo sviluppatore per nominare variabili."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "JavaScript fa differenza tra lettere maiuscole e minuscole, quindi `nome` e `Nome` sono due variabili distinte",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Un identificatore di variabile può iniziare tranquillamente con una cifra numerica",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "I simboli speciali del dollaro e del trattino basso sono consentiti all'interno dei nomi scelti",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Le parole riservate del linguaggio, come `for` o `function`, possono essere usate come nomi validi",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0064",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "variables-initialization"
+      ],
+      "prompt": "Per ogni affermazione sui valori iniziali forniti alle variabili durante la loro dichiarazione, indica se è vera o falsa.",
+      "explanation": {
+        "short": "L'inizializzazione varia tra costanti e variabili, e JavaScript gestisce i tipi dinamicamente.",
+        "whyCorrect": "Le costanti esigono un valore immediato, `let` può rimanere indefinita, e non serve specificare i tipi.",
+        "why": {
+          "s0": "Poiché una costante non può mai essere riassegnata, la sintassi impone rigorosamente che riceva un valore effettivo nel momento stesso in cui viene creata.",
+          "s1": "Le dichiarazioni prive di assegnazione non inizializzano la variabile a zero ma le assegnano automaticamente il valore speciale `undefined`.",
+          "s2": "La sintassi permette di elencare identificatori multipli separati da virgola dopo una singola parola chiave, rendendo il codice compatto quando necessario.",
+          "s3": "JavaScript è un linguaggio a tipizzazione dinamica: le variabili non hanno un tipo fisso e assumono il tipo del valore che viene loro assegnato."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "La dichiarazione tramite parola chiave `const` richiede sempre che venga assegnato subito un valore",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Una variabile creata con `let` ma senza assegnazione parte automaticamente con il valore numerico zero",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "È consentito dichiarare più variabili sulla stessa riga separandole semplicemente con delle virgole",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Le variabili richiedono di specificare il tipo esatto di dato che conterranno al momento della creazione",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0065",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "variables-global"
+      ],
+      "prompt": "Valuta le seguenti affermazioni generiche sulle variabili create nel livello più alto (contesto globale) di uno script.",
+      "explanation": {
+        "short": "Il comportamento delle variabili globali cambia notevolmente a seconda della parola chiave utilizzata.",
+        "whyCorrect": "Le dichiarazioni moderne evitano di inquinare l'oggetto globale e prevengono doppie dichiarazioni accidentali.",
+        "why": {
+          "s0": "A differenza delle dichiarazioni storiche, le variabili introdotte dalle parole chiave moderne risiedono in uno scope globale distinto e non inquinano l'oggetto principale.",
+          "s1": "Dimenticare la parola chiave in modalità non stretta (non-strict) fa sì che il motore crei silenziosamente una proprietà sull'oggetto globale, un comportamento noto per causare bug.",
+          "s2": "Una costante definita globalmente è visibile ovunque all'interno del file: il suo scopo è proprio quello di fornire un valore immutabile a tutto lo script.",
+          "s3": "Riscrivere una dichiarazione con lo stesso identificatore nello stesso scope genera un errore di sintassi; per aggiornare il valore si usa solo l'operatore di assegnazione."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Le variabili definite con `let` nel contesto globale diventano automaticamente proprietà dell'oggetto finestra del browser",
+          "value": false
+        },
+        {
+          "id": "s1",
+          "text": "Assegnare un valore a un nome mai dichiarato in modalità non stretta crea una variabile globale implicita",
+          "value": true
+        },
+        {
+          "id": "s2",
+          "text": "L'uso della parola `const` nel contesto globale impedisce alla costante di essere letta dalle funzioni interne",
+          "value": false
+        },
+        {
+          "id": "s3",
+          "text": "L'istruzione `let` permette di dichiarare due volte la stessa variabile per aggiornare il suo contenuto",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0066",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "variables-syntax"
+      ],
+      "prompt": "Indica se ciascuna delle seguenti istruzioni rappresenta una sintassi corretta per creare una variabile.",
+      "explanation": {
+        "short": "La sintassi richiede parole chiave specifiche e il rispetto delle regole di inizializzazione.",
+        "whyCorrect": "Solo `let`, `const` o `var` sono parole chiave valide, e `const` necessita sempre di un valore.",
+        "why": {
+          "s0": "Questa istruzione è perfettamente valida: impiega la parola chiave corretta seguita da un identificatore e assegna subito un valore booleano iniziale.",
+          "s1": "Omettere il valore iniziale su una costante provoca un immediato errore di sintassi, poiché il linguaggio richiede che venga stabilito immediatamente.",
+          "s2": "È del tutto legale combinare molteplici dichiarazioni tramite virgola, assegnando a ciascun identificatore il proprio valore nella stessa riga.",
+          "s3": "La parola 'variabile' non fa parte della grammatica del linguaggio; le uniche parole chiave riconosciute per questo scopo sono limitate e precise."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "`let utenteAttivo = true;`",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "`const punteggioMassimo;`",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "`let x = 10, y = 20;`",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "`variabile z = 50;`",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0067",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-declaration",
+      "skills": [
+        "let-vs-const"
+      ],
+      "prompt": "Per ogni affermazione relativa alle differenze fondamentali tra `let` e `const`, indica se risulta vera o falsa.",
+      "explanation": {
+        "short": "Le due istruzioni condividono le regole di visibilità ma differiscono sulla possibilità di cambiare il valore.",
+        "whyCorrect": "Entrambe sono bloccate allo scope, ma solo la costante proibisce riassegnazioni future; non ci sono differenze legate al tipo di dato.",
+        "why": {
+          "s0": "Queste parole chiave introducono lo scope di blocco: la variabile smette di esistere non appena l'esecuzione esce dalle graffe in cui è stata creata.",
+          "s1": "Entrambi i costrutti sono perfettamente agnostici rispetto ai tipi: possono ospitare liberamente oggetti, stringhe, booleani o numeri senza distinzione.",
+          "s2": "Questa è l'unica vera differenza: il tentativo di puntare l'identificatore a una cella di memoria diversa viene respinto dal linguaggio bloccando l'esecuzione.",
+          "s3": "Scegliere la costanza non influisce sensibilmente sulle performance nei motori moderni: il beneficio primario risiede nella chiarezza logica e nella prevenzione dei bug."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Entrambe creano variabili che restano confinate rigorosamente all'interno del blocco di parentesi graffe in cui si trovano",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "La parola `let` è pensata esclusivamente per i numeri, mentre `const` serve per le stringhe di testo",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Una costante definita in questo modo è costretta a mantenere il medesimo riferimento iniziale per tutta la sua esistenza",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "L'uso sistematico di `const` ottimizza le prestazioni convertendo automaticamente il codice in un formato più rapido",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0068",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "const-mutation"
+      ],
+      "prompt": "Per ogni affermazione sul comportamento degli oggetti e degli array assegnati originariamente a una `const`, indica se è vera o falsa.",
+      "explanation": {
+        "short": "Una costante impedisce esclusivamente di sostituire il contenitore principale, ma non vieta di modificarne il contenuto interno.",
+        "whyCorrect": "Il legame è immutabile ma i dati strutturati (come oggetti e array) restano del tutto mutabili dall'interno.",
+        "why": {
+          "s0": "Assegnare un nuovo array vuoto equivale a tentare di cambiare l'indirizzo di memoria a cui punta la costante, operazione bloccata da un TypeError.",
+          "s1": "Questi metodi operano alterando l'array esistente sul posto; poiché l'indirizzo di memoria rimane invariato, l'operazione è considerata perfettamente legittima.",
+          "s2": "Le proprietà interne di un oggetto non subiscono alcun vincolo: cambiare il valore di un campo mantiene il contenitore principale identico, rispettando la costante.",
+          "s3": "Per bloccare le aggiunte occorrono metodi specifici come Object.freeze; la dichiarazione originaria agisce soltanto sul legame principale dell'identificatore."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Tentare di sostituire un array assegnando una nuova struttura vuota alla stessa costante genera un errore fatale",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "L'utilizzo di metodi come `push` o `splice` risulta severamente vietato sugli array protetti da una costante",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Il linguaggio consente tranquillamente di sovrascrivere o alterare una singola proprietà dentro un oggetto costante",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "L'impiego della parola `const` congela automaticamente la struttura dell'oggetto rendendo impossibile aggiungervi dati",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0069",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "reassignment-operators"
+      ],
+      "prompt": "Indica se le seguenti istruzioni causano un'effettiva riassegnazione del valore contenuto nella variabile.",
+      "explanation": {
+        "short": "Gli operatori di assegnazione composti e di incremento modificano la variabile, mentre altri contesti si limitano a leggerla.",
+        "whyCorrect": "L'incremento e il `+=` memorizzano un nuovo dato sovrascrivendo il vecchio, mentre confronti e passaggi di funzione estraggono semplicemente il valore attuale.",
+        "why": {
+          "s0": "Questo operatore legge il dato attuale, aggiunge un'unità matematica e lo salva nuovamente al posto del valore originale, concretizzando una vera riassegnazione.",
+          "s1": "I controlli di uguaglianza si limitano a ispezionare il contenuto per stabilire una risposta booleana, senza toccare in alcun modo lo stato della variabile originale.",
+          "s2": "Questo costrutto unisce comodamente un'operazione e una riassegnazione in un singolo passaggio: calcola il risultato concatenato e lo salva immediatamente.",
+          "s3": "Fornire un dato a una funzione significa semplicemente consegnarne una copia o un riferimento per la durata della chiamata, lasciando intatta la sorgente."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "L'utilizzo dell'operatore di incremento `++` posto accanto al nome della variabile numerica",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Il confronto tra la variabile e una stringa arbitraria effettuato tramite l'operatore del triplo uguale",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "L'aggiunta di una porzione di testo al valore corrente utilizzando l'operatore composto `+=`",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Il trasferimento della variabile in qualità di argomento durante la chiamata di una funzione separata",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0070",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "let-reassignment"
+      ],
+      "prompt": "Per ogni affermazione riguardante la flessibilità e le regole di riassegnazione previste per `let`, indica se è vera o falsa.",
+      "explanation": {
+        "short": "Le variabili consentono una gestione molto libera: possono cambiare tipo di dato in qualsiasi istante senza necessità di essere ricreate.",
+        "whyCorrect": "Possiamo ritardare l'assegnazione e i tipi sono dinamici, mentre ripetere l'istruzione di dichiarazione genera esclusivamente errori.",
+        "why": {
+          "s0": "La flessibilità dei tipi dinamici fa sì che il contenitore possa passare da un formato all'altro liberamente in qualunque istante del programma.",
+          "s1": "L'identificatore rimane sempre lo stesso; ciò che viene aggiornato è unicamente il collegamento al nuovo valore nello spazio di memoria preesistente.",
+          "s2": "Questa prassi risulta molto diffusa quando l'informazione da memorizzare dipende da una condizione calcolata in seguito nel flusso del programma.",
+          "s3": "Riscrivere la parola chiave segnala l'intenzione di dichiarare un nuovo nome nello scope, causando un errore; per assegnare basta usare direttamente il simbolo uguale."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Una variabile avviata inizialmente con un numero può essere validamente aggiornata assegnandole una stringa",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "L'operazione di riassegnazione cancella la variabile originale e alloca un contenitore completamente nuovo",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Risulta ammesso dichiarare il nome omettendo il valore e fornendo i dati soltanto in un secondo momento",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "La riassegnazione obbliga lo sviluppatore a posizionare nuovamente la parola `let` davanti all'identificatore",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0071",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "const-violations"
+      ],
+      "prompt": "Indica se l'uso della variabile nei seguenti contesti provoca un arresto del codice per aver violato le restrizioni poste da `const`.",
+      "explanation": {
+        "short": "Si genera un errore solo e unicamente nel momento in cui l'indirizzo di base associato all'identificatore viene sovrascritto.",
+        "whyCorrect": "Cicli tradizionali e assegnazioni dirette violano la costanza; la rimozione di campi e l'iterazione moderna `for...of` operano su meccanismi legittimi.",
+        "why": {
+          "s0": "L'aggiornamento automatico del contatore a fine passaggio costituisce una riassegnazione diretta, scatenando subito un TypeError irrevocabile.",
+          "s1": "Questa struttura speciale crea di fatto una costante nuova e indipendente al principio di ciascun giro del ciclo, rispettando pienamente le regole.",
+          "s2": "Rimuovere elementi dall'interno della struttura modifica il contenuto secondario mantenendo inalterato l'indirizzo di memoria radice difeso dalla costante.",
+          "s3": "Qualsiasi impiego diretto dell'operatore di assegnazione sul nome principale costituisce il nucleo del divieto imposto dalla parola chiave."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Dichiarare il contatore principale di un classico ciclo `for` che deve aumentare il suo valore a ogni turno",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Definire la variabile ricevente dentro un ciclo moderno `for...of` in cui arriva un nuovo dato a ogni iterazione",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Cancellare definitivamente una proprietà interna dall'oggetto contenuto impiegando l'operatore speciale `delete`",
+          "value": false
+        },
+        {
+          "id": "s3",
+          "text": "Adoperare il simbolo uguale per sostituire del tutto il contenuto del contenitore con un oggetto differente",
+          "value": true
+        }
+      ],
+      "id": "variables-tf-0072",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-reassignment",
+      "skills": [
+        "const-binding"
+      ],
+      "prompt": "Per ogni affermazione riguardante la natura del legame (binding) creato dall'istruzione `const`, indica se è vera o falsa.",
+      "explanation": {
+        "short": "La dichiarazione impedisce ogni aggiornamento del riferimento, blindando definitivamente i valori semplici e producendo errori rumorosi.",
+        "whyCorrect": "Il legame non guarda al contenuto: vieta qualsiasi riassegnazione a prescindere dal valore e interrompe il codice quando viene forzato.",
+        "why": {
+          "s0": "Questa è l'essenza dell'istruzione: definisce un riferimento fisso e immutabile che unisce in modo indissolubile il nome assegnato e il suo primo valore.",
+          "s1": "L'interdizione interviene al livello dell'istruzione di assegnazione: il motore lancia un'eccezione prim'ancora di esaminare i contenuti in ingresso.",
+          "s2": "I dati primitivi mancano di proprietà alterabili; poiché l'unico modo per cambiarli sarebbe sostituirli integralmente, la restrizione li cristallizza del tutto.",
+          "s3": "Le violazioni al legame fisso non sono mai silenziose: sollevano immediatamente un grave TypeError che blocca irrimediabilmente il flusso esecutivo."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Il legame stabilito non permette mai di indirizzare l'identificatore verso un'area di memoria completamente differente",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "La restrizione consente comunque riassegnazioni a condizione rigorosa che il valore in arrivo sia speculare al precedente",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Quando l'informazione ospitata risulta essere un dato primitivo come una stringa, quest'ultima diventa intrinsecamente immodificabile",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Un tentativo illecito di aggiornamento viene ignorato in silenzio permettendo al resto del programma di proseguire regolarmente",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0073",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var-scope"
+      ],
+      "prompt": "Per ogni affermazione concernente il comportamento e la visibilità storica legati all'impiego di `var`, indica se risulta vera o falsa.",
+      "explanation": {
+        "short": "A differenza delle controparti moderne, la dichiarazione storica riconosce come confini unicamente le funzioni, ignorando completamente i blocchi.",
+        "whyCorrect": "Questa forma di dichiarazione attraversa indisturbata cicli e istruzioni condizionali, venendo contenuta esclusivamente dai margini delle funzioni.",
+        "why": {
+          "s0": "Mancando del concetto di visibilità a livello di blocco, la variabile oltrepassa la graffa di chiusura dell'istruzione condizionale invadendo l'ambiente circostante.",
+          "s1": "Le funzioni rappresentano l'unico confine naturale riconosciuto storicamente dal linguaggio: tutto ciò che nasce all'interno muore al termine dell'esecuzione della funzione stessa.",
+          "s2": "Questa forma antecedente a ES6 ignora deliberatamente l'esistenza delle graffe semplici, comportandosi come se si trovasse dichiarata nel contenitore padre più ampio.",
+          "s3": "Il contatore creato per orchestrare il ciclo sopravvive illecitamente al termine delle operazioni, mantenendo il suo ultimo valore calcolato e restando raggiungibile."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Una dichiarazione effettuata all'interno di un costrutto `if` rimane perfettamente accessibile persino all'esterno delle graffe",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "I blocchi delimitanti delle funzioni fungono da barriera impenetrabile, bloccando l'accesso dall'esterno alle definizioni interne",
+          "value": true
+        },
+        {
+          "id": "s2",
+          "text": "Le normali coppie di parentesi graffe impiegate nei cicli e nelle condizioni isolano sistematicamente le variabili definite con questo vecchio metodo",
+          "value": false
+        },
+        {
+          "id": "s3",
+          "text": "L'avvio di un ciclo `for` produce variabili locali effimere che scompaiono regolarmente dalla memoria a iterazioni concluse",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0074",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var-hoisting"
+      ],
+      "prompt": "Valuta scrupolosamente le affermazioni che descrivono le conseguenze del meccanismo di hoisting sulle variabili introdotte tramite `var`.",
+      "explanation": {
+        "short": "Il fenomeno solleva le definizioni al vertice lasciando indietro i valori assegnati, producendo comportamenti sorprendenti.",
+        "whyCorrect": "Le registrazioni dei nomi avvengono prima di tutto il resto; le inizializzazioni rimangono ferme, restituendo momentaneamente `undefined` e senza scatenare crash.",
+        "why": {
+          "s0": "Questa elaborazione preventiva fa sì che il parser conosca formalmente l'esistenza dell'identificatore prima ancora di avviare l'esecuzione del blocco di codice vero e proprio.",
+          "s1": "Solamente l'esistenza del nome riceve l'elaborazione anticipata; l'operazione di salvataggio del dato avviene unicamente quando il flusso esecutivo raggiunge fisicamente la riga.",
+          "s2": "Poiché il nome esiste già per il motore ma l'istruzione contenente il valore deve ancora giungere a compimento, l'estrazione fornisce lo speciale valore di assenza predefinito.",
+          "s3": "Il linguaggio accetta tradizionalmente e silenziosamente questo accesso precoce; l'assenza di blocchi severi in tale frangente è esattamente il motivo per cui tale pratica risulta pericolosa."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Durante una fase preparatoria, la dichiarazione viene spostata in modo virtuale e trasparente all'inizio del suo contesto operativo",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Oltre al nome, anche il dato inserito originariamente viene trasportato verso l'alto, garantendone un uso immediato",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Il recupero di una informazione invocata prima della riga in cui compare la sua vera assegnazione restituisce matematicamente `undefined`",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Sfruttare volontariamente o involontariamente questa dinamica causa l'arresto immediato del motore per evitare confusioni e bug",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0075",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var-redeclaration"
+      ],
+      "prompt": "Per ogni affermazione circa l'insolita tolleranza di JavaScript verso le ripetizioni delle dichiarazioni `var`, indica se si rivela vera o falsa.",
+      "explanation": {
+        "short": "L'uso ripetuto di questa parola chiave sulla stessa stringa di testo viene sistematicamente assecondato provocando talvolta sovrascritture accidentali.",
+        "whyCorrect": "Il motore tollera infinite dichiarazioni, sovrascrivendo i valori se sono presenti e lasciando i dati intatti in caso contrario, a scapito della sicurezza complessiva.",
+        "why": {
+          "s0": "A differenza delle varianti restrittive più recenti, l'operazione di sovrapposizione viene ignorata o assecondata dal parser, consentendo la prosecuzione normale dell'elaborazione.",
+          "s1": "Una definizione superflua e priva di uguaglianze non reinizializza minimamente il contenitore, garantendo che le informazioni preziose non subiscano distruzioni non richieste.",
+          "s2": "Tale flessibilità rappresenta in realtà un grave limite alla manutenzione, poiché maschera errori accidentali in cui uno sviluppatore calpesta inavvertitamente i dati altrui senza saperlo.",
+          "s3": "I motori attuali conservano intatta questa falla progettuale per pura e rigorosa compatibilità con le sterminate basi di codice esistenti da svariati decenni su internet."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Il linguaggio reagisce scatenando un'eccezione irreversibile non appena intercetta due creazioni coincidenti dello stesso identificatore",
+          "value": false
+        },
+        {
+          "id": "s1",
+          "text": "La ridichiarazione ripetuta della medesima voce, qualora manchi di un nuovo dato esplicito, preserva integralmente il contenuto già memorizzato",
+          "value": true
+        },
+        {
+          "id": "s2",
+          "text": "Questa permissività storica venne progettata accuratamente per agevolare il rilevamento rapido dei difetti architetturali nei grandi applicativi",
+          "value": false
+        },
+        {
+          "id": "s3",
+          "text": "Questa problematica è stata soppressa direttamente dalle piattaforme web recenti rendendo la doppia dichiarazione impossibile a prescindere",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0076",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var-global",
+        "var-scope"
+      ],
+      "prompt": "Indica quali tra i seguenti comportamenti insoliti e peculiarità sono caratteristici dell'impiego tradizionale di `var` a differenza dei costrutti recenti.",
+      "explanation": {
+        "short": "Le vecchie dichiarazioni invadono l'ambiente globale, scavalcano le difese dei blocchi logici e tollerano pessime abitudini di codifica.",
+        "whyCorrect": "Inquinano l'oggetto window e le graffe le ignorano bellamente; l'accesso precoce offre un valore indefinito, e la ridichiarazione passa inosservata.",
+        "why": {
+          "s0": "Questo costrutto crea silenziosamente un collegamento verso il fulcro dell'ambiente esecutivo nel browser, con enormi rischi di collisione fra script estranei.",
+          "s1": "La problematica genera come unico inconveniente un temporaneo ma fatale valore indefinito che scombina i calcoli successivi, sfuggendo a crash provvidenziali immediati.",
+          "s2": "L'interprete riduce silenziosamente l'esubero convertendolo in una pura operazione di salvataggio secondaria, permettendo al programmatore di accavallare assegnazioni.",
+          "s3": "Le strutture sintattiche elementari delle condizioni non generano contesti d'isolamento riconosciuti, permettendo la diffusione capillare della variabile ben oltre il recinto ipotizzato."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Se inserita nel contesto radice globale, l'istruzione va ad accodare un attributo permanente all'oggetto finestra centrale",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Cercare di sfruttare i dati prim'ancora che la riga corrispondente intervenga manda immediatamente in stallo tutto l'applicativo",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Risulta concesso duplicare ripetutamente l'istruzione generatrice per lo stesso termine all'interno del corpo di un'unica funzione",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "La propagazione dei dati incontra ostacoli insormontabili di fronte alle comunissime parentesi graffe di un comando if/else",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0077",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-var",
+      "skills": [
+        "var-legacy"
+      ],
+      "prompt": "Per ciascuna affermazione riguardante la diffusione e l'apprezzamento attuali e passati dell'istruzione `var`, indica se è riscontrabile come vera o falsa.",
+      "explanation": {
+        "short": "Questo strumento rappresenta un imponente fardello del passato conservato esclusivamente per mantenere operativi i siti web arcaici.",
+        "whyCorrect": "Era l'unico metodo concepito originariamente, ma la sua imprevedibilità e i problemi architetturali ne raccomandano oggi il pensionamento permanente a favore di standard chiari.",
+        "why": {
+          "s0": "Per circa un ventennio ha rappresentato il fondamento insostituibile per immagazzinare e gestire dati dinamici all'interno delle applicazioni.",
+          "s1": "Le misurazioni moderne hanno soppresso totalmente eventuali scostamenti esecutivi; le varianti attuali offrono vantaggi identici insieme a garanzie nettamente superiori.",
+          "s2": "L'inquinamento sistematico dell'ambiente, sommato all'assenza di limitazioni nei cicli e al tollerato accavallamento di definizioni, ha causato danni a intere generazioni di programmatori.",
+          "s3": "L'industria concorda all'unanimità nel raccomandare un esodo graduale verso alternative più limitanti e sicure per rafforzare la manutenibilità e le probabilità di successo."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Fungeva da monolitica e incontrastata soluzione universale predefinita prima del massiccio aggiornamento delle specifiche di ECMAScript 6",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Viene raccomandata strenuamente oggigiorno in quanto l'interprete sfrutta tale costrutto per eseguire i calcoli con un marcato divario prestazionale",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Una fetta maggioritaria di esperti tende a sradicarla attivamente a fronte di regole di diffusione e visibilità talvolta spiazzanti",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Le direttive ufficiali e i manuali suggeriscono di commutare integralmente gli script convertendo il moderno codice in questa sintassi solida",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0078",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "tdz-definition"
+      ],
+      "prompt": "Per ogni affermazione descrittiva sulla natura basilare della cosiddetta Temporal Dead Zone (TDZ), valuta accuratamente e indica se risulta vera o falsa.",
+      "explanation": {
+        "short": "Questo concetto descrive una salvaguardia introdotta per costringere a operare sui dati solamente dopo il completamento formale della loro assegnazione primaria.",
+        "whyCorrect": "La zona agisce solo sui comandi introdotti da ES6, restituisce ReferenceError per limitare gli infortuni ed è strettamente correlata ai flussi temporali di elaborazione.",
+        "why": {
+          "s0": "Forzando un crash incontrollabile anziché un silenzioso risultato indefinito, il motore spinge i progettisti a intercettare l'uso fuorviante assai precocemente e senza ambiguità.",
+          "s1": "L'infrastruttura storica possedeva difetti tali da restituire tranquillamente un risultato nullo, e non ha mai goduto delle protezioni integrate aggiunte nella successiva generazione.",
+          "s2": "Questa peculiare eccezione ferma all'istante la propagazione, segnalando a chiare lettere e con coordinate geografiche il misfatto architetturale commesso ai danni della linearità.",
+          "s3": "La dinamica si estende fino a coprire il lasso di tempo necessario all'esecuzione; anche passaggi posizionati fisicamente molto più in alto non incorrono in sanzioni se chiamati con tempismo differito."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Si concretizza come una restrizione intenzionale del motore che obbliga a delineare formalmente l'esistenza di un dato per arginare fastidiosi imprevisti",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Il meccanismo di sorveglianza appena menzionato agisce prevalentemente sulle informazioni definite tramite il comando obsoleto `var`",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Tentare sconsideratamente di sondare i valori immersi transitoriamente in questa fase fa saltare il sistema invocando uno specifico ReferenceError",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Rappresenta una barriera meramente testuale confinata alle primissime righe in alto nel documento sorgente, disancorata dallo scorrere del tempo operativo",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0079",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "tdz-typeof"
+      ],
+      "prompt": "Valuta le seguenti affermazioni riguardo all'interazione tra l'ispezione della variabile condotta da `typeof` e le restrizioni della Temporal Dead Zone.",
+      "explanation": {
+        "short": "Le limitazioni temporali sopprimono l'inviolabilità storica garantita ai comandi diagnostici di base per tutelare l'integrità del flusso e le buone abitudini.",
+        "whyCorrect": "L'ispezione incontra lo stesso identico sbarramento insormontabile di un calcolo standard producendo il crash; incapsularla smorza il crash ma non aggira il blocco per produrre risultati innocui.",
+        "why": {
+          "s0": "Mentre l'ispezione su lemmi fantasma inesistenti offre tipicamente rassicuranti garanzie, l'identificatore in tale area temporale è riconosciuto ed espressamente interdetto fino a completamento.",
+          "s1": "Pur trattandosi storicamente della formula più protetta e sicura, non possiede le autorizzazioni per intercettare l'avanzamento senza detonare nell'eccezione.",
+          "s2": "Ha rappresentato una clamorosa inversione di tendenza architetturale per la community disporre di uno scenario in cui l'inviolabile operatore diagnostico provocasse rovinosi arresti preventivi.",
+          "s3": "I sistemi di cattura eccezionale domano gli arresti gestendoli localmente, tuttavia non sono magicamente in grado di sovrascrivere l'errore forzando un esito di tipo diagnostico valido e fittizio."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "L'esecuzione dell'ispezione su una stringa protetta dalle barriere del blocco restituisce innocentemente ed elegantemente il temine `undefined`",
+          "value": false
+        },
+        {
+          "id": "s1",
+          "text": "Sondare la tipologia strutturale in tale contesto proibito spezza inaspettatamente la leggendaria immunità del comando forzando un netto ReferenceError",
+          "value": true
+        },
+        {
+          "id": "s2",
+          "text": "La protezione disintegra la granitica assunzione comunemente diffusa secondo la quale tale ispezione costituirebbe eternamente un'operazione sicura",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Inserire preventivamente l'ispezione diagnostica dentro i costrutti del try-catch bypassa agilmente le restrizioni fornendo comunque una risposta neutra",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0080",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "tdz-timing"
+      ],
+      "prompt": "Indica in modo rigoroso e inequivocabile gli istanti esatti in cui le limitazioni della Temporal Dead Zone avviano e terminano i propri rigidi effetti di sbarramento.",
+      "explanation": {
+        "short": "La zona inizia sistematicamente all'ingresso del contesto di appartenenza e cede il passo unicamente al transito della riga di inizializzazione.",
+        "whyCorrect": "Abbraccia il periodo vitale che intercorre tra l'accensione del blocco semantico e il riconoscimento ufficiale dell'identificatore, indipendentemente dalla natura o presenza di un contenuto addizionale.",
+        "why": {
+          "s0": "Sin dall'inaugurazione del settore contestuale, i metadati segnalano in modo subliminale l'esistenza di barriere, predisponendo le reazioni fulminee dell'interprete e bloccando sul nascere intrusioni.",
+          "s1": "Diluire le conseguenze protettive su base globale comprometterebbe lo snodarsi dinamico delle attività: al fine di salvaguardare le performance, la zona evapora al giungere puntuale dell'istruzione preposta.",
+          "s2": "In tale attimo decisivo l'interprete registra il superamento dello scoglio ed espande a titolo definitivo l'assegnazione nello spazio operativo, svincolandola per gli impieghi futuri e ripristinando la normale fruibilità.",
+          "s3": "Persino le formule mancanti di accompagnamento esplicito sbloccano egualmente il processo poiché l'interprete somministra tacitamente un valore neutro pur di rispettare la sequenzialità indispensabile."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Si insedia operativamente con precisione nell'attimo stesso in cui il contenitore circostante apre i battenti dell'elaborazione di routine",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Il lasso di tempo si prolunga artificialmente consumandosi solamente alle battute conclusive e assolute del documento madre in esecuzione",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Lo sbarramento svanisce dissolvendosi quando la testina logica metabolizza compiutamente l'istruzione contenente la famigerata definizione iniziale",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Gli effetti collaterali si estinguono e si auto-annullano del tutto a meno che venga stipulato a livello sintattico un valore effettivo e vincolante",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0081",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "tdz-hoisting"
+      ],
+      "prompt": "Per ogni affermazione focalizzata su come l'architettura interna solleva preventivamente (hoisting) gli identificatori interagendo coi divieti della Temporal Dead Zone (TDZ), indica la veridicità.",
+      "explanation": {
+        "short": "Le restrizioni della zona protettiva dipendono inesorabilmente dall'hoisting che intercetta i nomi rendendoli esistenti ma bloccati fino alla dichiarazione.",
+        "whyCorrect": "Le definizioni moderne subiscono il sollevamento ma mancano dell'innesco; in sua assenza scatterebbero insidiose invasioni laterali, e non vi è alcuna limitazione affine per l'hoisting funzionale autonomo.",
+        "why": {
+          "s0": "Questo paradosso formale evidenzia l'essenza stessa dell'operazione: l'interprete intuisce lo spazio ma rifiuta la sostanza rendendo il lemma ostaggio delle direttive stringenti preposte a tale mansione protettiva.",
+          "s1": "Al contrario di vecchie credenze, i motori aggiornati sollevano implacabilmente i lemmi moderni alla sommità; la zona speciale ne inibisce la fruibilità invece di precludere lo spostamento preparatorio pre-costituito.",
+          "s2": "Avendo il perimetro inglobato saldamente la sua esclusiva copia isolata, l'ispezione si arrende precludendo le alternative esterne; se non accadesse la lettura trapasserebbe i recinti intralciando operazioni lontane.",
+          "s3": "Le strutture procedurali classiche vantano il privilegio rarissimo della traslazione integrale dotata di innesto anticipato assicurando la libera esecutività persino alla prima riga senza inibizione alcuna."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Tutti gli identificatori moderni raggiungono preventivamente i vertici dello scope in via ufficiale e invisibile privi totalmente di rassicurante innesco preparatorio",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "L'insorgere tempestivo di tale blocco dipende palesemente dall'abbandono consapevole e mirato delle tecniche selettive di sollevamento nei dialetti di ultima generazione",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "In assenza della silente registrazione preliminare causata dall'hoisting, la richiesta sconsiderata procederebbe per esclusione scandagliando e agguantando le varianti globali identiche esterne",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Anche il sollevamento funzionale impiega i dogmi spietati della zona disattivata intralciando ferocemente le chiamate collocate impropriamente in alto sul foglio di lavoro",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0082",
+      "source": "ai"
+    },
+    {
+      "type": "true-false",
+      "difficulty": "easy",
+      "topicId": "variables",
+      "subtopicId": "variables-tdz",
+      "skills": [
+        "tdz-practical"
+      ],
+      "prompt": "Indica in maniera perentoria se gli scenari sotto elencati causano nella pratica un arresto fatale (ReferenceError) derivante dalle limitazioni introdotte dalla Temporal Dead Zone.",
+      "explanation": {
+        "short": "Le sanzioni intervengono senza indulgenza ogni volta che i processi di elaborazione inciampano sull'identificatore prima della conclusione esecutiva della corrispondente dichiarazione ufficiale di ES6.",
+        "whyCorrect": "Gli impieghi prematuri scatenano crash, le sequenzialità temporali corrette escludono intoppi e la vetusta parola chiave ignora bellamente la protezione, causando fastidi ma non blocchi strutturali legati alla TDZ.",
+        "why": {
+          "s0": "Procedere cronologicamente colpendone la sagoma incompleta scatena un immediato corto circuito sistemico dovuto al divieto assoluto vigente sulla disponibilità anticipata del contenuto restrittivo della TDZ.",
+          "s1": "Il differimento esecutivo indotto dall'invocazione posticipata scavalca l'inquadramento rigido testuale: il blocco subordina il tutto esclusivamente al tempo effettivo garantendo via libera se l'ordine cronologico ne supporta il rispetto vitale.",
+          "s2": "Poiché anche depositare input sollecita vigorosamente le verifiche restrittive preliminari, non fa differenze in questo stadio e intercetta le modifiche premature scardinando istantaneamente l'apparente linearità del comando di riversamento.",
+          "s3": "Questa casistica non è intercettata dai protocolli restrittivi aggiornati, limitandosi a offrire fastidiosi esiti neutrali a riprova dell'evidente obsolescenza del comando e dell'assenza totale di sbarramenti sanzionabili."
+        }
+      },
+      "format": "true-false",
+      "statements": [
+        {
+          "id": "s0",
+          "text": "Estrarre le credenziali da una costante nella riga fisicamente precedente a quella in cui avviene testualmente e formale l'esplicita operazione di creazione",
+          "value": true
+        },
+        {
+          "id": "s1",
+          "text": "Invocare al livello superiore un componente funzionale che sfrutta dati moderni dopo che tali risorse hanno incassato un corretto innesto sequenziale in basso",
+          "value": false
+        },
+        {
+          "id": "s2",
+          "text": "Somministrare dei contenuti direttamente a un lemma appoggiandosi su calcoli che ne precedono fisicamente l'instaurazione ufficiale protetta dalle barriere semantiche",
+          "value": true
+        },
+        {
+          "id": "s3",
+          "text": "Cercare vanamente e recuperare ostinatamente risorse storiche in sezioni remote a debita distanza dal comparto isolato che ne ospita l'effettiva comparsa iniziale",
+          "value": false
+        }
+      ],
+      "id": "variables-tf-0083",
+      "source": "ai"
+    }
+  ]
+}

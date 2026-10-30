@@ -1,11 +1,13 @@
 import {
   applyAnswer,
+  gradeAnswer,
   composeSession,
   summarizeSession,
   updateProgressAfterSession,
   xpForAttempt,
   type GameMode,
   type LevelId,
+  type AnswerResponse,
   type Question,
   type QuestionAttempt,
   type QuestionHistoryEntry,
@@ -25,10 +27,37 @@ interface SessionState {
   finishing: boolean;
 
   current(): Question | undefined;
-  start(subjectId: string, levelId: LevelId, mode: GameMode, weightedToWeak?: boolean): Promise<void>;
-  answer(optionId: string): void;
+  start(
+    subjectId: string,
+    levelId: LevelId,
+    mode: GameMode,
+    weightedToWeak?: boolean,
+  ): Promise<void>;
+  answer(response: AnswerResponse): void;
   next(): void;
   finish(): Promise<Session>;
+}
+
+export function makeAttempt(
+  q: Question,
+  response: AnswerResponse,
+  startedAt: number,
+): QuestionAttempt {
+  const r = gradeAnswer(q, response);
+  return {
+    questionId: q.id,
+    templateId: q.templateId,
+    topicId: q.topicId,
+    subtopicId: q.subtopicId,
+    type: q.type,
+    difficulty: q.difficulty,
+    correct: r.correct,
+    response,
+    score: r.score,
+    timeMs: Date.now() - startedAt,
+    attempt: 1,
+    answeredAt: Date.now(),
+  };
 }
 
 function currentStreak(attempts: readonly QuestionAttempt[]): number {
@@ -66,23 +95,11 @@ export const useSessionStore = create<SessionState>((set, get) => ({
     set({ session, index: 0, answered: null, questionStartedAt: Date.now(), lastXp: 0 });
   },
 
-  answer(optionId) {
+  answer(response) {
     const { session, index, answered, questionStartedAt } = get();
     const q = session?.questions[index];
     if (!session || !q || answered) return;
-    const attempt: QuestionAttempt = {
-      questionId: q.id,
-      templateId: q.templateId,
-      topicId: q.topicId,
-      subtopicId: q.subtopicId,
-      type: q.type,
-      difficulty: q.difficulty,
-      correct: optionId === q.correctOptionId,
-      selectedOptionId: optionId,
-      timeMs: Date.now() - questionStartedAt,
-      attempt: 1,
-      answeredAt: Date.now(),
-    };
+    const attempt = makeAttempt(q, response, questionStartedAt);
     const streak = currentStreak(session.attempts);
     set({
       session: applyAnswer(session, attempt),

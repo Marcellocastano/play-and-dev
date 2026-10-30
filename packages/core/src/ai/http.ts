@@ -50,10 +50,7 @@ export class HttpAIProvider implements AIProvider {
   }
 
   async generateStudyPlan(req: GenerateStudyPlanRequest): Promise<LearningRecommendation[]> {
-    const json = await this.post<{ recommendations: LearningRecommendation[] }>(
-      'study-plan',
-      req,
-    );
+    const json = await this.post<{ recommendations: LearningRecommendation[] }>('study-plan', req);
     return json.recommendations;
   }
 }

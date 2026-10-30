@@ -40,19 +40,23 @@ export function makeTemplate(
     generate(rng): GeneratedQuestion {
       const n = Math.floor(rng() * 10000);
       const correct = `valore-${n}`;
-      const distractors = uniqueDistractors(correct, [
-        `valore-${n + 1}`,
-        `valore-${n + 2}`,
-        `valore-${n + 3}`,
-        `valore-${n - 1}`,
-        `valore-${n + 4}`,
-      ], 3);
+      const distractors = uniqueDistractors(
+        correct,
+        [
+          `valore-${n + 1}`,
+          `valore-${n + 2}`,
+          `valore-${n + 3}`,
+          `valore-${n - 1}`,
+          `valore-${n + 4}`,
+        ],
+        3,
+      );
       const texts = shuffle([correct, ...distractors], rng);
       const options = texts.map((text, i) => ({ id: `o${i}`, text }));
       const correctOptionId = options.find((o) => o.text === correct)!.id;
-      const whyOthersWrong: Record<string, string> = {};
+      const why: Record<string, string> = {};
       for (const o of options) {
-        if (o.id !== correctOptionId) whyOthersWrong[o.id] = `${o.text} è errato.`;
+        if (o.id !== correctOptionId) why[o.id] = `${o.text} è errato.`;
       }
       return {
         templateId: id,
@@ -63,12 +67,13 @@ export function makeTemplate(
         skills: ['skill-1'],
         prompt: `Domanda ${n}?`,
         code: REQUIRES_CODE.has(type) ? `const x = ${n};` : undefined,
+        format: 'choice',
         options,
         correctOptionId,
         explanation: {
           short: 'Spiegazione breve.',
           whyCorrect: `${correct} è la risposta corretta.`,
-          whyOthersWrong,
+          why,
           concept: 'Concetto di test',
         },
       };
@@ -121,9 +126,7 @@ export function makeSubject(spec: SubjectSpec): SubjectDefinition {
     icon: 'icon',
     theme: TEST_THEME,
     status: 'available',
-    levels: [
-      { id: levelId, name: levelId, description: '', topicIds: topics.map((t) => t.id) },
-    ],
+    levels: [{ id: levelId, name: levelId, description: '', topicIds: topics.map((t) => t.id) }],
     topics,
     templates,
     learningObjectives: [],

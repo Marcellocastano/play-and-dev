@@ -6,11 +6,23 @@ export const arraysBasicsTopic: Topic = {
   levelId: 'beginner',
   name: 'Array (basi)',
   overview:
-    'Un array è una lista ordinata di valori con indici da `0` a `length - 1`. `push`/`pop` agiscono in coda, `unshift`/`shift` in testa; `indexOf` e `includes` cercano elementi. Accedere oltre l\'ultimo indice dà `undefined`.',
+    "Un array è una lista ordinata di valori con indici da `0` a `length - 1`. `push`/`pop` agiscono in coda, `unshift`/`shift` in testa; `indexOf` e `includes` cercano elementi. Accedere oltre l'ultimo indice dà `undefined`.",
   subtopics: [
-    { id: 'arrays-access', name: 'Indici e length', overview: 'arr[0] è il primo elemento; arr.length il numero di elementi.' },
-    { id: 'arrays-mutators', name: 'push, pop, shift, unshift', overview: 'Aggiungere e togliere da testa e coda.' },
-    { id: 'arrays-search', name: 'indexOf e includes', overview: 'Trovare la posizione o verificare la presenza.' },
+    {
+      id: 'arrays-access',
+      name: 'Indici e length',
+      overview: 'arr[0] è il primo elemento; arr.length il numero di elementi.',
+    },
+    {
+      id: 'arrays-mutators',
+      name: 'push, pop, shift, unshift',
+      overview: 'Aggiungere e togliere da testa e coda.',
+    },
+    {
+      id: 'arrays-search',
+      name: 'indexOf e includes',
+      overview: 'Trovare la posizione o verificare la presenza.',
+    },
   ],
   learningObjectives: [
     'Accedere agli elementi con gli indici (partendo da 0)',
@@ -19,8 +31,8 @@ export const arraysBasicsTopic: Topic = {
     'Sapere che arr[arr.length] è undefined',
   ],
   commonMistakes: [
-    'Off-by-one: l\'ultimo indice è length - 1, non length',
-    'Pensare che pop restituisca l\'array (restituisce l\'elemento tolto)',
+    "Off-by-one: l'ultimo indice è length - 1, non length",
+    "Pensare che pop restituisca l'array (restituisce l'elemento tolto)",
     'Confondere indexOf (posizione o -1) con includes (true/false)',
     'Aspettarsi un errore accedendo a un indice inesistente (si ottiene undefined)',
   ],

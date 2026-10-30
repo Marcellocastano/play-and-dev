@@ -32,18 +32,17 @@
       "explanation": {
         "short": "Math.max calcola il massimo tra i numeri dati.",
         "whyCorrect": "Math.max è il metodo corretto per ottenere il massimo tra i valori forniti come argomenti separati.",
-        "whyOthersWrong": {
+        "concept": "Math.max",
+        "commonMistake": "Confondere Math.max con una funzione chiamata maximum o usare sintassi errata.",
+        "example": "Math.max(4, 8, 1) // 8",
+        "why": {
           "b": "Math.maximum non esiste: la funzione giusta per il massimo è Math.max.",
           "c": "max non è definita come funzione globale in JavaScript, serve Math.max.",
           "d": "Math.max si usa con le parentesi tonde e argomenti separati, non con le quadre e array."
-        },
-        "concept": "Math.max",
-        "commonMistake": "Confondere Math.max con una funzione chiamata maximum o usare sintassi errata.",
-        "example": "Math.max(4, 8, 1) // 8"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:27:33.887Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fg-0002",
@@ -76,18 +75,17 @@
       "explanation": {
         "short": "Math.random() restituisce un float casuale tra 0 e 1.",
         "whyCorrect": "Math.random() va chiamato con le parentesi per ottenere il numero casuale; non è necessario passare argomenti.",
-        "whyOthersWrong": {
+        "concept": "Math.random",
+        "commonMistake": "Dimenticare le parentesi o confondere il nome della funzione.",
+        "example": "let x = Math.random();",
+        "why": {
           "b": "random() non è definita come funzione globale: serve sempre Math.random().",
           "c": "Math.rand non esiste in JavaScript, la funzione si chiama Math.random.",
           "d": "Math.random senza parentesi è la funzione stessa, non il suo risultato."
-        },
-        "concept": "Math.random",
-        "commonMistake": "Dimenticare le parentesi o confondere il nome della funzione.",
-        "example": "let x = Math.random();"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:27:33.888Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fg-0003",
@@ -120,18 +118,17 @@
       "explanation": {
         "short": "Number.isInteger verifica se il valore è un intero.",
         "whyCorrect": "Number.isInteger(7) restituisce true perché 7 è effettivamente un numero intero.",
-        "whyOthersWrong": {
+        "concept": "Number.isInteger",
+        "commonMistake": "Confondere il nome della funzione o passare una stringa invece di un numero.",
+        "example": "Number.isInteger(3.5) // false",
+        "why": {
           "b": "Number.isInt non esiste: la funzione corretta è Number.isInteger.",
           "c": "isInteger non è definita globalmente senza il prefisso Number.",
           "d": "Number.isInteger('7') restituisce false perché '7' è una stringa."
-        },
-        "concept": "Number.isInteger",
-        "commonMistake": "Confondere il nome della funzione o passare una stringa invece di un numero.",
-        "example": "Number.isInteger(3.5) // false"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:27:33.889Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fg-0006",
@@ -164,18 +161,17 @@
       "explanation": {
         "short": "Il mese di maggio corrisponde a 4 perché i mesi partono da 0.",
         "whyCorrect": "In JavaScript il mese 4 corrisponde a maggio, perché gennaio è 0 e aprile è 3.",
-        "whyOthersWrong": {
+        "concept": "Mesi 0-based in Date",
+        "commonMistake": "Dimenticare che i mesi vanno da 0 a 11.",
+        "example": "new Date(2022, 11, 25) // 25 dicembre 2022",
+        "why": {
           "b": "Il valore 5 produce giugno, perché i mesi partono da 0 e 5 è il sesto mese.",
           "c": "3 indica aprile, non maggio, a causa dell'indicizzazione da zero.",
           "d": "1 indica febbraio, poiché 0 è gennaio e 1 è il secondo mese."
-        },
-        "concept": "Mesi 0-based in Date",
-        "commonMistake": "Dimenticare che i mesi vanno da 0 a 11.",
-        "example": "new Date(2022, 11, 25) // 25 dicembre 2022"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:27:44.377Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fb-0001",
@@ -208,18 +204,17 @@
       "explanation": {
         "short": "I mesi in JavaScript partono da zero: 5 indica giugno, non maggio.",
         "whyCorrect": "Il costruttore `Date` usa mesi 0-based, quindi il mese 5 corrisponde a giugno. Per maggio bisogna passare 4 come secondo argomento.",
-        "whyOthersWrong": {
+        "concept": "Date e mesi 0-based",
+        "commonMistake": "Dimenticare che i mesi vanno da 0 (gennaio) a 11 (dicembre).",
+        "example": "new Date(2024, 4, 10) // 10 maggio 2024",
+        "why": {
           "b": "I giorni nei costruttori `Date` partono da 1, non da 0, quindi il giorno 10 rappresenta davvero il 10 del mese.",
           "c": "L'anno è espresso con il valore reale, non parte da zero: 2024 è effettivamente il 2024.",
           "d": "Il costruttore `Date` accetta anche parametri numerici, non obbligatoriamente stringhe."
-        },
-        "concept": "Date e mesi 0-based",
-        "commonMistake": "Dimenticare che i mesi vanno da 0 (gennaio) a 11 (dicembre).",
-        "example": "new Date(2024, 4, 10) // 10 maggio 2024"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:27:40.437Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fb-0002",
@@ -252,18 +247,17 @@
       "explanation": {
         "short": "Math.max richiede numeri separati, non un array.",
         "whyCorrect": "Passando l'intero array come singolo argomento a `Math.max`, il valore è trattato come NaN perché non è un numero. Serve lo spread operator per passare i valori singolarmente.",
-        "whyOthersWrong": {
+        "concept": "Math.max e spread operator",
+        "commonMistake": "Dimenticare di usare ... per passare i valori dell'array.",
+        "example": "Math.max(...[9, 2, 13, 7]) // 13",
+        "why": {
           "b": "Tutti gli elementi dell'array sono numeri. Il problema non è dovuto a valori non numerici.",
           "c": "Se l'array fosse vuoto, non si otterrebbe undefined, ma comunque NaN passando un array. Inoltre l'array non è vuoto.",
           "d": "Math.max non estrae il primo elemento se riceve un array, tratta l'intero array come un argomento unico e quindi restituisce NaN."
-        },
-        "concept": "Math.max e spread operator",
-        "commonMistake": "Dimenticare di usare ... per passare i valori dell'array.",
-        "example": "Math.max(...[9, 2, 13, 7]) // 13"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:27:40.438Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fb-0004",
@@ -296,18 +290,17 @@
       "explanation": {
         "short": "Il confronto === controlla il riferimento, non il valore.",
         "whyCorrect": "Due oggetti Date diversi non sono mai strettamente uguali, anche se rappresentano lo stesso momento. Bisogna confrontare i valori restituiti da getTime().",
-        "whyOthersWrong": {
+        "concept": "Confronto tra oggetti Date",
+        "commonMistake": "Usare === tra due oggetti Date invece di confrontare i valori numerici con getTime().",
+        "example": "d1.getTime() === d2.getTime()",
+        "why": {
           "b": "Il confronto non riguarda solo il mese, ma l'intero riferimento dell'oggetto: non c'entra il campo specifico.",
           "c": "Convertire le date in stringa può funzionare, ma il problema è il confronto tra oggetti, non la mancata conversione.",
           "d": "Anche creando due istanze identiche, sono oggetti distinti in memoria, quindi === restituisce sempre false."
-        },
-        "concept": "Confronto tra oggetti Date",
-        "commonMistake": "Usare === tra due oggetti Date invece di confrontare i valori numerici con getTime().",
-        "example": "d1.getTime() === d2.getTime()"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:27:40.438Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fb-0006",
@@ -340,18 +333,17 @@
       "explanation": {
         "short": "Math.random() * 6 genera valori da 0 a 5.999..., arrotondando con floor si ottiene 0–5.",
         "whyCorrect": "Con questa formula si producono numeri interi da 0 a 5. Bisogna sommare 1 per spostare il range da 1 a 6.",
-        "whyOthersWrong": {
+        "concept": "Math.random e generazione interi in range",
+        "commonMistake": "Dimenticare di aggiungere 1 per includere l'estremo superiore.",
+        "example": "Math.floor(Math.random() * 6) + 1",
+        "why": {
           "b": "Math.floor arrotonda per difetto, ma il problema non è il metodo, è la formula che parte da 0.",
           "c": "Math.ceil produrrebbe un range sbilanciato, includendo il 6 solo raramente e mai restituendo 0.",
           "d": "Math.random restituisce valori decimali tra 0 incluso e 1 escluso, non interi."
-        },
-        "concept": "Math.random e generazione interi in range",
-        "commonMistake": "Dimenticare di aggiungere 1 per includere l'estremo superiore.",
-        "example": "Math.floor(Math.random() * 6) + 1"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:27:40.439Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-po-0015",
@@ -384,18 +376,17 @@
       "explanation": {
         "short": "Math.abs converte il numero in positivo e Math.floor tronca verso il basso.",
         "whyCorrect": "Math.abs(-7.8) restituisce 7.8, Math.floor(7.8) porta a 7 perché floor arrotonda sempre verso il basso all'intero più vicino.",
-        "whyOthersWrong": {
+        "concept": "Math.abs e Math.floor",
+        "commonMistake": "Confondere floor con round o tralasciare abs.",
+        "example": "Math.floor(Math.abs(-3.4)) // 3",
+        "why": {
           "b": "Math.floor non arrotonda all'intero più vicino, ma al più basso, quindi 7.8 diventa 7 e non 8.",
           "c": "Math.abs rende il numero positivo, quindi il risultato non può essere negativo.",
           "d": "Math.abs converte in positivo e Math.floor non scende a -8 perché il valore di partenza dopo abs è positivo."
-        },
-        "concept": "Math.abs e Math.floor",
-        "commonMistake": "Confondere floor con round o tralasciare abs.",
-        "example": "Math.floor(Math.abs(-3.4)) // 3"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:46.765Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-po-0016",
@@ -428,18 +419,17 @@
       "explanation": {
         "short": "parseInt estrae la parte intera, parseFloat la parte decimale.",
         "whyCorrect": "parseInt preleva i caratteri numerici iniziali e si ferma al punto, quindi restituisce 12. parseFloat legge fino a dove il numero è valido come float, quindi restituisce 12.7.",
-        "whyOthersWrong": {
+        "concept": "parseInt vs parseFloat",
+        "commonMistake": "Aspettarsi che parseInt legga anche i decimali.",
+        "example": "parseInt('5.9abc') // 5, parseFloat('5.9abc') // 5.9",
+        "why": {
           "b": "Entrambe le funzioni restituiscono NaN solo se la stringa non inizia con una cifra (qui inizia con 12).",
           "c": "parseInt tronca al primo carattere non valido per un intero, quindi restituisce 12 e non 12.7.",
           "d": "parseFloat accetta la parte decimale, legge 12.7 e non si ferma alla parte intera."
-        },
-        "concept": "parseInt vs parseFloat",
-        "commonMistake": "Aspettarsi che parseInt legga anche i decimali.",
-        "example": "parseInt('5.9abc') // 5, parseFloat('5.9abc') // 5.9"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:46.767Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-po-0017",
@@ -472,18 +462,17 @@
       "explanation": {
         "short": "I mesi partono da 0, quindi getMonth restituisce il valore fornito.",
         "whyCorrect": "La data creata con mese 4 rappresenta maggio, e getMonth restituisce 4 perché i mesi vanno da 0 (gennaio) a 11 (dicembre).",
-        "whyOthersWrong": {
+        "concept": "Date e mesi 0-based",
+        "commonMistake": "Dimenticare che getMonth e costruttore usano 0-based.",
+        "example": "new Date(2024, 0, 1).getMonth() // 0 (gennaio)",
+        "why": {
           "b": "Scegliere 5 confonde il numero del mese umano (maggio come 5) con quello usato da Date, che è 0-based.",
           "c": "3 sarebbe aprile: qui invece è stato passato 4, che indica maggio.",
           "d": "15 è il giorno fornito, mentre getMonth restituisce solo l'indice del mese."
-        },
-        "concept": "Date e mesi 0-based",
-        "commonMistake": "Dimenticare che getMonth e costruttore usano 0-based.",
-        "example": "new Date(2024, 0, 1).getMonth() // 0 (gennaio)"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:46.767Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-po-0018",
@@ -516,18 +505,17 @@
       "explanation": {
         "short": "getDate restituisce il giorno del mese, getDay il giorno della settimana (domenica=0).",
         "whyCorrect": "new Date(2024, 3, 7) rappresenta il 7 aprile 2024, che è una domenica. getDate() è 7 (giorno del mese), getDay() è 0 (domenica).",
-        "whyOthersWrong": {
+        "concept": "Date: getDate vs getDay",
+        "commonMistake": "Confondere getDay (giorno settimana) e getDate (del mese).",
+        "example": "new Date(2024, 0, 1).getDay() // 1 (lunedì)",
+        "why": {
           "b": "getDay restituisce valori da 0 (domenica) a 6 (sabato), mai 7.",
           "c": "Il numero '3' come giorno del mese è errato: 3 è il mese (aprile, 0-based).",
           "d": "getDay=6 sarebbe sabato, ma il 7 aprile 2024 cade di domenica (0)."
-        },
-        "concept": "Date: getDate vs getDay",
-        "commonMistake": "Confondere getDay (giorno settimana) e getDate (del mese).",
-        "example": "new Date(2024, 0, 1).getDay() // 1 (lunedì)"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:46.767Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-po-0019",
@@ -560,18 +548,17 @@
       "explanation": {
         "short": "Math.abs calcola il valore assoluto della differenza tra i due numeri.",
         "whyCorrect": "La differenza tra -7 e 3 è -10, ma poi viene passato a Math.abs, che lo trasforma in 10.",
-        "whyOthersWrong": {
+        "concept": "Math.abs e differenze numeriche",
+        "commonMistake": "Confondere ordine e segno nella sottrazione.",
+        "example": "Math.abs(-4 - 2) // 6",
+        "why": {
           "b": "Questo valore deriva dalla differenza 7 - 3, ma l'operazione svolta qui è -7 - 3, non 7 - 3.",
           "c": "Questo è semplicemente il valore assoluto di a, mentre qui si calcola la differenza tra a e b.",
           "d": "Questo è il valore assoluto di b, ma la funzione applicata è Math.abs(a - b), non Math.abs(b)."
-        },
-        "concept": "Math.abs e differenze numeriche",
-        "commonMistake": "Confondere ordine e segno nella sottrazione.",
-        "example": "Math.abs(-4 - 2) // 6"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:56.590Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-po-0020",
@@ -604,18 +591,17 @@
       "explanation": {
         "short": "parseInt estrae la parte intera, parseFloat quella decimale finché trova cifre.",
         "whyCorrect": "parseInt legge fino al punto decimale e si ferma, restituendo 17. parseFloat legge anche il punto e il numero dopo, restituendo 17.5.",
-        "whyOthersWrong": {
+        "concept": "parseInt e parseFloat su stringhe miste",
+        "commonMistake": "Aspettarsi che parseInt restituisca la parte decimale.",
+        "example": "parseInt('23.8kg') // 23, parseFloat('23.8kg') // 23.8",
+        "why": {
           "b": "parseInt non restituisce 17.5: si ferma prima del punto decimale e restituisce solo la parte intera.",
           "c": "parseInt non restituisce NaN in questo caso, perché la stringa inizia con cifre valide. parseFloat converte correttamente in 17.5.",
           "d": "parseFloat riesce a leggere il valore decimale perché la stringa inizia con numeri validi, quindi non restituisce NaN."
-        },
-        "concept": "parseInt e parseFloat su stringhe miste",
-        "commonMistake": "Aspettarsi che parseInt restituisca la parte decimale.",
-        "example": "parseInt('23.8kg') // 23, parseFloat('23.8kg') // 23.8"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:31:56.590Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fg-0015",
@@ -648,18 +634,17 @@
       "explanation": {
         "short": "Math.abs restituisce il valore assoluto di un numero.",
         "whyCorrect": "Math.abs è il metodo corretto per ottenere il valore assoluto di un numero: accetta un argomento numerico e restituisce sempre un valore positivo.",
-        "whyOthersWrong": {
+        "concept": "Math.abs per valori assoluti",
+        "commonMistake": "Usare un nome metodo scorretto o non anteporre Math.",
+        "example": "Math.abs(-5) // 5",
+        "why": {
           "b": "Math.abs() senza argomento restituisce 0, non calcola il valore assoluto del numero specificato.",
           "c": "Math.absolute non esiste in JavaScript: il metodo corretto è Math.abs.",
           "d": "abs non è una funzione globale in JavaScript; serve il prefisso Math. e il nome esatto abs."
-        },
-        "concept": "Math.abs per valori assoluti",
-        "commonMistake": "Usare un nome metodo scorretto o non anteporre Math.",
-        "example": "Math.abs(-5) // 5"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:46:32.823Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fg-0018",
@@ -692,18 +677,17 @@
       "explanation": {
         "short": "Math.abs restituisce il valore assoluto di un numero, cioè sempre non negativo.",
         "whyCorrect": "Math.abs trasforma sempre il numero fornito nel suo valore assoluto. Nel caso di -8, restituisce 8.",
-        "whyOthersWrong": {
+        "concept": "Math.abs: valore assoluto",
+        "commonMistake": "Confondere abs con le funzioni di arrotondamento come ceil o floor.",
+        "example": "Math.abs(-5) // 5",
+        "why": {
           "b": "Math.max restituisce il massimo tra i parametri forniti, non il valore assoluto di uno solo.",
           "c": "Math.ceil arrotonda per eccesso, ma su -8 non ha effetto, restituisce -8.",
           "d": "Math.floor arrotonda per difetto, ma con -8 dà comunque -8, non cambia segno."
-        },
-        "concept": "Math.abs: valore assoluto",
-        "commonMistake": "Confondere abs con le funzioni di arrotondamento come ceil o floor.",
-        "example": "Math.abs(-5) // 5"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:46:39.488Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fb-0015",
@@ -736,18 +720,17 @@
       "explanation": {
         "short": "Number restituisce NaN se la stringa contiene caratteri non numerici, mentre parseFloat o parseInt interpretano la parte iniziale numerica.",
         "whyCorrect": "Number tenta di convertire l'intera stringa: non essendo un numero valido a causa del suffisso 'kg', restituisce NaN. parseFloat('25.7kg') invece avrebbe prodotto 25.7.",
-        "whyOthersWrong": {
+        "concept": "parseInt/parseFloat vs Number",
+        "commonMistake": "Usare Number invece di parseInt o parseFloat su stringhe con testo misto.",
+        "example": "parseFloat('25.7kg') // 25.7",
+        "why": {
           "b": "parseInt avrebbe restituito 25, scartando la parte decimale e il testo, ma qui non viene usato parseInt: il problema è proprio l'uso di Number.",
           "c": "Non è necessario convertire la stringa in array per estrarre il numero: la conversione numerica è indipendente dalla rappresentazione interna della stringa.",
           "d": "Math.floor può arrotondare solo un valore già numerico, ma qui Number restituisce NaN, quindi Math.floor(NaN) resterebbe comunque NaN."
-        },
-        "concept": "parseInt/parseFloat vs Number",
-        "commonMistake": "Usare Number invece di parseInt o parseFloat su stringhe con testo misto.",
-        "example": "parseFloat('25.7kg') // 25.7"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:46:49.089Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fb-0016",
@@ -780,18 +763,17 @@
       "explanation": {
         "short": "Il parametro mese in Date parte da 0: 11 corrisponde a dicembre, non a novembre.",
         "whyCorrect": "In JavaScript il secondo parametro di Date (mese) è 0-based, quindi 11 indica dicembre. Per novembre bisognava scrivere 10.",
-        "whyOthersWrong": {
+        "concept": "Date: mesi 0-based",
+        "commonMistake": "Dimenticare che il parametro mese parte da 0 e non da 1.",
+        "example": "new Date(2023, 10, 20) // 20 novembre 2023",
+        "why": {
           "b": "I giorni partono da 1, quindi il terzo parametro 20 indica correttamente il ventesimo giorno del mese.",
           "c": "L'anno in Date è sempre il valore numerico completo (es. 2023) e non è 0-based.",
           "d": "L'ordine dei parametri (anno, mese, giorno) è corretto secondo la documentazione Date."
-        },
-        "concept": "Date: mesi 0-based",
-        "commonMistake": "Dimenticare che il parametro mese parte da 0 e non da 1.",
-        "example": "new Date(2023, 10, 20) // 20 novembre 2023"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:46:49.090Z"
+      "format": "choice"
     },
     {
       "id": "dates-math-fb-0017",
@@ -824,18 +806,17 @@
       "explanation": {
         "short": "Math.min richiede argomenti separati, non un array; passato un array, restituisce NaN.",
         "whyCorrect": "Math.min(numeri) tenta di convertire l'intero array in numero, ottenendo NaN: bisogna usare lo spread operator (...numeri) per passare i valori separatamente.",
-        "whyOthersWrong": {
+        "concept": "Math.min/max con array",
+        "commonMistake": "Dimenticare che Math.min/max non accettano array come unico argomento.",
+        "example": "Math.min(...[4,2,8,5]) // 2",
+        "why": {
           "b": "Math.min accetta qualsiasi numero di argomenti, non solo due: il problema è che l'array non viene 'spacchettato'.",
           "c": "L'array non contiene valori undefined: tutti gli elementi sono numeri validi.",
           "d": "Math.floor serve ad arrotondare, ma qui l'errore è nel passaggio dell'array al posto degli argomenti."
-        },
-        "concept": "Math.min/max con array",
-        "commonMistake": "Dimenticare che Math.min/max non accettano array come unico argomento.",
-        "example": "Math.min(...[4,2,8,5]) // 2"
+        }
       },
       "source": "ai",
-      "model": "gpt-4.1",
-      "createdAt": "2026-09-16T08:46:49.090Z"
+      "format": "choice"
     }
   ]
 }

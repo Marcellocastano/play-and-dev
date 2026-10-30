@@ -16,7 +16,9 @@ export const useProgressStore = create<ProgressState>((set, get) => ({
 
   async loadAll(subjectIds) {
     const entries = await Promise.all(
-      subjectIds.map(async (id) => [id, (await persistence.getProgress(id)) ?? emptyProgress(id)] as const),
+      subjectIds.map(
+        async (id) => [id, (await persistence.getProgress(id)) ?? emptyProgress(id)] as const,
+      ),
     );
     set({ bySubject: Object.fromEntries(entries), loaded: true });
   },

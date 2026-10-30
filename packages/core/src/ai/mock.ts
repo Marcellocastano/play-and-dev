@@ -15,6 +15,7 @@ const MOCK_QUESTION: GeneratedQuestion = {
   subtopicId: 'mock-subtopic',
   skills: ['mock'],
   prompt: 'Quale di queste è una parola chiave per dichiarare una variabile?',
+  format: 'choice',
   options: [
     { id: 'a', text: 'let' },
     { id: 'b', text: 'vroom' },
@@ -25,7 +26,7 @@ const MOCK_QUESTION: GeneratedQuestion = {
   explanation: {
     short: '`let` dichiara una variabile.',
     whyCorrect: '`let` è una parola chiave del linguaggio per le variabili riscrivibili.',
-    whyOthersWrong: {
+    why: {
       b: '"vroom" non è una parola chiave.',
       c: '"blarg" non è una parola chiave.',
       d: '"zorp" non è una parola chiave.',
