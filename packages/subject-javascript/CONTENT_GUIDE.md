@@ -115,11 +115,14 @@ npm run content:add                                            # oppure: -- <alt
 ```
 
 `content:add` accetta `{ "topicId": ..., "questions": [...] }` (o un array, con
-`--topic`), JSON puro o blocco ` ```json `. Oltre al gate di `author` esegue i
-controlli automatici su match e true-false (esegue le espressioni e confronta il
-risultato con la risposta dichiarata). Strumenti avanzati: `content:import` scrive la
-risposta come bozza in `content/drafts/` senza approvarla; `content:review` e
-`content:approve` gestiscono le bozze a mano.
+`--topic`), JSON puro o blocco ` ```json `. Oltre al gate didattico esegue il codice
+delle `predict-output` e i controlli automatici su match e true-false (esegue le
+espressioni e confronta il risultato con la risposta dichiarata). Con `--api` genera
+le domande direttamente con OpenAI invece di leggere `risposta.json`.
+
+Per far crescere i contenuti in modo scalabile preferisci i template generativi:
+`content:template` fa scrivere all'AI un template nel DSL, lo esegue su 25 seed contro
+gate ed esecuzione del codice e lo registra in `src/templates/ai/` solo se passa.
 
 Il campo `format` è obbligatorio nel JSON generato; per i tipi didattici classici è
 `choice`. La revisione umana resta obbligatoria.

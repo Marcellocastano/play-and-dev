@@ -45,10 +45,11 @@ Senza `OPENAI_API_KEY` gli endpoint rispondono `503 { error: 'ai_unavailable' }`
 
 ## Aggiungere un nuovo subject
 
-1. Crea un package in `packages/subject-<nome>` che esporta una `SubjectDefinition` di `@lg/core`: `id`, `name`, `kind` (`language`/`framework`/`runtime`), `status`, `icon`, `theme` (palette + gradienti), `levels` con `topicIds`, `topics` completi e `templates`.
+1. Crea un package in `packages/subject-<nome>` che esporta una `SubjectDefinition` di `@lg/core`: `id`, `name`, `kind` (`language`/`framework`/`runtime`), `status`, `icon`, `theme` (palette + gradienti), `levels` con `topicIds`, `topics` completi e `templates`. Il DSL generico per i template (`defineTemplate`, `makeOptions`, `pickInt`…) viene da `@lg/subject-kit`.
 2. I template sono `QuestionTemplate`: `generate(rng)` restituisce una `GeneratedQuestion` (prompt, code opzionale, 4 opzioni, `correctOptionId`, `explanation` completa). Usa l'RNG passato dal core per variare i dati e `makeOptions`-like helpers per distrattori unici.
 3. Registra il subject in `apps/web/src/state/subjectStore.ts` (array `subjects`).
 4. Il tema viene applicato automaticamente da `ThemeProvider`/`applyTheme` scrivendo le CSS vars su `:root`.
+5. Per i comandi `content:*` aggiungi `packages/subject-<nome>/content.config.ts` (default export `SubjectContentConfig` di `@lg/subject-kit/node`: subject, language, pkgRoot, runner opzionale, path dei prompt, `template` opzionale). Il CLI `npm run content -- <cmd> --subject <nome>` lo carica automaticamente; per eseguire il codice delle domande servono anche un `CodeRunner` e i tre file prompt in `prompts/` (`author.language.md`, `author.examples.md`, `template.md`).
 
 Per un subject "coming soon" basta la `SubjectDefinition` con `status: 'coming-soon'` e liste vuote (vedi `subject-placeholders`).
 
@@ -62,41 +63,54 @@ domande alla stessa sessione, entro il cap di similarità del motore).
 I JSON sono importati direttamente; `src/bank/content/index.ts` (un import per file) è
 rigenerato dagli script ad ogni approvazione e un test verifica che sia allineato.
 
-Il flusso di authoring AI è offline e manuale:
+Il flusso di authoring AI è offline e manuale (pipeline condivisa in
+`@lg/content-pipeline`, tool comuni in `@lg/subject-kit`), con due strade che usano la
+stessa validazione e lo stesso merge nei JSON con rollback se i test dei contenuti
+falliscono. I comandi accettano `--subject <id>` (default `javascript`) e vivono nel CLI
+`npm run content -- <add|prompt|template|dump>`; gli alias `content:*` del workspace
+delegano allo stesso CLI:
 
 ```bash
-npm run content:author -w @lg/subject-javascript -- \
-  --topic errors --type predict-output --difficulty medium --count 7
-# genera bozze in content/drafts/ (system prompt: scripts/author.prompt.md,
-# key letta da apps/server/.env; modello di default gpt-4.1, override con --model)
+# via chat gratuita: stampa system+user prompt da incollare (system prompt =
+# subject-kit/prompts/author.base.md + prompts/author.language.md + prompts/author.examples.md)
+npm run content -- prompt --subject javascript \
+  --topic json --type true-false --difficulty easy --count 5   # | pbcopy
+# → incolla l'output in una chat, salva la risposta in risposta.json nella root del repo
+npm run content:add                                            # oppure: -- <altro-file.json>
 
-npm run content:review -w @lg/subject-javascript
-# stampa compatta delle bozze in attesa per la revisione umana
+# via OpenAI (key letta da apps/server/.env; modello di default gpt-4.1, --model per cambiare)
+npm run content -- add --subject javascript \
+  --api --topic errors --type predict-output --difficulty medium --count 7
 
-npm run content:approve -w @lg/subject-javascript -- content/drafts/<file>.json [id...]
-# senza id approva tutta la bozza; con --reject <file> id... rimuove gli id dalla bozza.
-# L'approvazione aggiorna src/bank/content/<topic>.json e l'indice dei JSON.
-
-npm run content:dump -w @lg/subject-javascript -- <seed> [--why]
+npm run content -- dump --subject javascript <seed> [--why]
 # dump di ogni template (generativi e banca) per ispezione
 ```
 
-Alternativa senza API key (authoring via chat gratuita): `content:prompt` stampa il
-system+user prompt da incollare in una chat; si salva la risposta in `risposta.json`
-nella root del repo e `npm run content:add` fa tutto il resto: valida ogni domanda,
-scarta quelle che non passano il gate, fa merge in `src/bank/content/<topic>.json`,
-esegue i test dei contenuti (se falliscono, ripristina tutto) e
-archivia la bozza in `content/drafts/approved/`:
+`content:add` valida ogni domanda (dedup, schema, gate didattico, esecuzione del codice
+via node:vm), scarta quelle che non passano, fa merge in `src/bank/content/<topic>.json`,
+rigenera l'indice dei JSON ed esegue i test dei contenuti (se falliscono, ripristina tutto).
+
+Un livello sopra: l'AI può scrivere **template generativi** (non singole domande) nel DSL
+di `src/templates/helpers.ts`; i file accettati finiscono in `src/templates/ai/` e vengono
+compilati come gli altri template:
 
 ```bash
-npm run content:prompt -w @lg/subject-javascript -- \
-  --topic json --type true-false --difficulty easy --count 5   # | pbcopy
-# → incolla l'output in una chat, salva la risposta in risposta.json
-npm run content:add                                            # oppure: -- <altro-file.json>
+npm run content -- template --subject javascript \
+  --topic loops --type predict-output --difficulty medium
+# API: fino a --rounds round (default 3) con retry guidato dagli errori del gate;
+# modello di default gpt-4.1 (--model per cambiare)
+
+npm run content -- template --subject javascript \
+  --topic loops --type predict-output --difficulty medium --print-prompt
+# niente API: stampa system+user da incollare in una chat, poi valida la risposta con
+# --from <file> (accetta JSON { "code": "..." } o TS grezzo, anche dentro un fence)
 ```
 
-Strumenti avanzati: `content:import` scrive la risposta come bozza in `content/drafts/`
-senza approvarla (poi `content:review` / `content:approve` come sopra).
+Il candidato viene scritto in `src/templates/ai/_candidate.ts`, importato e verificato
+con `checkTemplate` (25 seed: schema, gate didattico, ≥5 varianti, esecuzione del codice)
+più `tsc --noEmit`; se passa, il file è rinominato `ai/<topic>-<id>.ts`, l'indice dei
+template AI è rigenerato e l'intera suite + typecheck devono restare verdi (altrimenti
+rollback). La revisione umana del file resta obbligatoria.
 
 Regole di qualità e formato delle domande: `packages/subject-javascript/CONTENT_GUIDE.md`
 (il gate `qualityIssues` di `@lg/core` le applica nei test, bozze incluse).

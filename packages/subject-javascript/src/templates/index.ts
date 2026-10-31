@@ -15,6 +15,7 @@ import { objectsBasicsTemplates } from './objects-basics/index.js';
 import { arrayMethodsTemplates } from './array-methods/index.js';
 import { destructuringTemplates } from './destructuring/index.js';
 import { closuresAdvancedTemplates } from './closures-advanced/index.js';
+import { aiTemplates } from './ai/index.js';
 import { bankTemplates } from '../bank/index.js';
 
 export const templates: QuestionTemplate[] = [
@@ -34,5 +35,6 @@ export const templates: QuestionTemplate[] = [
   ...arrayMethodsTemplates,
   ...destructuringTemplates,
   ...closuresAdvancedTemplates,
+  ...aiTemplates,
   ...bankTemplates,
 ];

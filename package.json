@@ -15,7 +15,8 @@
     "test": "vitest run",
     "lint": "eslint .",
     "typecheck": "tsc -b",
-    "content:add": "npm run content:add -w @lg/subject-javascript --"
+    "content:add": "npm run content:add -w @lg/subject-javascript --",
+    "content": "tsx packages/subject-kit/src/cli.ts"
   },
   "engines": {
     "node": ">=22"

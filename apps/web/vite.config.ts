@@ -10,6 +10,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@lg/core': r('../../packages/core/src/index.ts'),
+      '@lg/subject-kit': r('../../packages/subject-kit/src/index.ts'),
       '@lg/subject-javascript': r('../../packages/subject-javascript/src/index.ts'),
       '@lg/subject-placeholders': r('../../packages/subject-placeholders/src/index.ts'),
     },

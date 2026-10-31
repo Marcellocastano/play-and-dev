@@ -1,7 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { checkCandidate, wrapCodeText } from '../scripts/checkCandidate.js';
+import { checkCandidate, wrapCodeText } from '@lg/content-pipeline';
+import { javascriptSubject } from '../src/index.js';
+import { javascriptRunner } from '../src/runner/index.js';
 
 const ctx = {
+  subject: javascriptSubject,
+  runner: javascriptRunner,
   topicId: 'json',
   type: 'match',
   difficulty: 'medium' as const,
@@ -51,8 +55,8 @@ describe('wrapCodeText', () => {
 });
 
 describe('checkCandidate — match eseguibile', () => {
-  it('accetta un match le cui righe producono le scelte dichiarate', () => {
-    const { q, reasons } = checkCandidate(
+  it('accetta un match le cui righe producono le scelte dichiarate', async () => {
+    const { q, reasons } = await checkCandidate(
       matchCandidate([
         { text: '`1 + 1`', choiceId: 'c0' },
         { text: "`'a' + 'b'`", choiceId: 'c1' },
@@ -64,8 +68,8 @@ describe('checkCandidate — match eseguibile', () => {
     expect(q).toBeDefined();
   });
 
-  it('scarta un match con una riga abbinata alla scelta sbagliata', () => {
-    const { reasons } = checkCandidate(
+  it('scarta un match con una riga abbinata alla scelta sbagliata', async () => {
+    const { reasons } = await checkCandidate(
       matchCandidate([
         { text: '`1 + 1`', choiceId: 'c1' },
         { text: "`'a' + 'b'`", choiceId: 'c1' },
@@ -76,8 +80,8 @@ describe('checkCandidate — match eseguibile', () => {
     expect(reasons.some((r) => r.startsWith('match:'))).toBe(true);
   });
 
-  it('ignora il controllo quando una riga non è un espressione eseguibile', () => {
-    const { reasons } = checkCandidate(
+  it('ignora il controllo quando una riga non è un espressione eseguibile', async () => {
+    const { reasons } = await checkCandidate(
       matchCandidate([
         { text: 'Il metodo che rimuove il primo elemento', choiceId: 'c0' },
         { text: "`'a' + 'b'`", choiceId: 'c1' },
@@ -119,9 +123,9 @@ describe('checkCandidate — true-false eseguibile', () => {
     { text: "`typeof null` restituisce `'object'`", value: true },
   ];
 
-  it('accetta affermazioni il cui valore coincide con il risultato reale', () => {
-    const { q, reasons } = checkCandidate(tfCandidate(statements), {
-      topicId: 'json',
+  it('accetta affermazioni il cui valore coincide con il risultato reale', async () => {
+    const { q, reasons } = await checkCandidate(tfCandidate(statements), {
+      ...ctx,
       type: 'true-false',
       difficulty: 'easy',
       seenKeys: new Set(),
@@ -130,10 +134,10 @@ describe('checkCandidate — true-false eseguibile', () => {
     expect(q).toBeDefined();
   });
 
-  it('scarta un affermazione con value che non coincide con il risultato', () => {
+  it('scarta un affermazione con value che non coincide con il risultato', async () => {
     const wrong = statements.map((s, i) => (i === 0 ? { ...s, value: false } : s));
-    const { reasons } = checkCandidate(tfCandidate(wrong), {
-      topicId: 'json',
+    const { reasons } = await checkCandidate(tfCandidate(wrong), {
+      ...ctx,
       type: 'true-false',
       difficulty: 'easy',
       seenKeys: new Set(),

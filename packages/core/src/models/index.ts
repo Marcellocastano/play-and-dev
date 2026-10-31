@@ -97,6 +97,16 @@ export type DistributiveOmit<T, K extends keyof T> = T extends unknown ? Omit<T,
 /** A Question before engine-level fields (id, variantKey) are assigned. */
 export type GeneratedQuestion = DistributiveOmit<Question, 'id' | 'variantKey'>;
 
+/** A curated/stored question (bank JSON, DB): a Question without engine-level fields. */
+export type BankQuestion = DistributiveOmit<Question, 'templateId' | 'variantKey' | 'deepDiveRef'> & {
+  source: 'ai' | 'manual';
+};
+
+export interface BankFile {
+  topicId: string;
+  questions: BankQuestion[];
+}
+
 export type AnswerResponse =
   | { format: 'choice'; optionId: string }
   | { format: 'categorize'; placement: Record<string, string> }

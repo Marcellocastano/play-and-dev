@@ -31,5 +31,5 @@ export { topics } from './curriculum/topics/index.js';
 export { templates } from './templates/index.js';
 export { deepDives, getDeepDive } from './deepDive/index.js';
 export { bankQuestions, bankTemplates, buildBankTemplates, MIN_BANK_SIZE } from './bank/index.js';
-export type { BankFile, BankQuestion } from './bank/types.js';
+export type { BankFile, BankQuestion } from '@lg/core';
 export type { DeepDive, DeepDiveSection } from './deepDive/index.js';

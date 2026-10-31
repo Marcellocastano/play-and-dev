@@ -1,15 +1,10 @@
-import { generateQuestion } from '@lg/core';
-import { javascriptSubject } from '../src/index.js';
-
-const args = process.argv.slice(2);
-const whyMode = args.includes('--why');
-const seed = Number(args.find((a) => a !== '--why') ?? 7);
+import type { Question } from '@lg/core';
 
 const nl = (s: string) => s.replace(/\n/g, ' ⏎ ');
 
-for (const t of javascriptSubject.templates) {
-  const q = generateQuestion(t, seed);
-  console.log(`\n### ${t.id} [${t.type}/${t.difficulty}]`);
+/** Stampa una domanda generata come la vede lo studente (con whyMode anche le spiegazioni). */
+export function printQuestion(q: Question, whyMode: boolean): void {
+  console.log(`\n### ${q.templateId} [${q.type}/${q.difficulty}]`);
   console.log(q.prompt);
   if (!whyMode && q.code) console.log(q.code);
   const why = q.explanation.why;

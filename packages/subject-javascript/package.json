@@ -9,6 +9,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./runner": {
+      "types": "./dist/runner/index.d.ts",
+      "default": "./dist/runner/index.js"
     }
   },
   "scripts": {
@@ -16,20 +20,18 @@
     "test": "vitest run",
     "typecheck": "tsc -b --force",
     "lint": "eslint src tests",
-    "content:dump": "tsx scripts/dump.ts",
-    "content:author": "tsx scripts/author.ts",
-    "content:approve": "tsx scripts/approve.ts",
-    "content:review": "tsx scripts/review.ts",
-    "content:prompt": "tsx scripts/prompt.ts",
-    "content:import": "tsx scripts/import.ts",
-    "content:add": "tsx scripts/add.ts"
+    "content:dump": "tsx ../../packages/subject-kit/src/cli.ts dump --subject javascript",
+    "content:prompt": "tsx ../../packages/subject-kit/src/cli.ts prompt --subject javascript",
+    "content:add": "tsx ../../packages/subject-kit/src/cli.ts add --subject javascript",
+    "content:template": "tsx ../../packages/subject-kit/src/cli.ts template --subject javascript"
   },
   "dependencies": {
-    "@lg/core": "*"
+    "@lg/core": "*",
+    "@lg/subject-kit": "*"
   },
   "devDependencies": {
+    "@lg/content-pipeline": "*",
     "dotenv": "^16.4.5",
-    "openai": "^5.0.0",
     "tsx": "^4.19.4"
   }
 }

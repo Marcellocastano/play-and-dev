@@ -1,5 +1,5 @@
-// GENERATO da scripts/bankIO.ts (saveApproved): un import per ogni JSON in questa cartella.
-import type { BankFile, BankQuestion } from '../types.js';
+// GENERATO dagli script content:* (saveApproved): un import per ogni JSON in questa cartella.
+import type { BankFile, BankQuestion } from '@lg/core';
 import arrayMethods from './array-methods.json';
 import datesMath from './dates-math.json';
 import destructuring from './destructuring.json';
